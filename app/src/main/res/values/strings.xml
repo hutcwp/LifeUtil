@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">阅•读•者</string>
+
+    <string name="menu_action_refresh">刷新</string>
+    <string name="menu_action_share">分享</string>
+    <string name="menu_action_copy">复制URL</string>
+    <string name="menu_action_openwith">其他方式打开</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pull_to_refresh">上拉刷新</string>
+    <string name="read">阅读</string>
+    <string name="gank">图片</string>
+
+    <string name="theme">主题</string>
+    <string name="done">确定</string>
+    <string name="cancel">取消</string>
+
+    <string name="open_source">• 和风天气提供天气数据\n• 百度定位提供定位服务\n• www.egouz.com网站的图片\n• 『Gank』『煎蛋』『妹子图』提供妹纸数据\n• 学习项目地址: https://github.com/li-yu/FakeWeather/blob/master/README.md
+    </string>
+
+    <string name="contact_me">• @hutcwp\n• hutcwp@foxmail.com
+    </string>
+
+    <string-array name="color_name">
+        <item>青石色</item>
+        <item>山茱萸</item>
+        <item>绿篱</item>
+        <item>樱草黄</item>
+        <item>烈焰红</item>
+        <item>天堂岛</item>
+        <item>甘蓝</item>
+        <item>粉蓍草</item>
+        <item>尼亚加拉</item>
+    </string-array>
+
+</resources>

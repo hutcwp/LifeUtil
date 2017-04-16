@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navigation_read"
+            android:checked="true"
+            android:icon="@drawable/ic_reading"
+            android:title="@string/read" />
+
+        <item
+            android:id="@+id/navigation_photo"
+            android:checked="true"
+            android:icon="@drawable/ic_gank"
+            android:title="@string/gank" />
+
+    </group>
+
+    <item android:title="软件相关">
+
+        <menu>
+            <item
+                android:id="@+id/navigation_setting"
+                android:icon="@drawable/ic_settings"
+                android:title="设置" />
+            <item
+                android:id="@+id/navigation_item_about"
+                android:icon="@drawable/ic_about"
+                android:title="关于" />
+
+        </menu>
+
+    </item>
+
+</menu>

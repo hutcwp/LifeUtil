@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import club.hutcwp.lifeutil.R;
 import club.hutcwp.lifeutil.app.AppGlobal;
@@ -20,11 +23,10 @@ import club.hutcwp.lifeutil.app.AppGlobal;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected abstract
-    @LayoutRes
-    int getLayoutId();
-
     protected Toolbar toolbar;
+
+    @LayoutRes
+    protected abstract int getLayoutId();
 
     protected abstract void initViews(Bundle savedInstanceState);
 
@@ -106,5 +108,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         }
     }
+
+    /**
+     * showSnack
+     *
+     * @param s 要显示的内容
+     */
+    public void showSnack(View view , String s) {
+        Snackbar snackbar = Snackbar.make(view, s, Toast.LENGTH_LONG);
+        snackbar.show();
+    }
+
 
 }

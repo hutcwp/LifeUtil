@@ -22,6 +22,7 @@ import club.hutcwp.lifeutil.databinding.FragmentReadBinding;
 import club.hutcwp.lifeutil.model.ReadCategory;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
+import club.hutcwp.lifeutil.ui.base.IBaseView;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -30,7 +31,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
-public class ReadFragment extends BaseFragment {
+public class ReadFragment extends BaseFragment implements IBaseView<ReadCategory> {
 
     private Subscription subscription;
     private FragmentReadBinding binding;
@@ -44,9 +45,9 @@ public class ReadFragment extends BaseFragment {
     @Override
     protected void initViews() {
 
-        binding= (FragmentReadBinding) getBinding();
+        binding = (FragmentReadBinding) getBinding();
         binding.toolbar.setTitle("阅读");
-        ((MainActivity)getActivity()).initDrawer(binding.toolbar);
+        ((MainActivity) getActivity()).initDrawer(binding.toolbar);
 
     }
 
@@ -75,7 +76,7 @@ public class ReadFragment extends BaseFragment {
                                 category.setName(element.text());
                                 category.setUrl(element.attr("abs:href"));
                                 list.add(category);
-                                Log.d("test","name: "+category.getName());
+                                Log.d("test", "name: " + category.getName());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -89,12 +90,12 @@ public class ReadFragment extends BaseFragment {
         ).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<ReadCategory>>() {
             @Override
             public void onCompleted() {
-                Log.d("test","complete");
+                Log.d("test", "complete");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("test","error");
+                Log.d("test", "error");
             }
 
             @Override
@@ -110,33 +111,16 @@ public class ReadFragment extends BaseFragment {
 
     /**
      * 初始化TabLayout
+     *
      * @param readCategories 标签类
      */
     private void initTabLayout(List<ReadCategory> readCategories) {
-
-        setupViewPager(binding.viewPager, readCategories);
+        setUpViewPager(binding.viewPager, readCategories);
         binding.viewPager.setOffscreenPageLimit(binding.viewPager.getAdapter().getCount());
-        binding.tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getActivity(),R.color.white));
+        binding.tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getActivity(), R.color.white));
         binding.tablayout.setupWithViewPager(binding.viewPager);
         binding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-    }
-
-    /**
-     * 初始化ViewPager
-     * @param viewPager ViewPager
-     * @param readCategories 标签类
-     */
-    private void setupViewPager(ViewPager viewPager, List<ReadCategory> readCategories) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        for (ReadCategory category : readCategories) {
-            Fragment fragment = new ReadCategoryFragment();
-            Bundle data = new Bundle();
-            data.putString("url",category.getUrl());
-            fragment.setArguments(data);
-            adapter.addFrag(fragment, category.getName());
-        }
-        viewPager.setAdapter(adapter);
     }
 
 
@@ -147,4 +131,16 @@ public class ReadFragment extends BaseFragment {
             subscription.unsubscribe();
     }
 
+    @Override
+    public void setUpViewPager(ViewPager viewPager, List<ReadCategory> readCategories) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        for (ReadCategory category : readCategories) {
+            Fragment fragment = new ReadCategoryFragment();
+            Bundle data = new Bundle();
+            data.putString("url", category.getUrl());
+            fragment.setArguments(data);
+            adapter.addFrag(fragment, category.getName());
+        }
+        viewPager.setAdapter(adapter);
+    }
 }

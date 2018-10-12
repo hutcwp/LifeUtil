@@ -16,11 +16,12 @@ import club.hutcwp.lifeutil.databinding.FragmentGirlBinding;
 import club.hutcwp.lifeutil.model.PhotoCategory;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
+import club.hutcwp.lifeutil.ui.base.IBaseView;
 
-public class PhotoFragment extends BaseFragment {
+public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCategory> {
 
-    FragmentGirlBinding binding;
-    List<PhotoCategory> photoCategories= new ArrayList<>();
+    private FragmentGirlBinding binding;
+    private List<PhotoCategory> photoCategories = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -30,9 +31,7 @@ public class PhotoFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
-
         binding = (FragmentGirlBinding) getBinding();
-
         binding.toolbar.setTitle(getString(R.string.gank));
         ((MainActivity) getActivity()).initDrawer(binding.toolbar);
         initCategorys();
@@ -41,16 +40,13 @@ public class PhotoFragment extends BaseFragment {
 
     @Override
     protected void lazyFetchData() {
-
-       initTabLayout(photoCategories);
-
+        initTabLayout(photoCategories);
     }
 
     /**
      * 初始化TabLayout
      */
     public void initTabLayout(List<PhotoCategory> photoCategories) {
-
         setUpViewPager(binding.viewPager, photoCategories);
         binding.viewPager.setOffscreenPageLimit(binding.viewPager.getAdapter().getCount());
         binding.tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getActivity(), R.color.white));
@@ -58,18 +54,23 @@ public class PhotoFragment extends BaseFragment {
         binding.tabLayout.setTabMode(TabLayout.GRAVITY_CENTER);
     }
 
-    /**
-     * 设置ViewPager
-     *
-     * @param viewPager
-     */
-    public void setUpViewPager(ViewPager viewPager, List<PhotoCategory> photoCategories) {
 
+    public void initCategorys() {
+        photoCategories.add(new PhotoCategory("摄影世界", "http://www.egouz.com/pics/icon/"));
+        photoCategories.add(new PhotoCategory("插画设计", "http://www.egouz.com/pics/vector/"));
+        photoCategories.add(new PhotoCategory("桌面壁纸", "http://www.egouz.com/pics/wallpaper/"));
+        photoCategories.add(new PhotoCategory("艺术人生", "http://www.egouz.com/pics/pattern/"));
+
+    }
+
+
+    @Override
+    public void setUpViewPager(ViewPager viewPager, List<PhotoCategory> categories) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         Fragment fragment = new GankGirlFragment();
         adapter.addFrag(fragment, "靓女专题");
 
-        for (PhotoCategory category : photoCategories) {
+        for (PhotoCategory category : categories) {
             Fragment categoryFragment = new PhotoCategoryFragment();
             Bundle data = new Bundle();
             data.putString("url", category.getUrl());
@@ -78,17 +79,5 @@ public class PhotoFragment extends BaseFragment {
         }
 
         viewPager.setAdapter(adapter);
-
     }
-
-    public void initCategorys(){
-
-        photoCategories.add(new PhotoCategory("摄影世界","http://www.egouz.com/pics/icon/"));
-        photoCategories.add(new PhotoCategory("插画设计","http://www.egouz.com/pics/vector/"));
-        photoCategories.add(new PhotoCategory("桌面壁纸","http://www.egouz.com/pics/wallpaper/"));
-        photoCategories.add(new PhotoCategory("艺术人生","http://www.egouz.com/pics/pattern/"));
-
-    }
-
-
 }

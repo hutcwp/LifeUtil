@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity {
     private static final String FRAGMENT_TAG_PHOTO = "photo";
     private static final String FRAGMENT_TAG_READING = "reading";
 
+    private DrawerLayout drawerLayout;
 
     @Override
     protected int getLayoutId() {
@@ -53,7 +54,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-
+        drawerLayout = findViewById(R.id.drawerLayout);
         fragmentManager = getSupportFragmentManager();
         initNavigationViewHeader();
         initFragment(savedInstanceState);
@@ -150,12 +151,14 @@ public class MainActivity extends BaseActivity {
         Log.d("error", "switchContent");
         if (currentFragmentTag != null && currentFragmentTag.equals(name))
             return;
+
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         Fragment currentFragment = fragmentManager.findFragmentByTag(currentFragmentTag);
         if (currentFragment != null) {
             ft.hide(currentFragment);
         }
+
         Fragment foundFragment = fragmentManager.findFragmentByTag(name);
         if (foundFragment == null) {
             switch (name) {
@@ -167,6 +170,7 @@ public class MainActivity extends BaseActivity {
                     break;
             }
         }
+
         if (foundFragment == null) {
         } else if (foundFragment.isAdded()) {
             ft.show(foundFragment);
@@ -175,24 +179,11 @@ public class MainActivity extends BaseActivity {
         }
         ft.commit();
         currentFragmentTag = name;
-        invalidateOptionsMenu();
-    }
-
-    /**
-     * showSnack
-     *
-     * @param s 要显示的内容
-     */
-    public void showSnack(String s) {
-
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.drawerLayout), s, Toast.LENGTH_LONG);
-        snackbar.show();
     }
 
 
     @Subscribe
     public void onMessageEvent(ThemeChangedEvent event) {
-
         Log.d("event", "msg");
         this.recreate();
     }
@@ -207,9 +198,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
-        super.onDestroy();
     }
 
     @Override
@@ -218,11 +209,20 @@ public class MainActivity extends BaseActivity {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             if (!DoubleClickExit.check()) {
-                Snackbar.make(MainActivity.this.getWindow().getDecorView().findViewById(android.R.id.content), "再按一次退出 App!", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(drawerLayout, "再按一次退出 App!", Snackbar.LENGTH_SHORT).show();
             } else {
                 super.onBackPressed();
             }
         }
+    }
+
+
+    public void showSnack(String msg) {
+        if (drawerLayout == null) {
+            return;
+        }
+
+        showSnack(drawerLayout,msg);
     }
 
 }

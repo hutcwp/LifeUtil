@@ -4,13 +4,17 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import hut.cwp.mvp.MvpFragment;
+import hut.cwp.mvp.MvpPresenter;
+import hut.cwp.mvp.MvpView;
 
 /**
  * Created by hutcwp on 2017/4/15.
@@ -19,21 +23,19 @@ import hut.cwp.mvp.MvpFragment;
  * GitHub : github.com/hutcwp
  */
 
-public abstract class BaseFragment extends MvpFragment {
+public abstract class BaseFragment<P extends MvpPresenter<V>, V extends MvpView> extends MvpFragment<P,V> {
 
+    private static final String TAG = "BaseFragment";
     private boolean isViewPrepared; // 标识fragment视图已经初始化完毕
     private boolean hasFetchData; // 标识已经触发过懒加载数据
     protected ViewDataBinding binding;
 
-    protected abstract
     @LayoutRes
-    int getLayoutId();
+    protected abstract int getLayoutId();
 
-    public ViewDataBinding getBinding(){
-
+    public ViewDataBinding getBinding() {
         return binding;
     }
-
 
     //初始化View
     protected abstract void initViews();
@@ -43,14 +45,12 @@ public abstract class BaseFragment extends MvpFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-            binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-            initViews();
-            return binding.getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+        initViews();
+        return binding.getRoot();
 
     }
-
 
     /**
      * 判断Fragment懒加载是否准备完成
@@ -69,6 +69,7 @@ public abstract class BaseFragment extends MvpFragment {
      */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        Log.d(TAG, "setUserVisibleHint: ");
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             lazyFetchDataIfPrepared();
@@ -95,6 +96,5 @@ public abstract class BaseFragment extends MvpFragment {
         hasFetchData = false;
         isViewPrepared = false;
     }
-
 
 }

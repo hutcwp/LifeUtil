@@ -19,12 +19,13 @@ import club.hutcwp.lifeutil.http.BaseGankResponse;
 import club.hutcwp.lifeutil.model.Girl;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
+import hut.cwp.mvp.BindPresenter;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-
-public class GankGirlFragment extends BaseFragment {
+@BindPresenter(presenter = GirlPresenter.class)
+public class GankGirlFragment extends BaseFragment<GirlPresenter, IGril> implements IGril {
 
 
     private GankGirlAdapter adapter;
@@ -35,9 +36,6 @@ public class GankGirlFragment extends BaseFragment {
     private FragmentGankGirlBinding binding;
 
 
-    private static boolean isRefresh = true;
-
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_gank_girl;
@@ -45,7 +43,7 @@ public class GankGirlFragment extends BaseFragment {
 
     @Override
     protected void lazyFetchData() {
-        getGank(curPage);
+        getPresenter().getGank(curPage);
     }
 
     @Override
@@ -64,24 +62,22 @@ public class GankGirlFragment extends BaseFragment {
      * 注意，因放置在initView方法的最后，以避免出现空指针
      */
     public void setting() {
-
         binding.swipRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         binding.swipRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                isRefresh = true;
+                getPresenter().serRefresh(true);
                 curPage = 1;
-                getGank(curPage);
+                getPresenter().getGank(curPage);
             }
         });
 
-        binding.gridRecycler.addOnScrollListener(new RecyclerView.OnScrollListener()
-         {
+        binding.gridRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (!binding.gridRecycler.canScrollVertically(1)) {
-                    isRefresh = false;
-                    getGank(++curPage);
+                    getPresenter().serRefresh(false);
+                    getPresenter().getGank(++curPage);
                 }
             }
 
@@ -93,45 +89,64 @@ public class GankGirlFragment extends BaseFragment {
         });
     }
 
-    /**
-     * 获取数据
-     *
-     * @param curPage 当前页
-     */
-    public void getGank(int curPage) {
+//    /**
+//     * 获取数据
+//     *
+//     * @param curPage 当前页
+//     */
+//    public void getGank(int curPage) {
+//        ApiFactory.getGirlsController().getGank(curPage + "").subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<BaseGankResponse<List<Girl>>>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        ((MainActivity) getActivity()).showSnack("加载完成");
+//                        binding.swipRefreshLayout.setRefreshing(false);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.d("teste", e.getMessage());
+//                        ((MainActivity) getActivity()).showSnack("加载失败");
+//                        binding.swipRefreshLayout.setRefreshing(false);
+//                    }
+//
+//                    @Override
+//                    public void onNext(BaseGankResponse<List<Girl>> response) {
+//                        for (Girl girl : response.datas) {
+//                            if (girl.getHeight() == 0) {
+//                                girl.setHeight((new Random().nextInt(100)) + 500);
+//                            }
+//                        }
+//
+//                        if (getPresenter().isRefresh()) {
+//                            adapter.setNewData(response.datas);
+//                        } else {
+//                            adapter.addDatas(response.datas);
+//                        }
+//                    }
+//
+//                });
+//    }
 
-        ApiFactory.getGirlsController().getGank(curPage + "").subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseGankResponse<List<Girl>>>() {
-                    @Override
-                    public void onCompleted() {
-                        ((MainActivity) getActivity()).showSnack("加载完成");
-                        binding.swipRefreshLayout.setRefreshing(false);
-                    }
+    @Override
+    public void showSnack(String msg) {
+        ((MainActivity) getActivity()).showSnack(msg);
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("teste", e.getMessage());
-                        ((MainActivity) getActivity()).showSnack("加载失败");
-                        binding.swipRefreshLayout.setRefreshing(false);
-                    }
+    @Override
+    public void setRefreshing(boolean status) {
+        binding.swipRefreshLayout.setRefreshing(status);
+    }
 
-                    @Override
-                    public void onNext(BaseGankResponse<List<Girl>> response) {
-                        for (Girl girl : response.datas) {
-                            if (girl.getHeight() == 0) {
-                                girl.setHeight((new Random().nextInt(100)) + 500);
-                            }
-                        }
+    @Override
+    public void setNewData(List<Girl> data) {
+        adapter.setNewData(data);
+    }
 
-                        if (isRefresh) {
-                            adapter.setNewData(response.datas);
-                        } else {
-                            adapter.addDatas(response.datas);
-                        }
-                    }
-
-                });
+    @Override
+    public void addNewData(List<Girl> data) {
+        adapter.addDatas(data);
     }
 
 

@@ -78,7 +78,7 @@ public class ReadPresenter extends MvpPresenter<IBaseView> {
 //                    Log.d("test", "cate: " + cate.getName());
 //                }
                 IBaseView fragment = getView();
-//                fragment.initTabLayout(readCategories);
+                fragment.initTabLayout(readCategories);
             }
         });
     }

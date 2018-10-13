@@ -17,6 +17,8 @@ import club.hutcwp.lifeutil.model.PhotoCategory;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
 import club.hutcwp.lifeutil.ui.base.IBaseView;
+import hut.cwp.mvp.MvpPresenter;
+import hut.cwp.mvp.MvpView;
 
 public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCategory> {
 
@@ -37,6 +39,12 @@ public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCatego
         initCategorys();
     }
 
+    public void initCategorys() {
+        photoCategories.add(new PhotoCategory("摄影世界", "http://www.egouz.com/pics/icon/"));
+        photoCategories.add(new PhotoCategory("插画设计", "http://www.egouz.com/pics/vector/"));
+        photoCategories.add(new PhotoCategory("桌面壁纸", "http://www.egouz.com/pics/wallpaper/"));
+        photoCategories.add(new PhotoCategory("艺术人生", "http://www.egouz.com/pics/pattern/"));
+    }
 
     @Override
     protected void lazyFetchData() {
@@ -46,6 +54,7 @@ public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCatego
     /**
      * 初始化TabLayout
      */
+    @Override
     public void initTabLayout(List<PhotoCategory> photoCategories) {
         setUpViewPager(binding.viewPager, photoCategories);
         binding.viewPager.setOffscreenPageLimit(binding.viewPager.getAdapter().getCount());
@@ -53,15 +62,6 @@ public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCatego
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         binding.tabLayout.setTabMode(TabLayout.GRAVITY_CENTER);
     }
-
-
-    public void initCategorys() {
-        photoCategories.add(new PhotoCategory("摄影世界", "http://www.egouz.com/pics/icon/"));
-        photoCategories.add(new PhotoCategory("插画设计", "http://www.egouz.com/pics/vector/"));
-        photoCategories.add(new PhotoCategory("桌面壁纸", "http://www.egouz.com/pics/wallpaper/"));
-        photoCategories.add(new PhotoCategory("艺术人生", "http://www.egouz.com/pics/pattern/"));
-    }
-
 
     @Override
     public void setUpViewPager(ViewPager viewPager, List<PhotoCategory> categories) {
@@ -76,7 +76,6 @@ public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCatego
             categoryFragment.setArguments(data);
             adapter.addFrag(categoryFragment, category.getName());
         }
-
         viewPager.setAdapter(adapter);
     }
 }

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import hut.cwp.mvp.MvpFragment;
+
 /**
  * Created by hutcwp on 2017/4/15.
  * Mail : hutcwp@foxmail.com
@@ -17,7 +19,7 @@ import android.view.ViewGroup;
  * GitHub : github.com/hutcwp
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends MvpFragment {
 
     private boolean isViewPrepared; // 标识fragment视图已经初始化完毕
     private boolean hasFetchData; // 标识已经触发过懒加载数据

@@ -1,10 +1,5 @@
 package club.hutcwp.lifeutil.ui.reading;
 
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 import org.jsoup.Jsoup;
@@ -16,13 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import club.hutcwp.lifeutil.R;
-import club.hutcwp.lifeutil.adpter.ViewPagerAdapter;
-import club.hutcwp.lifeutil.databinding.FragmentReadBinding;
 import club.hutcwp.lifeutil.model.ReadCategory;
-import club.hutcwp.lifeutil.ui.MainActivity;
-import club.hutcwp.lifeutil.ui.base.BaseFragment;
 import club.hutcwp.lifeutil.ui.base.IBaseView;
+import hut.cwp.mvp.MvpPresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -30,36 +21,19 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-
-public class ReadFragment extends BaseFragment implements IBaseView<ReadCategory> {
+/**
+ * Created by hutcwp on 2018/10/13 17:05
+ * email: caiwenpeng@yy.com
+ * YY: 909076244
+ **/
+public class ReadPresenter extends MvpPresenter<IBaseView> {
 
     private Subscription subscription;
-    private FragmentReadBinding binding;
-
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_read;
-    }
-
-    @Override
-    protected void initViews() {
-
-        binding = (FragmentReadBinding) getBinding();
-        binding.toolbar.setTitle("阅读");
-        ((MainActivity) getActivity()).initDrawer(binding.toolbar);
-
-    }
-
-    protected void lazyFetchData() {
-
-        getCategory();
-    }
 
     /**
      * 获取分类
      */
-    private void getCategory() {
+    public void getCategory() {
         final String host = "http://gank.io/xiandu";
 
         subscription = Observable.just(host).subscribeOn(Schedulers.io()).map(
@@ -103,27 +77,11 @@ public class ReadFragment extends BaseFragment implements IBaseView<ReadCategory
 //                for (ReadCategory cate : readCategories) {
 //                    Log.d("test", "cate: " + cate.getName());
 //                }
-                initTabLayout(readCategories);
+                IBaseView fragment = getView();
+//                fragment.initTabLayout(readCategories);
             }
         });
     }
-
-
-    /**
-     * 初始化TabLayout
-     *
-     * @param readCategories 标签类
-     */
-    @Override
-    public void initTabLayout(List<ReadCategory> readCategories) {
-        setUpViewPager(binding.viewPager, readCategories);
-        binding.viewPager.setOffscreenPageLimit(binding.viewPager.getAdapter().getCount());
-        binding.tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getActivity(), R.color.white));
-        binding.tablayout.setupWithViewPager(binding.viewPager);
-        binding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-
-    }
-
 
     @Override
     public void onDestroy() {
@@ -132,16 +90,4 @@ public class ReadFragment extends BaseFragment implements IBaseView<ReadCategory
             subscription.unsubscribe();
     }
 
-    @Override
-    public void setUpViewPager(ViewPager viewPager, List<ReadCategory> readCategories) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        for (ReadCategory category : readCategories) {
-            Fragment fragment = new ReadCategoryFragment();
-            Bundle data = new Bundle();
-            data.putString("url", category.getUrl());
-            fragment.setArguments(data);
-            adapter.addFrag(fragment, category.getName());
-        }
-        viewPager.setAdapter(adapter);
-    }
 }

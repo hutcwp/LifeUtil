@@ -60,7 +60,6 @@ public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCatego
         photoCategories.add(new PhotoCategory("插画设计", "http://www.egouz.com/pics/vector/"));
         photoCategories.add(new PhotoCategory("桌面壁纸", "http://www.egouz.com/pics/wallpaper/"));
         photoCategories.add(new PhotoCategory("艺术人生", "http://www.egouz.com/pics/pattern/"));
-
     }
 
 

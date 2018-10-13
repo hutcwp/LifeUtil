@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#bbc7b0"
-        tools:context="club.hutcwp.lifeutil.ui.girl.GankGirlFragment">
+        tools:context=".ui.home.sub.gank.GankGirlFragment">
 
 
         <ImageView

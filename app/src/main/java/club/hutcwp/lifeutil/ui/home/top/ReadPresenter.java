@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.ui.reading;
+package club.hutcwp.lifeutil.ui.home.top;
 
 import android.util.Log;
 
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import club.hutcwp.lifeutil.model.ReadCategory;
-import club.hutcwp.lifeutil.ui.base.IBaseView;
 import hut.cwp.mvp.MvpPresenter;
 import rx.Observable;
 import rx.Observer;
@@ -26,7 +25,7 @@ import rx.schedulers.Schedulers;
  * email: caiwenpeng@yy.com
  * YY: 909076244
  **/
-public class ReadPresenter extends MvpPresenter<IBaseView> {
+public class ReadPresenter extends MvpPresenter<IHome> {
 
     private Subscription subscription;
 
@@ -77,8 +76,7 @@ public class ReadPresenter extends MvpPresenter<IBaseView> {
 //                for (ReadCategory cate : readCategories) {
 //                    Log.d("test", "cate: " + cate.getName());
 //                }
-                IBaseView fragment = getView();
-                fragment.initTabLayout(readCategories);
+                getView().initTabLayout(readCategories);
             }
         });
     }

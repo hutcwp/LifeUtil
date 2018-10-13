@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.ui.reading;
+package club.hutcwp.lifeutil.ui.home.top;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,11 +14,11 @@ import club.hutcwp.lifeutil.databinding.FragmentReadBinding;
 import club.hutcwp.lifeutil.model.ReadCategory;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
-import club.hutcwp.lifeutil.ui.base.IBaseView;
+import club.hutcwp.lifeutil.ui.home.sub.news.NewsFragment;
 import hut.cwp.mvp.BindPresenter;
 
 @BindPresenter(presenter = ReadPresenter.class)
-public class ReadFragment extends BaseFragment<ReadPresenter, IBaseView> implements IBaseView<ReadCategory> {
+public class ReadFragment extends BaseFragment<ReadPresenter, IHome> implements IHome<ReadCategory> {
 
     private FragmentReadBinding binding;
 
@@ -56,7 +56,7 @@ public class ReadFragment extends BaseFragment<ReadPresenter, IBaseView> impleme
     public void setUpViewPager(ViewPager viewPager, List<ReadCategory> readCategories) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         for (ReadCategory category : readCategories) {
-            Fragment fragment = new ReadCategoryFragment();
+            Fragment fragment = new NewsFragment();
             Bundle data = new Bundle();
             data.putString("url", category.getUrl());
             fragment.setArguments(data);

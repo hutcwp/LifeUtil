@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000"
-    tools:context="club.hutcwp.lifeutil.ui.girl.PicDetailFragment">
+    tools:context=".ui.home.other.PicDetailFragment">
 
     <ImageView
         android:id="@+id/image"

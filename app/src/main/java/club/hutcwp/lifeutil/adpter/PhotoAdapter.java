@@ -18,7 +18,7 @@ import java.util.Random;
 
 import club.hutcwp.lifeutil.R;
 import club.hutcwp.lifeutil.model.PhotoItem;
-import club.hutcwp.lifeutil.ui.girl.PicDetailActivity;
+import club.hutcwp.lifeutil.ui.home.other.PicDetailActivity;
 
 /**
  * Created by hutcwp on 2017/4/16.

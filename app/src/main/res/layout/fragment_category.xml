@@ -7,7 +7,7 @@
     <FrameLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="club.hutcwp.lifeutil.ui.reading.ReadCategoryFragment">
+        tools:context=".ui.home.sub.news.NewsFragment">
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"

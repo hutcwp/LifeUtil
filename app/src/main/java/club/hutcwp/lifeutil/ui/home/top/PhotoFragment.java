@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.ui.girl;
+package club.hutcwp.lifeutil.ui.home.top;
 
 
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import club.hutcwp.lifeutil.R;
@@ -16,14 +15,14 @@ import club.hutcwp.lifeutil.databinding.FragmentGirlBinding;
 import club.hutcwp.lifeutil.model.PhotoCategory;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
-import club.hutcwp.lifeutil.ui.base.IBaseView;
-import hut.cwp.mvp.MvpPresenter;
-import hut.cwp.mvp.MvpView;
+import club.hutcwp.lifeutil.ui.home.sub.gank.GankGirlFragment;
+import club.hutcwp.lifeutil.ui.home.sub.girl.PhotoCategoryFragment;
+import hut.cwp.mvp.BindPresenter;
 
-public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCategory> {
+@BindPresenter(presenter =  PhotoPresenter.class)
+public class PhotoFragment extends BaseFragment<PhotoPresenter,IHome> implements IHome<PhotoCategory> {
 
     private FragmentGirlBinding binding;
-    private List<PhotoCategory> photoCategories = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -36,19 +35,12 @@ public class PhotoFragment extends BaseFragment implements IBaseView<PhotoCatego
         binding = (FragmentGirlBinding) getBinding();
         binding.toolbar.setTitle(getString(R.string.gank));
         ((MainActivity) getActivity()).initDrawer(binding.toolbar);
-        initCategorys();
     }
 
-    public void initCategorys() {
-        photoCategories.add(new PhotoCategory("摄影世界", "http://www.egouz.com/pics/icon/"));
-        photoCategories.add(new PhotoCategory("插画设计", "http://www.egouz.com/pics/vector/"));
-        photoCategories.add(new PhotoCategory("桌面壁纸", "http://www.egouz.com/pics/wallpaper/"));
-        photoCategories.add(new PhotoCategory("艺术人生", "http://www.egouz.com/pics/pattern/"));
-    }
 
     @Override
     protected void lazyFetchData() {
-        initTabLayout(photoCategories);
+        getPresenter().getCategory();
     }
 
     /**

@@ -1,31 +1,24 @@
-package club.hutcwp.lifeutil.ui.girl;
+package club.hutcwp.lifeutil.ui.home.sub.gank;
 
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.View;
 
 import java.util.List;
-import java.util.Random;
 
 import club.hutcwp.lifeutil.R;
 import club.hutcwp.lifeutil.adpter.GankGirlAdapter;
 import club.hutcwp.lifeutil.databinding.FragmentGankGirlBinding;
-import club.hutcwp.lifeutil.http.ApiFactory;
-import club.hutcwp.lifeutil.http.BaseGankResponse;
 import club.hutcwp.lifeutil.model.Girl;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
 import hut.cwp.mvp.BindPresenter;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
-@BindPresenter(presenter = GirlPresenter.class)
-public class GankGirlFragment extends BaseFragment<GirlPresenter, IGril> implements IGril {
+@BindPresenter(presenter = GankGirlPresenter.class)
+public class GankGirlFragment extends BaseFragment<GankGirlPresenter, IGankGril> implements IGankGril {
 
 
     private GankGirlAdapter adapter;
@@ -89,45 +82,6 @@ public class GankGirlFragment extends BaseFragment<GirlPresenter, IGril> impleme
         });
     }
 
-//    /**
-//     * 获取数据
-//     *
-//     * @param curPage 当前页
-//     */
-//    public void getGank(int curPage) {
-//        ApiFactory.getGirlsController().getGank(curPage + "").subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<BaseGankResponse<List<Girl>>>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        ((MainActivity) getActivity()).showSnack("加载完成");
-//                        binding.swipRefreshLayout.setRefreshing(false);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.d("teste", e.getMessage());
-//                        ((MainActivity) getActivity()).showSnack("加载失败");
-//                        binding.swipRefreshLayout.setRefreshing(false);
-//                    }
-//
-//                    @Override
-//                    public void onNext(BaseGankResponse<List<Girl>> response) {
-//                        for (Girl girl : response.datas) {
-//                            if (girl.getHeight() == 0) {
-//                                girl.setHeight((new Random().nextInt(100)) + 500);
-//                            }
-//                        }
-//
-//                        if (getPresenter().isRefresh()) {
-//                            adapter.setNewData(response.datas);
-//                        } else {
-//                            adapter.addDatas(response.datas);
-//                        }
-//                    }
-//
-//                });
-//    }
 
     @Override
     public void showSnack(String msg) {

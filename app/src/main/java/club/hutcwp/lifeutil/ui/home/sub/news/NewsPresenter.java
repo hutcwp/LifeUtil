@@ -1,7 +1,4 @@
-package club.hutcwp.lifeutil.ui.reading;
-
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+package club.hutcwp.lifeutil.ui.home.sub.news;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,11 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import club.hutcwp.lifeutil.R;
-import club.hutcwp.lifeutil.adpter.ReadAdapter;
-import club.hutcwp.lifeutil.databinding.FragmentCategoryBinding;
 import club.hutcwp.lifeutil.model.ReadItem;
-import club.hutcwp.lifeutil.ui.base.BaseFragment;
+import hut.cwp.mvp.MvpPresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -25,67 +19,23 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * 阅读的子类
- */
+ * Created by hutcwp on 2018/10/13 22:33
+ * email: caiwenpeng@yy.com
+ * YY: 909076244
+ **/
+public class NewsPresenter extends MvpPresenter<ICategory> {
 
-public class ReadCategoryFragment extends BaseFragment {
-
-
-    private int cutPage = 1;
-    private String baseUrl = "";
-
-    private ReadAdapter adapter;
     private Subscription subscription;
-    private FragmentCategoryBinding binding;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_category;
-    }
-
-    @Override
-    protected void initViews() {
-
-        binding = (FragmentCategoryBinding) getBinding();
-        adapter = new ReadAdapter(getContext(), null);
-
-        setting();
-
-    }
-
-
-    @Override
-    protected void lazyFetchData() {
-
-        getDataFromServer();
-    }
-
-    /**
-     * 设置监听等
-     */
-    public void setting() {
-
-        binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                getDataFromServer();
-            }
-        });
-
-    }
+    private int cutPage = 0;
 
     /**
      * 从服务器上获取数据
      */
     public void getDataFromServer() {
-
-        baseUrl = getArguments().getString("url");
+        String baseUrl = getArguments().getString("url");
         final String url = baseUrl + "/page/" + cutPage;
 
-        binding.swipeRefreshLayout.setRefreshing(true);
+        getView().setRefreshing(true);
         subscription = Observable.just(url).subscribeOn(Schedulers.io()).map(new Func1<String, List<ReadItem>>() {
             @Override
             public List<ReadItem> call(String s) {
@@ -95,7 +45,6 @@ public class ReadCategoryFragment extends BaseFragment {
                     Element element = doc.select("div.xiandu_items").first();
                     Elements items = element.select("div.xiandu_item");
                     for (Element ele : items) {
-
                         ReadItem item = new ReadItem();
                         Element left = ele.select("div.xiandu_left").first();
                         Element right = ele.select("div.xiandu_right").first();
@@ -107,46 +56,42 @@ public class ReadCategoryFragment extends BaseFragment {
                         item.setIcon(right.select("img").first().attr("src"));
                         readList.add(item);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 return readList;
-
             }
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<ReadItem>>() {
             @Override
             public void onCompleted() {
-
-                binding.swipeRefreshLayout.setRefreshing(false);
+                getView().setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
-
-                binding.swipeRefreshLayout.setRefreshing(false);
+                getView().setRefreshing(false);
             }
 
             @Override
             public void onNext(List<ReadItem> list) {
                 cutPage++;
-                if (adapter.getData() == null || adapter.getData().size() == 0) {
-                    adapter.setNewData(list);
-                } else {
-                    adapter.addData(adapter.getData().size(), list);
-                }
 
+                if (getView().getData() == null || getView().getData().size() == 0) {
+                    getView().setNewData(list);
+                } else {
+                    getView().addNewData(getView().getData().size(), list);
+                }
             }
         });
-
     }
 
+
+
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         if (subscription != null && !subscription.isUnsubscribed())
             subscription.unsubscribe();
     }
-
 
 }

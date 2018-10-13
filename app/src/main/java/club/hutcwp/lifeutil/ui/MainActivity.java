@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,8 +25,8 @@ import club.hutcwp.lifeutil.R;
 import club.hutcwp.lifeutil.app.AppGlobal;
 import club.hutcwp.lifeutil.event.ThemeChangedEvent;
 import club.hutcwp.lifeutil.ui.base.BaseActivity;
-import club.hutcwp.lifeutil.ui.girl.PhotoFragment;
-import club.hutcwp.lifeutil.ui.reading.ReadFragment;
+import club.hutcwp.lifeutil.ui.home.top.PhotoFragment;
+import club.hutcwp.lifeutil.ui.home.top.ReadFragment;
 import club.hutcwp.lifeutil.ui.setting.AboutActivity;
 import club.hutcwp.lifeutil.ui.setting.SettingActivity;
 import club.hutcwp.lifeutil.util.DoubleClickExit;

@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.ui.girl;
+package club.hutcwp.lifeutil.ui.home.sub.girl;
 
 import android.graphics.Rect;
 import android.support.v4.widget.SwipeRefreshLayout;

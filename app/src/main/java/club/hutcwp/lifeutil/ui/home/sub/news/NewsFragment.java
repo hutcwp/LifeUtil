@@ -17,7 +17,6 @@ import hut.cwp.mvp.BindPresenter;
  * 阅读的子类
  */
 @BindPresenter(presenter = NewsPresenter.class)
-//public class NewsFragment extends BaseFragment implements ICategory{
 public class NewsFragment extends BaseFragment<NewsPresenter,ICategory> implements ICategory{
 
     private ReadAdapter adapter;

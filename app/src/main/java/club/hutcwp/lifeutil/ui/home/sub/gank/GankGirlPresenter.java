@@ -34,7 +34,6 @@ public class GankGirlPresenter extends MvpPresenter<IGankGril> {
                     @Override
                     public void onCompleted() {
                         getView().showSnack("加载完成");
-
                         getView().setRefreshing(false);
                     }
 

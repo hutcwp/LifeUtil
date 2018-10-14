@@ -45,7 +45,7 @@ public class PhotoCategoryFragment extends BaseFragment {
     protected void initViews() {
 
         binding = (FragmentPhotoCategoryBinding) getBinding();
-        adapter = new PhotoAdapter(getContext(),photoItems);
+        adapter = new PhotoAdapter(getContext(), photoItems);
         setting();
 
     }
@@ -74,69 +74,69 @@ public class PhotoCategoryFragment extends BaseFragment {
 
     }
 
+    private static final String TAG = "PhotoCategoryFragment";
+
     /**
      * 从服务器上获取数据
      */
     public void getDataFromServer() {
 
+        final String url = getArguments().getString("url");
+//        final String url = "https://pixabay.com/zh/editors_choice/?media_type=illustration&pagi=1";
 
-        final String url =  getArguments().getString("url");
+        subscription = Observable.just(url)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<String, List<PhotoItem>>() {
+                    @Override
+                    public List<PhotoItem> call(String s) {
+                        List<PhotoItem> photoList = new ArrayList<>();
+                        try {
+                            Document doc = Jsoup.connect(url).timeout(5000).get();
+                            Element element =doc.select(".flex_grid").select(".credits").first();
+                            Elements items = element.select(".item");
+                            for (Element ele : items) {
+                                PhotoItem item = new PhotoItem();
 
-        subscription = Observable.just(url).subscribeOn(Schedulers.io()).map(new Func1<String, List<PhotoItem>>() {
-            @Override
-            public List<PhotoItem> call(String s) {
-                List<PhotoItem> photoList = new ArrayList<>();
-                try {
-                    Document doc = Jsoup.connect(url).timeout(5000).get();
-                    Element element = doc.select("div.wrap").last();
-                    Elements items = element.select("div.kboxgrid");
-                    for (Element ele : items) {
-                        PhotoItem item = new PhotoItem();
+                                String imgUrl = ele.select("a[href]").first().select("img").first().attr("src");
+                                String name = ele.select("a[href]").last().text();
+                                //https://cdn.pixabay.com/photo/2018/09/13/02/17/pills-3673645__340.jpg
 
-                        Element content = ele.select("div.boxgrid").first();
-                        Element info = ele.select("div.citemqt").first();
+                                String str1 = imgUrl.replace("https://cdn.pixabay.com/photo/","");
+                                String date = str1.substring(0,10);
+//                                Log.d("prase", "*****from****" + from);
+//                                Log.d("prase", "*****date****" + date);
+                                item.setName(name);
+                                item.setImg(imgUrl);
+//                                item.setFrom(from);
+                                item.setDate(date);
+                                photoList.add(item);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return photoList;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<PhotoItem>>() {
+                    @Override
+                    public void onCompleted() {
 
-                        String name = info.select("a").first().text();
-                        String imgUrl = content.select("img").first().attr("src");
-                        String from =content.select("a").first().attr("href");
-                        String date =info.select("a").last().text();
-
-                        Log.d("prase", "*****from****"+from);
-                        Log.d("prase", "*****date****" +date);
-                        item.setName(name);
-                        item.setImg(imgUrl);
-                        item.setFrom(from);
-                        item.setDate(date);
-
-                        photoList.add(item);
+                        binding.swipeRefreshLayout.setRefreshing(false);
+                        ((MainActivity) getActivity()).showSnack("加载完成");
                     }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return photoList;
-            }
-        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<PhotoItem>>() {
-            @Override
-            public void onCompleted() {
+                    @Override
+                    public void onError(Throwable e) {
+                        ((MainActivity) getActivity()).showSnack("加载失败");
+                        binding.swipeRefreshLayout.setRefreshing(false);
+                    }
 
-                binding.swipeRefreshLayout.setRefreshing(false);
-                ((MainActivity) getActivity()).showSnack("加载完成");
-            }
+                    @Override
+                    public void onNext(List<PhotoItem> list) {
 
-            @Override
-            public void onError(Throwable e) {
-                ((MainActivity) getActivity()).showSnack("加载失败");
-                binding.swipeRefreshLayout.setRefreshing(false);
-            }
+                        adapter.setNewData(list);
 
-            @Override
-            public void onNext(List<PhotoItem> list) {
-
-                adapter.setNewData(list);
-
-            }
-        });
+                    }
+                });
 
     }
 
@@ -169,7 +169,7 @@ public class PhotoCategoryFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(subscription!=null){
+        if (subscription != null) {
             subscription.unsubscribe();
         }
     }

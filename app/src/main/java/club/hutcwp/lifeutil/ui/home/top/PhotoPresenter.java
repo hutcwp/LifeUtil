@@ -22,9 +22,9 @@ public class PhotoPresenter extends MvpPresenter<IHome>{
     }
 
     public void initCategorys() {
-        photoCategories.add(new PhotoCategory("摄影世界", "http://www.egouz.com/pics/icon/"));
-        photoCategories.add(new PhotoCategory("插画设计", "http://www.egouz.com/pics/vector/"));
-        photoCategories.add(new PhotoCategory("桌面壁纸", "http://www.egouz.com/pics/wallpaper/"));
-        photoCategories.add(new PhotoCategory("艺术人生", "http://www.egouz.com/pics/pattern/"));
+        photoCategories.add(new PhotoCategory("插画", "https://pixabay.com/zh/editors_choice/?media_type=illustration&pagi=1"));
+        photoCategories.add(new PhotoCategory("矢量图", "https://pixabay.com/zh/editors_choice/?media_type=vector"));
+        photoCategories.add(new PhotoCategory("照片", "https://pixabay.com/zh/editors_choice/?media_type=photo"));
+//        photoCategories.add(new PhotoCategory("影视", "https://pixabay.com/zh/editors_choice/?media_type=video"));
     }
 }

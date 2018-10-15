@@ -4,10 +4,15 @@
 这个项目的是仿造开源项目『假装看天气』而开发的，主要在于学习知识，替换掉了原项目中的图片专区，改成其他网站的图片。
 去掉了天气和查公交的功能。暂时只完成了“阅读”和“图片”两个模块。后期考虑加入“天气”和一些其他的工具模块。
 
+### 最近更新
+- 使用mvppresnter框架重构该项目，接入mvp架构
+- 更新图片抓取网站
+- 用rxjava2代替原来的rxjava
+
 ### 使用的技术
 
 - DataBinding
-- RxJava
+- RxJava2
 - Retrofit 
 - EventBus
 
@@ -27,7 +32,7 @@
 ### 开源库
 - Glide
 - Jsoup
-- RxJava
+- RxJava2
 - Retofit
 - EventBus
 - RxAndroid

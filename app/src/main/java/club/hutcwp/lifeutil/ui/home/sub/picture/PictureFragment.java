@@ -38,6 +38,7 @@ public class PictureFragment extends BaseFragment<PicturePresenter, IPicture> im
     }
 
     private void getDatasByType() {
+        setRefreshing(true);
         if (getArguments().getInt("type") == 0) {
             getPresenter().getGank();
         } else {

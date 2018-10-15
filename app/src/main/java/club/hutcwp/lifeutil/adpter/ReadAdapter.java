@@ -19,7 +19,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import java.util.List;
 
 import club.hutcwp.lifeutil.R;
-import club.hutcwp.lifeutil.model.ReadItem;
+import club.hutcwp.lifeutil.entitys.News;
 import club.hutcwp.lifeutil.util.WebUtils;
 
 /**
@@ -31,12 +31,11 @@ import club.hutcwp.lifeutil.util.WebUtils;
 
 public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ReadHolder> {
 
-    private List<ReadItem> readlist;
+    private List<News> readlist;
     private Context context;
     private LayoutInflater inflater;
 
-    public ReadAdapter(Context context, List<ReadItem> list) {
-
+    public ReadAdapter(Context context, List<News> list) {
         this.context = context;
         this.readlist = list;
         this.inflater = LayoutInflater.from(context);
@@ -44,7 +43,6 @@ public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ReadHolder> {
 
     @Override
     public ReadHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = inflater.inflate(R.layout.item_read, parent, false);
         ReadHolder holder = new ReadHolder(view);
         return holder;
@@ -52,9 +50,7 @@ public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ReadHolder> {
 
     @Override
     public void onBindViewHolder(final ReadHolder holder, int position) {
-
-        final ReadItem item = readlist.get(position);
-
+        final News item = readlist.get(position);
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +77,7 @@ public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ReadHolder> {
      * 设置新内容
      * @param data 新内容
      */
-    public void setNewData(List<ReadItem> data) {
+    public void setNewData(List<News> data) {
         this.readlist = data;
         notifyDataSetChanged();
     }
@@ -92,12 +88,12 @@ public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ReadHolder> {
     }
 
     //取得data数据
-    public List<ReadItem> getData() {
+    public List<News> getData() {
         return readlist;
     }
 
     //添加data数据
-    public void addData(int position, List<ReadItem> data) {
+    public void addData(int position, List<News> data) {
         this.readlist.addAll(position, data);
         this.notifyItemRangeInserted(position, data.size());
     }

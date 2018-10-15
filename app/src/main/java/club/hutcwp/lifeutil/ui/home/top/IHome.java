@@ -4,7 +4,6 @@ import android.support.v4.view.ViewPager;
 
 import java.util.List;
 
-import club.hutcwp.lifeutil.model.ReadCategory;
 import hut.cwp.mvp.MvpView;
 
 /**

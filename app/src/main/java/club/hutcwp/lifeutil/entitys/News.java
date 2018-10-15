@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.model;
+package club.hutcwp.lifeutil.entitys;
 
 /**
  * Created by hutcwp on 2017/4/14.
@@ -7,7 +7,7 @@ package club.hutcwp.lifeutil.model;
  * GitHub : github.com/hutcwp
  */
 
-public class ReadItem {
+public class News {
 
     private String name;
     private String url;

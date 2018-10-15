@@ -1,5 +1,6 @@
 package club.hutcwp.lifeutil.adpter;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +18,11 @@ import java.util.List;
 import java.util.Random;
 
 import club.hutcwp.lifeutil.R;
-import club.hutcwp.lifeutil.model.PhotoItem;
+import club.hutcwp.lifeutil.entitys.Photo;
 import club.hutcwp.lifeutil.ui.home.other.PicDetailActivity;
 
 /**
- * Created by hutcwp on 2017/4/16.
+ * Created by hutcwp on 2017/4/13.
  * Mail : hutcwp@foxmail.com
  * Blog : hutcwp.club
  * GitHub : github.com/hutcwp
@@ -29,15 +30,15 @@ import club.hutcwp.lifeutil.ui.home.other.PicDetailActivity;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.GirlViewHolder> {
 
-    private List<PhotoItem> photoItems = new ArrayList<>();
+    private List<Photo> girlList = new ArrayList<>();
 
     private Context mContext;
 
 
-    public PhotoAdapter(Context context,  List<PhotoItem> photoItems) {
+    public PhotoAdapter(Context context, List<Photo> girlList) {
 
         mContext = context;
-        this.photoItems = photoItems;
+        this.girlList = girlList;
 
     }
 
@@ -46,11 +47,18 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.GirlViewHold
      *
      * @param datas 新增的数据
      */
-    public void addDatas(List<PhotoItem> datas) {
-
-        photoItems.addAll(datas);
-
+    public void addDatas(List<Photo> datas) {
+        if(datas==null){
+            return;
+        }
+        girlList.addAll(datas);
         notifyItemChanged(getItemCount());
+    }
+
+    //添加data数据
+    public void addData(int position, List<Photo> data) {
+        this.girlList.addAll(position, data);
+        this.notifyItemRangeInserted(position, data.size());
     }
 
     /**
@@ -58,8 +66,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.GirlViewHold
      *
      * @param data 新内容
      */
-    public void setNewData(List<PhotoItem> data) {
-        this.photoItems = data;
+    public void setNewData(List<Photo> data) {
+        this.girlList = data;
         notifyDataSetChanged();
     }
 
@@ -78,18 +86,18 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.GirlViewHold
     @Override
     public void onBindViewHolder(GirlViewHolder holder, final int position) {
 
-        holder.name.setText(photoItems.get(position).getName());
-        holder.date.setText(photoItems.get(position).getDate());
-
         ViewGroup.LayoutParams params = holder.iv.getLayoutParams();
         params.width = 520;
-        params.height = (new Random().nextInt(100) + 500);
+        params.height = (new Random().nextInt(100) + 600);
         holder.iv.setLayoutParams(params);
+
+        holder.name.setText(girlList.get(position).getName());
+        holder.date.setText(girlList.get(position).getDate());
 
         holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = PicDetailActivity.newIntent(mContext, photoItems.get(position).getImg(), "");
+                Intent intent = PicDetailActivity.newIntent(mContext, girlList.get(position).getImg(), "");
                 mContext.startActivity(intent);
             }
         });
@@ -97,7 +105,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.GirlViewHold
 
         //使用params,width 和params.heght 去加载图片
         Glide.with(mContext)
-                .load(photoItems.get(position)
+                .load(girlList.get(position)
                         .getImg())
                 .override(params.width, params.height) //设置加载尺寸
                 .centerCrop()
@@ -108,7 +116,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.GirlViewHold
 
     @Override
     public int getItemCount() {
-        return photoItems == null ? 0 : photoItems.size();
+        return girlList == null ? 0 : girlList.size();
     }
 
 
@@ -126,5 +134,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.GirlViewHold
             date = (TextView) view.findViewById(R.id.date);
         }
     }
+
 
 }

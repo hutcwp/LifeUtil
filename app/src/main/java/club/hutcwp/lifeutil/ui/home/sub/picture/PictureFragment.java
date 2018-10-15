@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.ui.home.sub.gank;
+package club.hutcwp.lifeutil.ui.home.sub.picture;
 
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
@@ -10,20 +10,18 @@ import android.view.View;
 import java.util.List;
 
 import club.hutcwp.lifeutil.R;
-import club.hutcwp.lifeutil.adpter.GankGirlAdapter;
+import club.hutcwp.lifeutil.adpter.PhotoAdapter;
 import club.hutcwp.lifeutil.databinding.FragmentGankGirlBinding;
-import club.hutcwp.lifeutil.model.Girl;
+import club.hutcwp.lifeutil.entitys.Photo;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
 import hut.cwp.mvp.BindPresenter;
 
-@BindPresenter(presenter = GankGirlPresenter.class)
-public class GankGirlFragment extends BaseFragment<GankGirlPresenter, IGankGril> implements IGankGril {
+@BindPresenter(presenter = PicturePresenter.class)
+public class PictureFragment extends BaseFragment<PicturePresenter, IPicture> implements IPicture {
 
 
-    private GankGirlAdapter adapter;
-
-    private static int curPage = 1;
+    private PhotoAdapter adapter;
 
 
     private FragmentGankGirlBinding binding;
@@ -36,18 +34,25 @@ public class GankGirlFragment extends BaseFragment<GankGirlPresenter, IGankGril>
 
     @Override
     protected void lazyFetchData() {
-        getPresenter().getGank(curPage);
+        getDatasByType();
+    }
+
+    private void getDatasByType() {
+        if (getArguments().getInt("type") == 0) {
+            getPresenter().getGank();
+        } else {
+            getPresenter().getServer();
+        }
     }
 
     @Override
     protected void initViews() {
         binding = (FragmentGankGirlBinding) getBinding();
         //可能会出现空指针异常
-        adapter = new GankGirlAdapter(getContext(), null);
+        adapter = new PhotoAdapter(getContext(), null);
         binding.gridRecycler.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         binding.gridRecycler.addItemDecoration(new SpacesItemDecoration(14));
         binding.gridRecycler.setAdapter(adapter);
-
         setting();
     }
 
@@ -60,8 +65,7 @@ public class GankGirlFragment extends BaseFragment<GankGirlPresenter, IGankGril>
             @Override
             public void onRefresh() {
                 getPresenter().serRefresh(true);
-                curPage = 1;
-                getPresenter().getGank(curPage);
+                getDatasByType();
             }
         });
 
@@ -69,15 +73,15 @@ public class GankGirlFragment extends BaseFragment<GankGirlPresenter, IGankGril>
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (!binding.gridRecycler.canScrollVertically(1)) {
+                    // 此操作先与getDatasByType（）
                     getPresenter().serRefresh(false);
-                    getPresenter().getGank(++curPage);
+                    getDatasByType();
                 }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
             }
         });
     }
@@ -94,12 +98,12 @@ public class GankGirlFragment extends BaseFragment<GankGirlPresenter, IGankGril>
     }
 
     @Override
-    public void setNewData(List<Girl> data) {
+    public void setNewData(List<Photo> data) {
         adapter.setNewData(data);
     }
 
     @Override
-    public void addNewData(List<Girl> data) {
+    public void addNewData(List<Photo> data) {
         adapter.addDatas(data);
     }
 

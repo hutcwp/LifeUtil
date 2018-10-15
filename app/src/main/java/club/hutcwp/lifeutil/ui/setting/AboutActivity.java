@@ -16,6 +16,8 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import org.reactivestreams.Subscriber;
+
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -23,10 +25,11 @@ import club.hutcwp.lifeutil.BuildConfig;
 import club.hutcwp.lifeutil.R;
 import club.hutcwp.lifeutil.ui.base.BaseActivity;
 import club.hutcwp.lifeutil.util.WebUtils;
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+
 
 /**
  * Created by liyu on 2016/11/28.
@@ -43,7 +46,7 @@ public class AboutActivity extends BaseActivity {
             "http://7xp1a1.com1.z0.glb.clouddn.com/liyu04.png",
             "http://7xp1a1.com1.z0.glb.clouddn.com/liyu05.png"};
 
-    private Subscription subscription;
+    private Disposable disposable;
 
     @Override
     protected int getLayoutId() {
@@ -88,21 +91,11 @@ public class AboutActivity extends BaseActivity {
                 loadImage();
             }
         });
-        subscription = Observable.interval(5, TimeUnit.SECONDS)
+        disposable = Observable.interval(5, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Long>() {
+                .subscribe(new Consumer<Long>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
+                    public void accept(Long aLong) throws Exception {
                         loadImage();
                     }
                 });
@@ -128,8 +121,8 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (!subscription.isUnsubscribed())
-            subscription.unsubscribe();
+        if (!disposable.isDisposed())
+            disposable.dispose();
     }
 
     private void feedBack() {

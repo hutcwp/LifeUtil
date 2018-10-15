@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.model;
+package club.hutcwp.lifeutil.entitys;
 
 /**
  * Created by hutcwp on 2017/4/16.
@@ -10,10 +10,11 @@ package club.hutcwp.lifeutil.model;
 public class PhotoCategory {
 
     private String name;
-
+    private int type = 0; // 0表示走api ，1表示抓包
     private String url;
 
-    public PhotoCategory(String name, String url) {
+    public PhotoCategory(int type, String name, String url) {
+        this.type = type;
         this.name = name;
         this.url = url;
     }
@@ -35,4 +36,11 @@ public class PhotoCategory {
     }
 
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 }

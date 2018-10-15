@@ -8,8 +8,7 @@ import java.util.List;
 import club.hutcwp.lifeutil.R;
 import club.hutcwp.lifeutil.adpter.ReadAdapter;
 import club.hutcwp.lifeutil.databinding.FragmentCategoryBinding;
-import club.hutcwp.lifeutil.model.ReadItem;
-import club.hutcwp.lifeutil.ui.MainActivity;
+import club.hutcwp.lifeutil.entitys.News;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
 import hut.cwp.mvp.BindPresenter;
 
@@ -17,7 +16,7 @@ import hut.cwp.mvp.BindPresenter;
  * 阅读的子类
  */
 @BindPresenter(presenter = NewsPresenter.class)
-public class NewsFragment extends BaseFragment<NewsPresenter,ICategory> implements ICategory{
+public class NewsFragment extends BaseFragment<NewsPresenter,INews> implements INews {
 
     private ReadAdapter adapter;
 
@@ -55,26 +54,22 @@ public class NewsFragment extends BaseFragment<NewsPresenter,ICategory> implemen
     }
 
     @Override
-    public void showSnack(String msg) {
-        ((MainActivity) getActivity()).showSnack(msg);
-    }
-
-    @Override
     public void setRefreshing(boolean status) {
         binding.swipeRefreshLayout.setRefreshing(status);
     }
 
     @Override
-    public void setNewData(List<ReadItem> data) {
+    public void setNewData(List<News> data) {
         adapter.setNewData(data);
     }
 
     @Override
-    public void addNewData(int pos,List<ReadItem> data) {
+    public void addNewData(int pos, List<News> data) {
         adapter.addData(pos,data);
     }
 
-    public List<ReadItem> getData(){
+    @Override
+    public List<News> getData() {
         return adapter.getData();
     }
 

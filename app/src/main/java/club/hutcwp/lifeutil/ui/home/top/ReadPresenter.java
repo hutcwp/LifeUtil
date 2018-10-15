@@ -1,6 +1,7 @@
 package club.hutcwp.lifeutil.ui.home.top;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,14 +12,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import club.hutcwp.lifeutil.model.ReadCategory;
+import club.hutcwp.lifeutil.app.App;
+import club.hutcwp.lifeutil.entitys.ReadCategory;
 import hut.cwp.mvp.MvpPresenter;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by hutcwp on 2018/10/13 17:05
@@ -27,7 +30,7 @@ import rx.schedulers.Schedulers;
  **/
 public class ReadPresenter extends MvpPresenter<IHome> {
 
-    private Subscription subscription;
+    private Disposable disposable;
 
     /**
      * 获取分类
@@ -35,10 +38,10 @@ public class ReadPresenter extends MvpPresenter<IHome> {
     public void getCategory() {
         final String host = "http://gank.io/xiandu";
 
-        subscription = Observable.just(host).subscribeOn(Schedulers.io()).map(
-                new Func1<String, List<ReadCategory>>() {
+        disposable = Observable.just(host).subscribeOn(Schedulers.io()).map(
+                new Function<String, List<ReadCategory>>() {
                     @Override
-                    public List<ReadCategory> call(String s) {
+                    public List<ReadCategory> apply(String s) throws Exception {
                         List<ReadCategory> list = new ArrayList<>();
                         try {
                             Document doc = Jsoup.connect(host).timeout(5000).get();
@@ -60,23 +63,15 @@ public class ReadPresenter extends MvpPresenter<IHome> {
                         return list;
                     }
                 }
-        ).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<ReadCategory>>() {
+        ).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<ReadCategory>>() {
             @Override
-            public void onCompleted() {
-                Log.d("test", "complete");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d("test", "error");
-            }
-
-            @Override
-            public void onNext(List<ReadCategory> readCategories) {
-//                for (ReadCategory cate : readCategories) {
-//                    Log.d("test", "cate: " + cate.getName());
-//                }
+            public void accept(List<ReadCategory> readCategories) {
                 getView().initTabLayout(readCategories);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) {
+                Toast.makeText(App.getContext(), "解析发生过程!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -84,8 +79,8 @@ public class ReadPresenter extends MvpPresenter<IHome> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (subscription != null && !subscription.isUnsubscribed())
-            subscription.unsubscribe();
+        if (disposable != null && !disposable.isDisposed())
+            disposable.dispose();
     }
 
 }

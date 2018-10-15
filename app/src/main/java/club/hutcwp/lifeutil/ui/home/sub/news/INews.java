@@ -2,7 +2,7 @@ package club.hutcwp.lifeutil.ui.home.sub.news;
 
 import java.util.List;
 
-import club.hutcwp.lifeutil.model.ReadItem;
+import club.hutcwp.lifeutil.entitys.News;
 import hut.cwp.mvp.MvpView;
 
 /**
@@ -10,15 +10,14 @@ import hut.cwp.mvp.MvpView;
  * email: caiwenpeng@yy.com
  * YY: 909076244
  **/
-public interface ICategory extends MvpView{
+public interface INews extends MvpView {
 
-    void showSnack(String msg);
 
     void setRefreshing(boolean status);
 
-    void setNewData(List<ReadItem> data);
+    void setNewData(List<News> data);
 
-    void addNewData(int pos,List<ReadItem> data);
+    void addNewData(int pos, List<News> data);
 
-    List<ReadItem> getData();
+    List<News> getData();
 }

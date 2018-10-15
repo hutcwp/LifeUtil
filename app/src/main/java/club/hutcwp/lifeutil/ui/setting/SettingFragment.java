@@ -15,17 +15,19 @@ import club.hutcwp.lifeutil.app.App;
 import club.hutcwp.lifeutil.app.AppGlobal;
 import club.hutcwp.lifeutil.util.FileSizeUtil;
 import club.hutcwp.lifeutil.util.FileUtil;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
     private Preference cleanCache;
     private Preference theme;
-
+    private Disposable disposable;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,37 +62,30 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference == cleanCache) {
-            Observable
-                    .just(FileUtil.delete(FileUtil.getInternalCacheDir(App.getContext())))
-                    .map(new Func1<Boolean, Boolean>() {
+            disposable = Observable.just(FileUtil.delete(FileUtil.getInternalCacheDir(App.getContext())))
+                    .map(new Function<Boolean, Boolean>() {
                         @Override
-                        public Boolean call(Boolean result) {
+                        public Boolean apply(Boolean result) throws Exception {
                             return result && FileUtil.delete(FileUtil.getExternalCacheDir(App.getContext()));
+
                         }
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Boolean>() {
+                    .subscribe(new Consumer<Boolean>() {
                         @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(Boolean aBoolean) {
+                        public void accept(Boolean o) throws Exception {
                             cleanCache.setSummary(
                                     FileSizeUtil.
                                             getAutoFileOrFilesSize(
                                                     FileUtil.getInternalCacheDir(App.getContext()),
                                                     FileUtil.getExternalCacheDir(App.getContext())));
                             Snackbar.make(getView(), "缓存已清除 (*^__^*)", Snackbar.LENGTH_SHORT).show();
+
                         }
                     });
+
+
         } else if (preference == theme) {
             new ColorChooserDialog.Builder((SettingActivity) getActivity(), R.string.theme)
                     .customColors(R.array.colors, null)
@@ -103,5 +98,11 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         return true;
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+    }
 }

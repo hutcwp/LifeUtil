@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#bbc7b0"
-        tools:context=".ui.home.sub.gank.GankGirlFragment">
+        tools:context=".ui.home.sub.picture.PictureFragment">
 
 
         <ImageView

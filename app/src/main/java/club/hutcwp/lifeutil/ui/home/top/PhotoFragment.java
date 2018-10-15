@@ -12,11 +12,10 @@ import java.util.List;
 import club.hutcwp.lifeutil.R;
 import club.hutcwp.lifeutil.adpter.ViewPagerAdapter;
 import club.hutcwp.lifeutil.databinding.FragmentGirlBinding;
-import club.hutcwp.lifeutil.model.PhotoCategory;
+import club.hutcwp.lifeutil.entitys.PhotoCategory;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
-import club.hutcwp.lifeutil.ui.home.sub.gank.GankGirlFragment;
-import club.hutcwp.lifeutil.ui.home.sub.girl.PhotoCategoryFragment;
+import club.hutcwp.lifeutil.ui.home.sub.picture.PictureFragment;
 import hut.cwp.mvp.BindPresenter;
 
 @BindPresenter(presenter =  PhotoPresenter.class)
@@ -58,12 +57,10 @@ public class PhotoFragment extends BaseFragment<PhotoPresenter,IHome> implements
     @Override
     public void setUpViewPager(ViewPager viewPager, List<PhotoCategory> categories) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        Fragment fragment = new GankGirlFragment();
-        adapter.addFrag(fragment, "靓女专题");
-
         for (PhotoCategory category : categories) {
-            Fragment categoryFragment = new PhotoCategoryFragment();
+            Fragment categoryFragment = new PictureFragment();
             Bundle data = new Bundle();
+            data.putInt("type",category.getType());
             data.putString("url", category.getUrl());
             categoryFragment.setArguments(data);
             adapter.addFrag(categoryFragment, category.getName());

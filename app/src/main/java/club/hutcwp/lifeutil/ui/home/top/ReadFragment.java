@@ -11,7 +11,7 @@ import java.util.List;
 import club.hutcwp.lifeutil.R;
 import club.hutcwp.lifeutil.adpter.ViewPagerAdapter;
 import club.hutcwp.lifeutil.databinding.FragmentReadBinding;
-import club.hutcwp.lifeutil.model.ReadCategory;
+import club.hutcwp.lifeutil.entitys.ReadCategory;
 import club.hutcwp.lifeutil.ui.MainActivity;
 import club.hutcwp.lifeutil.ui.base.BaseFragment;
 import club.hutcwp.lifeutil.ui.home.sub.news.NewsFragment;

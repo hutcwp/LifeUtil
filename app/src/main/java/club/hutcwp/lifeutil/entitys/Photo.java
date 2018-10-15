@@ -1,17 +1,18 @@
-package club.hutcwp.lifeutil.model;
+package club.hutcwp.lifeutil.entitys;
 
 /**
- * Created by hutcwp on 2017/4/16.
- * Mail : hutcwp@foxmail.com
- * Blog : hutcwp.club
- * GitHub : github.com/hutcwp
- */
+ * Created by hutcwp on 2018/10/15 19:24
+ * email: caiwenpeng@yy.com
+ * YY: 909076244
+ **/
 
-public class PhotoItem {
+/**
+ * Photo是所有图片分类的基础类
+ *
+ */
+public class Photo {
 
     private String img;
-
-    private String from;
 
     private String name;
 
@@ -25,13 +26,6 @@ public class PhotoItem {
         this.img = img;
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
 
     public String getName() {
         return name;
@@ -48,4 +42,5 @@ public class PhotoItem {
     public void setDate(String date) {
         this.date = date;
     }
+
 }

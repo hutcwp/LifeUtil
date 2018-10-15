@@ -3,7 +3,7 @@ package club.hutcwp.lifeutil.ui.home.top;
 import java.util.ArrayList;
 import java.util.List;
 
-import club.hutcwp.lifeutil.model.PhotoCategory;
+import club.hutcwp.lifeutil.entitys.PhotoCategory;
 import hut.cwp.mvp.MvpPresenter;
 
 /**
@@ -11,20 +11,20 @@ import hut.cwp.mvp.MvpPresenter;
  * email: caiwenpeng@yy.com
  * YY: 909076244
  **/
-public class PhotoPresenter extends MvpPresenter<IHome>{
+public class PhotoPresenter extends MvpPresenter<IHome> {
 
     private List<PhotoCategory> photoCategories = new ArrayList<>();
 
 
-    public void getCategory(){
+    public void getCategory() {
         initCategorys();
         getView().initTabLayout(photoCategories);
     }
 
     public void initCategorys() {
-        photoCategories.add(new PhotoCategory("插画", "https://pixabay.com/zh/editors_choice/?media_type=illustration&pagi=1"));
-        photoCategories.add(new PhotoCategory("矢量图", "https://pixabay.com/zh/editors_choice/?media_type=vector"));
-        photoCategories.add(new PhotoCategory("照片", "https://pixabay.com/zh/editors_choice/?media_type=photo"));
-//        photoCategories.add(new PhotoCategory("影视", "https://pixabay.com/zh/editors_choice/?media_type=video"));
+        photoCategories.add(new PhotoCategory(0, "靓女专题", "http://gank.io/api/data/%E7%A6%8F%E5%88%A9/6/"));
+        photoCategories.add(new PhotoCategory(1, "插画", "https://pixabay.com/zh/editors_choice/?media_type=illustration&pagi="));
+        photoCategories.add(new PhotoCategory(1, "矢量图", "https://pixabay.com/zh/editors_choice/?media_type=vector&pagi="));
+        photoCategories.add(new PhotoCategory(1, "照片", "https://pixabay.com/zh/editors_choice/?media_type=photo&pagi="));
     }
 }

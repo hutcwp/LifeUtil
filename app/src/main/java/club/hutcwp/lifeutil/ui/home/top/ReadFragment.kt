@@ -14,7 +14,6 @@ import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import club.hutcwp.lifeutil.ui.home.sub.news.NewsFragment
 import hut.cwp.mvp.BindPresenter
-import java.lang.Exception
 
 @BindPresenter(presenter = ReadPresenter::class)
 class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCategory> {
@@ -38,10 +37,11 @@ class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCate
     /**
      * 初始化TabLayout
      *
-     * @param readCategories 标签类
+     * @param categories 标签类
      */
-    override fun initTabLayout(readCategories: List<ReadCategory>) {
-        setUpViewPager(fragmentReadBinding!!.viewPager, readCategories)
+    override fun initTabLayout(categories: List<ReadCategory>) {
+        Log.i("cwp","initTabLayout")
+        setUpViewPager(fragmentReadBinding!!.viewPager, categories)
         fragmentReadBinding!!.viewPager.offscreenPageLimit = fragmentReadBinding!!.viewPager.adapter!!.count
         fragmentReadBinding!!.tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(activity!!, R.color.white))
         fragmentReadBinding!!.tablayout.setupWithViewPager(fragmentReadBinding!!.viewPager)

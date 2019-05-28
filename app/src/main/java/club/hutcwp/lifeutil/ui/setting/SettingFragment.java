@@ -38,7 +38,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         theme = findPreference("theme_color");
 
         String[] colorNames = getActivity().getResources().getStringArray(R.array.color_name);
-        SharedPreferences sp = getActivity().getSharedPreferences(AppGlobal.FILE_NAME,
+        SharedPreferences sp = getActivity().getSharedPreferences(AppGlobal.INSTANCE.getFILE_NAME(),
                 Context.MODE_PRIVATE);
         int currentThemeIndex = sp.getInt("theme", 0);
 

@@ -43,7 +43,7 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
     override fun initViews() {
         fragmentGankGirlBinding = getBinding() as FragmentGankGirlBinding
         //可能会出现空指针异常
-        adapter = PhotoAdapter(context, null)
+        adapter = PhotoAdapter(context!!, null)
         fragmentGankGirlBinding!!.gridRecycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         fragmentGankGirlBinding!!.gridRecycler.addItemDecoration(SpacesItemDecoration(14))
         fragmentGankGirlBinding!!.gridRecycler.setAdapter(adapter)
@@ -85,7 +85,7 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
     }
 
     override fun setNewData(data: List<Photo>) {
-        adapter!!.setNewData(data)
+        adapter!!.setNewData(data.toMutableList())
     }
 
     override fun addNewData(data: List<Photo>) {

@@ -73,6 +73,7 @@ public class ReadPresenter extends MvpPresenter<ReadFragment> {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) {
+                Log.i("cwp", "t = " + throwable);
                 Toast.makeText(App.getContext(), "解析发生过程!", Toast.LENGTH_SHORT).show();
             }
         });

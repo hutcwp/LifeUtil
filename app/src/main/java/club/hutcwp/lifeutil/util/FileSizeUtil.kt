@@ -62,7 +62,7 @@ object FileSizeUtil {
             e.printStackTrace()
         }
 
-        return Formatter.formatFileSize(App.getContext(), blockSize)
+        return Formatter.formatFileSize(App.context, blockSize)
     }
 
     fun getAutoFileOrFilesSize(vararg filePaths: String): String {
@@ -82,7 +82,7 @@ object FileSizeUtil {
 
             totalSize = totalSize + blockSize
         }
-        return Formatter.formatFileSize(App.getContext(), totalSize)
+        return Formatter.formatFileSize(App.context, totalSize)
     }
 
 
@@ -95,7 +95,7 @@ object FileSizeUtil {
     private fun getFileSize(file: File): Long {
         var size: Long = 0
         if (file.exists()) {
-            var fis: FileInputStream? = null
+            val fis: FileInputStream?
             fis = FileInputStream(file)
             size = fis.available().toLong()
             fis.close()

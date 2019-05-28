@@ -75,7 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 设置主题
      */
     private void initTheme() {
-        SharedPreferences pf = getSharedPreferences(AppGlobal.FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences pf = getSharedPreferences(AppGlobal.INSTANCE.getFILE_NAME(), Context.MODE_PRIVATE);
         int themeIndex =  pf.getInt("theme",0);
         switch (themeIndex) {
             case 0:

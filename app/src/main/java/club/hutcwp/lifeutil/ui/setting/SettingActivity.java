@@ -90,7 +90,7 @@ public class SettingActivity extends BaseActivity implements ColorChooserDialog.
     }
 
     private void saveTheme(int theme) {
-        SharedPreferences pf = getSharedPreferences(AppGlobal.FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences pf = getSharedPreferences(AppGlobal.INSTANCE.getFILE_NAME(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pf.edit();
         setTheme(R.style.NiagaraTheme);
         editor.putInt("theme", theme);

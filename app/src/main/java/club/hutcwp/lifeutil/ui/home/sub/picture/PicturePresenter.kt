@@ -36,12 +36,11 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
 
     private val gankObservable: Observable<List<Photo>>
-        get() = ApiFactory.getGirlsController().getGank(curPage.toString() + "").subscribeOn(Schedulers.io())
-                .map { response ->
-                    val photos = ArrayList<Photo>()
-                    photos.addAll(response.datas)
-                    photos
-                }
+        get() = ApiFactory.getGirlsController()?.getGank(curPage.toString() + "")?.subscribeOn(Schedulers.io())!!.map { response ->
+            val photos = ArrayList<Photo>()
+            photos.addAll(response.datas)
+            photos
+        }
 
     /**
      * 从服务器上获取数据
@@ -64,6 +63,7 @@ class PicturePresenter : MvpPresenter<IPicture>() {
     fun getGank() {
         getData(gankObservable)
     }
+
 
     private fun getData(observable: Observable<List<Photo>>) {
         observable.observeOn(AndroidSchedulers.mainThread())
@@ -93,6 +93,7 @@ class PicturePresenter : MvpPresenter<IPicture>() {
                 })
 
     }
+
 
     fun getServer() {
         getData(dataFromServer)

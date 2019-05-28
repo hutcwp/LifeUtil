@@ -1,5 +1,6 @@
 package club.hutcwp.lifeutil.ui.home.sub.news
 
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.adpter.ReadAdapter
@@ -15,7 +16,7 @@ import hut.cwp.mvp.BindPresenter
 class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     override val data: List<News>
         get() = if (adapter != null && adapter!!.data != null) {
-            adapter!!.data
+            adapter!!.data!!
         } else {
             listOf()
         }
@@ -30,7 +31,6 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
 
     override fun initViews() {
         fragmentCategoryBinding = getBinding() as FragmentCategoryBinding
-        adapter = ReadAdapter(context, null)
         setListener()
     }
 
@@ -43,6 +43,10 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
      */
     private fun setListener() {
         fragmentCategoryBinding?.run {
+            Log.i(TAG, "setListener run")
+            if (adapter == null) {
+                adapter = ReadAdapter(context!!, listOf<News>().toMutableList())
+            }
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(activity)
             swipeRefreshLayout.setOnRefreshListener { presenter.getDataFromServer() }
@@ -54,10 +58,16 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     }
 
     override fun setNewData(data: List<News>) {
-        adapter?.setNewData(data)
+        Log.i(TAG, "setNewData = " + data.size)
+        adapter?.setNewData(data.toMutableList())
     }
 
     override fun addNewData(pos: Int, data: List<News>) {
+        Log.i(TAG, "addNewData = " + data.size)
         adapter?.addData(pos, data)
+    }
+
+    companion object {
+        const val TAG = "NewsFragment"
     }
 }

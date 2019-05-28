@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
         if (savedInstanceState == null) {
             switchContent(FRAGMENT_TAG_READING);
         } else {
-            currentFragmentTag = savedInstanceState.getString(AppGlobal.CURRENT_INDEX);
+            currentFragmentTag = savedInstanceState.getString(AppGlobal.INSTANCE.getCURRENT_INDEX());
             switchContent(currentFragmentTag);
         }
     }
@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(AppGlobal.CURRENT_INDEX, currentFragmentTag);
+        outState.putString(AppGlobal.INSTANCE.getCURRENT_INDEX(), currentFragmentTag);
     }
 
     @Override

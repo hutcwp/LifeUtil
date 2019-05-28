@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.entitys;
+package club.hutcwp.lifeutil.entitys
 
 /**
  * Created by hutcwp on 2017/4/16.
@@ -7,6 +7,4 @@ package club.hutcwp.lifeutil.entitys;
  * GitHub : github.com/hutcwp
  */
 
-public class NormalPhoto extends Photo{
-
-}
+class NormalPhoto : Photo()

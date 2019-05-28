@@ -55,7 +55,7 @@ class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCate
             val data = Bundle()
             data.putString("url", category.url)
             fragment.arguments = data
-            adapter.addFrag(fragment, category.name)
+            adapter.addFrag(fragment, category.name!!)
         }
         viewPager.adapter = adapter
     }

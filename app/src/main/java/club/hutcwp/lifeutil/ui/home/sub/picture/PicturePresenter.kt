@@ -38,7 +38,7 @@ class PicturePresenter : MvpPresenter<IPicture>() {
     private val gankObservable: Observable<List<Photo>>
         get() = ApiFactory.getGirlsController()?.getGank(curPage.toString() + "")?.subscribeOn(Schedulers.io())!!.map { response ->
             val photos = ArrayList<Photo>()
-            photos.addAll(response.datas)
+            photos.addAll(response.datas!!)
             photos
         }
 

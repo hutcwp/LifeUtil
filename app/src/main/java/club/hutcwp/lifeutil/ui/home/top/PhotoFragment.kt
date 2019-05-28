@@ -57,7 +57,7 @@ class PhotoFragment : BaseFragment<PhotoPresenter, PhotoFragment>(), IHome<Photo
             data.putInt("type", category.type)
             data.putString("url", category.url)
             categoryFragment.arguments = data
-            adapter.addFrag(categoryFragment, category.name)
+            adapter.addFrag(categoryFragment, category.name!!)
         }
         viewPager.adapter = adapter
     }

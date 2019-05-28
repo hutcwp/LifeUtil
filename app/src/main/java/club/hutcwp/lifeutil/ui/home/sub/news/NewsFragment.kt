@@ -30,7 +30,7 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     }
 
     override fun initViews() {
-        fragmentCategoryBinding = getBinding() as FragmentCategoryBinding
+        fragmentCategoryBinding = binding as FragmentCategoryBinding
         setListener()
     }
 

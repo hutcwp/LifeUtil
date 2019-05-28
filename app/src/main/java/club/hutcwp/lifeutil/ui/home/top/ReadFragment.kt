@@ -25,7 +25,7 @@ class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCate
     }
 
     override fun initViews() {
-        fragmentReadBinding = getBinding() as FragmentReadBinding
+        fragmentReadBinding = binding as FragmentReadBinding
         fragmentReadBinding!!.toolbar.title = "阅读"
         (activity as MainActivity).initDrawer(fragmentReadBinding!!.toolbar)
     }

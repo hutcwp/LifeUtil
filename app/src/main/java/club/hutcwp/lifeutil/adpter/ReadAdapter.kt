@@ -41,7 +41,7 @@ class ReadAdapter(private val context: Context, var readlist: MutableList<News>?
 
     override fun onBindViewHolder(holder: ReadHolder, position: Int) {
         val item = readlist!![position]
-        holder.rootView.setOnClickListener { WebUtils.openInternal(context, item.url) }
+        holder.rootView.setOnClickListener { WebUtils.openInternal(context, item.url!!) }
         //将标题设置为 序号.内容这种格式
         holder.tv_name.text = String.format("%s. %s", position + 1, item.name)
         holder.tv_info.text = item.updateTime + " • " + item.from

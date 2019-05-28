@@ -52,8 +52,8 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         cleanCache.setSummary(
                 FileSizeUtil.INSTANCE.
                         getAutoFileOrFilesSize(
-                                FileUtil.getInternalCacheDir(App.getContext()),
-                                FileUtil.getExternalCacheDir(App.getContext())));
+                                FileUtil.INSTANCE.getInternalCacheDir(App.getContext()),
+                                FileUtil.INSTANCE.getExternalCacheDir(App.getContext())));
         theme.setOnPreferenceClickListener(this);
         cleanCache.setOnPreferenceClickListener(this);
 
@@ -62,11 +62,11 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference == cleanCache) {
-            disposable = Observable.just(FileUtil.delete(FileUtil.getInternalCacheDir(App.getContext())))
+            disposable = Observable.just(FileUtil.INSTANCE.delete(FileUtil.INSTANCE.getInternalCacheDir(App.getContext())))
                     .map(new Function<Boolean, Boolean>() {
                         @Override
                         public Boolean apply(Boolean result) throws Exception {
-                            return result && FileUtil.delete(FileUtil.getExternalCacheDir(App.getContext()));
+                            return result && FileUtil.INSTANCE.delete(FileUtil.INSTANCE.getExternalCacheDir(App.getContext()));
 
                         }
                     })
@@ -78,8 +78,8 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
                             cleanCache.setSummary(
                                     FileSizeUtil.INSTANCE.
                                             getAutoFileOrFilesSize(
-                                                    FileUtil.getInternalCacheDir(App.getContext()),
-                                                    FileUtil.getExternalCacheDir(App.getContext())));
+                                                    FileUtil.INSTANCE.getInternalCacheDir(App.getContext()),
+                                                    FileUtil.INSTANCE.getExternalCacheDir(App.getContext())));
                             Snackbar.make(getView(), "缓存已清除 (*^__^*)", Snackbar.LENGTH_SHORT).show();
 
                         }

@@ -41,7 +41,7 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
     }
 
     override fun initViews() {
-        fragmentGankGirlBinding = getBinding() as FragmentGankGirlBinding
+        fragmentGankGirlBinding = binding as FragmentGankGirlBinding
         //可能会出现空指针异常
         adapter = PhotoAdapter(context!!, null)
         fragmentGankGirlBinding!!.gridRecycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)

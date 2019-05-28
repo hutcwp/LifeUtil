@@ -28,7 +28,7 @@ class PhotoFragment : BaseFragment<PhotoPresenter, PhotoFragment>(), IHome<Photo
 
 
     override fun initViews() {
-        fragmentGirlBinding = getBinding() as FragmentGirlBinding
+        fragmentGirlBinding = binding as FragmentGirlBinding
         fragmentGirlBinding!!.toolbar.title = getString(R.string.gank)
         (activity as MainActivity).initDrawer(fragmentGirlBinding!!.toolbar)
     }

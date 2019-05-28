@@ -82,7 +82,7 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
         holder.date.text = girlList!![position].date
 
         holder.iv.setOnClickListener {
-            val intent = PicDetailActivity.newIntent(mContext, girlList!![position].img, "")
+            val intent = PicDetailActivity.newIntent(mContext, girlList!![position].img!!, "")
             mContext.startActivity(intent)
         }
 

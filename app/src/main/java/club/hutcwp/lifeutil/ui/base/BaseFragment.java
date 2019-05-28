@@ -1,12 +1,12 @@
 package club.hutcwp.lifeutil.ui.base;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +29,7 @@ public abstract class BaseFragment<P extends MvpPresenter<V>, V extends MvpView>
     private static final String TAG = "BaseFragment";
     private boolean isViewPrepared; // 标识fragment视图已经初始化完毕
     private boolean hasFetchData; // 标识已经触发过懒加载数据
-    protected ViewDataBinding binding;
+    public ViewDataBinding binding;
 
     @LayoutRes
     protected abstract int getLayoutId();
@@ -100,7 +100,7 @@ public abstract class BaseFragment<P extends MvpPresenter<V>, V extends MvpView>
 
     public void showSnack(String msg) {
         if(binding.getRoot()!=null) {
-            Snackbar snackbar = Snackbar.make(binding.getRoot(), msg, Toast.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(binding.getRoot(), msg, Snackbar.LENGTH_LONG);
             snackbar.show();
         }
     }

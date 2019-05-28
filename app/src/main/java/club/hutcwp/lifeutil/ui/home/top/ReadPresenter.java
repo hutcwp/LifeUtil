@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
  * email: caiwenpeng@yy.com
  * YY: 909076244
  **/
-public class ReadPresenter extends MvpPresenter<IHome> {
+public class ReadPresenter extends MvpPresenter<ReadFragment> {
 
     private Disposable disposable;
 
@@ -66,7 +66,9 @@ public class ReadPresenter extends MvpPresenter<IHome> {
         ).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<ReadCategory>>() {
             @Override
             public void accept(List<ReadCategory> readCategories) {
-                getView().initTabLayout(readCategories);
+                if (getView() != null) {
+                    getView().initTabLayout(readCategories);
+                }
             }
         }, new Consumer<Throwable>() {
             @Override

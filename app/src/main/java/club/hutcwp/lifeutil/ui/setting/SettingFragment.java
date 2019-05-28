@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 
@@ -50,7 +50,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         }
 
         cleanCache.setSummary(
-                FileSizeUtil.
+                FileSizeUtil.INSTANCE.
                         getAutoFileOrFilesSize(
                                 FileUtil.getInternalCacheDir(App.getContext()),
                                 FileUtil.getExternalCacheDir(App.getContext())));
@@ -76,7 +76,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
                         @Override
                         public void accept(Boolean o) throws Exception {
                             cleanCache.setSummary(
-                                    FileSizeUtil.
+                                    FileSizeUtil.INSTANCE.
                                             getAutoFileOrFilesSize(
                                                     FileUtil.getInternalCacheDir(App.getContext()),
                                                     FileUtil.getExternalCacheDir(App.getContext())));

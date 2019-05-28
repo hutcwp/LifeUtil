@@ -11,14 +11,15 @@ import hut.cwp.mvp.MvpPresenter;
  * email: caiwenpeng@yy.com
  * YY: 909076244
  **/
-public class PhotoPresenter extends MvpPresenter<IHome> {
+public class PhotoPresenter extends MvpPresenter<PhotoFragment> {
 
     private List<PhotoCategory> photoCategories = new ArrayList<>();
 
-
     public void getCategory() {
         initCategorys();
-        getView().initTabLayout(photoCategories);
+        if (getView() != null) {
+            getView().initTabLayout(photoCategories);
+        }
     }
 
     public void initCategorys() {

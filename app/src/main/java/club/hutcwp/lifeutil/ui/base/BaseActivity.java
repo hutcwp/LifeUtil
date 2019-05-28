@@ -3,10 +3,10 @@ package club.hutcwp.lifeutil.ui.base;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.LayoutRes;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -115,7 +115,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param s 要显示的内容
      */
     public void showSnack(View view , String s) {
-        Snackbar snackbar = Snackbar.make(view, s, Toast.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(view, s, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 

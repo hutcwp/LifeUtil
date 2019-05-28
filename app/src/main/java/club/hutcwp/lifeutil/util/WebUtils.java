@@ -3,7 +3,7 @@ package club.hutcwp.lifeutil.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 import com.thefinestartist.finestwebview.FinestWebView;
 
@@ -39,7 +39,7 @@ public class WebUtils {
                 .webViewDisplayZoomControls(true)
                 .webViewSupportZoom(true)
                 .webViewBuiltInZoomControls(true)
-                .iconDefaultColor(context.getResources().getColor(R.color.Color_White))
+                .iconDefaultColor(context.getResources().getColor(R.color.white))
                 .show(url);
     }
 
@@ -71,7 +71,7 @@ public class WebUtils {
                 .statusBarColor(ContextCompat.getColor(context,R.color.colorPrimaryDark))
                 .swipeRefreshColor(ContextCompat.getColor(context,R.color.colorPrimary))
                 .showUrl(false)
-                .iconDefaultColor(context.getResources().getColor(R.color.Color_White))
-                .load(html, "text/html; charset=UTF-8", null);//妈卖批，加载中文乱码
+                .iconDefaultColor(context.getResources().getColor(R.color.white))
+                .load(html, "text/html; charset=UTF-8", null);
     }
 }

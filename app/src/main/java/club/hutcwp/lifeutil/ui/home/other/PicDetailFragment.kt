@@ -15,14 +15,10 @@ import club.hutcwp.lifeutil.R
 
 class PicDetailFragment : Fragment() {
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         val view = inflater.inflate(R.layout.fragment_girl_pic, container, false)
         Log.d("url", PicDetailActivity.EXTRA_IMAGE_URL)
-        Glide.with(activity).load(PicDetailActivity.EXTRA_IMAGE_URL).into(view.findViewById<View>(R.id.image) as ImageView)
+        Glide.with(activity!!).load(PicDetailActivity.EXTRA_IMAGE_URL).into(view.findViewById<View>(R.id.image) as ImageView)
         return view
     }
-
-
 }

@@ -1,24 +1,18 @@
 package club.hutcwp.lifeutil.adpter
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import androidx.core.graphics.drawable.RoundedBitmapDrawable
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
-
+import androidx.recyclerview.widget.RecyclerView
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.util.WebUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 /**
  * Created by hutcwp on 2017/4/14.
@@ -39,20 +33,16 @@ class ReadAdapter(private val context: Context, var readlist: MutableList<News>?
         return ReadHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ReadHolder, position: Int) {
         val item = readlist!![position]
         holder.rootView.setOnClickListener { WebUtils.openInternal(context, item.url!!) }
         //将标题设置为 序号.内容这种格式
         holder.tv_name.text = String.format("%s. %s", position + 1, item.name)
-        holder.tv_info.text = item.updateTime + " • " + item.from
+        holder.tv_info.text = "${item.updateTime} • ${item.from}"
 
-        Glide.with(context).load(item.icon).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(object : SimpleTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, glideAnimation: GlideAnimation<in Bitmap>) {
-                val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, resource)
-                circularBitmapDrawable.isCircular = true
-                holder.iv.setImageDrawable(circularBitmapDrawable)
-            }
-        })
+        val option = RequestOptions().circleCrop()
+        Glide.with(context).load(item.icon).apply(option).into(holder.iv)
     }
 
     /**

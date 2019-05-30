@@ -2,6 +2,7 @@ package club.hutcwp.lifeutil.ui.setting
 
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -9,28 +10,21 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageSwitcher
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.ViewSwitcher
-
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
-
-import org.reactivestreams.Subscriber
-
-import java.util.Random
-import java.util.concurrent.TimeUnit
-
-import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
 import club.hutcwp.lifeutil.BuildConfig
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.ui.base.BaseActivity
 import club.hutcwp.lifeutil.util.WebUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.Request
+import com.bumptech.glide.request.target.SizeReadyCallback
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -73,9 +67,49 @@ class AboutActivity : BaseActivity() {
     }
 
     private fun loadImage() {
-        Glide.with(this).load(imageUrls[Random().nextInt(imageUrls.size)]).into(object : SimpleTarget<GlideDrawable>(imageSwitcher!!.width, imageSwitcher!!.height) {
-            override fun onResourceReady(resource: GlideDrawable, glideAnimation: GlideAnimation<in GlideDrawable>) {
-                imageSwitcher!!.setImageDrawable(resource)
+        Glide.with(this).asDrawable().load(imageUrls[Random().nextInt(imageUrls.size)]).into(object : Target<Drawable> {
+            override fun onLoadStarted(placeholder: Drawable?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun getSize(cb: SizeReadyCallback) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun getRequest(): Request? {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onStop() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun setRequest(request: Request?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun removeCallback(cb: SizeReadyCallback) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onStart() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDestroy() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+
             }
         })
     }

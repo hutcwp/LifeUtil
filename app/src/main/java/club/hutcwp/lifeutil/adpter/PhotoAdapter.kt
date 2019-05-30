@@ -13,6 +13,7 @@ import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.ui.home.other.PicDetailActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import java.util.*
 
 /**
@@ -91,9 +92,7 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
         Glide.with(mContext)
                 .load(girlList!![position]
                         .img)
-                .override(params.width, params.height) //设置加载尺寸
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .apply(RequestOptions().centerCrop())
                 .into(holder.iv)//加载网络图片
     }
 

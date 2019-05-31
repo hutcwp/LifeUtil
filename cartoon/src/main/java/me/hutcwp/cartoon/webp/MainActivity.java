@@ -55,7 +55,14 @@ public class MainActivity extends AppCompatActivity implements SimpleOnGestureLi
     private static final String KEY_PAGE = "page";
     private static final String KEY_CHAPTER = "chapter";
 
+    private static final String BASE_URL = "https://mhpic.manhualang.com/comic/";
+    private static final String CODE = "J"; //漫画分类
+    private static final String NAME = "绝世唐门条漫版"; //漫画名
+    private static final String PAGES = "话GQ"; //漫画名
+
+
     private List<Drawable> mChapterList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,8 +96,13 @@ public class MainActivity extends AppCompatActivity implements SimpleOnGestureLi
         initCurrentChapter(chapter, 1);
     }
 
+    private String getImgUrl(final int chapter, final int page) {
+        return BASE_URL + CODE + "/" + NAME + "/" + chapter + PAGES+"/" + page + ".jpg-mht.middle.webp";
+    }
+
     public void initCurrentChapter(final int chapter, final int page) {
-        String img = "https://mhpic.manhualang.com/comic/Y/妖神记/" + chapter + "话/" + page + ".jpg-mht.middle.webp";
+//        String img = "https://mhpic.manhualang.com/comic/"+"Y/妖神记/" + chapter + "话/" + page + ".jpg-mht.middle.webp";
+        String img = getImgUrl(chapter, page);
         RequestOptions options =
                 new RequestOptions()
                         .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).diskCacheStrategy(DiskCacheStrategy.NONE);

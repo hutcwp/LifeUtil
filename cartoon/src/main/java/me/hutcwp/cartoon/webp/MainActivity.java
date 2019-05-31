@@ -33,8 +33,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import me.hutcwp.cartoon.R;
 import me.hutcwp.cartoon.webp.gesture.SimpleOnGestureListener;
-import me.hutcwp.cartoon.webp.webp.WebpBytebufferDecoder;
-import me.hutcwp.cartoon.webp.webp.WebpResourceDecoder;
+import me.hutcwp.webp.WebpBytebufferDecoder;
+import me.hutcwp.webp.WebpResourceDecoder;
 
 public class MainActivity extends AppCompatActivity implements SimpleOnGestureListener.SwipeViewDelegate {
 

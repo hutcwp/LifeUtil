@@ -1,4 +1,4 @@
-package me.hutcwp.cartoon.webp.imagelist;
+package me.hutcwp.imagelist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +16,10 @@ import com.bumptech.glide.Glide;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import me.hutcwp.cartoon.R;
+import me.hutcwp.base.R;
 import okhttp3.OkHttpClient;
 
 /**

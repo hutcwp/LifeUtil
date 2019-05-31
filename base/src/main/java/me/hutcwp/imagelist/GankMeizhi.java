@@ -17,7 +17,7 @@
  * along with Meizhi.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.hutcwp.cartoon.webp.imagelist;
+package me.hutcwp.imagelist;
 
 import java.io.Serializable;
 import java.util.List;

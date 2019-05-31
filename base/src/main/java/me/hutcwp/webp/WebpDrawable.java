@@ -1,4 +1,4 @@
-package me.hutcwp.cartoon.webp.webp;
+package me.hutcwp.webp;
 
 import android.content.Context;
 import android.content.res.Resources;

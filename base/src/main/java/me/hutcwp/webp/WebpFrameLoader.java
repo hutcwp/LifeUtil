@@ -1,4 +1,4 @@
-package me.hutcwp.cartoon.webp.webp;
+package me.hutcwp.webp;
 
 import android.graphics.Bitmap;
 import android.os.Handler;

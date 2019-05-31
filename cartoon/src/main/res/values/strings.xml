@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">cartoon</string>
+    <string name="crt_string_current_page">%1$d话/%2$d页</string>
+</resources>

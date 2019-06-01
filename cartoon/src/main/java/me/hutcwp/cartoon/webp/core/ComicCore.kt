@@ -8,7 +8,7 @@ import me.hutcwp.cartoon.webp.bean.Comic
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
-class ComicCore {
+object ComicCore {
     var mCurrentChapter = 1
     var mCurrentPage = 1
     var mCurrentName = "comic"
@@ -27,16 +27,5 @@ class ComicCore {
 //        ComicDBRepo.getComicsByChapter()
     }
 
-    class Params(var name: String) {
-        var chapter: Int = 1
-        var page: Int = 1
-    }
 
-    companion object {
-        fun getInstance() = SingleHolder.mInstance
-    }
-    ​
-    private object SingleHolder {
-        val mInstance: ComicCore = ComicCore()
-    }
 }

@@ -7,6 +7,7 @@ import me.hutcwp.cartoon.R
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.crt_activity_load.*
 import me.hutcwp.cartoon.webp.db.ComicDBRepo
 import me.hutcwp.cartoon.webp.db.ComicEntity
 
+@Route(path = "/cartoon/load")
 class LoadActivity : AppCompatActivity() {
 
     var mChapterList = mutableListOf<String>()

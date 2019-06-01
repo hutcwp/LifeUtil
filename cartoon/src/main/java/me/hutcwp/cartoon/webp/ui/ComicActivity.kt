@@ -3,15 +3,17 @@ package me.hutcwp.cartoon.webp.ui
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlinx.android.synthetic.main.crt_activity_comic.*
 import me.hutcwp.cartoon.R
 import me.hutcwp.cartoon.webp.db.ComicDBRepo
 
+@Route(path = "/cartoon/comic")
 class ComicActivity : AppCompatActivity() {
 
-    private var mChapter = 0
+    private var mChapter = 1
     private var mPage = 6
 
     override fun onCreate(savedInstanceState: Bundle?) {

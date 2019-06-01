@@ -1,4 +1,4 @@
-package me.hutcwp.cartoon.webp;
+package me.hutcwp.cartoon.webp.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;

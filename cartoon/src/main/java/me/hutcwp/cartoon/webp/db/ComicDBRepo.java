@@ -31,7 +31,7 @@ public class ComicDBRepo {
         return AppDatabase.getInstance(context).comicDao().getByPage(type, chapter, page);
     }
 
-    public static ComicEntity getComicsByChapter(Context context, String name, int chapter) {
+    public static List<ComicEntity> getComicsByChapter(Context context, String name, int chapter) {
         Log.i(TAG, "getComicsByChapter");
         return AppDatabase.getInstance(context).comicDao().getComicsByChapter(name, chapter);
     }

@@ -37,7 +37,7 @@ public interface ComicDao {
     ComicEntity getByPage(String type, int chapter, int page);
 
      @Query("SELECT * FROM ComicEntity WHERE name = :name and chapter = :chapter")
-    ComicEntity getComicsByChapter(String name, int chapter);
+    List<ComicEntity> getComicsByChapter(String name, int chapter);
 
 
 }

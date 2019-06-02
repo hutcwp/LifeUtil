@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity(), SimpleOnGestureListener.SwipeViewDeleg
     private var mCurrentPage = 1
     private var mCurrentChapter = 2
     private val handler = Handler()
-    internal lateinit var mGestureDetector: GestureDetector
-    internal lateinit var mSimpleOnGestureListener: SimpleOnGestureListener
+    private lateinit var mGestureDetector: GestureDetector
+    private lateinit var mSimpleOnGestureListener: SimpleOnGestureListener
 
     private var isEnable = true
 

@@ -17,10 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:gravity="center"
+        android:gravity="right"
         android:padding="8dp"
+        android:layout_margin="8dp"
+        android:layout_alignParentBottom="true"
         android:text="我是标题"
         android:textColor="#ffffff"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 </RelativeLayout>

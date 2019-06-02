@@ -35,7 +35,7 @@ class PageInfoRepository {
         val datas: MutableList<ComicPageInfo> = mutableListOf()
         ComicCore.mPages.forEach {
             val title = "chapter=${it.chapter} , page=${it.page}"
-            val data = ComicPageInfo(it.url, title)
+            val data = ComicPageInfo(it.url, title,it)
             datas.add(data)
         }
         fakeRemoteResource = datas
@@ -46,7 +46,7 @@ class PageInfoRepository {
         val datas: MutableList<ComicPageInfo> = mutableListOf()
         ComicCore.mPages.forEach {
             val title = "chapter=${it.chapter} , page=${it.page}"
-            val data = ComicPageInfo(it.url, title)
+            val data = ComicPageInfo(it.url, title,it)
             datas.add(data)
         }
         fakeRemoteResource.addAll(datas)
@@ -56,7 +56,7 @@ class PageInfoRepository {
         val datas: MutableList<ComicPageInfo> = mutableListOf()
         ComicCore.mPages.forEach {
             val title = "chapter=${it.chapter} , page=${it.page}"
-            val data = ComicPageInfo(it.url, title)
+            val data = ComicPageInfo(it.url, title,it)
             datas.add(data)
         }
         datas.addAll(fakeRemoteResource)

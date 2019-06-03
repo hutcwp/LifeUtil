@@ -17,6 +17,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 //        ARouter.getInstance().build("/cartoon/comic").navigation();
-        ARouter.getInstance().build("/cartoon/load").navigation();
+//        ARouter.getInstance().build("/cartoon/load").navigation();
+        ARouter.getInstance().build("/comic/list").navigation();
     }
 }

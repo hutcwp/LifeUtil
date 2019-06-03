@@ -14,8 +14,8 @@ class MainActivity : AppCompatActivity() {
 //        ARouter.getInstance().build("/cartoon/comic").navigation()
 //        startActivity(Intent(this,HomeActivity::class.java))
         Handler().postDelayed({
-//            ARouter.getInstance().build("/homepage/home").navigation()
-            ARouter.getInstance().build("/cartoon/demo").navigation()
+            ARouter.getInstance().build("/homepage/home").navigation()
+//            ARouter.getInstance().build("/cartoon/demo").navigation()
         }, 500)
     }
 

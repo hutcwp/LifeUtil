@@ -4,9 +4,6 @@ import android.util.Log
 import android.widget.Toast
 
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
 
 import java.io.IOException
 import java.util.ArrayList
@@ -17,8 +14,6 @@ import hut.cwp.mvp.MvpPresenter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 
 

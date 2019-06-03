@@ -80,4 +80,6 @@ dependencies {
     compile 'com.github.YvesCheung:SlidableLayout:1.0.4.x'
 
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-23'
+
+    compile 'me.drakeet.multitype:multitype:4.0.0-alpha3'
 }

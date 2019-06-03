@@ -3,6 +3,7 @@
     package="me.hutcwp.cartoon">
 
     <application>
+        <activity android:name=".webp.ui.ListComicActivity"></activity>
         <activity android:name=".webp.ui.ComicSlideActivity" />
         <activity android:name=".webp.ui.ComicActivity" />
         <activity android:name=".webp.ui.LoadActivity" />

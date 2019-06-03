@@ -15,7 +15,6 @@ import com.yy.mobile.widget.SlideDirection
 import kotlinx.android.synthetic.main.crt_activity_demo.*
 import me.hutcwp.cartoon.R
 import me.hutcwp.cartoon.webp.bean.ComicPageInfo
-import me.hutcwp.cartoon.webp.bean.PageInfoRepository
 import me.hutcwp.cartoon.webp.core.ComicCore
 import me.hutcwp.cartoon.webp.core.Params
 import me.hutcwp.cartoon.webp.ui.fragment.FragmentAdapter
@@ -32,20 +31,19 @@ class ComicSlideActivity : FragmentActivity() {
 
 //    private var offset = 0 //当前移动量？
 
-    private lateinit var slidable_layout: SlidableLayout
+    private lateinit var slidableLayout: SlidableLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         immersive()
         setContentView(R.layout.crt_activity_demo)
-        slidable_layout = findViewById(R.id.slidable_layout)
+        slidableLayout = findViewById(R.id.slidable_layout)
 
         initComicCore()
         loadCurrentPage()
         initRefreshLayout()
         val adapter =FragmentAdapter(dataList, supportFragmentManager)
-        adapter.
-        slidable_layout.setAdapter(adapter)
+        slidableLayout.setAdapter(adapter)
 
     }
 
@@ -119,7 +117,7 @@ class ComicSlideActivity : FragmentActivity() {
             val isLastPage = dataList.size == 0
             refresh_layout.finishRefresh(0, true, isLastPage)
             if (!isLastPage) {
-                slidable_layout.slideTo(SlideDirection.Prev)
+                slidableLayout.slideTo(SlideDirection.Prev)
             }
         } else {
             ComicCore.getNextChapter()
@@ -134,7 +132,7 @@ class ComicSlideActivity : FragmentActivity() {
             dataList.addLast(newDatas)
             val isLastPage = dataList.size == 0
             if (!isLastPage) {
-                slidable_layout.slideTo(SlideDirection.Next)
+                slidableLayout.slideTo(SlideDirection.Next)
             }
             refresh_layout.finishLoadMore(0, true, isLastPage)
         }

@@ -20,6 +20,7 @@ import me.hutcwp.cartoon.webp.core.ComicCore
 import me.hutcwp.cartoon.webp.core.Params
 import me.hutcwp.cartoon.webp.ui.fragment.FragmentAdapter
 import me.hutcwp.cartoon.webp.ui.fragment.SimpleListQueue
+import me.hutcwp.cartoon.webp.util.SpUtils
 
 @Route(path = "/cartoon/demo")
 class ComicSlideActivity : FragmentActivity() {
@@ -27,9 +28,9 @@ class ComicSlideActivity : FragmentActivity() {
     //    private val dataList = SimpleListQueue<PageInfo>()
     private val dataList = SimpleListQueue<ComicPageInfo>()
 
-    private val repo = PageInfoRepository()
+//    private val repo = PageInfoRepository()
 
-    private var offset = 0 //当前移动量？
+//    private var offset = 0 //当前移动量？
 
     private lateinit var slidable_layout: SlidableLayout
 
@@ -40,17 +41,19 @@ class ComicSlideActivity : FragmentActivity() {
         slidable_layout = findViewById(R.id.slidable_layout)
 
         initComicCore()
-        repo.loadCurrentData()
-        requestDataAndAddToAdapter(false)
+        loadCurrentPage()
         initRefreshLayout()
-        slidable_layout.setAdapter(FragmentAdapter(dataList, supportFragmentManager))
+        val adapter =FragmentAdapter(dataList, supportFragmentManager)
+        adapter.
+        slidable_layout.setAdapter(adapter)
+
     }
 
     private fun initComicCore() {
         val params = Params()
         params.name = "妖神记"
-        params.chapter = 2
-        params.page = 1
+        params.chapter = SpUtils.getInt(KEY_CHAPTER, 1, this@ComicSlideActivity)
+        params.page = SpUtils.getInt(KEY_PAGE, 1, this@ComicSlideActivity)
         ComicCore.init(params)
     }
 
@@ -90,6 +93,17 @@ class ComicSlideActivity : FragmentActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
+    fun loadCurrentPage(){
+        val newDatas = mutableListOf<ComicPageInfo>()
+        ComicCore.mPages.forEach {
+            val title = "${it.chapter}节/${it.page}页"
+            val img = it.url
+            val comicPageInfo = ComicPageInfo(img, title,it)
+            newDatas.add(comicPageInfo)
+        }
+        dataList.addLast(newDatas)
+    }
+
     private fun requestDataAndAddToAdapter(insertToFirst: Boolean = true, delayMills: Long = 0L) {
         if (insertToFirst) {
             ComicCore.getPreChapter()
@@ -98,13 +112,13 @@ class ComicSlideActivity : FragmentActivity() {
             ComicCore.mPages.forEach {
                 val title = "${it.chapter}节/${it.page}页"
                 val img = it.url
-                val comicPageInfo = ComicPageInfo(img, title)
+                val comicPageInfo = ComicPageInfo(img, title,it)
                 newDatas.add(comicPageInfo)
             }
             dataList.addFirst(newDatas)
             val isLastPage = dataList.size == 0
             refresh_layout.finishRefresh(0, true, isLastPage)
-            if(!isLastPage){
+            if (!isLastPage) {
                 slidable_layout.slideTo(SlideDirection.Prev)
             }
         } else {
@@ -114,20 +128,29 @@ class ComicSlideActivity : FragmentActivity() {
             ComicCore.mPages.forEach {
                 val title = "${it.chapter}节/${it.page}页"
                 val img = it.url
-                val comicPageInfo = ComicPageInfo(img, title)
+                val comicPageInfo = ComicPageInfo(img, title,it)
                 newDatas.add(comicPageInfo)
             }
             dataList.addLast(newDatas)
             val isLastPage = dataList.size == 0
-            if(!isLastPage){
+            if (!isLastPage) {
                 slidable_layout.slideTo(SlideDirection.Next)
             }
             refresh_layout.finishLoadMore(0, true, isLastPage)
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        SpUtils.putInt(KEY_PAGE, ComicCore.mCurrentPage, this@ComicSlideActivity)
+        SpUtils.putInt(KEY_CHAPTER, ComicCore.mCurrentChapter, this@ComicSlideActivity)
+    }
+
     companion object {
         const val TAG = "ComicSlideActivity"
+        private const val KEY_PAGE = "page"
+        private const val KEY_CHAPTER = "chapter"
+
     }
 
 }

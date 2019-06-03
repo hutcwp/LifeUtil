@@ -15,6 +15,7 @@ import com.yy.mobile.widget.SlidableUI
 import com.yy.mobile.widget.SlideDirection
 import me.hutcwp.cartoon.R
 import me.hutcwp.cartoon.webp.bean.ComicPageInfo
+import me.hutcwp.cartoon.webp.core.ComicCore
 import me.hutcwp.cartoon.webp.util.startAnimation
 
 /**
@@ -35,7 +36,7 @@ class ComicSlideFragment : Fragment(), SlidableUI {
 
     @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var root = inflater.inflate(R.layout.page_main_content, null, false) as View
+        var root = inflater.inflate(R.layout.crt_page_main_content, null, false) as View
         content_player = root.findViewById(R.id.content_player)
         content_title = root.findViewById(R.id.content_title)
         return root
@@ -46,6 +47,8 @@ class ComicSlideFragment : Fragment(), SlidableUI {
     }
 
     override fun startVisible(direction: SlideDirection) {
+        ComicCore.mCurrentChapter = currentInfo?.comic?.chapter!!
+        ComicCore.mCurrentPage =currentInfo?.comic?.page!!
         currentInfo?.let {
             content_title.text = it.title
             content_player.setImageDrawable(null) //should be snapshot

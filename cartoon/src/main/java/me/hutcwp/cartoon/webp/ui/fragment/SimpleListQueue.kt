@@ -13,7 +13,13 @@ class SimpleListQueue<Element>(
         private val actual: MutableList<Element> = mutableListOf()
 ) : SimpleQueue<Element>, List<Element> by actual {
 
-    private var curIdx = 0
+    private var curIdx = 5
+
+    fun setCurPage(page: Int) {
+        if (page in 1..size){
+            curIdx = page-1
+        }
+    }
 
     fun addFirst(data: List<Element>) {
         actual.addAll(0, data)

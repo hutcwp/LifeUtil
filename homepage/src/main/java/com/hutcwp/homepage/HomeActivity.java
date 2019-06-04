@@ -18,6 +18,7 @@ public class HomeActivity extends AppCompatActivity {
 
 //        ARouter.getInstance().build("/cartoon/comic").navigation();
 //        ARouter.getInstance().build("/cartoon/load").navigation();
-        ARouter.getInstance().build("/comic/list").navigation();
+//        ARouter.getInstance().build("/comic/list").navigation();
+        ARouter.getInstance().build("/cartoon/demo").navigation();
     }
 }

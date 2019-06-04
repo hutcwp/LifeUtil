@@ -42,7 +42,7 @@ class ComicSlideActivity : FragmentActivity() {
         initComicCore()
         loadCurrentPage()
         initRefreshLayout()
-        val adapter =FragmentAdapter(dataList, supportFragmentManager)
+        val adapter = FragmentAdapter(dataList, supportFragmentManager)
         slidableLayout.setAdapter(adapter)
 
     }
@@ -91,15 +91,17 @@ class ComicSlideActivity : FragmentActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
-    fun loadCurrentPage(){
+    fun loadCurrentPage() {
         val newDatas = mutableListOf<ComicPageInfo>()
         ComicCore.mPages.forEach {
             val title = "${it.chapter}节/${it.page}页"
             val img = it.url
-            val comicPageInfo = ComicPageInfo(img, title,it)
+            val comicPageInfo = ComicPageInfo(img, title, it)
             newDatas.add(comicPageInfo)
         }
         dataList.addLast(newDatas)
+        val page = SpUtils.getInt(KEY_PAGE, 1, this@ComicSlideActivity)
+        dataList.setCurPage(page)
     }
 
     private fun requestDataAndAddToAdapter(insertToFirst: Boolean = true, delayMills: Long = 0L) {
@@ -110,7 +112,7 @@ class ComicSlideActivity : FragmentActivity() {
             ComicCore.mPages.forEach {
                 val title = "${it.chapter}节/${it.page}页"
                 val img = it.url
-                val comicPageInfo = ComicPageInfo(img, title,it)
+                val comicPageInfo = ComicPageInfo(img, title, it)
                 newDatas.add(comicPageInfo)
             }
             dataList.addFirst(newDatas)
@@ -126,7 +128,7 @@ class ComicSlideActivity : FragmentActivity() {
             ComicCore.mPages.forEach {
                 val title = "${it.chapter}节/${it.page}页"
                 val img = it.url
-                val comicPageInfo = ComicPageInfo(img, title,it)
+                val comicPageInfo = ComicPageInfo(img, title, it)
                 newDatas.add(comicPageInfo)
             }
             dataList.addLast(newDatas)

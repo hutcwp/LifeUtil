@@ -89,7 +89,7 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="TabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
+    <style name="TabLayoutTextAppearance" parent="TextAppearance.AppCompat">
         <item name="textAllCaps">false</item>
     </style>
 

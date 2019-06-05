@@ -3,11 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LifeUtil.iml" filepath="$PROJECT_DIR$/LifeUtil.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
       <module fileurl="file://$PROJECT_DIR$/cartoon/cartoon.iml" filepath="$PROJECT_DIR$/cartoon/cartoon.iml" />
       <module fileurl="file://$PROJECT_DIR$/homepage/homepage.iml" filepath="$PROJECT_DIR$/homepage/homepage.iml" />
       <module fileurl="file://$PROJECT_DIR$/host/host.iml" filepath="$PROJECT_DIR$/host/host.iml" />
+      <module fileurl="file://$PROJECT_DIR$/read/read.iml" filepath="$PROJECT_DIR$/read/read.iml" />
     </modules>
   </component>
 </project>

@@ -1,12 +1,11 @@
 package com.hutcwp.homepage;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 @Route(path = "/homepage/home")
 public class HomeActivity extends AppCompatActivity {
@@ -19,6 +18,7 @@ public class HomeActivity extends AppCompatActivity {
 //        ARouter.getInstance().build("/cartoon/comic").navigation();
 //        ARouter.getInstance().build("/cartoon/load").navigation();
 //        ARouter.getInstance().build("/comic/list").navigation();
-        ARouter.getInstance().build("/cartoon/demo").navigation();
+//        ARouter.getInstance().build("/cartoon/demo").navigation();
+        ARouter.getInstance().build("/read/main").navigation();
     }
 }

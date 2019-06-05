@@ -52,7 +52,7 @@ dependencies {
     compile project(path: ':cartoon')
     compile project(path: ':base')
     compile project(path: ':homepage')
-//    compile project(path: ':app')
+    compile project(path: ':read')
 }
 repositories {
     mavenCentral()

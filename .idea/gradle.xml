@@ -8,11 +8,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/cartoon" />
             <option value="$PROJECT_DIR$/homepage" />
             <option value="$PROJECT_DIR$/host" />
+            <option value="$PROJECT_DIR$/read" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

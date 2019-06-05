@@ -11,11 +11,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        ARouter.getInstance().build("/cartoon/comic").navigation()
-//        startActivity(Intent(this,HomeActivity::class.java))
+
         Handler().postDelayed({
             ARouter.getInstance().build("/homepage/home").navigation()
-//            ARouter.getInstance().build("/cartoon/demo").navigation()
+            finish()
         }, 500)
     }
 

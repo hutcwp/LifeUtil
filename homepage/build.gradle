@@ -6,6 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
 
+    resourcePrefix "hp_"
 
     defaultConfig {
         minSdkVersion 23

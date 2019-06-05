@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
+import com.facebook.stetho.Stetho
 import me.hutcwp.BaseConfig
 import me.hutcwp.webp.WebpBytebufferDecoder
 import me.hutcwp.webp.WebpDrawable
@@ -23,6 +24,7 @@ class mApp : Application() {
         super.onCreate()
         context = applicationContext
         BaseConfig.setApplicationContext(applicationContext)
+        Stetho.initializeWithDefaults(this);
         webpInit()
         arouterInit()
     }

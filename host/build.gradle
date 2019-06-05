@@ -46,6 +46,9 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
+    //用于chrome远程调试
+    debugCompile 'com.facebook.stetho:stetho:1.5.0'
+
     compile project(path: ':cartoon')
     compile project(path: ':base')
     compile project(path: ':homepage')

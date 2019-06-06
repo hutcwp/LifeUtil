@@ -82,4 +82,7 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-23'
 
     compile 'me.drakeet.multitype:multitype:4.0.0-alpha3'
+
+    implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
+
 }

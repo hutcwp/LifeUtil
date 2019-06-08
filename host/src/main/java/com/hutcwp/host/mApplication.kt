@@ -6,7 +6,9 @@ import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.facebook.stetho.Stetho
+import com.hutcwp.homepage.HomePageInitLogic
 import me.hutcwp.BaseConfig
+import me.hutcwp.app.BaseApplication
 import me.hutcwp.webp.WebpBytebufferDecoder
 import me.hutcwp.webp.WebpDrawable
 import me.hutcwp.webp.WebpResourceDecoder
@@ -18,7 +20,11 @@ import java.nio.ByteBuffer
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
-class mApp : Application() {
+class mApplication : BaseApplication() {
+
+    override fun initLogic() {
+        registerAppLogic(HomePageInitLogic())
+    }
 
     override fun onCreate() {
         super.onCreate()

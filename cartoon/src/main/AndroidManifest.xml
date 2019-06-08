@@ -3,11 +3,11 @@
     package="me.hutcwp.cartoon">
 
     <application>
-        <activity android:name=".webp.ui.ListComicActivity"></activity>
-        <activity android:name=".webp.ui.ComicSlideActivity" />
-        <activity android:name=".webp.ui.ComicActivity" />
-        <activity android:name=".webp.ui.LoadActivity" />
-        <activity android:name=".webp.ui.MainActivity" />
+        <activity android:name="me.hutcwp.cartoon.ui.ListComicActivity"></activity>
+        <activity android:name="me.hutcwp.cartoon.ui.ComicSlideActivity" />
+        <activity android:name="me.hutcwp.cartoon.ui.ComicActivity" />
+        <activity android:name="me.hutcwp.cartoon.ui.LoadActivity" />
+        <activity android:name="me.hutcwp.cartoon.ui.MainActivity" />
     </application>
 
 </manifest>

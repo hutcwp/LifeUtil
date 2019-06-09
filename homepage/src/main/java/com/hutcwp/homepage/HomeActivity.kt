@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
         items.add(PageItem(Page("阅读首页", "/read/main", "")))
         items.add(PageItem(Page("漫画首页", "/cartoon/demo", "")))
         items.add(PageItem(Page("漫画爬虫", "/cartoon/load", "")))
-        items.add(PageItem(Page("今日天气", "/weather/main", "")))
+        items.add(PageItem(Page("今日天气", "/weather/select", "")))
 
         val adapter = MultiTypeAdapter()
         recyclerView.adapter = adapter

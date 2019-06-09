@@ -1,3 +1,11 @@
 <resources>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="wea_hello_blank_fragment">Hello blank fragment</string>
+    <string name="wea_city_name">城市</string>
+    <string name="weather_statu">天气状况</string>
+    <string name="wea_tmp">气温</string>
+    <string name="wea_back">返回</string>
+    <string name="wea_title">标题</string>
+    <string name="wea_title_activity_weather_info">WeatherInfoActivity</string>
+    <string name="wea_name">每日天气</string>
 </resources>

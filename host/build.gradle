@@ -59,3 +59,48 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+//auto register extension
+// 功能介绍：
+//  在编译期扫描将打到apk包中的所有类
+//  将 scanInterface的实现类 或 scanSuperClasses的子类
+//  并在 codeInsertToClassName 类的 codeInsertToMethodName 方法中生成如下代码：
+//  codeInsertToClassName.registerMethodName(scanInterface)
+// 要点：
+//  1. codeInsertToMethodName 若未指定，则默认为static块
+//  2. codeInsertToMethodName 与 registerMethodName 需要同为static或非static
+// 自动生成的代码示例：
+/*
+  在com.billy.app_lib_interface.MainPageManager.class文件中
+  static
+  {
+    register(new CategoryA()); //scanInterface的实现类
+    register(new CategoryB()); //scanSuperClass的子类
+  }
+ */
+apply plugin: 'auto-register'
+project.ext.registerInfoList = [
+        [
+                'scanInterface'          : 'me.hutcwp.auto.IMainPage'
+                // scanSuperClasses 会自动被加入到exclude中，下面的exclude只作为演示，其实可以不用手动添加
+                , 'scanSuperClasses'     : ['com.billy.android.autoregister.demo.BaseCategory']
+                , 'codeInsertToClassName': 'me.hutcwp.auto.MainPageManager'
+                //未指定codeInsertToMethodName，默认插入到static块中，故此处register必须为static方法
+                , 'registerMethodName'   : 'register' //
+                , 'exclude'              : [
+                //排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                'com.billy.android.autoregister.demo.BaseCategory'.replaceAll('\\.', '/') //排除这个基类
+        ]
+        ],
+        [
+                'scanInterface'           : 'me.hutcwp.IMainPage'
+                , 'codeInsertToClassName' : 'com.hutcwp.host.MainPageManager'
+                , 'codeInsertToMethodName': 'init' //非static方法
+                , 'registerMethodName'    : 'register' //非static方法
+        ]
+]
+
+autoregister {
+    registerInfo = registerInfoList
+    cacheEnabled = true
+}

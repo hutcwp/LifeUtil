@@ -47,6 +47,7 @@ class SelectCityActivity : AppCompatActivity() {
 
         if (cityCode != null) {
             startActivity(Intent(this, WeatherInfoActivity::class.java))
+            finish()
         }
     }
 }

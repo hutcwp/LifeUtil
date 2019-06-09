@@ -24,11 +24,17 @@ import club.hutcwp.lifeutil.util.DoubleClickExit
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import me.hutcwp.auto.IMainPage
+import me.hutcwp.log.MLog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 @Route(path = "/read/main")
 class MainActivity : BaseActivity() {
+
+    init {
+        MLog.info("hutcwp","初始化")
+    }
 
     private var mDrawerLayout: DrawerLayout? = null
 

@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import me.hutcwp.BaseConfig
+import me.hutcwp.auto.MainPageManager
 import me.hutcwp.log.MLog
 
 class SplashActivity : AppCompatActivity() {
@@ -18,7 +19,6 @@ class SplashActivity : AppCompatActivity() {
         MLog.warn(TAG, "MainActivity:onCreate")
         MLog.info(TAG, "MainActivity:onCreate")
         MLog.debug(TAG, "MainActivity: currentTopActivity = ${BaseConfig.getTopActivity()}")
-
 
         Handler().postDelayed({
             ARouter.getInstance().build("/homepage/home").navigation()

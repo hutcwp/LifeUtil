@@ -5,18 +5,19 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
+import me.hutcwp.BaseConfig
 import me.hutcwp.log.MLog
 
-class MainActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_splash)
 
         MLog.debug(TAG, "MainActivity:onCreate")
         MLog.warn(TAG, "MainActivity:onCreate")
         MLog.info(TAG, "MainActivity:onCreate")
-        MLog.debug(TAG, "MainActivity: s = %s", TAG)
+        MLog.debug(TAG, "MainActivity: currentTopActivity = ${BaseConfig.getTopActivity()}")
 
 
         Handler().postDelayed({

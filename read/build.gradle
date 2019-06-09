@@ -65,7 +65,7 @@ dependencies {
 
     implementation 'hutcwp:mvppresenter:1.0.9'
     annotationProcessor 'hutcwp:mvppresenter-compiler:1.0.8'
-    compile project(path: ':cartoon')
+//    compile project(path: ':cartoon')
     compile project(path: ':base')
 
     implementation 'com.alibaba:arouter-api:1.5.0'

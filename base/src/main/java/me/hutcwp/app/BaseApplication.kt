@@ -1,6 +1,9 @@
 package me.hutcwp.app
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
+import me.hutcwp.BaseConfig
 import me.hutcwp.log.MLog
 import kotlin.reflect.KClass
 
@@ -14,7 +17,6 @@ import kotlin.reflect.KClass
 abstract class BaseApplication : Application() {
 
     private val logicList: MutableList<BaseAppLogic> = mutableListOf()
-
     private val logicClassSet: MutableSet<KClass<out BaseAppLogic>> = mutableSetOf()
 
     protected fun registerAppLogicClass(clazz: KClass<out BaseAppLogic>) {
@@ -22,12 +24,36 @@ abstract class BaseApplication : Application() {
     }
 
     private fun registerAppLogic(logic: BaseAppLogic) {
-        // todo 判断唯一性
         logicList.add(logic)
     }
 
     override fun onCreate() {
         super.onCreate()
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityPaused(p0: Activity?) {
+            }
+
+            override fun onActivityStarted(p0: Activity?) {
+            }
+
+            override fun onActivityDestroyed(p0: Activity?) {
+            }
+
+            override fun onActivitySaveInstanceState(p0: Activity?, p1: Bundle?) {
+            }
+
+            override fun onActivityStopped(p0: Activity?) {
+            }
+
+            override fun onActivityResumed(activity: Activity?) {
+                BaseConfig.setTopActivity(activity)
+            }
+
+            override fun onActivityCreated(activity: Activity?, bundle: Bundle?) {
+                BaseConfig.setTopActivity(activity)
+            }
+        })
+
         initLogic()
         initInstance()
         logicList.forEach {

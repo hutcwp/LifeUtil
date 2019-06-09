@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/homepage" />
             <option value="$PROJECT_DIR$/host" />
             <option value="$PROJECT_DIR$/read" />
+            <option value="$PROJECT_DIR$/weather" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MainGameActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line_v1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line_v2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <RelativeLayout
+        android:id="@+id/game_status"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#545"
+        app:layout_constraintBottom_toTopOf="@id/guide_line_v1"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/game_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#E91E63"
+        app:layout_constraintBottom_toTopOf="@id/guide_line_v2"
+        app:layout_constraintTop_toBottomOf="@id/guide_line_v1"
+        app:layout_constraintVertical_weight="8">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/game_controller"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#790AE8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guide_line_v2"
+        app:layout_constraintVertical_weight="2">
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

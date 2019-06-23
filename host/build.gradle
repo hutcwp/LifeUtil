@@ -55,6 +55,7 @@ dependencies {
     compile project(path: ':homepage')
     compile project(path: ':read')
     compile project(path: ':weather')
+    compile project(path: ':game')
 }
 repositories {
     mavenCentral()

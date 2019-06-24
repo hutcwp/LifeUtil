@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.hutcwp.game.R
+import me.hutcwp.event.IEventCompat
 
 /**
  *
@@ -14,7 +15,7 @@ import com.hutcwp.game.R
  * YY: 909076244
  *
  **/
-class GameStatusComponent private constructor() : Fragment() {
+class GameStatusComponent private constructor() : Fragment(), IEventCompat {
 
     companion object {
         fun Instance(): GameStatusComponent {
@@ -25,5 +26,16 @@ class GameStatusComponent private constructor() : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.game_layout_game_status, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onEventBind()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onUnEventBind()
     }
 }

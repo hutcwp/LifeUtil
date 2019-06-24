@@ -1,5 +1,9 @@
 package com.hutcwp.game
 
+import com.hutcwp.game.event.GameEndEvent
+import com.hutcwp.game.event.GameStartEvent
+import org.greenrobot.eventbus.EventBus
+
 /**
  *
  * Created by hutcwp on 2019-06-23 18:48
@@ -12,12 +16,12 @@ object GameManager {
     private const val TAG = "GameManager"
 
 
-    fun startNewGame(){
-
+    fun GameStart(){
+        EventBus.getDefault().post(GameStartEvent())
     }
 
-    fun finishGame() {
-
+    fun GameOver() {
+        EventBus.getDefault().post(GameEndEvent())
 
     }
 

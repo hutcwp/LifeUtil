@@ -3,7 +3,11 @@
     package="com.hutcwp.game">
 
     <application>
-        <activity android:name=".ui.MainGameActivity"></activity>
+        <activity
+            android:name=".ui.MainGameActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,19 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_status"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <View
+        android:id="@+id/v_dividing_v_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#12D822"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tvNick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:layout_marginStart="20dp"
-        android:text="回合数：1" />
+        android:text="姓名"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_dividing_v_1" />
 
     <TextView
+        android:id="@+id/tvYear"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="[公元]"
+        app:layout_constraintBottom_toBottomOf="@id/tvNick"
+        app:layout_constraintLeft_toRightOf="@id/tvNick" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:text="[1年]"
+        app:layout_constraintBottom_toBottomOf="@id/tvNick"
+        app:layout_constraintLeft_toRightOf="@id/tvYear" />
+
+    <View
+        android:id="@+id/v_dividing"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvOld"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:text="年龄: "
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tvStrength"
+        app:layout_constraintTop_toTopOf="@id/v_dividing"
+        app:layout_constraintWidth_percent="0.25" />
+
+    <TextView
+        android:id="@+id/tvStrength"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="体力: "
+        app:layout_constraintLeft_toRightOf="@id/tvOld"
+        app:layout_constraintRight_toLeftOf="@+id/tvTroops"
+        app:layout_constraintTop_toTopOf="@id/v_dividing"
+        app:layout_constraintWidth_percent="0.25" />
+
+    <TextView
+        android:id="@+id/tvTroops"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="兵力: "
+        app:layout_constraintLeft_toRightOf="@id/tvStrength"
+        app:layout_constraintRight_toLeftOf="@+id/tvMoney"
+        app:layout_constraintTop_toTopOf="@id/v_dividing"
+        app:layout_constraintWidth_percent="0.25" />
+
+    <TextView
+        android:id="@+id/tvMoney"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="金钱: "
+        app:layout_constraintLeft_toRightOf="@id/tvTroops"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/v_dividing"
+        app:layout_constraintWidth_percent="0.25" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

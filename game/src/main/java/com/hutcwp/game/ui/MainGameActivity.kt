@@ -17,8 +17,10 @@ class MainGameActivity : AppCompatActivity() {
 
     private fun initView() {
         val gameStatusComponent = GameStatusComponent.Instance()
+        val mapComponent = MapComponent.Instance()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.game_status, gameStatusComponent)
+                .replace(R.id.game_main_map, mapComponent)
                 .commitAllowingStateLoss()
     }
 }

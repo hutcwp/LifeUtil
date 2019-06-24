@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import com.hutcwp.game.R
-import me.hutcwp.event.IEventCompat
+import com.hutcwp.game.util.FontUtil
+import kotlinx.android.synthetic.main.game_layout_game_status.*
+
 
 /**
  *
@@ -15,7 +18,15 @@ import me.hutcwp.event.IEventCompat
  * YY: 909076244
  *
  **/
-class GameStatusComponent private constructor() : Fragment(), IEventCompat {
+class GameStatusComponent private constructor() : BaseComponent() {
+
+    private var tvTime: TextView? = null
+    private var tvNick: TextView? = null
+    private var tvYear: TextView? = null
+    private var tvOld: TextView? = null
+    private var tvStrength: TextView? = null
+    private var tvTroops: TextView? = null
+    private var tvMoney: TextView? = null
 
     companion object {
         fun Instance(): GameStatusComponent {
@@ -25,17 +36,31 @@ class GameStatusComponent private constructor() : Fragment(), IEventCompat {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.game_layout_game_status, container, false)
+        val rootView = inflater.inflate(R.layout.game_layout_game_status, container, false)
+        initView(rootView)
+        return rootView
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        onEventBind()
+    private fun initView(rootView: View?) {
+        tvTime = rootView?.findViewById(R.id.tvTime)
+        tvNick = rootView?.findViewById(R.id.tvNick)
+        tvYear = rootView?.findViewById(R.id.tvYear)
+        tvOld = rootView?.findViewById(R.id.tvOld)
+        tvStrength = rootView?.findViewById(R.id.tvStrength)
+        tvTroops = rootView?.findViewById(R.id.tvTroops)
+        tvMoney = rootView?.findViewById(R.id.tvMoney)
+
+        setFonts()
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        onUnEventBind()
+    private fun setFonts() {
+        FontUtil.setFont(tvTime, R.font.iconfont)
+        FontUtil.setFont(tvNick, R.font.iconfont)
+        FontUtil.setFont(tvYear, R.font.iconfont)
+        FontUtil.setFont(tvOld, R.font.iconfont)
+        FontUtil.setFont(tvStrength, R.font.iconfont)
+        FontUtil.setFont(tvTroops, R.font.iconfont)
+        FontUtil.setFont(tvMoney, R.font.iconfont)
     }
+
 }

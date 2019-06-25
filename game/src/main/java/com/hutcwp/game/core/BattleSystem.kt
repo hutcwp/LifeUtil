@@ -38,13 +38,14 @@ enum class BattleSystem {
                 hurt = 0
             }
             def.hp = def.hp - hurt
-            sb.append("${def.nick}受到来自${atk.nick}的伤害。").append("\n")
-            sb.append("${def.nick}生命值减少$hurt").append("\n")
+            sb.append("${def.nick} 受到来自 ${atk.nick} 的伤害").append("\n")
+            sb.append("${def.nick} 生命值减少 $hurt ").append("\n")
             action(sb.toString())
             // 改变下角色
             val tmp = atk
             atk = def
             def = tmp
+            Thread.sleep(500)
         }
         MLog.info(TAG, "battle end")
         return own.hp > 0

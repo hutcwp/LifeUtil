@@ -7,7 +7,6 @@ import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.hutcwp.game.R
 import com.hutcwp.game.bean.Enemy
-import com.hutcwp.game.bean.Role
 import com.hutcwp.game.core.BattleSystem
 import com.hutcwp.game.core.GameManager
 import kotlinx.android.synthetic.main.game_layout_battle_scene.*
@@ -54,18 +53,31 @@ class BattleSceneComponent private constructor() : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         tvBattleDetail.text = "开始战斗..."
-        Handler().postDelayed({
+        btnFinish.setOnClickListener {
+            MLog.info(TAG,"click finish button.")
+            dismiss()
+        }
+        Thread(Runnable {
             val player = GameManager.getInstance().getPlayer()
             val enemy = mockEnemy()
             MLog.info(TAG, "post delay")
-            BattleSystem.INSTANCE.battle(player!!, enemy) {
-                tvBattleDetail.text = it
-                MLog.info(TAG, "text = $it")
-                Thread.sleep(200)
+            val result = BattleSystem.INSTANCE.battle(player!!, enemy) {
+                activity?.runOnUiThread {
+                    Handler().post {
+                        tvBattleDetail.text = it
+                        MLog.info(TAG, "text = $it")
+                    }
+                }
             }
-        }, 1000)
+            activity?.runOnUiThread {
+                if (result) {
+                    tvTitle.text = "战斗胜利"
+                } else {
+                    tvTitle.text = "战斗失败"
+                }
+            }
+        }).start()
     }
 
     private fun mockEnemy(): Enemy {

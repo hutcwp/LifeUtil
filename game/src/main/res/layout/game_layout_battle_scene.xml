@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center"
+    android:background="@drawable/layout_bg_circle">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="战斗详情"
+        android:textColor="#000000"
+        android:textSize="22sp" />
+
+    <View
+        android:id="@+id/dividing_top"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginTop="10dp"
+        android:background="#efefef" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/dividing_bottom"
+        android:layout_below="@id/dividing_top">
+
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/tvBattleDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/dividing_bottom"
+            android:layout_below="@id/dividing_top"
+            android:textColor="#5C5555"
+            android:text="详情" />
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/dividing_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="48dp"
+        android:background="#efefef" />
+
+    <Button
+        android:id="@+id/btnFinish"
+        android:layout_width="80dp"
+        android:layout_height="28dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/hp_btn_circle_yellow"
+        android:text="知  悉"
+        android:textColor="#000000" />
+
+</RelativeLayout>

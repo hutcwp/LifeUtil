@@ -1,7 +1,11 @@
 package com.hutcwp.game.core
 
+import com.hutcwp.game.bean.GameInfo
+import com.hutcwp.game.bean.Player
 import com.hutcwp.game.event.GameEndEvent
+import com.hutcwp.game.event.GameInfoChangeEvent
 import com.hutcwp.game.event.GameStartEvent
+import com.hutcwp.game.event.PlayerInfoChangeEvent
 import me.hutcwp.log.MLog
 import org.greenrobot.eventbus.EventBus
 
@@ -12,16 +16,19 @@ import org.greenrobot.eventbus.EventBus
  * YY: 909076244
  * 游戏主程序
  **/
-class GameManager private constructor() {
+class GameManager private constructor() : IGameCore {
 
 
+    private var mCurPlayer: Player? = null
+    private var mCurGameInfo: GameInfo? = null
     private var mGameStatus = GameStatus.UnKnow
-
 
     fun onGameStart() {
         MLog.info(TAG, "mGameStatus = $mGameStatus")
         if (mGameStatus != GameStatus.Start) {
             updataGameStatus(GameStatus.Start)
+            initPlayerInfo()
+            initGameInfo()
             EventBus.getDefault().post(GameStartEvent())
         } else {
             //
@@ -34,7 +41,32 @@ class GameManager private constructor() {
             updataGameStatus(GameStatus.End)
             EventBus.getDefault().post(GameEndEvent())
         }
+    }
 
+    private fun initGameInfo() {
+        val gameInfo = GameInfo()
+        gameInfo.time = 1
+        gameInfo.gameStatus = mGameStatus
+        updataGameInfo(gameInfo)
+    }
+
+    private fun initPlayerInfo() {
+        val player = Player()
+        player.nick = "昵称而已咯"
+        player.hp = 50
+        player.attack = 10
+        player.defence = 5
+        updataPlayerInfo(player)
+    }
+
+    fun updataPlayerInfo(player: Player) {
+        mCurPlayer = player
+        EventBus.getDefault().post(PlayerInfoChangeEvent(player))
+    }
+
+    fun updataGameInfo(gameInfo: GameInfo) {
+        mCurGameInfo = gameInfo
+        EventBus.getDefault().post(GameInfoChangeEvent(gameInfo))
     }
 
     private fun updataGameStatus(status: GameStatus) {
@@ -42,6 +74,15 @@ class GameManager private constructor() {
         mGameStatus = status
     }
 
+    //=============================下面是接口实现=========================
+
+    override fun getPlayer(): Player? {
+        return mCurPlayer
+    }
+
+    override fun getGameInfo(): GameInfo? {
+        return mCurGameInfo
+    }
 
     /**
      * 游戏状态

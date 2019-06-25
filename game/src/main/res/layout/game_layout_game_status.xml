@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="[公元]"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="@id/tvNick"
         app:layout_constraintLeft_toRightOf="@id/tvNick" />
 
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
-        android:text="[1年]"
+        android:text="回合 1"
         app:layout_constraintBottom_toBottomOf="@id/tvNick"
         app:layout_constraintLeft_toRightOf="@id/tvYear" />
 
@@ -53,38 +53,39 @@
         android:id="@+id/tvOld"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:text="年龄: "
+        android:text="类型: "
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tvStrength"
+        app:layout_constraintRight_toLeftOf="@+id/tvHp"
         app:layout_constraintTop_toTopOf="@id/v_dividing"
         app:layout_constraintWidth_percent="0.25" />
 
     <TextView
-        android:id="@+id/tvStrength"
+        android:id="@+id/tvHp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="体力: "
+        android:text="生命值: "
         app:layout_constraintLeft_toRightOf="@id/tvOld"
-        app:layout_constraintRight_toLeftOf="@+id/tvTroops"
+        app:layout_constraintRight_toLeftOf="@+id/tvAttack"
         app:layout_constraintTop_toTopOf="@id/v_dividing"
         app:layout_constraintWidth_percent="0.25" />
 
     <TextView
-        android:id="@+id/tvTroops"
+        android:id="@+id/tvAttack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="兵力: "
-        app:layout_constraintLeft_toRightOf="@id/tvStrength"
-        app:layout_constraintRight_toLeftOf="@+id/tvMoney"
+        android:text="攻击: "
+        app:layout_constraintLeft_toRightOf="@id/tvHp"
+        app:layout_constraintRight_toLeftOf="@+id/tvDenfence"
         app:layout_constraintTop_toTopOf="@id/v_dividing"
         app:layout_constraintWidth_percent="0.25" />
 
     <TextView
-        android:id="@+id/tvMoney"
+        android:id="@+id/tvDenfence"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="金钱: "
-        app:layout_constraintLeft_toRightOf="@id/tvTroops"
+        android:text="防御: "
+        app:layout_constraintLeft_toRightOf="@id/tvAttack"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/v_dividing"
         app:layout_constraintWidth_percent="0.25" />

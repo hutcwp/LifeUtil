@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="440dp"
     android:orientation="vertical">
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_controller"
+        android:layout_width="140dp"
+        android:background="#efefef"
+        android:gravity="center_horizontal"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/btnViewerInfo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="查看信息" />
+
+        <Button
+            android:id="@+id/btnAttack"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnViewerInfo"
+            android:text="攻击" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_show_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/rl_controller">
+
+    </RelativeLayout>
+
+</RelativeLayout>

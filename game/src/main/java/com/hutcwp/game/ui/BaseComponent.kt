@@ -18,6 +18,19 @@ import org.greenrobot.eventbus.ThreadMode
  **/
 open class BaseComponent : Fragment(), IEventCompat {
 
+    private var mRoot: Fragment? = null
+
+    private var components:MutableList<BaseComponent>?= mutableListOf()
+
+
+    fun setRoot(root: Fragment) {
+        mRoot = root
+    }
+
+    fun getRoot(): Fragment? {
+       return mRoot
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     open fun onGameStartEvent(event: GameStartEvent) {
     }

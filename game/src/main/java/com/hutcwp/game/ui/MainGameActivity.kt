@@ -1,5 +1,7 @@
 package com.hutcwp.game.ui
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -37,6 +39,21 @@ class MainGameActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        showExitDialog()
+    }
+
+    private fun showExitDialog() {
+        val bulider = AlertDialog.Builder(this)
+//        bulider.setIcon()//在title的左边显示一个图片
+        bulider.setTitle("提示")
+        bulider.setMessage("确定要退出游戏吗？")
+        bulider.setPositiveButton("确定") { dialog, arg1 ->
+            dialog.dismiss()
+            this@MainGameActivity.finish()
+        }
+        bulider.setNegativeButton("取消") { dialog, arg1 ->
+            dialog.dismiss()
+        }
+        bulider.create().show()
     }
 }

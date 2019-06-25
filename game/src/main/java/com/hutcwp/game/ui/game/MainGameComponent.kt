@@ -16,6 +16,8 @@ import com.hutcwp.game.ui.BaseComponent
  **/
 class MainGameComponent : BaseComponent() {
 
+    var components: MutableList<BaseComponent>? = mutableListOf()
+
     companion object {
         fun newInstance(): MainGameComponent {
             return MainGameComponent()
@@ -30,9 +32,18 @@ class MainGameComponent : BaseComponent() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val gameStatusComponent = GameStatusComponent.newInstance()
         val mapComponent = MapComponent.newInstance()
+        val gameControllerComponent = GameControllerComponent.newInstance()
+        gameStatusComponent.setRoot(this)
+        mapComponent.setRoot(this)
+        gameControllerComponent.setRoot(this)
+        components?.add(gameStatusComponent)
+        components?.add(mapComponent)
+        components?.add(gameControllerComponent)
         childFragmentManager.beginTransaction()
                 .replace(R.id.game_status, gameStatusComponent)
                 .replace(R.id.game_main_map, mapComponent)
+                .replace(R.id.game_controller, gameControllerComponent)
                 .commitAllowingStateLoss()
     }
+
 }

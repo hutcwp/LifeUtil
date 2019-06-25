@@ -19,11 +19,11 @@ import org.greenrobot.eventbus.ThreadMode
 open class BaseComponent : Fragment(), IEventCompat {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: GameStartEvent) {
+    open fun onGameStartEvent(event: GameStartEvent) {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: GameEndEvent) {
+    open fun onGameEndEvent(event: GameEndEvent) {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

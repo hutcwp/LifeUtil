@@ -1,4 +1,4 @@
-package com.hutcwp.game
+package com.hutcwp.game.bean
 
 /**
  *

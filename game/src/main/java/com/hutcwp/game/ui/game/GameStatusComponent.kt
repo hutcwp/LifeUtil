@@ -1,14 +1,13 @@
-package com.hutcwp.game.ui
+package com.hutcwp.game.ui.game
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import com.hutcwp.game.R
+import com.hutcwp.game.ui.BaseComponent
 import com.hutcwp.game.util.FontUtil
-import kotlinx.android.synthetic.main.game_layout_game_status.*
 
 
 /**
@@ -29,7 +28,7 @@ class GameStatusComponent private constructor() : BaseComponent() {
     private var tvMoney: TextView? = null
 
     companion object {
-        fun Instance(): GameStatusComponent {
+        fun newInstance(): GameStatusComponent {
             return GameStatusComponent()
         }
     }

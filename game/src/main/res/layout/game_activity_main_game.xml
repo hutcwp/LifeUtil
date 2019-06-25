@@ -1,41 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainGameActivity">
 
     <RelativeLayout
-        android:id="@+id/game_status"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/game_main_map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintVertical_weight="8">
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/game_npc_list"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/game_controller"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_weight="2">
-
-    </RelativeLayout>
 
 </RelativeLayout>

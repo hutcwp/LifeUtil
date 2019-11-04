@@ -1,6 +1,5 @@
 package me.hutcwp.auto;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 

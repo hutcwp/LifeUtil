@@ -1,12 +1,12 @@
-package com.hutcwp.host
+package com.hutcwp.host.activity
 
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
+import com.hutcwp.host.R
 import me.hutcwp.BaseConfig
-import me.hutcwp.auto.MainPageManager
 import me.hutcwp.log.MLog
 
 class SplashActivity : AppCompatActivity() {

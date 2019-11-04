@@ -1,4 +1,4 @@
-package com.hutcwp.host.url
+package com.hutcwp.host.activity
 
 import android.app.Activity
 import android.os.Bundle

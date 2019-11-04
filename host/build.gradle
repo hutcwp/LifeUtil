@@ -57,6 +57,9 @@ dependencies {
     compile project(path: ':weather')
     compile project(path: ':game')
     compile project(path: ':blog')
+
+    // 本地异常捕捉框架：https://github.com/Ereza/CustomActivityOnCrash
+    implementation 'cat.ereza:customactivityoncrash:2.2.0'
 }
 repositories {
     mavenCentral()

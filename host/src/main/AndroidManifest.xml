@@ -25,14 +25,14 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon,android:name,android:theme">
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".url.SchemaFilterActivity">
+        <activity android:name=".activity.SchemaFilterActivity">
             <!-- Schame -->
             <intent-filter>
                 <data
@@ -45,6 +45,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.CrashActivity" />
     </application>
 
 </manifest>

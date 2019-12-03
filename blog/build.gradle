@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        signer {
+            storeFile file('/Users/hutcwp/Desktop/github/LifeUtil/key/signer.jks')
+            storePassword '123456'
+            keyAlias = 'key'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 28
 
     resourcePrefix "blog_"
@@ -27,6 +35,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.signer
         }
     }
 

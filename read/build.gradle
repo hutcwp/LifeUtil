@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     signingConfigs {
         signer {
-            storeFile file('/Users/hutcwp/Desktop/github/LifeUtil/key/signer.jks')
+            storeFile file('../key/signer.jks')
             storePassword '123456'
             keyAlias = 'key'
             keyPassword '123456'

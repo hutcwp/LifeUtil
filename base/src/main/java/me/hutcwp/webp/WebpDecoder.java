@@ -60,7 +60,7 @@ public class WebpDecoder implements GifDecoder {
 
     @Override
     public int getStatus() {
-        return 0;
+        return STATUS_OK;
     }
 
     @Override
@@ -180,7 +180,7 @@ public class WebpDecoder implements GifDecoder {
 
     @Override
     public int read(InputStream inputStream, int i) {
-        return 0;
+        return STATUS_OK;
     }
 
     @Override
@@ -206,7 +206,7 @@ public class WebpDecoder implements GifDecoder {
 
     @Override
     public int read(byte[] bytes) {
-        return 0;
+        return STATUS_OK;
     }
 
     @Override

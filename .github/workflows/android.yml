@@ -13,8 +13,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-     - name: Make gradlew executable
-       run: chmod +x ./gradlew
      - name: Build with Gradle
       run: ./gradlew build
       #      - run: curl -X POST ${{ secrets.WeChart_Push_URL }} -H 'content-type:application/json' -d '{ "channelName":"GitHubPlanAssistant","text":"Android程序已成功打包并提交fir.im！" }'

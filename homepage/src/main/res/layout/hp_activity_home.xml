@@ -22,6 +22,15 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
+        android:visibility="gone"
         android:clipChildren="false" />
+
+    <com.hutcwp.homepage.rv.DiscreteScrollView
+        android:id="@+id/discreteView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true">
+
+    </com.hutcwp.homepage.rv.DiscreteScrollView>
 
 </RelativeLayout>

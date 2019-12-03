@@ -1,37 +1,62 @@
 package com.hutcwp.host.activity
 
 import android.os.Bundle
-import android.os.Handler
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hutcwp.host.R
-import me.hutcwp.BaseConfig
-import me.hutcwp.log.MLog
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_splash.*
+import java.util.concurrent.TimeUnit
 
+/**
+ *  闪屏页
+ */
 class SplashActivity : AppCompatActivity() {
+
+    private var mCountDownDisposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        MLog.debug(TAG, "MainActivity:onCreate")
-        MLog.warn(TAG, "MainActivity:onCreate")
-        MLog.info(TAG, "MainActivity:onCreate")
-        MLog.debug(TAG, "MainActivity: currentTopActivity = ${BaseConfig.getTopActivity()}")
-
-        Handler().postDelayed({
-            ARouter.getInstance().build("/homepage/home").navigation()
-            finish()
-        }, 500)
+        tvCountDown?.setOnClickListener {
+            toHomePage()
+        }
+        startCountDownToHomePage()
     }
 
+    private fun startCountDownToHomePage() {
+        mCountDownDisposable = Observable.interval(0, 1, TimeUnit.SECONDS)//延迟0，间隔1s，单位秒
+                .take(COUNT_DOWN_SECOND + 1)//限制发射次数（因为倒计时要显示 3 2 1 0 四个数字）
+                .map {
+                    COUNT_DOWN_SECOND - it
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Consumer {
+                    tvCountDown?.text = "点击跳过(${it}s)"
+                    if (it == 0L) {
+                        toHomePage()
+                    }
+                })
+    }
 
-    fun click(view: View) {
+    private fun toHomePage() {
         ARouter.getInstance().build("/homepage/home").navigation()
+        finish()
+    }
+
+    override fun onDestroy() {
+        mCountDownDisposable?.dispose()
+        super.onDestroy()
     }
 
     companion object {
+        const val COUNT_DOWN_SECOND = 5L
         const val TAG = "MainActivity"
     }
 }

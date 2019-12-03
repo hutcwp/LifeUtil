@@ -5,7 +5,6 @@ import android.content.Context
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
-import com.facebook.stetho.Stetho
 import com.hutcwp.homepage.HomePageInitLogic
 import com.hutcwp.host.activity.CrashActivity
 import com.hutcwp.host.activity.SplashActivity
@@ -34,7 +33,9 @@ class mApplication : BaseApplication() {
         super.onCreate()
         context = applicationContext
         BaseConfig.setApplicationContext(applicationContext)
-        Stetho.initializeWithDefaults(this);
+        if (isDebug()) {
+//            Stetho.initializeWithDefaults(this)
+        }
         webpInit()
         aRouterInit()
         // Crash 捕捉界面

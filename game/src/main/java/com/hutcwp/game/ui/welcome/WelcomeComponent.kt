@@ -12,8 +12,6 @@ import com.hutcwp.game.ui.BaseComponent
 import com.hutcwp.game.util.PageManager
 import kotlinx.android.synthetic.main.game_layout_welcome.*
 import me.hutcwp.log.MLog
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 
 /**

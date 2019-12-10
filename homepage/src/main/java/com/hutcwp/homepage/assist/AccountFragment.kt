@@ -4,17 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.hutcwp.homepage.R
 
 class AccountFragment : Fragment() {
 
-    private var copyLayout: CopyableLayout? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private var clAccount: CopyableLayout? = null
+    private var clPassword: CopyableLayout? = null
+    private var btnAdd: Button? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -24,19 +22,20 @@ class AccountFragment : Fragment() {
     }
 
     private fun initView(root: View) {
-        copyLayout = root.findViewById(R.id.copyLayout)
-        copyLayout?.setText("这是要被copy的内容")
-    }
+        clAccount = root.findViewById(R.id.clAccount)
+        clPassword = root.findViewById(R.id.clPassword)
+        btnAdd = root.findViewById(R.id.btnAdd)
 
-
-    override fun onDetach() {
-        super.onDetach()
+        clAccount?.setText(Account.getAccountName().toString())
+        clPassword?.setText(Account.getAccountPassword().toString())
+        btnAdd?.setOnClickListener {
+            val addFragment = AddFragment.newInstance()
+            addFragment.show(childFragmentManager, AddFragment.TAG)
+        }
     }
 
 
     companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) = AccountFragment()
+        private const val TAG = "AccountFragment"
     }
 }

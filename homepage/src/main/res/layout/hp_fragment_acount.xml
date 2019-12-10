@@ -6,9 +6,26 @@
     tools:context=".assist.AccountFragment">
 
     <com.hutcwp.homepage.assist.CopyableLayout
-        android:id="@+id/copyLayout"
+        android:id="@+id/clAccount"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp" />
+
+    <com.hutcwp.homepage.assist.CopyableLayout
+        android:id="@+id/clPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:layout_toEndOf="@id/clAccount" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="添加" />
 
     <EditText
         android:layout_width="match_parent"

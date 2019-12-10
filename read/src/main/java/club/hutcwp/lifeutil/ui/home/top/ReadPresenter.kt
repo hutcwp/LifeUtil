@@ -14,7 +14,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 
 
 /**
@@ -59,7 +59,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
             }
         }, { throwable ->
             Log.i("cwp", "t = $throwable")
-            Toast.makeText(BaseConfig.getApplicationContext(), "解析发生过程!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(BasicConfig.getApplicationContext(), "解析发生过程!", Toast.LENGTH_SHORT).show()
         })
     }
 

@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.hutcwp.homepage.HomePageInitLogic
 import com.hutcwp.host.activity.CrashActivity
 import com.hutcwp.host.activity.SplashActivity
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
 import me.hutcwp.cartoon.app.CartoonInitLogic
 import me.hutcwp.webp.WebpBytebufferDecoder
@@ -32,7 +32,7 @@ class mApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-        BaseConfig.setApplicationContext(applicationContext)
+        BasicConfig.setApplicationContext(applicationContext)
         if (isDebug()) {
 //            Stetho.initializeWithDefaults(this)
         }

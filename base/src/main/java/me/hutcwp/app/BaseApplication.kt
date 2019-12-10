@@ -3,7 +3,7 @@ package me.hutcwp.app
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 import me.hutcwp.log.MLog
 import kotlin.reflect.KClass
 
@@ -46,11 +46,11 @@ abstract class BaseApplication : Application() {
             }
 
             override fun onActivityResumed(activity: Activity?) {
-                BaseConfig.setTopActivity(activity)
+//                BasicConfig.setTopActivity(activity)
             }
 
             override fun onActivityCreated(activity: Activity?, bundle: Bundle?) {
-                BaseConfig.setTopActivity(activity)
+//                BasicConfig.setTopActivity(activity)
             }
         })
 

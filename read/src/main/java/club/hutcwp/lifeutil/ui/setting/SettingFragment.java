@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import me.hutcwp.BaseConfig;
+import me.hutcwp.BasicConfig;
 
 
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
@@ -52,8 +52,8 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         cleanCache.setSummary(
                 FileSizeUtil.INSTANCE.
                         getAutoFileOrFilesSize(
-                                FileUtil.INSTANCE.getInternalCacheDir(BaseConfig.getApplicationContext()),
-                                FileUtil.INSTANCE.getExternalCacheDir(BaseConfig.getApplicationContext())));
+                                FileUtil.INSTANCE.getInternalCacheDir(BasicConfig.getApplicationContext()),
+                                FileUtil.INSTANCE.getExternalCacheDir(BasicConfig.getApplicationContext())));
         theme.setOnPreferenceClickListener(this);
         cleanCache.setOnPreferenceClickListener(this);
 
@@ -62,11 +62,11 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference == cleanCache) {
-            disposable = Observable.just(FileUtil.INSTANCE.delete(FileUtil.INSTANCE.getInternalCacheDir(BaseConfig.getApplicationContext())))
+            disposable = Observable.just(FileUtil.INSTANCE.delete(FileUtil.INSTANCE.getInternalCacheDir(BasicConfig.getApplicationContext())))
                     .map(new Function<Boolean, Boolean>() {
                         @Override
                         public Boolean apply(Boolean result) throws Exception {
-                            return result && FileUtil.INSTANCE.delete(FileUtil.INSTANCE.getExternalCacheDir(BaseConfig.getApplicationContext()));
+                            return result && FileUtil.INSTANCE.delete(FileUtil.INSTANCE.getExternalCacheDir(BasicConfig.getApplicationContext()));
 
                         }
                     })
@@ -78,8 +78,8 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
                             cleanCache.setSummary(
                                     FileSizeUtil.INSTANCE.
                                             getAutoFileOrFilesSize(
-                                                    FileUtil.INSTANCE.getInternalCacheDir(BaseConfig.getApplicationContext()),
-                                                    FileUtil.INSTANCE.getExternalCacheDir(BaseConfig.getApplicationContext())));
+                                                    FileUtil.INSTANCE.getInternalCacheDir(BasicConfig.getApplicationContext()),
+                                                    FileUtil.INSTANCE.getExternalCacheDir(BasicConfig.getApplicationContext())));
                             Snackbar.make(getView(), "缓存已清除 (*^__^*)", Snackbar.LENGTH_SHORT).show();
 
                         }

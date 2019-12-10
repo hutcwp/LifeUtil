@@ -6,7 +6,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.text.DecimalFormat
 
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 
 /**
  * Created by hugo on 2016/2/19 0019.
@@ -62,7 +62,7 @@ object FileSizeUtil {
             e.printStackTrace()
         }
 
-        return Formatter.formatFileSize(BaseConfig.getApplicationContext(), blockSize)
+        return Formatter.formatFileSize(BasicConfig.getApplicationContext(), blockSize)
     }
 
     fun getAutoFileOrFilesSize(vararg filePaths: String): String {
@@ -82,7 +82,7 @@ object FileSizeUtil {
 
             totalSize = totalSize + blockSize
         }
-        return Formatter.formatFileSize(BaseConfig.getApplicationContext(), totalSize)
+        return Formatter.formatFileSize(BasicConfig.getApplicationContext(), totalSize)
     }
 
 

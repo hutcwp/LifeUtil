@@ -10,7 +10,7 @@ import java.io.FileWriter
 import java.io.IOException
 import java.io.InputStreamReader
 
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 
 /**
  * Created by liyu on 2016/12/1.
@@ -155,9 +155,9 @@ object FileUtil {
     fun getFileDir(filePath: String): String {
         var dir: String
         if (isExistSDCard) {
-            dir = BaseConfig.getApplicationContext()!!.getExternalFilesDir("")!!.absolutePath
+            dir = BasicConfig.getApplicationContext()!!.getExternalFilesDir("")!!.absolutePath
         } else {
-            dir = BaseConfig.getApplicationContext()!!.filesDir.absolutePath
+            dir = BasicConfig.getApplicationContext()!!.filesDir.absolutePath
         }
 
         if (TextUtils.isEmpty(filePath))

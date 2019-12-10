@@ -46,7 +46,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun toHomePage() {
-        ARouter.getInstance().build("/homepage/home").navigation()
+//        ARouter.getInstance().build("/homepage/home").navigation()
+        ARouter.getInstance().build("/homepage/assist").navigation()
         finish()
     }
 
@@ -56,7 +57,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val COUNT_DOWN_SECOND = 5L
+        const val COUNT_DOWN_SECOND = 3L
         const val TAG = "MainActivity"
     }
 }

@@ -3,7 +3,8 @@
     package="com.hutcwp.homepage">
 
     <application>
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".assist.AssistActivity"></activity>
+        <activity android:name=".HomeActivity" />
     </application>
 
 </manifest>

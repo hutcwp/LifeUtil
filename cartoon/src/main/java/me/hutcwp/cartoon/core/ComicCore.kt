@@ -3,7 +3,7 @@ package me.hutcwp.cartoon.core
 import android.util.Log
 import androidx.annotation.NonNull
 import io.reactivex.Observable
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 import me.hutcwp.cartoon.bean.Comic
 import me.hutcwp.cartoon.db.ComicDBRepo
 import me.hutcwp.cartoon.db.Mapper
@@ -33,7 +33,7 @@ object ComicCore {
     private fun initPagesByDB() {
         mPages.clear()
         ComicDBRepo.getComicsByChapter(
-                BaseConfig.getApplicationContext(),
+                BasicConfig.getApplicationContext(),
                 mCurrentName,
                 mCurrentChapter)
                 .forEach {
@@ -46,7 +46,7 @@ object ComicCore {
         mPages.clear()
         mCurrentChapter++
         ComicDBRepo.getComicsByChapter(
-                BaseConfig.getApplicationContext(),
+                BasicConfig.getApplicationContext(),
                 mCurrentName,
                 mCurrentChapter)
                 .forEach {
@@ -58,7 +58,7 @@ object ComicCore {
     fun getCurrentChapter() {
         mPages.clear()
         ComicDBRepo.getComicsByChapter(
-                BaseConfig.getApplicationContext(),
+                BasicConfig.getApplicationContext(),
                 mCurrentName,
                 mCurrentChapter)
                 .forEach {
@@ -71,7 +71,7 @@ object ComicCore {
         mPages.clear()
         mCurrentChapter--
         ComicDBRepo.getComicsByChapter(
-                BaseConfig.getApplicationContext(),
+                BasicConfig.getApplicationContext(),
                 mCurrentName,
                 mCurrentChapter)
                 .forEach {

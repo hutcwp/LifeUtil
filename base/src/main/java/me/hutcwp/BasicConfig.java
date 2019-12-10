@@ -2,7 +2,6 @@ package me.hutcwp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 
 /**
@@ -10,8 +9,9 @@ import android.content.Context;
  * email: caiwenpeng@yy.com
  * YY: 909076244
  **/
-public class BaseConfig {
+public class BasicConfig {
 
+    private  BasicConfig mInstance = null;
 
     @SuppressLint("StaticFieldLeak")
     private static Activity mTopActivity = null;
@@ -26,13 +26,19 @@ public class BaseConfig {
         ApplicationContext = applicationContext;
     }
 
-    public static Activity getTopActivity() {
-        return mTopActivity;
-    }
+//    public static Activity getTopActivity() {
+//        return mTopActivity;
+//    }
+//
+//    public static Activity setTopActivity(Activity activity) {
+//        return mTopActivity = activity;
+//    }
 
-    public static Activity setTopActivity(Activity activity) {
-        return mTopActivity = activity;
+    public BasicConfig getInstance() {
+        if (mInstance == null) {
+            mInstance = new BasicConfig();
+        }
+        return mInstance;
     }
-
 
 }

@@ -49,41 +49,31 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'androidx.appcompat:appcompat:1.0.2'
-//    testImplementation 'junit:junit:4.12'
-//    androidTestImplementation 'androidx.test:runner:1.1.1'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-//
-//    compile 'com.caverock:androidsvg-aar:1.3'
-//    compile "com.facebook.fresco:animated-webp:1.9.0"
-//    compile 'com.github.bumptech.glide:glide:4.9.0'
-//    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-//    compile "com.github.bumptech.glide:okhttp3-integration:4.7.1"
+    api 'androidx.appcompat:appcompat:1.0.2'
 
-    compile "com.facebook.fresco:animated-base:1.9.0"
-    compile "com.facebook.fresco:animated-drawable:1.9.0"
-    compile "com.facebook.fresco:animated-webp:1.9.0"
-    compile "com.facebook.fresco:drawee:1.9.0"
-    compile "com.facebook.fresco:fbcore:1.9.0"
-    compile "com.facebook.fresco:imagepipeline:1.9.0"
-    compile "com.facebook.fresco:imagepipeline-base:1.9.0"
-    compile "com.facebook.fresco:webpsupport:1.9.0"
-    compile "com.facebook.soloader:soloader:0.3.0"
+    api "com.facebook.fresco:animated-base:1.9.0"
+    api "com.facebook.fresco:animated-drawable:1.9.0"
+    api "com.facebook.fresco:animated-webp:1.9.0"
+    api "com.facebook.fresco:drawee:1.9.0"
+    api "com.facebook.fresco:fbcore:1.9.0"
+    api "com.facebook.fresco:imagepipeline:1.9.0"
+    api "com.facebook.fresco:imagepipeline-base:1.9.0"
+    api "com.facebook.fresco:webpsupport:1.9.0"
+    api "com.facebook.soloader:soloader:0.3.0"
 
-    compile ("com.github.bumptech.glide:glide:4.7.1")
-    compile "com.github.bumptech.glide:okhttp3-integration:4.6.1"
-    compile 'com.squareup.okhttp3:okhttp:3.10.0'
-    compile 'com.alibaba:fastjson:1.1.68.android'
-    compile 'com.google.code.gson:gson:2.8.1'
-
+    api ("com.github.bumptech.glide:glide:4.7.1")
+    api "com.github.bumptech.glide:okhttp3-integration:4.6.1"
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
+    api 'com.alibaba:fastjson:1.1.68.android'
+    api 'com.google.code.gson:gson:2.8.1'
 
     compile 'io.reactivex.rxjava2:rxjava:2.1.11'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
 
     // Room
-    compile 'androidx.room:room-runtime:2.0.0'
+    api 'androidx.room:room-runtime:2.0.0'
 //    annotationProcessor 'androidx.room:room-compiler:2.0.0'
     kapt 'android.arch.persistence.room:compiler:2.0.0'
 
@@ -91,17 +81,11 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
-    compile 'com.github.YvesCheung:SlidableLayout:1.0.4.x'
-
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-23'
-
-    compile 'me.drakeet.multitype:multitype:4.0.0-alpha3'
-
+    api 'com.github.YvesCheung:SlidableLayout:1.0.4.x'
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-23'
+    api 'me.drakeet.multitype:multitype:4.0.0-alpha3'
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
-
-    compile 'org.greenrobot:eventbus:3.1.1'
-
-    compile 'com.yanzhenjie.permission:x:2.0.1'
-
+    api 'org.greenrobot:eventbus:3.1.1'
+    api 'com.yanzhenjie.permission:x:2.0.1'
     api 'com.just.agentweb:agentweb:4.1.2' // (必选)
 }

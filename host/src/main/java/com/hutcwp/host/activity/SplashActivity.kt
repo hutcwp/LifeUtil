@@ -46,8 +46,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun toHomePage() {
-//        ARouter.getInstance().build("/homepage/home").navigation()
-        ARouter.getInstance().build("/homepage/assist").navigation()
+        ARouter.getInstance().build("/homepage/home").navigation()
+//        ARouter.getInstance().build("/homepage/assist").navigation()
         finish()
     }
 

@@ -24,24 +24,15 @@ import club.hutcwp.lifeutil.util.DoubleClickExit
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import me.hutcwp.auto.IMainPage
-import me.hutcwp.log.MLog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 @Route(path = "/read/main")
 class MainActivity : BaseActivity() {
 
-    init {
-        MLog.info("hutcwp","初始化")
-    }
-
     private var mDrawerLayout: DrawerLayout? = null
-
     private var currentFragmentTag: String? = null
-
     private var fragmentManager: FragmentManager? = null
-
     private var drawerLayout: DrawerLayout? = null
 
     override val layoutId: Int
@@ -56,7 +47,6 @@ class MainActivity : BaseActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
     }
-
 
     private fun initFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
@@ -136,10 +126,10 @@ class MainActivity : BaseActivity() {
      * @param name Fragment的名字
      */
     fun switchContent(name: String?) {
-
         Log.d("error", "switchContent")
-        if (currentFragmentTag != null && currentFragmentTag == name)
+        if (currentFragmentTag != null && currentFragmentTag == name) {
             return
+        }
 
         val ft = fragmentManager!!.beginTransaction()
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
@@ -165,7 +155,6 @@ class MainActivity : BaseActivity() {
         ft.commit()
         currentFragmentTag = name
     }
-
 
     @Subscribe
     fun onMessageEvent(event: ThemeChangedEvent) {
@@ -198,7 +187,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
     fun showSnack(msg: String) {
         if (drawerLayout == null) {
             return
@@ -208,9 +196,7 @@ class MainActivity : BaseActivity() {
     }
 
     companion object {
-
-        private val FRAGMENT_TAG_PHOTO = "photo"
-        private val FRAGMENT_TAG_READING = "reading"
+        private const val FRAGMENT_TAG_PHOTO = "photo"
+        private const val FRAGMENT_TAG_READING = "reading"
     }
-
 }

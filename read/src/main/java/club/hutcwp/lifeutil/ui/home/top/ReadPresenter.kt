@@ -1,13 +1,6 @@
 package club.hutcwp.lifeutil.ui.home.top
 
-import android.util.Log
 import android.widget.Toast
-
-import org.jsoup.Jsoup
-
-import java.io.IOException
-import java.util.ArrayList
-
 import club.hutcwp.lifeutil.entitys.ReadCategory
 import hut.cwp.mvp.MvpPresenter
 import io.reactivex.Observable
@@ -15,6 +8,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import me.hutcwp.BaseConfig
+import me.hutcwp.log.MLog
+import org.jsoup.Jsoup
+import java.io.IOException
+import java.util.*
 
 
 /**
@@ -43,7 +40,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
                     category.name = element.text()
                     category.url = element.attr("abs:href")
                     list.add(category)
-                    Log.d("test", "name: " + category.name!!)
+                    MLog.debug("test", "name: " + category.name!!)
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -58,7 +55,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
                 view!!.initTabLayout(readCategories)
             }
         }, { throwable ->
-            Log.i("cwp", "t = $throwable")
+            MLog.info("cwp", "t = $throwable")
             Toast.makeText(BaseConfig.getApplicationContext(), "解析发生过程!", Toast.LENGTH_SHORT).show()
         })
     }

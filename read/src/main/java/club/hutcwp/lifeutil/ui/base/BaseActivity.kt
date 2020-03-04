@@ -65,8 +65,7 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     private fun initTheme() {
         val pf = getSharedPreferences(AppGlobal.FILE_NAME, Context.MODE_PRIVATE)
-        val themeIndex = pf.getInt("theme", 0)
-        when (themeIndex) {
+        when (pf.getInt("theme", 0)) {
             0 -> setTheme(R.style.LapisBlueTheme)
             1 -> setTheme(R.style.PaleDogwoodTheme)
             2 -> setTheme(R.style.GreeneryTheme)

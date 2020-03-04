@@ -47,9 +47,9 @@ class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCate
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
     }
 
-    override fun setUpViewPager(viewPager: ViewPager, readCategories: List<ReadCategory>) {
+    override fun setUpViewPager(viewPager: ViewPager, categories: List<ReadCategory>) {
         val adapter = ViewPagerAdapter(childFragmentManager)
-        for (category in readCategories) {
+        for (category in categories) {
             val fragment = NewsFragment()
             val data = Bundle()
             data.putString("url", category.url)

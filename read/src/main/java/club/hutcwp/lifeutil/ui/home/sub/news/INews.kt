@@ -9,7 +9,6 @@ import hut.cwp.mvp.MvpView
  * YY: 909076244
  */
 interface INews : MvpView {
-    val data: List<News>
     fun setRefreshing(status: Boolean)
     fun setNewData(data: List<News>)
     fun addNewData(pos: Int, data: List<News>)

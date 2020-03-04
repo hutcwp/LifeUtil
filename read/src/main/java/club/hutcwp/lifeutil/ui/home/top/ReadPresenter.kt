@@ -28,7 +28,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
      */
     fun getCategory() {
         val host = "http://gank.io/xiandu"
-
+        disposable?.dispose()
         disposable = Observable.just(host).subscribeOn(Schedulers.io()).map {
             val list = ArrayList<ReadCategory>()
             try {
@@ -51,9 +51,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
             }
             list
         }.observeOn(AndroidSchedulers.mainThread()).subscribe({ readCategories ->
-            if (view != null) {
-                view!!.initTabLayout(readCategories)
-            }
+            view?.initTabLayout(readCategories)
         }, { throwable ->
             MLog.info("cwp", "t = $throwable")
             Toast.makeText(BaseConfig.getApplicationContext(), "解析发生过程!", Toast.LENGTH_SHORT).show()
@@ -62,8 +60,9 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
 
     public override fun onDestroy() {
         super.onDestroy()
-        if (disposable != null && !disposable!!.isDisposed)
+        if (disposable != null && !disposable!!.isDisposed) {
             disposable!!.dispose()
+        }
     }
 
 }

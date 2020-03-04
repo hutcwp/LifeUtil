@@ -10,8 +10,10 @@ package club.hutcwp.lifeutil.core
 </T> */
 abstract class IParse<T> {
 
-
-    abstract fun parseHtmlFromUrl(path: String): List<T>
+    /**
+     * 解析得到数据集合，具体通过html解析还是json随意
+     */
+    abstract fun parse(path: String): List<T>
 
 }
 

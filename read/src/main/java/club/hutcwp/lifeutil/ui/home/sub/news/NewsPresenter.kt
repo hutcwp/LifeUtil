@@ -15,7 +15,7 @@ import me.hutcwp.log.MLog
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
-private const val TAG = "NewsPresenter"
+
 
 class NewsPresenter : MvpPresenter<INews>() {
 
@@ -29,12 +29,16 @@ class NewsPresenter : MvpPresenter<INews>() {
                 .subscribeOn(Schedulers.io())
                 .map {
                     MLog.info(TAG, "getDataFromServer:  url= $it")
-                    NewsParseImpl().parseHtmlFromUrl(it)
+                    NewsParseImpl().parse(it)
                 }.toFlowable(BackpressureStrategy.MISSING)
     }
 
     fun getUrl(curPage: Int): String {
         val baseUrl = arguments.getString("url")
         return "$baseUrl/page/$curPage"
+    }
+
+    companion object {
+        private const val TAG = "NewsPresenter"
     }
 }

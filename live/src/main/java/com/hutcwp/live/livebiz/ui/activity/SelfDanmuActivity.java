@@ -32,7 +32,7 @@ public class SelfDanmuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        Injector.inject(this);
+//        Injector.inject(this);
         btnDanmu = findViewById(R.id.btn_danmu);
         barrageView = findViewById(R.id.barrageView);
         btnDanmu.setOnClickListener(new View.OnClickListener() {

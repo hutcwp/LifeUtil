@@ -41,9 +41,11 @@ dependencies {
 
     compile 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     compile 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
-    implementation 'hutcwp:mvppresenter:1.0.7'
-    annotationProcessor 'hutcwp:mvppresenter-compiler:1.0.7'
-    kapt 'hutcwp:mvppresenter-compiler:1.0.7'
+
+    implementation 'hutcwp:mvppresenter-annotations:1.1'
+    implementation 'hutcwp:mvppresenter:1.1'
+    annotationProcessor 'hutcwp:mvppresenter-compiler:1.1'
+    kapt 'hutcwp:mvppresenter-compiler:1.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

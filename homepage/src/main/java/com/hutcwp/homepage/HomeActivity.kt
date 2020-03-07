@@ -1,6 +1,7 @@
 package com.hutcwp.homepage
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -9,33 +10,29 @@ import com.hutcwp.homepage.rv.DiscreteScrollView
 import com.hutcwp.homepage.rv.ScaleTransformer
 import me.drakeet.multitype.MultiTypeAdapter
 import me.hutcwp.auto.MainPageManager
+import me.hutcwp.constant.ARoutePath
 import me.hutcwp.log.MLog
 import me.hutcwp.view.banner.vp.CustomViewPager
 import me.hutcwp.view.banner.vp.LoopTransformer
 
-@Route(path = "/homepage/home")
+@Route(path = ARoutePath.HomePage)
 class HomeActivity : AppCompatActivity() {
 
-    val instance by lazy { this }
+    private val instance by lazy { this }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hp_activity_home)
 //        initViewPager()
-//        initListView()
-        initDiscreteRv()
+        initListView()
+//        initDiscreteRv()
     }
 
     private fun initDiscreteRv() {
         val discreteView = findViewById<DiscreteScrollView>(R.id.discreteView)
+        discreteView.visibility= View.VISIBLE
         discreteView.setOrientation(DSVOrientation.HORIZONTAL)
-        discreteView.addOnItemChangedListener(object : DiscreteScrollView.OnItemChangedListener<RvAdapter.VH> {
-            override fun onCurrentItemChanged(viewHolder: RvAdapter.VH?, adapterPosition: Int) {
-
-            }
-        })
-
-//        infiniteAdapter = InfiniteScrollAdapter.wrap(getAdapter())
+        discreteView.addOnItemChangedListener { _, _ -> }
         val items = mutableListOf<PageItem>()
         for (page in MainPageManager.getCategoryNames()) {
             MLog.info(TAG, "class=$page , s.key = ${page.name} , s.value = ${page.path}")
@@ -50,13 +47,13 @@ class HomeActivity : AppCompatActivity() {
                         .setMinScale(0.8f)
                         .build()
         )
-
     }
 
 
     private fun initViewPager() {
         MLog.info(TAG, "initViewPager")
         val viewPager = findViewById<CustomViewPager>(R.id.viewPager)
+        viewPager.visibility= View.VISIBLE
         val items = mutableListOf<PageItem>()
         for (page in MainPageManager.getCategoryNames()) {
             MLog.info(TAG, "class=$page , s.key = ${page.name} , s.value = ${page.path}")
@@ -71,6 +68,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initListView() {
         val recyclerView = findViewById<RecyclerView>(R.id.list)
+        recyclerView.visibility= View.VISIBLE
         val items = mutableListOf<PageItem>()
 
         for (page in MainPageManager.getCategoryNames()) {

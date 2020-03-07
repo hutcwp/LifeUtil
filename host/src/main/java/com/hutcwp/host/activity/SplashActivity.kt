@@ -10,6 +10,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_splash.*
+import me.hutcwp.constant.ARoutePath
 import java.util.concurrent.TimeUnit
 
 /**
@@ -37,16 +38,16 @@ class SplashActivity : AppCompatActivity() {
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer {
+                .subscribe {
                     tvCountDown?.text = "点击跳过(${it}s)"
                     if (it == 0L) {
                         toHomePage()
                     }
-                })
+                }
     }
 
     private fun toHomePage() {
-        ARouter.getInstance().build("/homepage/home").navigation()
+        ARouter.getInstance().build(ARoutePath.HomePage).navigation()
         finish()
     }
 
@@ -57,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
 
     companion object {
         const val COUNT_DOWN_SECOND = 3L
-        const val TAG = "MainActivity"
+        const val TAG = "SplashActivity"
     }
 }
 

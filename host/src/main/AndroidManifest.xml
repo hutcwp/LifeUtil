@@ -25,7 +25,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon,android:name,android:theme">
 
-        <activity android:name=".activity.SplashActivity">
+        <activity android:name="com.hutcwp.host.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -38,13 +38,17 @@ class FragmentAdapter(
         }
     }
 
-    fun getData(direction: SlideDirection): ComicPageInfo? {
-        return if (direction == SlideDirection.Next) {
-            data.next()
-        } else if (direction == SlideDirection.Prev) {
-            data.prev()
-        } else {
-            data.current()
+    private fun getData(direction: SlideDirection): ComicPageInfo? {
+        return when (direction) {
+            SlideDirection.Next -> {
+                data.next()
+            }
+            SlideDirection.Prev -> {
+                data.prev()
+            }
+            else -> {
+                data.current()
+            }
         }
     }
 }

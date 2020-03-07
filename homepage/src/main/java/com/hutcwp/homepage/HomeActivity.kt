@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.core.LogisticsCenter
+import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hutcwp.homepage.rv.DSVOrientation
 import com.hutcwp.homepage.rv.DiscreteScrollView
@@ -30,15 +32,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initDiscreteRv() {
         val discreteView = findViewById<DiscreteScrollView>(R.id.discreteView)
-        discreteView.visibility= View.VISIBLE
+        discreteView.visibility = View.VISIBLE
         discreteView.setOrientation(DSVOrientation.HORIZONTAL)
         discreteView.addOnItemChangedListener { _, _ -> }
-        val items = mutableListOf<PageItem>()
-        for (page in MainPageManager.getCategoryNames()) {
-            MLog.info(TAG, "class=$page , s.key = ${page.name} , s.value = ${page.path}")
-            items.add(PageItem(Page(page.name, page.path, "")))
-        }
-
+        val items = findPageItems().toMutableList()
         val adapter = RvAdapter(items)
         discreteView.adapter = adapter
         discreteView.setItemTransitionTimeMillis(1000)
@@ -53,14 +50,10 @@ class HomeActivity : AppCompatActivity() {
     private fun initViewPager() {
         MLog.info(TAG, "initViewPager")
         val viewPager = findViewById<CustomViewPager>(R.id.viewPager)
-        viewPager.visibility= View.VISIBLE
-        val items = mutableListOf<PageItem>()
-        for (page in MainPageManager.getCategoryNames()) {
-            MLog.info(TAG, "class=$page , s.key = ${page.name} , s.value = ${page.path}")
-            items.add(PageItem(Page(page.name, page.path, "")))
-        }
+        viewPager.visibility = View.VISIBLE
+        val items = findPageItems()
 
-        val adapter = ViewAdapter(instance, items)
+        val adapter = ViewAdapter(instance, items.toMutableList())
         viewPager.adapter = adapter
         viewPager.setPageTransformer(false, LoopTransformer())
         viewPager.offscreenPageLimit = 2
@@ -68,19 +61,35 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initListView() {
         val recyclerView = findViewById<RecyclerView>(R.id.list)
-        recyclerView.visibility= View.VISIBLE
-        val items = mutableListOf<PageItem>()
-
-        for (page in MainPageManager.getCategoryNames()) {
-            MLog.info(TAG, "class=$page , s.key = ${page.name} , s.value = ${page.path}")
-            items.add(PageItem(Page(page.name, page.path, "")))
-        }
-
+        recyclerView.visibility = View.VISIBLE
+        val items = findPageItems()
         val adapter = MultiTypeAdapter()
         recyclerView.adapter = adapter
         adapter.register(PageItemViewBinder(this@HomeActivity))
         adapter.items = items
         adapter.notifyDataSetChanged()
+    }
+
+
+    fun findPageItems(): List<PageItem> {
+        val items = mutableListOf<PageItem>()
+        for (page in MainPageManager.getCategoryNames()) {
+            MLog.info(TAG, "class=$page , s.key = ${page.name} , s.value = ${page.path}")
+            if (checkPath(page.path)) {
+                items.add(PageItem(Page(page.name, page.path, "")))
+            }
+        }
+        return items
+    }
+
+    fun checkPath(path: String): Boolean {
+        try {
+            val group = path.substring(1, path.indexOf("/", 1))
+            LogisticsCenter.completion(Postcard(path, group))
+        } catch (e: Exception) {
+            return false
+        }
+        return true
     }
 
     companion object {

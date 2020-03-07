@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/blog" />
             <option value="$PROJECT_DIR$/cartoon" />
             <option value="$PROJECT_DIR$/game" />
             <option value="$PROJECT_DIR$/homepage" />

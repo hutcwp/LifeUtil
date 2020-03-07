@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.facebook.stetho.Stetho
 //import com.hutcwp.homepage.HomePageInitLogic
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
 //import me.hutcwp.cartoon.app.CartoonInitLogic
 import me.hutcwp.webp.WebpBytebufferDecoder
@@ -30,7 +30,7 @@ class mApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-        BaseConfig.setApplicationContext(applicationContext)
+        BasicConfig.setApplicationContext(applicationContext)
         Stetho.initializeWithDefaults(this);
         webpInit()
         aRouterInit()

@@ -7,7 +7,6 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import me.hutcwp.BaseConfig
 import me.hutcwp.log.MLog
 import org.jsoup.Jsoup
 import java.io.IOException
@@ -54,7 +53,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
             view?.initTabLayout(readCategories)
         }, { throwable ->
             MLog.info("cwp", "t = $throwable")
-            Toast.makeText(BaseConfig.getApplicationContext(), "解析发生过程!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(view?.context, "解析发生过程!", Toast.LENGTH_SHORT).show()
         })
     }
 

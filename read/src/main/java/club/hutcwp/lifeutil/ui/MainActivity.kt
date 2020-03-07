@@ -24,7 +24,6 @@ import club.hutcwp.lifeutil.util.DoubleClickExit
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import me.hutcwp.auto.IMainPage
 import me.hutcwp.log.MLog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -33,20 +32,15 @@ import org.greenrobot.eventbus.Subscribe
 class MainActivity : BaseActivity() {
 
     init {
-        MLog.info("hutcwp","初始化")
     }
 
     private var mDrawerLayout: DrawerLayout? = null
-
     private var currentFragmentTag: String? = null
-
     private var fragmentManager: FragmentManager? = null
-
     private var drawerLayout: DrawerLayout? = null
 
     override val layoutId: Int
         get() = R.layout.read_activity_main
-
 
     override fun initViews(savedInstanceState: Bundle?) {
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -56,7 +50,6 @@ class MainActivity : BaseActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
     }
-
 
     private fun initFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
@@ -74,7 +67,6 @@ class MainActivity : BaseActivity() {
 
     override fun loadData() {
 
-
     }
 
     private fun initNavigationViewHeader() {
@@ -84,7 +76,6 @@ class MainActivity : BaseActivity() {
         navigationView.setNavigationItemSelectedListener(NavigationItemSelected())
     }
 
-
     /**
      * 用来开关DrawerLayout
      *
@@ -93,13 +84,6 @@ class MainActivity : BaseActivity() {
     fun initDrawer(toolbar: Toolbar?) {
         if (toolbar != null) {
             val mDrawerToggle = object : ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.refresh, R.string.refresh) {
-                override fun onDrawerOpened(drawerView: View) {
-                    super.onDrawerOpened(drawerView)
-                }
-
-                override fun onDrawerClosed(drawerView: View) {
-                    super.onDrawerClosed(drawerView)
-                }
             }
             //更新状态
             mDrawerToggle.syncState()
@@ -136,8 +120,6 @@ class MainActivity : BaseActivity() {
      * @param name Fragment的名字
      */
     fun switchContent(name: String?) {
-
-        Log.d("error", "switchContent")
         if (currentFragmentTag != null && currentFragmentTag == name)
             return
 

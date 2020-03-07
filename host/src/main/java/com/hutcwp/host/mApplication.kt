@@ -2,15 +2,13 @@ package com.hutcwp.host
 
 import android.annotation.SuppressLint
 import android.content.Context
-import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
-import com.hutcwp.homepage.HomePageInitLogic
-import com.hutcwp.host.activity.CrashActivity
-import com.hutcwp.host.activity.SplashActivity
-import me.hutcwp.BasicConfig
+import com.facebook.stetho.Stetho
+//import com.hutcwp.homepage.HomePageInitLogic
+import me.hutcwp.BaseConfig
 import me.hutcwp.app.BaseApplication
-import me.hutcwp.cartoon.app.CartoonInitLogic
+//import me.hutcwp.cartoon.app.CartoonInitLogic
 import me.hutcwp.webp.WebpBytebufferDecoder
 import me.hutcwp.webp.WebpDrawable
 import me.hutcwp.webp.WebpResourceDecoder
@@ -25,32 +23,17 @@ import java.nio.ByteBuffer
 class mApplication : BaseApplication() {
 
     override fun initLogic() {
-        registerAppLogicClass(HomePageInitLogic::class)
-        registerAppLogicClass(CartoonInitLogic::class)
+//        registerAppLogicClass(HomePageInitLogic::class)
+//        registerAppLogicClass(CartoonInitLogic::class)
     }
 
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-        BasicConfig.setApplicationContext(applicationContext)
-        if (isDebug()) {
-//            Stetho.initializeWithDefaults(this)
-        }
+        BaseConfig.setApplicationContext(applicationContext)
+        Stetho.initializeWithDefaults(this);
         webpInit()
         aRouterInit()
-        // Crash 捕捉界面
-        CaocConfig.Builder.create()
-                .backgroundMode(CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM)
-                .enabled(true)
-                .trackActivities(true)
-                .minTimeBetweenCrashesMs(2000)
-                // 重启的 Activity
-                .restartActivity(SplashActivity::class.java)
-                // 错误的 Activity
-                .errorActivity(CrashActivity::class.java)
-                // 设置监听器
-                //.eventListener(new YourCustomEventListener())
-                .apply()
     }
 
     private fun aRouterInit() {

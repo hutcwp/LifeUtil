@@ -17,7 +17,7 @@ import club.hutcwp.lifeutil.entitys.NormalPhoto
  */
 class PhotoCatagoryParseImpl : IParse<NormalPhoto>() {
 
-    override fun parseHtmlFromUrl(path: String): List<NormalPhoto> {
+    override fun parse(path: String): List<NormalPhoto> {
         val photoList = ArrayList<NormalPhoto>()
         try {
             val doc = Jsoup.connect(path).timeout(5000).get()

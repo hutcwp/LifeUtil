@@ -1,1 +1,1 @@
-include ':read', ':cartoon', ':base', ':host', ':homepage', ':weather', ':game', ':blog'
+include ':read', ':cartoon', ':base', ':host', ':homepage', ':weather', ':game', ':live'

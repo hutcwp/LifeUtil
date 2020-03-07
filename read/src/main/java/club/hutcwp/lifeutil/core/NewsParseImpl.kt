@@ -16,7 +16,7 @@ import club.hutcwp.lifeutil.entitys.News
  */
 class NewsParseImpl : IParse<News>() {
 
-    override fun parseHtmlFromUrl(path: String): List<News> {
+    override fun parse(path: String): List<News> {
         val readList = ArrayList<News>()
         try {
             val doc = Jsoup.connect(path).timeout(5000).get()

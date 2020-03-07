@@ -20,18 +20,14 @@ import hut.cwp.mvp.BindPresenter
 @BindPresenter(presenter = PhotoPresenter::class)
 class PhotoFragment : BaseFragment<PhotoPresenter, PhotoFragment>(), IHome<PhotoCategory> {
 
-
-
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_girl
     }
-
 
     override fun initViews() {
         rootView.findViewById<Toolbar>(R.id.toolbar).title = getString(R.string.gank)
         (activity as MainActivity).initDrawer(rootView.findViewById<Toolbar>(R.id.toolbar))
     }
-
 
     override fun lazyFetchData() {
         presenter.getCategory()

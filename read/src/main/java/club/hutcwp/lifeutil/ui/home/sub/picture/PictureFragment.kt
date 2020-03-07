@@ -12,13 +12,19 @@ import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import hut.cwp.mvp.BindPresenter
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 @BindPresenter(presenter = PicturePresenter::class)
 class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
-
     private var adapter: PhotoAdapter? = null
-
+    private var recyclerView: RecyclerView? = null
+    private var swipeRefreshLayout: SwipeRefreshLayout? = null
+    private var compositeDisposable = CompositeDisposable()
 
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_gank_girl
@@ -30,71 +36,91 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
     private fun getDatasByType() {
         setRefreshing(true)
-        if (arguments!!.getInt("type") == 0) {
-            presenter.getGank()
-        } else {
-            presenter.getServer()
-        }
+//        if (arguments!!.getInt("type") == 0) {
+//            presenter.getGank()
+//        } else {
+//            presenter.getServer()
+//        }
+
+        getData(presenter.gerStrge())
     }
 
     override fun initViews() {
-        //可能会出现空指针异常
-        adapter = PhotoAdapter(context!!, null)
-
-        rootView?.findViewById<RecyclerView>(R.id.grid_recycler)!!.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        rootView?.findViewById<RecyclerView>(R.id.grid_recycler)!!.addItemDecoration(SpacesItemDecoration(14))
-        rootView?.findViewById<RecyclerView>(R.id.grid_recycler)!!.setAdapter(adapter)
-        setting()
+        swipeRefreshLayout = rootView.findViewById(R.id.swipRefreshLayout)
+        recyclerView = rootView.findViewById(R.id.grid_recycler)
+        recyclerView?.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView?.addItemDecoration(SpacesItemDecoration(14))
+        adapter = PhotoAdapter(context!!, mutableListOf())
+        recyclerView?.adapter = adapter
+        setListener()
     }
 
-    /**
-     * 注意，因放置在initView方法的最后，以避免出现空指针
-     */
-    fun setting() {
-        rootView?.findViewById<SwipeRefreshLayout>(R.id.swipRefreshLayout)!!.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
-        rootView?.findViewById<SwipeRefreshLayout>(R.id.swipRefreshLayout).setOnRefreshListener {
+    private fun setListener() {
+        swipeRefreshLayout?.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        swipeRefreshLayout?.setOnRefreshListener {
             presenter.serRefresh(true)
             getDatasByType()
         }
 
-        rootView?.findViewById<RecyclerView>(R.id.grid_recycler).addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!rootView?.findViewById<RecyclerView>(R.id.grid_recycler).canScrollVertically(1)) {
+                if (recyclerView.canScrollVertically(1)) {
                     // 此操作先与getDatasByType（）
                     presenter.serRefresh(false)
                     getDatasByType()
                 }
             }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-            }
         })
     }
-
 
     override fun showSnack(msg: String) {
         (activity as MainActivity).showSnack(msg)
     }
 
     override fun setRefreshing(status: Boolean) {
-        rootView?.findViewById<SwipeRefreshLayout>(R.id.swipRefreshLayout).setRefreshing(status)
+        swipeRefreshLayout?.isRefreshing = status
     }
 
     override fun setNewData(data: List<Photo>) {
-        adapter!!.setNewData(data.toMutableList())
+        adapter?.setNewData(data.toMutableList())
     }
 
     override fun addNewData(data: List<Photo>) {
-        adapter!!.addDatas(data)
+        adapter?.addDatas(data)
     }
 
+    private fun getData(observable: Observable<List<Photo>>) {
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<List<Photo>> {
+                    override fun onSubscribe(d: Disposable) {
+                        compositeDisposable.add(d)
+                    }
+
+                    override fun onNext(photos: List<Photo>) {
+                        setNewData(photos)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        showSnack("加载失败")
+                        setRefreshing(false)
+                    }
+
+                    override fun onComplete() {
+                        showSnack("加载完成")
+                        setRefreshing(false)
+                    }
+                })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
+    }
 
     /**
      * Recycler的分割线
      */
     private inner class SpacesItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
-
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
             outRect.left = space
             outRect.right = space
@@ -104,6 +130,4 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
             }
         }
     }
-
-
 }

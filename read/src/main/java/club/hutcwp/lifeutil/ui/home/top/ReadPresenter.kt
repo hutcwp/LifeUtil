@@ -1,20 +1,17 @@
 package club.hutcwp.lifeutil.ui.home.top
 
-import android.util.Log
 import android.widget.Toast
-
-import org.jsoup.Jsoup
-
-import java.io.IOException
-import java.util.ArrayList
-
 import club.hutcwp.lifeutil.entitys.ReadCategory
 import hut.cwp.mvp.MvpPresenter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import me.hutcwp.BasicConfig
+import me.hutcwp.BaseConfig
+import me.hutcwp.log.MLog
+import org.jsoup.Jsoup
+import java.io.IOException
+import java.util.*
 
 
 /**
@@ -31,7 +28,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
      */
     fun getCategory() {
         val host = "http://gank.io/xiandu"
-
+        disposable?.dispose()
         disposable = Observable.just(host).subscribeOn(Schedulers.io()).map {
             val list = ArrayList<ReadCategory>()
             try {
@@ -43,7 +40,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
                     category.name = element.text()
                     category.url = element.attr("abs:href")
                     list.add(category)
-                    Log.d("test", "name: " + category.name!!)
+                    MLog.debug("test", "name: " + category.name!!)
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -54,19 +51,18 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
             }
             list
         }.observeOn(AndroidSchedulers.mainThread()).subscribe({ readCategories ->
-            if (view != null) {
-                view!!.initTabLayout(readCategories)
-            }
+            view?.initTabLayout(readCategories)
         }, { throwable ->
-            Log.i("cwp", "t = $throwable")
-            Toast.makeText(BasicConfig.getApplicationContext(), "解析发生过程!", Toast.LENGTH_SHORT).show()
+            MLog.info("cwp", "t = $throwable")
+            Toast.makeText(BaseConfig.getApplicationContext(), "解析发生过程!", Toast.LENGTH_SHORT).show()
         })
     }
 
     public override fun onDestroy() {
         super.onDestroy()
-        if (disposable != null && !disposable!!.isDisposed)
+        if (disposable != null && !disposable!!.isDisposed) {
             disposable!!.dispose()
+        }
     }
 
 }

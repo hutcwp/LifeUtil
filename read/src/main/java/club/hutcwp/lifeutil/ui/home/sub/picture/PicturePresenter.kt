@@ -1,23 +1,17 @@
 package club.hutcwp.lifeutil.ui.home.sub.picture
 
-import android.util.Log
-
-import java.util.ArrayList
-
+import club.hutcwp.lifeutil.core.DoubanPhotoParseImpl
 import club.hutcwp.lifeutil.core.PhotoCatagoryParseImpl
-import club.hutcwp.lifeutil.entitys.GankGirlPhoto
 import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.http.ApiFactory
-import club.hutcwp.lifeutil.http.BaseGankResponse
 import hut.cwp.mvp.MvpPresenter
 import io.reactivex.Observable
-import io.reactivex.Observer
-
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
+import me.hutcwp.log.MLog
+import okhttp3.*
+import java.io.IOException
+import java.util.*
 
 
 /**
@@ -29,9 +23,7 @@ import io.reactivex.schedulers.Schedulers
 class PicturePresenter : MvpPresenter<IPicture>() {
 
     private var curPage = 1
-    var isRefresh = true
-        private set
-
+    private var isRefresh = true
     private val compositeDisposable = CompositeDisposable()
 
 
@@ -52,51 +44,37 @@ class PicturePresenter : MvpPresenter<IPicture>() {
                     .subscribeOn(Schedulers.io())
                     .map { path ->
                         val photos = ArrayList<Photo>()
-                        photos.addAll(PhotoCatagoryParseImpl().parseHtmlFromUrl(path))
+                        photos.addAll(PhotoCatagoryParseImpl().parse(path))
                         photos
                     }
         }
 
-    /**
-     * 获取数据
-     */
-    fun getGank() {
-        getData(gankObservable)
-    }
-
-
-    private fun getData(observable: Observable<List<Photo>>) {
-        observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<List<Photo>> {
-                    override fun onSubscribe(d: Disposable) {
-                        compositeDisposable.add(d)
+    private val dataFromServer2: Observable<List<Photo>>
+        get() {
+            val url = "https://meizi.leanapp.cn/category/All/page/1"
+            val client = OkHttpClient()
+            val request: Request = Request.Builder().get().url(url).build()
+            val call: Call = client.newCall(request)
+            //异步调用并设置回调函数
+            return Observable.create {
+                call.enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        MLog.error(TAG, "parseHtmlFromUrl error", e)
+                        it.onError(e)
                     }
 
-                    override fun onNext(photos: List<Photo>) {
-                        curPage++
-                        if (isRefresh) {
-                            view!!.setNewData(photos)
-                        } else {
-                            view!!.addNewData(photos)
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        view!!.showSnack("加载失败")
-                        view!!.setRefreshing(false)
-                    }
-
-                    override fun onComplete() {
-                        view!!.showSnack("加载完成")
-                        view!!.setRefreshing(false)
+                    override fun onResponse(call: Call, response: Response) {
+                        val content = response.body()?.string() ?: ""
+                        MLog.info(TAG, "parseHtmlFromUrl onResponse, response=${content}")
+                        it.onNext(DoubanPhotoParseImpl().parse(content))
+                        it.onComplete()
                     }
                 })
+            }
+        }
 
-    }
-
-
-    fun getServer() {
-        getData(dataFromServer)
+    fun gerStrge(): Observable<List<Photo>> {
+        return dataFromServer2
     }
 
     fun serRefresh(isRefresh: Boolean) {
@@ -108,11 +86,10 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
     public override fun onDestroy() {
         super.onDestroy()
-        compositeDisposable?.dispose()
+        compositeDisposable.dispose()
     }
 
     companion object {
-
-        private val TAG = "PicturePresenter"
+        private const val TAG = "PicturePresenter"
     }
 }

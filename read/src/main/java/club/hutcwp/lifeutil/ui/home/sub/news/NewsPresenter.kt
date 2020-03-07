@@ -3,12 +3,11 @@ package club.hutcwp.lifeutil.ui.home.sub.news
 import club.hutcwp.lifeutil.core.NewsParseImpl
 import club.hutcwp.lifeutil.entitys.News
 import hut.cwp.mvp.MvpPresenter
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
+import me.hutcwp.log.MLog
 
 
 /**
@@ -16,32 +15,30 @@ import io.reactivex.schedulers.Schedulers
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
+
+
 class NewsPresenter : MvpPresenter<INews>() {
 
-    private var disposable: Disposable? = null
-    private var curPage = 0
-
-    fun getDataFromServer() {
-        val baseUrl = arguments.getString("url")
-        val url = "$baseUrl/page/$curPage"
-
-        view!!.setRefreshing(true)
-        disposable = Observable.just(url)
+    /**
+     * 请求特定的某一页数据
+     * @param url
+     */
+    fun getDataFromServer(url: String): Flowable<List<News>> {
+        view?.setRefreshing(true)
+        return Observable.just(url)
                 .subscribeOn(Schedulers.io())
-                .map { url -> NewsParseImpl().parseHtmlFromUrl(url) }.observeOn(AndroidSchedulers.mainThread()).subscribe { list ->
-                    view!!.setRefreshing(false)
-                    curPage++
-                    if (view!!.data == null || view!!.data.size == 0) {
-                        view!!.setNewData(list)
-                    } else {
-                        view!!.addNewData(view!!.data.size, list)
-                    }
-                }
+                .map {
+                    MLog.info(TAG, "getDataFromServer:  url= $it")
+                    NewsParseImpl().parse(it)
+                }.toFlowable(BackpressureStrategy.MISSING)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (disposable != null && !disposable!!.isDisposed)
-            disposable!!.dispose()
+    fun getUrl(curPage: Int): String {
+        val baseUrl = arguments.getString("url")
+        return "$baseUrl/page/$curPage"
+    }
+
+    companion object {
+        private const val TAG = "NewsPresenter"
     }
 }

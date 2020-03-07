@@ -4,14 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    signingConfigs {
-        signer {
-            storeFile file('../key/signer.jks')
-            storePassword '123456'
-            keyAlias = 'key'
-            keyPassword '123456'
-        }
-    }
     compileSdkVersion 28
 
 
@@ -23,7 +15,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.signer
         kapt {
             arguments {
                 arg("AROUTER_MODULE_NAME", project.getName())
@@ -36,12 +27,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.signer
         }
-    }
-
-    lintOptions {
-        abortOnError false
     }
 
 }
@@ -64,16 +50,13 @@ dependencies {
     //用于chrome远程调试
     debugCompile 'com.facebook.stetho:stetho:1.5.0'
 
-    compile project(path: ':cartoon')
-    compile project(path: ':base')
-    compile project(path: ':homepage')
-    compile project(path: ':read')
-    compile project(path: ':weather')
-    compile project(path: ':game')
-    compile project(path: ':blog')
-
-    // 本地异常捕捉框架：https://github.com/Ereza/CustomActivityOnCrash
-    implementation 'cat.ereza:customactivityoncrash:2.2.0'
+     project(path: ':cartoon')
+    implementation project(path: ':base')
+    implementation project(path: ':homepage')
+    implementation project(path: ':read')
+    implementation project(path: ':weather')
+    implementation project(path: ':game')
+    implementation project(path: ':live')
 }
 repositories {
     mavenCentral()

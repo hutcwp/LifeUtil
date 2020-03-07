@@ -14,11 +14,13 @@
             <option value="$PROJECT_DIR$/game" />
             <option value="$PROJECT_DIR$/homepage" />
             <option value="$PROJECT_DIR$/host" />
+            <option value="$PROJECT_DIR$/live" />
             <option value="$PROJECT_DIR$/read" />
             <option value="$PROJECT_DIR$/weather" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

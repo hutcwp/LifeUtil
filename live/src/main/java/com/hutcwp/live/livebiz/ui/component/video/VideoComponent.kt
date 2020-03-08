@@ -1,5 +1,6 @@
 package com.hutcwp.live.livebiz.ui.component.video
 
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import hut.cwp.mvp.BindPresenter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+
 
 @BindPresenter(presenter = VideoComponentPresenter::class)
 class VideoComponent : Component<VideoComponentPresenter?, IVideoComponent?>(), IVideoComponent {

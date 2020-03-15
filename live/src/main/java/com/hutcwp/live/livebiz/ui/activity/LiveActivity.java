@@ -20,8 +20,8 @@ import hut.cwp.mvp.MvpActivity;
 
 @InitAttrConfigs({
         @InitAttrConfig(component = PublicMessageComponent.class, resourceId = R2.id.public_message_view),
-        @InitAttrConfig(component = RecommendComponent.class, resourceId = R2.id.recommend_view),
-        @InitAttrConfig(component = VideoComponent.class, resourceId = R2.id.video_view),
+//        @InitAttrConfig(component = RecommendComponent.class, resourceId = R2.id.recommend_view),
+//        @InitAttrConfig(component = VideoComponent.class, resourceId = R2.id.video_view),
         @InitAttrConfig(component = DanmuComponent.class, resourceId = R2.id.danmu_view)
 })
 @BindPresenter(presenter = LivePresenter.class)

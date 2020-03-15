@@ -1,13 +1,17 @@
 package com.hutcwp.live.livebiz.ui.component.danmu;
 
 import android.graphics.Color;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.MyChatMsg;
 import com.hutcwp.livebiz.R;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Random;
 
@@ -57,7 +61,7 @@ public class DanmuComponent extends MvpFragment<DanmuPresenter, IDanmuComponent>
             public void prepared() {
                 showDanmaku = true;
                 danmakuView.start();
-                generateSomeDanmaku();
+//                generateSomeDanmaku();
             }
 
             @Override
@@ -120,6 +124,18 @@ public class DanmuComponent extends MvpFragment<DanmuPresenter, IDanmuComponent>
         }).start();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveMsg(MyChatMsg msg) {
+        addDanmaku(msg.content, false);
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     /**
      * sp转px的方法。
      */
@@ -147,6 +163,7 @@ public class DanmuComponent extends MvpFragment<DanmuPresenter, IDanmuComponent>
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         showDanmaku = false;
         if (danmakuView != null) {
             danmakuView.release();

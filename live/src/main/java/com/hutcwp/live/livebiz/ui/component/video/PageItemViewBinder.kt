@@ -40,7 +40,7 @@ class PageItemViewBinder(var context: Context) : ItemViewBinder<Playable, PageIt
     }
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): PageHolder {
-        return PageHolder(inflater.inflate(R.layout.item_music, parent, false))
+        return PageHolder(inflater.inflate(R.layout.item_public_msg, parent, false))
     }
 
 

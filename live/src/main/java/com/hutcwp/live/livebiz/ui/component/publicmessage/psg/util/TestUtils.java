@@ -3,6 +3,11 @@ package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util;
 import android.content.res.TypedArray;
 
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.MyChatMsg;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.ActivityNewsMsg;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.GiftMsg;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.HeaderChatMsg;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.NormalMsg;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.SystemNewMsg;
 import com.hutcwp.livebiz.R;
 
 import java.util.ArrayList;
@@ -46,6 +51,82 @@ public class TestUtils {
 
     public static MyChatMsg getRandomMsg() {
         MyChatMsg msg = new MyChatMsg();
+        msg.type = getRandomType();
+        msg.headLight = getRandomHeadLight();
+        msg.content = getRandomContent();
+        msg.systemNews = getRandomSystemNews();
+        msg.activityNews = getRandomActivityNews();
+        msg.sendUserName = getRandomUserName();
+        msg.atUserName = getRandomAtUserName();
+        msg.giftName = getRandomGiftName();
+        msg.giftRes = getRandomGiftRes();
+        msg.giftNum = getRandomGiftNum();
+        return msg;
+    }
+
+
+    public static GiftMsg getGiftMsg() {
+        GiftMsg msg = new GiftMsg();
+        msg.type = getRandomType();
+        msg.headLight = getRandomHeadLight();
+        msg.content = getRandomContent();
+        msg.systemNews = getRandomSystemNews();
+        msg.activityNews = getRandomActivityNews();
+        msg.sendUserName = getRandomUserName();
+        msg.atUserName = getRandomAtUserName();
+        msg.giftName = getRandomGiftName();
+        msg.giftRes = getRandomGiftRes();
+        msg.giftNum = getRandomGiftNum();
+        return msg;
+    }
+
+    public static HeaderChatMsg getHeaderChatMsg() {
+        HeaderChatMsg msg = new HeaderChatMsg();
+        msg.type = getRandomType();
+        msg.headLight = getRandomHeadLight();
+        msg.content = getRandomContent();
+        msg.systemNews = getRandomSystemNews();
+        msg.activityNews = getRandomActivityNews();
+        msg.sendUserName = getRandomUserName();
+        msg.atUserName = getRandomAtUserName();
+        msg.giftName = getRandomGiftName();
+        msg.giftRes = getRandomGiftRes();
+        msg.giftNum = getRandomGiftNum();
+        return msg;
+    }
+
+    public static NormalMsg getNormalMsg() {
+        NormalMsg msg = new NormalMsg();
+        msg.type = getRandomType();
+        msg.headLight = getRandomHeadLight();
+        msg.content = getRandomContent();
+        msg.systemNews = getRandomSystemNews();
+        msg.activityNews = getRandomActivityNews();
+        msg.sendUserName = getRandomUserName();
+        msg.atUserName = getRandomAtUserName();
+        msg.giftName = getRandomGiftName();
+        msg.giftRes = getRandomGiftRes();
+        msg.giftNum = getRandomGiftNum();
+        return msg;
+    }
+
+    public static SystemNewMsg getSystemNewMsg() {
+        SystemNewMsg msg = new SystemNewMsg();
+        msg.type = getRandomType();
+        msg.headLight = getRandomHeadLight();
+        msg.content = getRandomContent();
+        msg.systemNews = getRandomSystemNews();
+        msg.activityNews = getRandomActivityNews();
+        msg.sendUserName = getRandomUserName();
+        msg.atUserName = getRandomAtUserName();
+        msg.giftName = getRandomGiftName();
+        msg.giftRes = getRandomGiftRes();
+        msg.giftNum = getRandomGiftNum();
+        return msg;
+    }
+
+    public static ActivityNewsMsg getActivityMsg() {
+        ActivityNewsMsg msg = new ActivityNewsMsg();
         msg.type = getRandomType();
         msg.headLight = getRandomHeadLight();
         msg.content = getRandomContent();

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.MyChatMsg
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.BitmapUtils
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.CenteredImageSpan
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.NormalMsg
 import com.hutcwp.livebiz.R
 import me.drakeet.multitype.ItemViewBinder
 import me.hutcwp.BasicConfig
@@ -26,13 +27,13 @@ import me.hutcwp.util.ResolutionUtils
  * YY: 909076244
  *
  **/
-class NormalViewBinder : ItemViewBinder<MyChatMsg, NormalViewBinder.ViewHolder>() {
+class NormalViewBinder : ItemViewBinder<NormalMsg, NormalViewBinder.ViewHolder>() {
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder {
         return ViewHolder(inflater.inflate(R.layout.layout_normal_text, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, data: MyChatMsg) {
+    override fun onBindViewHolder(holder: ViewHolder, data: NormalMsg) {
         val text = holder.fooView
         val builder = SpannableStringBuilder()
         if (data.headLight > 0) { // 设置头灯

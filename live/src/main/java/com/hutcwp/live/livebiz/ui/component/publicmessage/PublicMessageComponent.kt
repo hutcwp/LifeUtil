@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.hutcwp.live.livebiz.base.util.MLog
 import com.hutcwp.live.livebiz.ui.component.Component
 import com.hutcwp.live.livebiz.ui.component.publicmessage.lib.DefaultChatDecoration
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.PublicChatView
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.mutiltype.PublicChatAdapter2
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.mutiltype.PublicChatView2
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.TestUtils
-import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.NormalViewBinder
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.*
 import com.hutcwp.livebiz.R
 import hut.cwp.mvp.BindPresenter
 import io.reactivex.Observable
@@ -48,11 +49,15 @@ class PublicMessageComponent : Component<PublicMessagePresenter?, IPublicMessage
 //        }
 
         val adapter2 = PublicChatAdapter2()
-//        adapter2.register(NormalViewBinder())
+        adapter2.register(ActivityNewsViewBinder())
+        adapter2.register(HeaderChatViewBinder())
+        adapter2.register(NormalViewBinder())
+        adapter2.register(SystemNewViewBinder())
+        adapter2.register(GiftViewBinder())
         rvPublicMessage2?.let {
             it.addItemDecoration(DefaultChatDecoration(ResolutionUtils.convertDpToPixel(3f, context).toInt()))
             it.setChatAdapter(adapter2)
-                    .addMsgs(TestUtils.getRandomMsgList(10))
+//                    .addMsgs(TestUtils.getRandomMsgList(10))
         }
     }
 
@@ -85,12 +90,23 @@ class PublicMessageComponent : Component<PublicMessagePresenter?, IPublicMessage
             sendMsgDisposable = Observable.interval(500, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        val msg = TestUtils.getRandomMsg()
-                        rvPublicMessage2?.addMsg(msg)
-                        EventBus.getDefault().post(msg)
+
+                        val rand = (1..5).shuffled().last()
+                        when (rand) {
+                            1 -> rvPublicMessage2?.addMsg(TestUtils.getActivityMsg())
+                            2 -> rvPublicMessage2?.addMsg(TestUtils.getGiftMsg())
+                            3 -> rvPublicMessage2?.addMsg(TestUtils.getHeaderChatMsg())
+                            4 -> rvPublicMessage2?.addMsg(TestUtils.getNormalMsg())
+                            5 -> rvPublicMessage2?.addMsg(TestUtils.getSystemNewMsg())
+                            else -> rvPublicMessage2?.addMsg(TestUtils.getNormalMsg())
+                        }
+
+                        MLog.info(TAG, "rand is $rand")
+//                        EventBus.getDefault().post(msg)
                     }
         }
     }
+
 
     companion object {
         const val TAG = "PublicMessageComponent"

@@ -63,4 +63,8 @@ class PublicChatView : RecyclerView, IPublicChat<BaseChatMsg> {
         }
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        mManager?.onRelease()
+    }
 }

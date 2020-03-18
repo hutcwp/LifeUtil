@@ -1,14 +1,12 @@
-package com.hutcwp.live.livebiz.ui.component.publicmessage.psg
+package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.RecyclerView
-import com.hutcwp.live.livebiz.ui.component.publicmessage.lib.BaseChatMsg
-import com.hutcwp.live.livebiz.ui.component.publicmessage.lib.IPublicChat
 
 /**
  *
- * Created by hutcwp on 2020-03-09 16:16
+ * Created by hutcwp on 2020-03-13 18:08
  * email: caiwenpeng@yy.com
  * YY: 909076244
  *

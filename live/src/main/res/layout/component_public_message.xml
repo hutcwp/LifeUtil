@@ -4,19 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="240dp">
 
-    <!--    <com.hutcwp.live.livebiz.ui.component.publicmessage.psg.PublicChatView-->
-    <!--        android:id="@+id/rvPublicMessage"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="200dp"-->
-    <!--        android:layout_marginStart="@dimen/dp5"-->
-    <!--        android:layout_marginLeft="@dimen/dp5"-->
-    <!--        android:layout_marginEnd="100dp"-->
-    <!--        android:layout_marginRight="100dp"-->
-    <!--        android:layout_marginBottom="45dp"-->
-    <!--        android:orientation="vertical"-->
-    <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
-
-    <com.hutcwp.live.livebiz.ui.component.publicmessage.psg.mutiltype.PublicChatView2
+    <com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatView
         android:id="@+id/rvPublicMessage2"
         android:layout_width="match_parent"
         android:layout_height="200dp"

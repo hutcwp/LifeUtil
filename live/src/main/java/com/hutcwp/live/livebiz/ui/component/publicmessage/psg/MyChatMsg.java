@@ -1,6 +1,6 @@
 package com.hutcwp.live.livebiz.ui.component.publicmessage.psg;
 
-import com.hutcwp.live.livebiz.ui.component.publicmessage.lib.BaseChatMsg;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.BaseChatMsg;
 
 /**
  * @author RyanLee

@@ -1,6 +1,4 @@
-package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.mutiltype;
-
-import com.hutcwp.live.livebiz.ui.component.publicmessage.lib.BaseChatMsg;
+package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib;
 
 import java.util.List;
 
@@ -12,7 +10,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * email: caiwenpeng@yy.com
  * YY: 909076244
  **/
-public abstract class BaseChatAdapter2<D extends BaseChatMsg> extends MultiTypeAdapter {
+public abstract class BaseChatAdapter<D extends BaseChatMsg> extends MultiTypeAdapter {
 
     public abstract void addItem(D chatMsg);
 

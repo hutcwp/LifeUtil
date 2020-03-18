@@ -1,4 +1,4 @@
-package com.hutcwp.live.livebiz.ui.component.publicmessage.lib
+package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib
 
 import android.graphics.Rect
 import android.view.View

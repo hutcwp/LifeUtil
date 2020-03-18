@@ -1,11 +1,8 @@
-package com.hutcwp.live.livebiz.ui.component.publicmessage.psg
-
-import com.hutcwp.live.livebiz.ui.component.publicmessage.lib.BaseChatMsg
-import com.hutcwp.live.livebiz.ui.component.publicmessage.lib.IPublicChat
+package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib
 
 /**
  *
- * Created by hutcwp on 2020-03-10 10:39
+ * Created by hutcwp on 2020-03-13 18:10
  * email: caiwenpeng@yy.com
  * YY: 909076244
  *

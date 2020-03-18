@@ -26,8 +26,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hp_activity_home)
 //        initViewPager()
-        initListView()
-//        initDiscreteRv()
+//        initListView()
+        initDiscreteRv()
     }
 
     private fun initDiscreteRv() {

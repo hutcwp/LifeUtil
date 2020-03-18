@@ -79,12 +79,12 @@ class PublicMessageComponent : Component<PublicMessagePresenter?, IPublicMessage
                     .subscribe {
                         val rand = (1..5).shuffled().last()
                         when (rand) {
-                            1 -> rvPublicMessage?.addMsg(TestUtils.getActivityMsg())
-                            2 -> rvPublicMessage?.addMsg(TestUtils.getGiftMsg())
-                            3 -> rvPublicMessage?.addMsg(TestUtils.getHeaderChatMsg())
-                            4 -> rvPublicMessage?.addMsg(TestUtils.getNormalMsg())
-                            5 -> rvPublicMessage?.addMsg(TestUtils.getSystemNewMsg())
-                            else -> rvPublicMessage?.addMsg(TestUtils.getNormalMsg())
+                            1 -> rvPublicMessage?.addMessage(TestUtils.getActivityMsg())
+                            2 -> rvPublicMessage?.addMessage(TestUtils.getGiftMsg())
+                            3 -> rvPublicMessage?.addMessage(TestUtils.getHeaderChatMsg())
+                            4 -> rvPublicMessage?.addMessage(TestUtils.getNormalMsg())
+                            5 -> rvPublicMessage?.addMessage(TestUtils.getSystemNewMsg())
+                            else -> rvPublicMessage?.addMessage(TestUtils.getNormalMsg())
                         }
                         MLog.info(TAG, "rand is $rand")
 //                        EventBus.getDefault().post(msg)

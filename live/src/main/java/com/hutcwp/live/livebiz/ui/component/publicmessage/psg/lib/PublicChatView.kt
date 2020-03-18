@@ -13,58 +13,51 @@ import androidx.recyclerview.widget.RecyclerView
  **/
 class PublicChatView : RecyclerView, IPublicChat<BaseChatMsg> {
 
-    private var mAdapter: PublicChatAdapter? = null
-    private var mManager: PublicMsgManager? = null
+    private var mPublicChatAdapter: PublicChatAdapter? = null
+    private var mPublicChatPresenter: PublicChatPresenter? = null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     init {
-        mManager = PublicMsgManager()
-        mManager?.setPublicMsgView(this)
+        mPublicChatPresenter = PublicChatPresenter()
+        mPublicChatPresenter?.setPublicMsgView(this)
     }
 
     fun setChatAdapter(adapter: PublicChatAdapter): PublicChatView {
-        mAdapter = adapter
-        mManager?.setAdapter(adapter)
-        setAdapter(mAdapter)
+        mPublicChatAdapter = adapter
+        mPublicChatPresenter?.setAdapter(adapter)
+        setAdapter(mPublicChatAdapter)
         return this
     }
 
-    override fun addMsg(msg: BaseChatMsg) {
-        mManager?.addMsg(msg)
-        updateViewPosition()
+    override fun addMessage(msg: BaseChatMsg) {
+        mPublicChatPresenter?.addMessage(msg)
     }
 
-    override fun addMsgs(msgs: List<BaseChatMsg>) {
-        mManager?.addMsgs(msgs)
-        updateViewPosition()
+    override fun addChatMessages(msgList: List<BaseChatMsg>) {
+        mPublicChatPresenter?.addChatMessages(msgList)
     }
 
-    override fun updateMsgs(msgs: List<BaseChatMsg>) {
-        mManager?.updateMsgs(msgs)
-        updateViewPosition()
+    override fun updatePublicMessages(msgList: List<BaseChatMsg>) {
+        mPublicChatPresenter?.updatePublicMessages(msgList)
     }
 
-    fun setManager(manager: PublicMsgManager) {
-        mManager = manager
-        mManager?.setPublicMsgView(this)
-        mAdapter?.let {
-            mManager?.setAdapter(it)
-        }
-    }
-
-    private fun updateViewPosition() {
-        if (!canScrollVertically(1)) {
-            mAdapter?.let {
-                scrollToPosition(it.itemCount - 1)
-            }
+    fun updateViewPosition() {
+        mPublicChatAdapter?.let {
+            scrollToPosition(it.itemCount - 1)
         }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        mManager?.onRelease()
+        onRelease()
+    }
+
+    private fun onRelease() {
+        mPublicChatPresenter?.release()
+        mPublicChatPresenter = null
+        mPublicChatAdapter = null
     }
 }

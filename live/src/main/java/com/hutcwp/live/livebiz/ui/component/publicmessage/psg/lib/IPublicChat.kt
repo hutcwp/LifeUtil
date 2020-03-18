@@ -8,9 +8,7 @@ package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib
  *
  **/
 interface IPublicChat<T> {
-
-    fun addMsg(msg: T)
-    fun addMsgs(msgs: List<T>)
-    fun updateMsgs(msgs: List<T>)
-
+    fun addMessage(msg: T)
+    fun addChatMessages(msgList: List<T>) //新增
+    fun updatePublicMessages(msgList: List<T>) //更新
 }

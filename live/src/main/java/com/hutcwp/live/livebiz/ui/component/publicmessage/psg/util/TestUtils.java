@@ -2,7 +2,7 @@ package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util;
 
 import android.content.res.TypedArray;
 
-import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.MyChatMsg;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg;
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.ActivityNewsMsg;
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.GiftMsg;
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.HeaderChatMsg;

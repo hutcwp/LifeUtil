@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.MyChatMsg
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.BitmapUtils
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.CenteredImageSpan
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.NormalMsg
@@ -51,7 +51,6 @@ class NormalViewBinder : ItemViewBinder<NormalMsg, NormalViewBinder.ViewHolder>(
 
         builder.append(data.sendUserName).append(BasicConfig.getApplicationContext().resources.getString(R.string.str_to))
 
-        // 用户名的长度
         // 用户名的长度
         val leftLen = builder.length
         if (!TextUtils.isEmpty(data.atUserName)) {

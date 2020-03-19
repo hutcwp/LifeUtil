@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.MyChatMsg
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.BitmapUtils
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.CenteredImageSpan
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.GiftMsg

@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="window_bg">#f8f8f8</color>
 
+    <color name="btn_yellow_nor">#FFDD00</color>
+    <color name="btn_yellow_pre">#FFC600</color>
+
     <color name="color999999">#999999</color>
 
     <color name="color_title_text">#25252f</color>
@@ -16,4 +19,7 @@
     <color name="color_chat_at_username">#80D640</color>
 
     <color name="color_chat_news">#1296db</color>
+
+    <color name="txt_color_unfollow">#1d1d1d</color>
+    <color name="common_color_9">#999999</color>
 </resources>

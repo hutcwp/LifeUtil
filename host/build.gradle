@@ -49,6 +49,7 @@ dependencies {
 
     //用于chrome远程调试
     implementation 'com.facebook.stetho:stetho:1.5.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
 
     implementation project(path: ':cartoon')
     implementation project(path: ':base')

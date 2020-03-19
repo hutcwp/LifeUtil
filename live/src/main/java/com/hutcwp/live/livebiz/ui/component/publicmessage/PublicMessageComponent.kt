@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.hutcwp.live.livebiz.base.util.MLog
 import com.hutcwp.live.livebiz.ui.component.Component
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.DefaultChatDecoration
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatAdapter
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatView
@@ -19,6 +20,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import me.hutcwp.util.ResolutionUtils
 import me.hutcwp.util.RxUtils
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.TimeUnit
 
 @BindPresenter(presenter = PublicMessagePresenter::class)
@@ -73,23 +77,39 @@ class PublicMessageComponent : Component<PublicMessagePresenter?, IPublicMessage
     }
 
     private fun startSendMsg() {
-        if (sendMsgDisposable == null || sendMsgDisposable!!.isDisposed) {
-            sendMsgDisposable = Observable.interval(500, TimeUnit.MILLISECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
-                        val rand = (1..5).shuffled().last()
-                        when (rand) {
-                            1 -> rvPublicMessage?.addMessage(TestUtils.getActivityMsg())
-                            2 -> rvPublicMessage?.addMessage(TestUtils.getGiftMsg())
-                            3 -> rvPublicMessage?.addMessage(TestUtils.getHeaderChatMsg())
-                            4 -> rvPublicMessage?.addMessage(TestUtils.getNormalMsg())
-                            5 -> rvPublicMessage?.addMessage(TestUtils.getSystemNewMsg())
-                            else -> rvPublicMessage?.addMessage(TestUtils.getNormalMsg())
-                        }
-                        MLog.info(TAG, "rand is $rand")
-//                        EventBus.getDefault().post(msg)
-                    }
-        }
+        RxUtils.dispose(sendMsgDisposable)
+        sendMsgDisposable = Observable.interval(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    val rand = (1..5).shuffled().last()
+//                    val msg = when (rand) {
+//                        1 -> TestUtils.getActivityMsg()
+//                        2 -> TestUtils.getGiftMsg()
+//                        3 -> TestUtils.getHeaderChatMsg()
+//                        4 -> TestUtils.getNormalMsg()
+//                        5 -> TestUtils.getSystemNewMsg()
+//                        else -> TestUtils.getNormalMsg()
+//                    }
+                    val msg = TestUtils.getNormalMsg()
+                    MLog.info(TAG, "rand is $rand")
+                    EventBus.getDefault().post(msg)
+                }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun receiveMsg(msg: MyChatMsg) {
+        rvPublicMessage?.addMessage(msg)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+        RxUtils.dispose(sendMsgDisposable)
     }
 
 

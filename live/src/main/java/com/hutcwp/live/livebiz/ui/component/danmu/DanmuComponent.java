@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.MyChatMsg;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg;
 import com.hutcwp.livebiz.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -94,7 +94,7 @@ public class DanmuComponent extends MvpFragment<DanmuPresenter, IDanmuComponent>
         BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         danmaku.text = content;
         danmaku.padding = 5;
-        danmaku.textSize = sp2px(20);
+        danmaku.textSize = sp2px(16);
         danmaku.textColor = Color.WHITE;
         danmaku.setTime(danmakuView.getCurrentTime());
         if (withBorder) {

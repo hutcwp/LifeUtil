@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="240dp">
+    android:layout_height="wrap_content">
 
     <com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatView
         android:id="@+id/rvPublicMessage2"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/dp5"
-        android:layout_marginLeft="@dimen/dp5"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginBottom="45dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -20,15 +19,21 @@
         android:id="@+id/btnLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="log" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:text="停止" />
 
     <Button
         android:id="@+id/btnTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:text="test" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="发送" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp20"
+        android:background="@drawable/bg_alpha_change"/>
 
-</FrameLayout>
+</RelativeLayout>

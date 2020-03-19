@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"
+        android:drawable="@drawable/btn_yellow_pre_corner_90">
+    </item>
+    <item android:drawable="@drawable/btn_yellow_nor_corner_90">
+    </item>
+</selector>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hutcwp.live.livebiz.ui.component.danmu.DanmuComponent;
+import com.hutcwp.live.livebiz.ui.component.publicmessage.publicchatinput.PublicChatInputComponent;
 import com.hutcwp.live.livebiz.ui.component.publicmessage.PublicMessageComponent;
 import com.hutcwp.live.livebiz.ui.component.recommend.RecommendComponent;
 import com.hutcwp.live.livebiz.ui.component.video.VideoComponent;
@@ -20,9 +21,10 @@ import hut.cwp.mvp.MvpActivity;
 
 @InitAttrConfigs({
         @InitAttrConfig(component = PublicMessageComponent.class, resourceId = R2.id.public_message_view),
-//        @InitAttrConfig(component = RecommendComponent.class, resourceId = R2.id.recommend_view),
-//        @InitAttrConfig(component = VideoComponent.class, resourceId = R2.id.video_view),
-        @InitAttrConfig(component = DanmuComponent.class, resourceId = R2.id.danmu_view)
+        @InitAttrConfig(component = RecommendComponent.class, resourceId = R2.id.recommend_view),
+        @InitAttrConfig(component = VideoComponent.class, resourceId = R2.id.video_view),
+        @InitAttrConfig(component = DanmuComponent.class, resourceId = R2.id.danmu_view),
+        @InitAttrConfig(component = PublicChatInputComponent.class, resourceId = R2.id.public_chat_input)
 })
 @BindPresenter(presenter = LivePresenter.class)
 @Route(path = "/live/main")

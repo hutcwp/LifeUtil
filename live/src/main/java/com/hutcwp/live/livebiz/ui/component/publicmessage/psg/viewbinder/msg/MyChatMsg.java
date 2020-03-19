@@ -1,4 +1,4 @@
-package com.hutcwp.live.livebiz.ui.component.publicmessage.psg;
+package com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg;
 
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.BaseChatMsg;
 

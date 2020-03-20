@@ -10,6 +10,11 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+import com.hutcwp.live.livebiz.ui.component.emoji.RichTextManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @SuppressLint("AppCompatCustomView")
 public class EmotionChatEditText extends EditText {
@@ -59,6 +64,10 @@ public class EmotionChatEditText extends EditText {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                List<RichTextManager.Feature> features = new ArrayList<>();
+                features.add(RichTextManager.Feature.EMOTICON);
+                RichTextManager.getInstance().getSpannableString(getContext(), editable, features);
+
                 String msg = editable.toString().trim();
                 if (listener != null) {
                     if (TextUtils.isEmpty(msg)) {

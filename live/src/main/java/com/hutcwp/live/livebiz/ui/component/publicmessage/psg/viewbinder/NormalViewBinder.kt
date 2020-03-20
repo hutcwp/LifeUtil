@@ -11,14 +11,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
+import com.hutcwp.live.livebiz.ui.component.emoji.RichTextManager
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.BitmapUtils
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.CenteredImageSpan
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.NormalMsg
 import com.hutcwp.livebiz.R
 import me.drakeet.multitype.ItemViewBinder
 import me.hutcwp.BasicConfig
 import me.hutcwp.util.ResolutionUtils
+import java.util.*
 
 /**
  *
@@ -69,6 +71,9 @@ class NormalViewBinder : ItemViewBinder<NormalMsg, NormalViewBinder.ViewHolder>(
         colorSpan = ForegroundColorSpan(ContextCompat.getColor(BasicConfig.getApplicationContext(), R.color.color_chat_username))
         builder.setSpan(colorSpan, 1, data.sendUserName.length + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
 
+        val features: MutableList<RichTextManager.Feature> = ArrayList()
+        features.add(RichTextManager.Feature.EMOTICON)
+        RichTextManager.getInstance().getSpannableString(text.context, builder, features)
 
         text.text = builder
     }

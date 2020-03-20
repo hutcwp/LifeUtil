@@ -37,4 +37,8 @@ public class MLog {
         }
     }
 
+    public static boolean isLogLevelAboveDebug() {
+        return isDebug;
+    }
+
 }

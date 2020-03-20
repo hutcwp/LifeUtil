@@ -88,4 +88,6 @@
     <dimen name="sp7">7sp</dimen>
     <dimen name="sp8">8sp</dimen>
     <dimen name="sp9">9sp</dimen>
+
+    <dimen name="emotion_span_size">22dp</dimen>
 </resources>

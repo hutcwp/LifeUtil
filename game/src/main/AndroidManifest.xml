@@ -3,11 +3,10 @@
     package="com.hutcwp.game">
 
     <application>
+        <activity android:name=".wuziqi.MainActivity"></activity>
         <activity
-            android:name=".ui.MainGameActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-        </activity>
+            android:name=".sanguo.ui.MainGameActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

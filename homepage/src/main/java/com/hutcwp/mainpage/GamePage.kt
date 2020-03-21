@@ -1,6 +1,7 @@
 package com.hutcwp.mainpage
 
 import me.hutcwp.auto.IMainPage
+import me.hutcwp.constant.Constants
 
 /**
  *
@@ -15,6 +16,6 @@ class GamePage : IMainPage {
     }
 
     override fun getPath(): String {
-        return "/game/main"
+        return Constants.RoutePath.WUZIQI_MAIN_PAGE
     }
 }

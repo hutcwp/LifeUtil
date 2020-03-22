@@ -15,6 +15,14 @@
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="24dp" />
 
+    <TextView
+        android:id="@+id/tvPlayer"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="当前会合:玩家" />
+
     <com.hutcwp.game.wuziqi.GameView
         android:id="@+id/gameView"
         android:layout_width="wrap_content"

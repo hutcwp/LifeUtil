@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.game_activity_main_wuziqi)
         initView()
         initData()
+//        val ai = AI2Player()
+//        ai.testMark()
     }
 
     private fun initData() {

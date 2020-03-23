@@ -99,6 +99,15 @@ class GameView : View, IGameController {
      ** 绘制对战棋盘
      */
     private fun drawCheckerBoard(canvas: Canvas) {
+
+        val paint = Paint()
+        paint.color = Color.BLACK
+        paint.textSize = ResolutionUtils.convertDpToPixel(12f, context)
+        for (i in 1 until count) {
+            canvas.drawText(i.toString(), weight.toFloat(), weight * i.toFloat(), paint)
+            canvas.drawText(i.toString(), weight * i.toFloat(), weight.toFloat(), paint)
+        }
+
         for (i in 1 until count) {
             var y = i * weight
             var x = i * weight
@@ -203,18 +212,6 @@ class GameView : View, IGameController {
         }
         return false
     }
-
-    private fun getScore(player: IGamePlayer, point: GamePoint) {
-        val score = 0
-        val x = point.x
-        val y = point.y
-        val type = point.type
-
-        if (isHavePoint(x - 1, y, type)){
-
-        }
-    }
-
 
     override fun changePlayer() {
 

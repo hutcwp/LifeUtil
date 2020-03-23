@@ -12,7 +12,7 @@ import com.hutcwp.game.wuziqi.GamePoint
  **/
 class UserPlayer : IGamePlayer {
     override fun type(): Int {
-        return 0
+        return -1
     }
 
     override fun name(): String {

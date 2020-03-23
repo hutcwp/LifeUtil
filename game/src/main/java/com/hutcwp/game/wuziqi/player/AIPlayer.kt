@@ -18,7 +18,7 @@ import kotlin.collections.HashMap
 
 open class AIPlayer : IGamePlayer {
     override fun type(): Int {
-        return 1
+        return 2
     }
 
     override fun name(): String {
@@ -69,14 +69,61 @@ open class AIPlayer : IGamePlayer {
     var myPoints = mutableListOf<Point>()
 
     //棋盘最大横坐标和纵标，
-    protected var maxX = 0
-    protected var maxY = 0
+    private var maxX = 0
+    private var maxY = 0
 
     //所有空白棋子
-    protected var allFreePoints: MutableList<Point>? = null
+    private var allFreePoints: MutableList<Point>? = null
 
     var currentRange = CalcuteRange(1, 1, 14, 14)
     private val RANGE_STEP = 1
+
+    //第一次分析结果
+    private val computerFirstResults: MutableMap<Point?, MutableList<FirstAnalysisResult>?> = HashMap()
+    private val humanFirstResults: MutableMap<Point?, MutableList<FirstAnalysisResult>?> = HashMap()
+    //第二次总结果
+    private val computerSencodResults: MutableList<SencondAnalysisResult> = ArrayList()
+    private val humanSencodResults: MutableList<SencondAnalysisResult> = ArrayList()
+    //第二次分结果，电脑
+    private val computer4HalfAlives: MutableList<SencondAnalysisResult> = ArrayList(2)
+    private val computerDouble3Alives: MutableList<SencondAnalysisResult> = ArrayList(4)
+    private val computer3Alives: MutableList<SencondAnalysisResult> = ArrayList(5)
+    private val computerDouble2Alives: MutableList<SencondAnalysisResult> = ArrayList()
+    private val computer2Alives: MutableList<SencondAnalysisResult> = ArrayList()
+    private val computer3HalfAlives: MutableList<SencondAnalysisResult> = ArrayList()
+
+    //第二次分结果，人类
+    private val human4Alives: MutableList<SencondAnalysisResult> = ArrayList(2)
+    private val human4HalfAlives: MutableList<SencondAnalysisResult> = ArrayList(5)
+    private val humanDouble3Alives: MutableList<SencondAnalysisResult> = ArrayList(2)
+    private val human3Alives: MutableList<SencondAnalysisResult> = ArrayList(10)
+    private val humanDouble2Alives: MutableList<SencondAnalysisResult> = ArrayList(3)
+    private val human2Alives: MutableList<SencondAnalysisResult> = ArrayList()
+    private val human3HalfAlives: MutableList<SencondAnalysisResult> = ArrayList()
+
+    //第一次分析前清空上一步棋子的分析结果
+    private fun initAnalysisResults() {
+        computerFirstResults.clear()
+        humanFirstResults.clear()
+        //第二次总结果
+        computerSencodResults.clear()
+        humanSencodResults.clear()
+        //第二次分结果
+        computer4HalfAlives.clear()
+        computerDouble3Alives.clear()
+        computer3Alives.clear()
+        computerDouble2Alives.clear()
+        computer2Alives.clear()
+        computer3HalfAlives.clear()
+        //第二次分结果，人类
+        human4Alives.clear()
+        human4HalfAlives.clear()
+        humanDouble3Alives.clear()
+        human3Alives.clear()
+        humanDouble2Alives.clear()
+        human2Alives.clear()
+        human3HalfAlives.clear()
+    }
 
     //计算范围，太大的范围会有性能问题
     class CalcuteRange(var xStart: Int, var yStart: Int, var xStop: Int, var yStop: Int) {
@@ -157,7 +204,6 @@ open class AIPlayer : IGamePlayer {
             Point(point.x - 1, point.y)
         }
     }
-
 
     // 开始分析，扫描所有空白点，形成第一次分析结果
     private fun doFirstAnalysis(comuters: List<Point>, humans: List<Point>): Point? {
@@ -346,28 +392,24 @@ open class AIPlayer : IGamePlayer {
         }
     }
 
-
     //第三次分析，双方都不可以制造活4，找双活3棋子，不行就找半活4，再不行就找单活3，双活2
     private fun doThirdAnalysis(): Point? {
-        if (!computer4HalfAlives.isEmpty()) {
+        if (computer4HalfAlives.isNotEmpty()) {
             return computer4HalfAlives[0].point
         }
-        System.gc()
-        sleep(300)
-        Collections.sort(computerSencodResults)
-        System.gc()
+
+        computerSencodResults.sort()
         //即将单活4，且我没有半活4以上的，只能堵
         var mostBest: Point? = getBestPoint(human4Alives, computerSencodResults)
         if (mostBest != null) return mostBest
-        Collections.sort(humanSencodResults)
-        System.gc()
+        humanSencodResults.sort()
         mostBest = getBestPoint()
-        return if (mostBest != null) mostBest else computerSencodResults[0].point
+        return mostBest ?: computerSencodResults[0].point
         //拿出各自排第一的，谁好就下谁
     }
 
     //子类实现这个方法，并改变其顺序可以实现防守为主还是猛攻
-    protected fun getBestPoint(): Point? { //即将单活4，且我没有半活4以上的，只能堵
+    private fun getBestPoint(): Point? { //即将单活4，且我没有半活4以上的，只能堵
         var mostBest: Point? = getBestPoint(computerDouble3Alives, humanSencodResults)
         if (mostBest != null) return mostBest
         mostBest = getBestPoint(computer3Alives, humanSencodResults)
@@ -392,10 +434,9 @@ open class AIPlayer : IGamePlayer {
         return mostBest
     }
 
-
     //第三次分析的最后一步，第二次结果已经过排序，在此可以从前面选出最好的棋子
-    protected fun getBestPoint(myBest: List<SencondAnalysisResult>, yourSencodResults: List<SencondAnalysisResult>): Point? {
-        return if (!myBest.isEmpty()) {
+    private fun getBestPoint(myBest: List<SencondAnalysisResult>, yourSencodResults: List<SencondAnalysisResult>): Point? {
+        return if (myBest.isNotEmpty()) {
             if (myBest.size > 1) {
                 for (your in yourSencodResults) {
                     if (myBest.contains(your)) {
@@ -409,54 +450,6 @@ open class AIPlayer : IGamePlayer {
         } else null
     }
 
-
-    //第一次分析结果
-    private val computerFirstResults: MutableMap<Point?, MutableList<FirstAnalysisResult>?> = HashMap()
-    private val humanFirstResults: MutableMap<Point?, MutableList<FirstAnalysisResult>?> = HashMap()
-    //    //第二次总结果
-    protected val computerSencodResults: MutableList<SencondAnalysisResult> = ArrayList()
-    protected val humanSencodResults: MutableList<SencondAnalysisResult> = ArrayList()
-    //第二次分结果，电脑
-    protected val computer4HalfAlives: MutableList<SencondAnalysisResult> = ArrayList(2)
-    protected val computerDouble3Alives: MutableList<SencondAnalysisResult> = ArrayList(4)
-    protected val computer3Alives: MutableList<SencondAnalysisResult> = ArrayList(5)
-    protected val computerDouble2Alives: MutableList<SencondAnalysisResult> = ArrayList()
-    protected val computer2Alives: MutableList<SencondAnalysisResult> = ArrayList()
-    protected val computer3HalfAlives: MutableList<SencondAnalysisResult> = ArrayList()
-
-    //第二次分结果，人类
-    protected val human4Alives: MutableList<SencondAnalysisResult> = ArrayList(2)
-    protected val human4HalfAlives: MutableList<SencondAnalysisResult> = ArrayList(5)
-    protected val humanDouble3Alives: MutableList<SencondAnalysisResult> = ArrayList(2)
-    protected val human3Alives: MutableList<SencondAnalysisResult> = ArrayList(10)
-    protected val humanDouble2Alives: MutableList<SencondAnalysisResult> = ArrayList(3)
-    protected val human2Alives: MutableList<SencondAnalysisResult> = ArrayList()
-    protected val human3HalfAlives: MutableList<SencondAnalysisResult> = ArrayList()
-
-    //第一次分析前清空上一步棋子的分析结果
-    private fun initAnalysisResults() {
-        computerFirstResults.clear()
-        humanFirstResults.clear()
-        //第二次总结果
-        computerSencodResults.clear()
-        humanSencodResults.clear()
-        //第二次分结果
-        computer4HalfAlives.clear()
-        computerDouble3Alives.clear()
-        computer3Alives.clear()
-        computerDouble2Alives.clear()
-        computer2Alives.clear()
-        computer3HalfAlives.clear()
-        //第二次分结果，人类
-        human4Alives.clear()
-        human4HalfAlives.clear()
-        humanDouble3Alives.clear()
-        human3Alives.clear()
-        humanDouble2Alives.clear()
-        human2Alives.clear()
-        human3HalfAlives.clear()
-    }
-
     //加入到第一次分析结果中
     private fun addToFirstAnalysisResult(result: FirstAnalysisResult, dest: MutableMap<Point?, MutableList<FirstAnalysisResult>?>) {
         if (dest.containsKey(result.point)) {
@@ -467,7 +460,6 @@ open class AIPlayer : IGamePlayer {
             dest[result.point] = list
         }
     }
-
 
     //第一次分析结果类
     private class FirstAnalysisResult private constructor(//连续数

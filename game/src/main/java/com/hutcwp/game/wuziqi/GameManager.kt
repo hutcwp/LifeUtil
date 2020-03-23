@@ -2,11 +2,15 @@ package com.hutcwp.game.wuziqi
 
 import android.graphics.Color
 import android.graphics.Point
-import com.hutcwp.game.wuziqi.player.AIPlayer
+import com.hutcwp.game.wuziqi.player.AI2Player
 import com.hutcwp.game.wuziqi.player.IGamePlayer
 import com.hutcwp.game.wuziqi.player.UserPlayer
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import me.hutcwp.log.MLog
 import me.hutcwp.util.SingleToastUtil
+import java.util.concurrent.TimeUnit
 
 /**
  *
@@ -18,7 +22,8 @@ import me.hutcwp.util.SingleToastUtil
 class GameManager(private var gameView: GameView?, private var activity: MainActivity) : IGameController {
 
     private val userPlayer = UserPlayer()
-    private val aiPlayer = AIPlayer()
+    //    private val aiPlayer = AIPlayer()
+    private val aiPlayer = AI2Player()
     private var currentPlayer: IGamePlayer? = null
     private val aiPoints = mutableListOf<Point>()
     private val userPoints = mutableListOf<Point>()
@@ -32,6 +37,7 @@ class GameManager(private var gameView: GameView?, private var activity: MainAct
         aiPoints.clear()
         userPoints.clear()
         allFreePoints.clear()
+        aiPlayer.initChessBoard()
         currentPlayer = userPlayer
         for (i in 1..14) {
             for (j in 1..14) {

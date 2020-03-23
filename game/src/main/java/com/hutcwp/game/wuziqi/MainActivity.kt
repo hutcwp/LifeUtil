@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hutcwp.game.R
+import com.hutcwp.game.wuziqi.player.AI2Player
 import com.hutcwp.game.wuziqi.player.IGamePlayer
 import me.hutcwp.constant.Constants
 

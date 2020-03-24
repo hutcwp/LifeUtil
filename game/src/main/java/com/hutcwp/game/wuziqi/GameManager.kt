@@ -71,6 +71,7 @@ class GameManager(private var gameView: GameView?, private var activity: MainAct
         }
 
         currentPlayer?.let { player ->
+            activity.updateCurPlayer(player)
             player.startPlay(userPoints, aiPoints, allFreePoints) { point ->
                 val color = if (player == aiPlayer) {
                     Color.RED
@@ -79,7 +80,6 @@ class GameManager(private var gameView: GameView?, private var activity: MainAct
                 }
                 addNewPoint(GamePoint(point.x.toFloat(), point.y.toFloat(), player.type(), color), aiPlayer)
                 changePlayer()
-                activity.updateCurPlayer(player)
             }
         }
     }

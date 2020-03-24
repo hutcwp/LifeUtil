@@ -160,10 +160,10 @@ class GameView : View, IGameController {
         invalidate()
     }
 
-    private fun judgeFinish() {
+    private fun judgeFinish(player: IGamePlayer) {
         mPoints?.forEach { p ->
             if (isFinished(p)) {
-                Toast.makeText(context, "胜利", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "${player.name()} 胜利", Toast.LENGTH_SHORT).show()
                 setOnTouchListener { view, motionEvent ->
                     Toast.makeText(context, "请点击开始游戏按钮", Toast.LENGTH_SHORT).show()
                     false
@@ -223,7 +223,7 @@ class GameView : View, IGameController {
         val y = point.y
         if (iFAddPoint(x, y)) {
             mPoints?.add(GamePoint(x, y, player.type(), point.color))
-            judgeFinish()
+            judgeFinish(player)
             invalidate()
         }
     }

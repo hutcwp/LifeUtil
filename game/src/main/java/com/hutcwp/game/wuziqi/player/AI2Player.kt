@@ -53,7 +53,7 @@ class AI2Player : IGamePlayer {
             }
         }
         printToJudge()
-        Observable.timer(10, TimeUnit.MILLISECONDS)
+        Observable.timer(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {

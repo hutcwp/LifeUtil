@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Point
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -12,6 +13,7 @@ import com.hutcwp.game.wuziqi.player.IGamePlayer
 import me.hutcwp.log.MLog
 import me.hutcwp.util.ResolutionUtils
 import java.util.*
+
 
 /**
  * Created by hutcwp on 2020-03-21 14:35
@@ -24,13 +26,14 @@ class GameView : View, IGameController {
     private var mPoints: MutableList<GamePoint>? = ArrayList()
     private val mWidth = (ResolutionUtils.getScreenWidth(context) * 0.9).toInt()
 
-    //实际格子数比count少2 ，用于左右边缘
-    private val count = 15
+
+    private val count = 16
     private val weight = mWidth / count
 
     private val radius = (weight * 0.4).toFloat()
 
     private var onSelectPointListener: OnSelectPointListener? = null
+    private var flagePoints = listOf<Point>(Point(4, 4), Point(8, 8), Point(4, 12), Point(12, 12), Point(12, 4))
 
     constructor(context: Context?) : super(context) {
         initPaint()
@@ -92,20 +95,39 @@ class GameView : View, IGameController {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawCheckerBoard(canvas)
+        drawFlagPoint(canvas)
         drawPoints(canvas)
+    }
+
+    /**
+     * 绘制标志点
+     */
+    private fun drawFlagPoint(canvas: Canvas) {
+        flagePoints.forEach { point ->
+            val realX = point.x * weight
+            val realY = point.y * weight
+            mPointPaint.color = Color.BLACK
+            val padding = 10f
+            val l = realX - padding
+            val t = realY - padding
+            val r = realX + padding
+            val b = realY + padding
+            canvas.drawRect(l, t, r, b, mPointPaint)
+        }
     }
 
     /**
      ** 绘制对战棋盘
      */
     private fun drawCheckerBoard(canvas: Canvas) {
-
         val paint = Paint()
         paint.color = Color.BLACK
         paint.textSize = ResolutionUtils.convertDpToPixel(12f, context)
+
         for (i in 1 until count) {
-            canvas.drawText(i.toString(), weight.toFloat(), weight * i.toFloat(), paint)
-            canvas.drawText(i.toString(), weight * i.toFloat(), weight.toFloat(), paint)
+            val offset = ResolutionUtils.convertDpToPixel(10f, context)
+            canvas.drawText(i.toString(), weight.toFloat() - offset, weight * i.toFloat(), paint)
+            canvas.drawText(i.toString(), weight * i.toFloat() - offset, weight.toFloat(), paint)
         }
 
         for (i in 1 until count) {

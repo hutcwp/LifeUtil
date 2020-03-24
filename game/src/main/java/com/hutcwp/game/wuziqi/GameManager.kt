@@ -74,7 +74,7 @@ class GameManager(private var gameView: GameView?, private var activity: MainAct
             activity.updateCurPlayer(player)
             player.startPlay(userPoints, aiPoints, allFreePoints) { point ->
                 val color = if (player == aiPlayer) {
-                    Color.RED
+                    Color.BLACK
                 } else {
                     Color.WHITE
                 }

@@ -374,7 +374,7 @@ class AI2Player : IGamePlayer {
         private val dc = intArrayOf(1, -1, -1, 1, -1, 1, 0, 0) //方向向量
         private const val MAXN = 1 shl 28
         private const val MINN = -MAXN
-        private const val SearchDeep = 2 //搜索深度
+        private const val SearchDeep = 4 //搜索深度
         private const val BoardSize = 14 //棋盘大小
         var isFinished = false
     }

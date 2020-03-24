@@ -21,19 +21,20 @@ import java.util.*
  * YY: 909076244
  */
 class GameView : View, IGameController {
-    private var mPaint: Paint? = null
+    private var mPaint: Paint = Paint()
     private var mPointPaint: Paint = Paint()
     private var mPoints: MutableList<GamePoint>? = ArrayList()
     private val mWidth = (ResolutionUtils.getScreenWidth(context) * 0.9).toInt()
+    private val padding = (ResolutionUtils.getScreenWidth(context) * 0.1).toInt() / 2
+    private val boardCount = 15 //棋盘点数
+    private val weight = (mWidth - padding) / boardCount //单个棋子宽度
+    private val radius = (weight * 0.4).toFloat() //棋子圆幅度
 
-
-    private val count = 16
-    private val weight = mWidth / count
-
-    private val radius = (weight * 0.4).toFloat()
+    private val isDebug = false
 
     private var onSelectPointListener: OnSelectPointListener? = null
-    private var flagePoints = listOf<Point>(Point(4, 4), Point(8, 8), Point(4, 12), Point(12, 12), Point(12, 4))
+    private var flagPoints = listOf(Point(4, 4), Point(8, 8),
+            Point(4, 12), Point(12, 12), Point(12, 4)) //棋子标点
 
     constructor(context: Context?) : super(context) {
         initPaint()
@@ -55,10 +56,8 @@ class GameView : View, IGameController {
     }
 
     private fun initPaint() {
-        mPaint = Paint()
-        mPaint?.isAntiAlias = true
-        mPaint?.isFakeBoldText = true
-        mPointPaint = Paint()
+        mPaint.isAntiAlias = true
+        mPaint.isFakeBoldText = true
         mPointPaint.isAntiAlias = true
         mPointPaint.color = Color.WHITE
     }
@@ -78,9 +77,9 @@ class GameView : View, IGameController {
                     if (y % weight > weight / 2) {
                         ascY = 1
                     }
-                    x = (x / weight + ascX).toInt().toFloat()
-                    y = (y / weight + ascY).toInt().toFloat()
-                    onSelectPointListener?.selectPoint(x, y)
+                    val selectX = (x / weight + ascX).toInt()
+                    val selectY = (y / weight + ascY).toInt()
+                    onSelectPointListener?.selectPoint(selectX, selectY)
                 }
             }
             false
@@ -103,15 +102,15 @@ class GameView : View, IGameController {
      * 绘制标志点
      */
     private fun drawFlagPoint(canvas: Canvas) {
-        flagePoints.forEach { point ->
-            val realX = point.x * weight
-            val realY = point.y * weight
+        flagPoints.forEach { point ->
+            val realX = point.x * weight + padding
+            val realY = point.y * weight + padding
             mPointPaint.color = Color.BLACK
-            val padding = 10f
-            val l = realX - padding
-            val t = realY - padding
-            val r = realX + padding
-            val b = realY + padding
+            val flagPadding = 10f
+            val l = realX - flagPadding
+            val t = realY - flagPadding
+            val r = realX + flagPadding
+            val b = realY + flagPadding
             canvas.drawRect(l, t, r, b, mPointPaint)
         }
     }
@@ -124,25 +123,22 @@ class GameView : View, IGameController {
         paint.color = Color.BLACK
         paint.textSize = ResolutionUtils.convertDpToPixel(12f, context)
 
-        for (i in 1 until count) {
-            val offset = ResolutionUtils.convertDpToPixel(10f, context)
-            canvas.drawText(i.toString(), weight.toFloat() - offset, weight * i.toFloat(), paint)
-            canvas.drawText(i.toString(), weight * i.toFloat() - offset, weight.toFloat(), paint)
+        if (isDebug) {
+            for (i in 1..boardCount) {
+                val offset = ResolutionUtils.convertDpToPixel(10f, context)
+                canvas.drawText(i.toString(), weight.toFloat() - offset, weight * i.toFloat(), paint)
+                canvas.drawText(i.toString(), weight * i.toFloat() - offset, weight.toFloat(), paint)
+            }
         }
 
-        for (i in 1 until count) {
-            var y = i * weight
-            var x = i * weight
-            if (i == count) {
-                x--
-                y--
-            }
-
-            mPaint?.let {
+        for (i in 1..boardCount) {
+            val y = (i - 1) * weight + padding
+            val x = (i - 1) * weight + padding
+            mPaint.let {
                 //竖线
-                canvas.drawLine(x.toFloat(), weight.toFloat(), x.toFloat(), (count - 1) * weight.toFloat(), it)
+                canvas.drawLine(x.toFloat(), padding.toFloat(), x.toFloat(), padding + (boardCount - 1) * weight.toFloat(), it)
                 //横线
-                canvas.drawLine(weight.toFloat(), y.toFloat(), (count - 1) * weight.toFloat(), y.toFloat(), it)
+                canvas.drawLine(padding.toFloat(), y.toFloat(), padding + (boardCount - 1) * weight.toFloat(), y.toFloat(), it)
             }
         }
     }
@@ -152,8 +148,8 @@ class GameView : View, IGameController {
      **/
     private fun drawPoints(canvas: Canvas) {
         mPoints?.forEach { point ->
-            val realX = point.x * weight
-            val realY = point.y * weight
+            val realX = point.x * weight.toFloat() + padding
+            val realY = point.y * weight.toFloat() + padding
             mPointPaint.color = point.color
             canvas.drawCircle(realX, realY, radius, mPointPaint)
         }
@@ -162,8 +158,8 @@ class GameView : View, IGameController {
     /**
      *  判断该点是否可以添加棋子
      */
-    fun iFAddPoint(x: Float, y: Float): Boolean {
-        if (x.toInt() == 0 || x > weight * (count - 1) || y == 0f || y > weight * (count - 1)) {
+    fun canAddNewPoint(x: Int, y: Int): Boolean {
+        if (x == 0 || x > weight * (boardCount - 1) || y == 0 || y > weight * (boardCount - 1)) {
             return false
         }
 
@@ -195,6 +191,15 @@ class GameView : View, IGameController {
         }
     }
 
+    fun isGameOver(): Boolean {
+        mPoints?.forEach { p ->
+            if (isFinished(p)) {
+                return true
+            }
+        }
+        return false
+    }
+
     private fun isFinished(point: GamePoint): Boolean {
         val x = point.x
         val y = point.y
@@ -221,8 +226,8 @@ class GameView : View, IGameController {
                 && isHavePoint(x + 1, y - 1, type) && isHavePoint(x + 2, y - 2, type))
     }
 
-    private fun isHavePoint(x: Float, y: Float, type: Int): Boolean {
-        if (x.toInt() <= 0 || x == mWidth.toFloat() || y <= 0 || y == mWidth.toFloat()) {
+    private fun isHavePoint(x: Int, y: Int, type: Int): Boolean {
+        if (x < 1 || x > boardCount || y < 1 || y > boardCount) {
             // 出界
             return false
         }
@@ -235,21 +240,22 @@ class GameView : View, IGameController {
         return false
     }
 
-    override fun changePlayer() {
-
-    }
-
-    override fun addNewPoint(point: GamePoint, player: IGamePlayer) {
-        MLog.debug(TAG, "addPoint")
+    override fun addNewPoint(point: Point, player: IGamePlayer): Boolean {
+        MLog.info(TAG, "point=$point, player=$player")
         val x = point.x
         val y = point.y
-        if (iFAddPoint(x, y)) {
-            mPoints?.add(GamePoint(x, y, player.type(), point.color))
+        if (canAddNewPoint(x, y)) {
+            mPoints?.add(GamePoint(x, y, player.type(), player.pointColor()))
             judgeFinish(player)
             invalidate()
+            return true
         }
+        return false
     }
 
+    fun getBoardCount(): Int {
+        return boardCount
+    }
 
     fun setSelectPointListener(listener: OnSelectPointListener) {
         onSelectPointListener = listener
@@ -259,7 +265,7 @@ class GameView : View, IGameController {
      * 暴露接口出去
      */
     interface OnSelectPointListener {
-        fun selectPoint(x: Float, y: Float)
+        fun selectPoint(x: Int, y: Int)
     }
 
     companion object {

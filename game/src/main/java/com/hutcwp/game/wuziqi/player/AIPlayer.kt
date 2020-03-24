@@ -1,8 +1,11 @@
 package com.hutcwp.game.wuziqi.player
 
+import android.graphics.Color
 import android.graphics.Point
+import com.hutcwp.game.wuziqi.GameManager
 import com.hutcwp.game.wuziqi.GamePoint
 import me.hutcwp.log.MLog
+import me.hutcwp.util.SingleToastUtil
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -16,9 +19,14 @@ import kotlin.collections.HashMap
  *
  **/
 
-open class AIPlayer : IGamePlayer {
+class AIPlayer(private val manager: GameManager) : IGamePlayer {
+
+    override fun pointColor(): Int {
+        return Color.BLUE
+    }
+
     override fun type(): Int {
-        return 2
+        return -1
     }
 
     override fun name(): String {
@@ -45,9 +53,16 @@ open class AIPlayer : IGamePlayer {
             allFreePoints[i]
         }
 
-        MLog.info("aiplayer", "result=$result")
-        block(result!!)
+        MLog.info(TAG, "result=$result")
+        if (manager.getCurrentUser() != this) {
+            MLog.debug(TAG, "current is other user play...")
+        }
 
+        if (manager.canAddNewPoint(result!!.x, result.y)) {
+            manager.addNewPoint(Point(result.x, result.y), this)
+        } else {
+            SingleToastUtil.showToast("当前位置不能放置，请重新选择")
+        }
     }
 
     // 四个方向，横- 、纵| 、正斜/ 、反斜\
@@ -723,4 +738,7 @@ open class AIPlayer : IGamePlayer {
         return count
     }
 
+    companion object {
+        const val TAG = "AIPlayer"
+    }
 }

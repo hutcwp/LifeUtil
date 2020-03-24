@@ -13,6 +13,8 @@ import com.hutcwp.game.wuziqi.GamePoint
 
 interface IGamePlayer {
 
+    fun pointColor(): Int
+
     fun type(): Int
 
     fun name(): String

@@ -11,10 +11,5 @@ import com.hutcwp.game.wuziqi.player.IGamePlayer
  *
  **/
 interface IGameController {
-
-    fun changePlayer()
-
-    fun addNewPoint(point: GamePoint, player: IGamePlayer)
-
-
+    fun addNewPoint(point: Point, player: IGamePlayer): Boolean
 }

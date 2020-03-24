@@ -1,12 +1,15 @@
 package com.hutcwp.game.wuziqi.player
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.graphics.Point
+import com.hutcwp.game.wuziqi.GameManager
 import com.hutcwp.game.wuziqi.GamePoint
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.hutcwp.log.MLog
+import me.hutcwp.util.SingleToastUtil
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -15,7 +18,12 @@ import java.util.concurrent.TimeUnit
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
-class AI2Player : IGamePlayer {
+class AI2Player(private val manager: GameManager) : IGamePlayer {
+
+    override fun pointColor(): Int {
+        return Color.BLACK
+    }
+
     override fun type(): Int {
         return 1
     }
@@ -61,15 +69,26 @@ class AI2Player : IGamePlayer {
                     MLog.info(TAG, "==============dfs===start==============")
                     val node = Node()
                     dfs(0, node, MINN, MAXN, null)
-                    val now = node.bestChild!!.p
+                    val now = node.bestChild?.p ?: Point(8, 8)
                     val duration = System.currentTimeMillis() - startTime
                     MLog.info(TAG, "==============dfs====end============= time(ms)=$duration")
                     now
                 }
                 .subscribe { point ->
-                    MLog.debug("hutcwp", "point=%s", point)
+                    MLog.debug(TAG, "point=%s", point)
                     toJudge.remove(point)
-                    block.invoke(point)
+//                    block.invoke(point)
+
+                    if (manager.getCurrentUser() != this) {
+//                    SingleToastUtil.showToast("现在是${currentPlayer?.name()}回合，请稍等")
+                        MLog.debug(TAG, "current is other user play...")
+                    }
+
+                    if (manager.canAddNewPoint(point.x, point.y)) {
+                        manager.addNewPoint(Point(point.x, point.y), this)
+                    } else {
+                        SingleToastUtil.showToast("当前位置不能放置，请重新选择")
+                    }
                 }
     }
 
@@ -374,7 +393,7 @@ class AI2Player : IGamePlayer {
         private val dc = intArrayOf(1, -1, -1, 1, -1, 1, 0, 0) //方向向量
         private const val MAXN = 1 shl 28
         private const val MINN = -MAXN
-        private const val SearchDeep = 4 //搜索深度
+        private const val SearchDeep = 2 //搜索深度
         private const val BoardSize = 14 //棋盘大小
         var isFinished = false
     }

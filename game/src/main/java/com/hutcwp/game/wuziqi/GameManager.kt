@@ -1,16 +1,11 @@
 package com.hutcwp.game.wuziqi
 
-import android.graphics.Color
 import android.graphics.Point
 import com.hutcwp.game.wuziqi.player.AI2Player
+import com.hutcwp.game.wuziqi.player.AIPlayer
 import com.hutcwp.game.wuziqi.player.IGamePlayer
-import com.hutcwp.game.wuziqi.player.UserPlayer
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import me.hutcwp.log.MLog
 import me.hutcwp.util.SingleToastUtil
-import java.util.concurrent.TimeUnit
 
 /**
  *
@@ -19,18 +14,24 @@ import java.util.concurrent.TimeUnit
  * YY: 909076244
  *
  **/
-class GameManager(private var gameView: GameView?, private var activity: MainActivity) : IGameController {
+class GameManager(private var gameView: GameView, private var activity: MainActivity) : IGameController {
 
-    private val userPlayer = UserPlayer()
+    //    private val userPlayer = UserPlayer(this)
+    private val userPlayer = AIPlayer(this)
     //    private val aiPlayer = AIPlayer()
-    private val aiPlayer = AI2Player()
-    private var currentPlayer: IGamePlayer? = null
+    private val aiPlayer = AI2Player(this)
+    private var currentPlayer: IGamePlayer = userPlayer
     private val aiPoints = mutableListOf<Point>()
     private val userPoints = mutableListOf<Point>()
     private val allFreePoints = mutableListOf<Point>()
 
     init {
         initGame()
+        initData()
+    }
+
+    private fun initData() {
+        changePlayer()
     }
 
     private fun initGame() {
@@ -39,66 +40,69 @@ class GameManager(private var gameView: GameView?, private var activity: MainAct
         allFreePoints.clear()
         aiPlayer.initChessBoard()
         currentPlayer = userPlayer
-        for (i in 1..14) {
-            for (j in 1..14) {
+        for (i in 1..gameView.getBoardCount()) {
+            for (j in 1..gameView.getBoardCount()) {
                 allFreePoints.add(Point(i, j))
             }
         }
-        gameView?.let { gameView ->
-            gameView.setSelectPointListener(object : GameView.OnSelectPointListener {
-                override fun selectPoint(x: Float, y: Float) {
-                    if (currentPlayer != userPlayer) {
-                        SingleToastUtil.showToast("现在是${currentPlayer?.name()}回合，请稍等")
-                        return
-                    }
 
-                    if (gameView.iFAddPoint(x, y)) {
-                        addNewPoint(GamePoint(x, y, 0, Color.WHITE), userPlayer)
-                        changePlayer()
-                    } else {
-                        SingleToastUtil.showToast("当前位置不能放置，请重新选择")
-                    }
-                }
-            })
-        }
+        gameView.setSelectPointListener(object : GameView.OnSelectPointListener {
+            override fun selectPoint(x: Int, y: Int) {
+//                userPlayer.selectPoint(x, y)
+            }
+        })
     }
 
-    override fun changePlayer() {
+    private fun changePlayer() {
         currentPlayer = if (currentPlayer == userPlayer) {
             aiPlayer
         } else {
             userPlayer
         }
 
-        currentPlayer?.let { player ->
+        currentPlayer.let { player ->
             activity.updateCurPlayer(player)
             player.startPlay(userPoints, aiPoints, allFreePoints) { point ->
-                val color = if (player == aiPlayer) {
-                    Color.BLACK
-                } else {
-                    Color.WHITE
-                }
-                addNewPoint(GamePoint(point.x.toFloat(), point.y.toFloat(), player.type(), color), aiPlayer)
-                changePlayer()
+                addNewPoint(point, aiPlayer)
             }
         }
     }
 
-    override fun addNewPoint(point: GamePoint, player: IGamePlayer) {
-        val p = Point(point.x.toInt(), point.y.toInt())
-        allFreePoints.remove(p)
-        if (currentPlayer == userPlayer) {
-            userPoints.add(p)
-            MLog.info("GameManager", "userPoints add point${p}")
-        } else {
-            aiPoints.add(p)
-            MLog.info("GameManager", "aiPoints add point${p}")
-        }
-        gameView?.addNewPoint(point, player)
+    fun getCurrentUser(): IGamePlayer {
+        return currentPlayer
     }
 
-    fun release() {
+    fun canAddNewPoint(x: Int, y: Int): Boolean {
+        return gameView.canAddNewPoint(x, y)
+    }
+
+    override fun addNewPoint(point: Point, player: IGamePlayer): Boolean {
+        allFreePoints.remove(point)
+        if (currentPlayer == userPlayer) {
+            userPoints.add(point)
+            MLog.info("GameManager", "userPoints add point${point}")
+        } else {
+            aiPoints.add(point)
+            MLog.info("GameManager", "aiPoints add point${point}")
+        }
+        val addSuccess = gameView.addNewPoint(point, player)
+        val isGameOver = gameView.isGameOver()
+        if (addSuccess && !isGameOver) {
+            changePlayer()
+        }
+
+        if (gameView.isGameOver()) {
+            SingleToastUtil.showToast("游戏结束")
+        }
+        return addSuccess
+    }
+
+    fun resetGame() {
         initGame()
     }
 
+
+    companion object {
+        const val TAG = "GameManager"
+    }
 }

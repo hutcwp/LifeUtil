@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hutcwp.game.R
-import com.hutcwp.game.wuziqi.player.AI2Player
 import com.hutcwp.game.wuziqi.player.IGamePlayer
 import me.hutcwp.constant.Constants
 
@@ -33,7 +32,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        gameManager = GameManager(gameView, this)
+        gameView?.let {
+            gameManager = GameManager(it, this)
+        }
     }
 
     private fun initView() {
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         btnStartGame?.setOnClickListener {
             gameView?.resetGame()
-            gameManager?.release()
+            gameManager?.resetGame()
         }
     }
 

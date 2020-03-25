@@ -1,12 +1,17 @@
 package com.hutcwp.game.wuziqi.player
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Point
 import com.hutcwp.game.wuziqi.GameManager
 import com.hutcwp.game.wuziqi.GamePoint
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import me.hutcwp.log.MLog
 import me.hutcwp.util.SingleToastUtil
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -22,7 +27,7 @@ import kotlin.collections.HashMap
 class AIPlayer(private val manager: GameManager) : IGamePlayer {
 
     override fun pointColor(): Int {
-        return Color.BLUE
+        return Color.WHITE
     }
 
     override fun type(): Int {
@@ -37,32 +42,40 @@ class AIPlayer(private val manager: GameManager) : IGamePlayer {
 
     }
 
+    @SuppressLint("CheckResult")
     override fun startPlay(userPoints: MutableList<Point>, aiPoints: MutableList<Point>, allFreePoints: MutableList<Point>, block: (Point) -> Unit) {
         this.myPoints = aiPoints
         this.allFreePoints = allFreePoints
 
-        val result = try {
-            doAnalysis(aiPoints, userPoints)
-        } catch (e: NullPointerException) { //修复可能出现的罕见bug：当快下满的时候（和棋时）可能出现AI崩溃的bug，暂定的解决方式是：AI随机下子。
-            val random = Random()
-            val i = random.nextInt(allFreePoints.size)
-            allFreePoints[i]
-        } catch (e: IndexOutOfBoundsException) {
-            val random = Random()
-            val i = random.nextInt(allFreePoints.size)
-            allFreePoints[i]
-        }
+        Observable.timer(1000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map {
+                    val result = try {
+                        doAnalysis(aiPoints, userPoints)
+                    } catch (e: NullPointerException) { //修复可能出现的罕见bug：当快下满的时候（和棋时）可能出现AI崩溃的bug，暂定的解决方式是：AI随机下子。
+                        val random = Random()
+                        val i = random.nextInt(allFreePoints.size)
+                        allFreePoints[i]
+                    } catch (e: IndexOutOfBoundsException) {
+                        val random = Random()
+                        val i = random.nextInt(allFreePoints.size)
+                        allFreePoints[i]
+                    }
+                    result
+                }.subscribe { result ->
+                    MLog.info(TAG, "result=$result")
+                    if (manager.getCurrentUser() != this) {
+                        MLog.debug(TAG, "current is other user play...")
+                    }
 
-        MLog.info(TAG, "result=$result")
-        if (manager.getCurrentUser() != this) {
-            MLog.debug(TAG, "current is other user play...")
-        }
+                    if (manager.canAddNewPoint(result!!.x, result.y)) {
+                        manager.addNewPoint(Point(result.x, result.y), this)
+                    } else {
+                        SingleToastUtil.showToast("当前位置不能放置，请重新选择")
+                    }
+                }
 
-        if (manager.canAddNewPoint(result!!.x, result.y)) {
-            manager.addNewPoint(Point(result.x, result.y), this)
-        } else {
-            SingleToastUtil.showToast("当前位置不能放置，请重新选择")
-        }
     }
 
     // 四个方向，横- 、纵| 、正斜/ 、反斜\

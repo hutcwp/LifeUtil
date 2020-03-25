@@ -1,5 +1,6 @@
 package com.hutcwp.game.wuziqi
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Window
 import android.widget.Button
@@ -19,7 +20,9 @@ class MainActivity : AppCompatActivity() {
     private var btnStartGame: Button? = null
     private var gameView: GameView? = null
     private var gameManager: GameManager? = null
-    private var tvPlayer: TextView? = null
+    private var curTVPlayer: TextView? = null
+    private var tvPlayer1: TextView? = null
+    private var tvPlayer2: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        tvPlayer = findViewById(R.id.tvPlayer)
+        curTVPlayer = findViewById(R.id.tvPlayer)
+        tvPlayer1 = findViewById(R.id.tvPlayer1)
+        tvPlayer2 = findViewById(R.id.tvPlayer2)
         gameView = findViewById(R.id.gameView)
         btnStartGame = findViewById(R.id.btn_startGame)
 
@@ -50,6 +55,15 @@ class MainActivity : AppCompatActivity() {
 
     fun updateCurPlayer(player: IGamePlayer) {
         val content = "当前回合：${player.name()}"
-        tvPlayer?.text = content
+        curTVPlayer?.text = content
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun updatePlayerInfo(player1: IGamePlayer, player2: IGamePlayer) {
+        tvPlayer1?.setTextColor(player1.pointColor())
+        tvPlayer1?.text = player1.name()
+
+        tvPlayer2?.setTextColor(player2.pointColor())
+        tvPlayer2?.text = player2.name()
     }
 }

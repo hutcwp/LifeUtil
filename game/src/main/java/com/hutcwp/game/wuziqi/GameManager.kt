@@ -16,11 +16,9 @@ import me.hutcwp.util.SingleToastUtil
  **/
 class GameManager(private var gameView: GameView, private var activity: MainActivity) : IGameController {
 
-    //    private val userPlayer = UserPlayer(this)
     private val userPlayer = AIPlayer(this)
-    //    private val aiPlayer = AIPlayer()
     private val aiPlayer = AI2Player(this)
-    private var currentPlayer: IGamePlayer = userPlayer
+    private var currentPlayer: IGamePlayer = aiPlayer
     private val aiPoints = mutableListOf<Point>()
     private val userPoints = mutableListOf<Point>()
     private val allFreePoints = mutableListOf<Point>()
@@ -31,7 +29,7 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
     }
 
     private fun initData() {
-        changePlayer()
+        autoPlay()
     }
 
     private fun initGame() {
@@ -39,6 +37,7 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
         userPoints.clear()
         allFreePoints.clear()
         aiPlayer.initChessBoard()
+        activity.updatePlayerInfo(userPlayer, aiPlayer)
         currentPlayer = userPlayer
         for (i in 1..gameView.getBoardCount()) {
             for (j in 1..gameView.getBoardCount()) {
@@ -59,7 +58,10 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
         } else {
             userPlayer
         }
+        autoPlay()
+    }
 
+    private fun autoPlay() {
         currentPlayer.let { player ->
             activity.updateCurPlayer(player)
             player.startPlay(userPoints, aiPoints, allFreePoints) { point ->
@@ -92,13 +94,14 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
         }
 
         if (gameView.isGameOver()) {
-            SingleToastUtil.showToast("游戏结束")
+            SingleToastUtil.showToast("游戏结束,${player.name()}胜利")
         }
         return addSuccess
     }
 
     fun resetGame() {
         initGame()
+        changePlayer()
     }
 
 

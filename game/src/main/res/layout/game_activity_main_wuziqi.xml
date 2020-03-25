@@ -17,11 +17,11 @@
 
     <TextView
         android:id="@+id/tvPlayer"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="当前会合:玩家" />
+        android:text="当前会合:玩家"
+        android:textColor="@color/black" />
 
     <com.hutcwp.game.wuziqi.GameView
         android:id="@+id/gameView"
@@ -29,6 +29,30 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="#CDA383" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#009688"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/tvPlayer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="50dp"
+            android:text="玩家:白色" />
+
+        <TextView
+            android:id="@+id/tvPlayer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="50dp"
+            android:text="玩家:黑色" />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btn_startGame"

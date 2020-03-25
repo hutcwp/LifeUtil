@@ -29,7 +29,7 @@ class AI2Player(private val manager: GameManager) : IGamePlayer {
     }
 
     override fun name(): String {
-        return "ai2"
+        return "AI2玩家"
     }
 
     override fun makeNewPoint(paint: GamePoint) {}

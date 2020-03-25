@@ -21,13 +21,14 @@ import java.util.*
  * YY: 909076244
  */
 class GameView : View, IGameController {
-    private var mPaint: Paint = Paint()
-    private var mPointPaint: Paint = Paint()
+    private var mCheckBoardPaint: Paint = Paint() //棋盘画笔
+    private var mPointPaint: Paint = Paint() //棋子画笔
     private var mPoints: MutableList<GamePoint>? = ArrayList()
-    private val mWidth = (ResolutionUtils.getScreenWidth(context) * 0.9).toInt()
-    private val padding = (ResolutionUtils.getScreenWidth(context) * 0.1).toInt() / 2
+    private val mCheckBoardWidth = (ResolutionUtils.getScreenWidth(context) * 0.8).toInt() //真实棋盘的宽度
+
+    private val padding = (mCheckBoardWidth * 0.1f / 2f) //棋盘边距
     private val boardCount = 15 //棋盘点数
-    private val weight = (mWidth - padding) / boardCount //单个棋子宽度
+    private val weight = ((mCheckBoardWidth - padding * 2) / (boardCount - 1)) //单个棋子宽度
     private val radius = (weight * 0.4).toFloat() //棋子圆幅度
 
     private val isDebug = false
@@ -56,8 +57,8 @@ class GameView : View, IGameController {
     }
 
     private fun initPaint() {
-        mPaint.isAntiAlias = true
-        mPaint.isFakeBoldText = true
+        mCheckBoardPaint.isAntiAlias = true
+        mCheckBoardPaint.isFakeBoldText = true
         mPointPaint.isAntiAlias = true
         mPointPaint.color = Color.WHITE
     }
@@ -88,7 +89,7 @@ class GameView : View, IGameController {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        setMeasuredDimension(mWidth, mWidth)
+        setMeasuredDimension(mCheckBoardWidth, mCheckBoardWidth)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -103,8 +104,8 @@ class GameView : View, IGameController {
      */
     private fun drawFlagPoint(canvas: Canvas) {
         flagPoints.forEach { point ->
-            val realX = point.x * weight + padding
-            val realY = point.y * weight + padding
+            val realX = (point.x - 1) * weight + padding
+            val realY = (point.y - 1) * weight + padding
             mPointPaint.color = Color.BLACK
             val flagPadding = 10f
             val l = realX - flagPadding
@@ -134,7 +135,7 @@ class GameView : View, IGameController {
         for (i in 1..boardCount) {
             val y = (i - 1) * weight + padding
             val x = (i - 1) * weight + padding
-            mPaint.let {
+            mCheckBoardPaint.let {
                 //竖线
                 canvas.drawLine(x.toFloat(), padding.toFloat(), x.toFloat(), padding + (boardCount - 1) * weight.toFloat(), it)
                 //横线
@@ -148,8 +149,8 @@ class GameView : View, IGameController {
      **/
     private fun drawPoints(canvas: Canvas) {
         mPoints?.forEach { point ->
-            val realX = point.x * weight.toFloat() + padding
-            val realY = point.y * weight.toFloat() + padding
+            val realX = (point.x - 1) * weight.toFloat() + padding
+            val realY = (point.y - 1) * weight.toFloat() + padding
             mPointPaint.color = point.color
             canvas.drawCircle(realX, realY, radius, mPointPaint)
         }

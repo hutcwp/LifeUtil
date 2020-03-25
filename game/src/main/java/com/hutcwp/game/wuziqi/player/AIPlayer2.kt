@@ -17,11 +17,12 @@ import java.util.concurrent.TimeUnit
  * Created by hutcwp on 2020-03-23 10:55
  * email: caiwenpeng@yy.com
  * YY: 909076244
+ * 基于极大极小 alpha beta剪枝算法
  */
-class AI2Player(private val manager: GameManager) : IGamePlayer {
+class AIPlayer2(private val manager: GameManager) : IGamePlayer {
 
     override fun pointColor(): Int {
-        return Color.BLACK
+        return Color.WHITE
     }
 
     override fun type(): Int {
@@ -35,8 +36,8 @@ class AI2Player(private val manager: GameManager) : IGamePlayer {
     override fun makeNewPoint(paint: GamePoint) {}
 
     @SuppressLint("CheckResult")
-    override fun startPlay(userPoints: MutableList<Point>, aiPoints: MutableList<Point>, allFreePoints: MutableList<Point>, block: Function1<Point, Unit>) {
-        for (p in userPoints) {
+    override fun startPlay(myPoints: MutableList<Point>, enemyPoints: MutableList<Point>, allFreePoints: MutableList<Point>) {
+        for (p in myPoints) {
             chessBoard[p.x][p.y] = -1
             toJudge.remove(p)
             for (i in 0..7) {
@@ -48,7 +49,7 @@ class AI2Player(private val manager: GameManager) : IGamePlayer {
                 }
             }
         }
-        for (p in aiPoints) {
+        for (p in enemyPoints) {
             chessBoard[p.x][p.y] = 1
             toJudge.remove(p)
             for (i in 0..7) {
@@ -61,7 +62,7 @@ class AI2Player(private val manager: GameManager) : IGamePlayer {
             }
         }
         printToJudge()
-        Observable.timer(1000, TimeUnit.MILLISECONDS)
+        Observable.timer(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {
@@ -84,12 +85,16 @@ class AI2Player(private val manager: GameManager) : IGamePlayer {
                         MLog.debug(TAG, "current is other user play...")
                     }
 
-                    if (manager.canAddNewPoint(point.x, point.y)) {
+                    if (manager.canAddNewPoint(point)) {
                         manager.addNewPoint(Point(point.x, point.y), this)
                     } else {
                         SingleToastUtil.showToast("当前位置不能放置，请重新选择")
                     }
                 }
+    }
+
+    init {
+        initChessBoard()
     }
 
     private fun printToJudge() {

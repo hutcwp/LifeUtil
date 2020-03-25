@@ -21,6 +21,6 @@ interface IGamePlayer {
 
     fun makeNewPoint(paint: GamePoint) //下棋子
 
-    fun startPlay(userPoints: MutableList<Point>, aiPoints: MutableList<Point>, allFreePoints: MutableList<Point>, block: (Point) -> Unit)
+    fun startPlay(myPoints: MutableList<Point>, enemyPoints: MutableList<Point>, allFreePoints: MutableList<Point>)
 
 }

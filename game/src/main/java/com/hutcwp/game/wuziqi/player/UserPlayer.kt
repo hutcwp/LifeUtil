@@ -18,11 +18,11 @@ import me.hutcwp.util.SingleToastUtil
 class UserPlayer(private val manager: GameManager) : IGamePlayer, GameView.OnSelectPointListener {
 
     override fun pointColor(): Int {
-        return Color.WHITE
+        return Color.RED
     }
 
     override fun type(): Int {
-        return -1
+        return 3
     }
 
     override fun name(): String {
@@ -33,7 +33,7 @@ class UserPlayer(private val manager: GameManager) : IGamePlayer, GameView.OnSel
 
     }
 
-    override fun startPlay(userPoints: MutableList<Point>, aiPoints: MutableList<Point>, allFreePoints: MutableList<Point>, block: (Point) -> Unit) {
+    override fun startPlay(myPoints: MutableList<Point>, enemyPoints: MutableList<Point>, allFreePoints: MutableList<Point>) {
 
     }
 
@@ -44,8 +44,9 @@ class UserPlayer(private val manager: GameManager) : IGamePlayer, GameView.OnSel
             return
         }
 
-        if (manager.canAddNewPoint(x, y)) {
-            manager.addNewPoint(Point(x, y), this)
+        val p = Point(x, y)
+        if (manager.canAddNewPoint(p)) {
+            manager.addNewPoint(p, this)
         } else {
             SingleToastUtil.showToast("当前位置不能放置，请重新选择")
         }

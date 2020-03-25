@@ -3,7 +3,9 @@
     package="com.hutcwp.game">
 
     <application>
-        <activity android:name=".wuziqi.MainActivity"></activity>
+        <activity
+            android:name=".wuziqi.MainActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".sanguo.ui.MainGameActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>

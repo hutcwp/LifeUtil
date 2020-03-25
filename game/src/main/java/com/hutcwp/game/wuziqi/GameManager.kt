@@ -1,8 +1,8 @@
 package com.hutcwp.game.wuziqi
 
 import android.graphics.Point
-import com.hutcwp.game.wuziqi.player.AI2Player
-import com.hutcwp.game.wuziqi.player.AIPlayer
+import com.hutcwp.game.wuziqi.player.AIPlayer2
+import com.hutcwp.game.wuziqi.player.AIPlayer3
 import com.hutcwp.game.wuziqi.player.IGamePlayer
 import me.hutcwp.log.MLog
 import me.hutcwp.util.SingleToastUtil
@@ -16,8 +16,10 @@ import me.hutcwp.util.SingleToastUtil
  **/
 class GameManager(private var gameView: GameView, private var activity: MainActivity) : IGameController {
 
-    private val userPlayer = AIPlayer(this)
-    private val aiPlayer = AI2Player(this)
+    //    private val userPlayer = AIPlayer(this)
+//    private val userPlayer = UserPlayer(this)
+    private val userPlayer = AIPlayer2(this)
+    private val aiPlayer = AIPlayer3(this)
     private var currentPlayer: IGamePlayer = aiPlayer
     private val aiPoints = mutableListOf<Point>()
     private val userPoints = mutableListOf<Point>()
@@ -36,7 +38,7 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
         aiPoints.clear()
         userPoints.clear()
         allFreePoints.clear()
-        aiPlayer.initChessBoard()
+//        aiPlayer.initChessBoard()
         activity.updatePlayerInfo(userPlayer, aiPlayer)
         currentPlayer = userPlayer
         for (i in 1..gameView.getBoardCount()) {
@@ -52,7 +54,8 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
         })
     }
 
-    private fun changePlayer() {
+    //更换用户回合
+    private fun changePlayerRound() {
         currentPlayer = if (currentPlayer == userPlayer) {
             aiPlayer
         } else {
@@ -64,8 +67,10 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
     private fun autoPlay() {
         currentPlayer.let { player ->
             activity.updateCurPlayer(player)
-            player.startPlay(userPoints, aiPoints, allFreePoints) { point ->
-                addNewPoint(point, aiPlayer)
+            if (currentPlayer == userPlayer) {
+                player.startPlay(userPoints, aiPoints, allFreePoints)
+            } else {
+                player.startPlay(aiPoints, userPoints, allFreePoints)
             }
         }
     }
@@ -74,34 +79,51 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
         return currentPlayer
     }
 
-    fun canAddNewPoint(x: Int, y: Int): Boolean {
-        return gameView.canAddNewPoint(x, y)
+    fun canAddNewPoint(point: Point): Boolean {
+        return gameView.canAddNewPoint(point.x, point.y)
     }
 
     override fun addNewPoint(point: Point, player: IGamePlayer): Boolean {
+        if (!canAddNewPoint(point)) {
+            MLog.error(TAG, "addNewPoint: can not add point($point)")
+            return false
+        }
+
         allFreePoints.remove(point)
         if (currentPlayer == userPlayer) {
             userPoints.add(point)
-            MLog.info("GameManager", "userPoints add point${point}")
+            MLog.info(TAG, "userPoints add point${point}")
         } else {
             aiPoints.add(point)
-            MLog.info("GameManager", "aiPoints add point${point}")
-        }
-        val addSuccess = gameView.addNewPoint(point, player)
-        val isGameOver = gameView.isGameOver()
-        if (addSuccess && !isGameOver) {
-            changePlayer()
+            MLog.info(TAG, "aiPoints add point${point}")
         }
 
-        if (gameView.isGameOver()) {
+        val addSuccess = gameView.addNewPoint(point, player)
+        if (addSuccess && !checkGameFinished(player)) {
+            changePlayerRound()
+        }
+
+        return addSuccess
+    }
+
+    private fun checkGameFinished(player: IGamePlayer): Boolean {
+        var isGameOver = gameView.isGameOver()
+        if (isGameOver) {
             SingleToastUtil.showToast("游戏结束,${player.name()}胜利")
         }
-        return addSuccess
+
+        if (allFreePoints.size == 0) {
+            SingleToastUtil.showToast("平局")
+            MLog.info(TAG, "平局")
+            isGameOver = true
+        }
+
+        return isGameOver
     }
 
     fun resetGame() {
         initGame()
-        changePlayer()
+        changePlayerRound()
     }
 
 

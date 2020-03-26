@@ -1,6 +1,8 @@
 package com.hutcwp.game.wuziqi
 
 import android.graphics.Point
+import android.os.Handler
+import android.os.Looper
 import com.hutcwp.game.wuziqi.player.AIPlayer2
 import com.hutcwp.game.wuziqi.player.AIPlayer3
 import com.hutcwp.game.wuziqi.player.IGamePlayer
@@ -17,13 +19,15 @@ import me.hutcwp.util.SingleToastUtil
 class GameManager(private var gameView: GameView, private var activity: MainActivity) : IGameController {
 
     //    private val userPlayer = AIPlayer(this)
-//    private val userPlayer = UserPlayer(this)
-    private val userPlayer = AIPlayer2(this)
+    private val userPlayer: IGamePlayer = AIPlayer2(this)
+    //    private val userPlayer = AIPlayer2(this)
     private val aiPlayer = AIPlayer3(this)
     private var currentPlayer: IGamePlayer = aiPlayer
     private val aiPoints = mutableListOf<Point>()
     private val userPoints = mutableListOf<Point>()
     private val allFreePoints = mutableListOf<Point>()
+
+    private val handler = Handler(Looper.getMainLooper())
 
     init {
         initGame()
@@ -49,7 +53,9 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
 
         gameView.setSelectPointListener(object : GameView.OnSelectPointListener {
             override fun selectPoint(x: Int, y: Int) {
-//                userPlayer.selectPoint(x, y)
+                if (userPlayer is GameView.OnSelectPointListener) {
+                    userPlayer.selectPoint(x, y)
+                }
             }
         })
     }
@@ -68,9 +74,13 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
         currentPlayer.let { player ->
             activity.updateCurPlayer(player)
             if (currentPlayer == userPlayer) {
-                player.startPlay(userPoints, aiPoints, allFreePoints)
+                handler.postDelayed({
+                    player.startPlay(userPoints, aiPoints, allFreePoints)
+                }, 200)
             } else {
-                player.startPlay(aiPoints, userPoints, allFreePoints)
+                handler.postDelayed({
+                    player.startPlay(aiPoints, userPoints, allFreePoints)
+                }, 200)
             }
         }
     }
@@ -126,6 +136,9 @@ class GameManager(private var gameView: GameView, private var activity: MainActi
         changePlayerRound()
     }
 
+    fun release() {
+        handler.removeCallbacksAndMessages(null)
+    }
 
     companion object {
         const val TAG = "GameManager"

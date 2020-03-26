@@ -8,7 +8,7 @@ import androidx.annotation.ColorInt
  * YY: 909076244
  * type 白色球 ： 0  黑色球 ：1
  */
-class GamePoint(val x: Int, val y: Int, val type: Int, @ColorInt val color: Int) {
+class GamePoint(val x: Int, val y: Int, val type: Int, @ColorInt val color: Int, var flag: Boolean = false) {
 
     fun compare(x: Int, y: Int): Boolean {
         return this.x == x && this.y == y
@@ -19,6 +19,10 @@ class GamePoint(val x: Int, val y: Int, val type: Int, @ColorInt val color: Int)
             if (type == t) return true
         }
         return false
+    }
+
+    override fun toString(): String {
+        return "GamePoint(x=$x , Y=$y)"
     }
 
 }

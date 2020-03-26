@@ -5,13 +5,9 @@ import android.graphics.Color
 import android.graphics.Point
 import com.hutcwp.game.wuziqi.GameManager
 import com.hutcwp.game.wuziqi.GamePoint
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import me.hutcwp.log.MLog
 import me.hutcwp.util.SingleToastUtil
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by hutcwp on 2020-03-23 10:55
@@ -62,35 +58,26 @@ class AIPlayer2(private val manager: GameManager) : IGamePlayer {
             }
         }
         printToJudge()
-        Observable.timer(500, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map {
-                    val startTime = System.currentTimeMillis()
-                    MLog.info(TAG, "==============dfs===start==============")
-                    val node = Node()
-                    dfs(0, node, MINN, MAXN, null)
-                    val now = node.bestChild?.p ?: Point(8, 8)
-                    val duration = System.currentTimeMillis() - startTime
-                    MLog.info(TAG, "==============dfs====end============= time(ms)=$duration")
-                    now
-                }
-                .subscribe { point ->
-                    MLog.debug(TAG, "point=%s", point)
-                    toJudge.remove(point)
-//                    block.invoke(point)
 
-                    if (manager.getCurrentUser() != this) {
-//                    SingleToastUtil.showToast("现在是${currentPlayer?.name()}回合，请稍等")
-                        MLog.debug(TAG, "current is other user play...")
-                    }
+        val startTime = System.currentTimeMillis()
+        MLog.info(TAG, "==============dfs===start==============")
+        val node = Node()
+        dfs(0, node, MINN, MAXN, null)
+        val point = node.bestChild?.p ?: Point(8, 8)
+        val duration = System.currentTimeMillis() - startTime
+        MLog.info(TAG, "==============dfs====end============= time(ms)=$duration")
 
-                    if (manager.canAddNewPoint(point)) {
-                        manager.addNewPoint(Point(point.x, point.y), this)
-                    } else {
-                        SingleToastUtil.showToast("当前位置不能放置，请重新选择")
-                    }
-                }
+        MLog.debug(TAG, "point=%s", point)
+        toJudge.remove(point)
+        if (manager.getCurrentUser() != this) {
+            MLog.debug(TAG, "current is other user play...")
+        }
+
+        if (manager.canAddNewPoint(point)) {
+            manager.addNewPoint(Point(point.x, point.y), this)
+        } else {
+            SingleToastUtil.showToast("当前位置不能放置，请重新选择")
+        }
     }
 
     init {

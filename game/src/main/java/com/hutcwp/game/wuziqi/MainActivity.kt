@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.game_activity_main_wuziqi)
         initView()
         initData()
-//        val ai = AI2Player()
-//        ai.testMark()
     }
 
     private fun initData() {
@@ -65,5 +63,10 @@ class MainActivity : AppCompatActivity() {
 
         tvPlayer2?.setTextColor(player2.pointColor())
         tvPlayer2?.text = player2.name()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        gameManager?.release()
     }
 }

@@ -1,10 +1,7 @@
 package com.hutcwp.game.wuziqi
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Point
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -31,7 +28,7 @@ class GameView : View, IGameController {
     private val weight = ((mCheckBoardWidth - padding * 2) / (boardCount - 1)) //单个棋子宽度
     private val radius = (weight * 0.4).toFloat() //棋子圆幅度
 
-    private val isDebug = false
+    private val isDebug = true
 
     private var onSelectPointListener: OnSelectPointListener? = null
     private var flagPoints = listOf(Point(4, 4), Point(8, 8),
@@ -137,9 +134,9 @@ class GameView : View, IGameController {
             val x = (i - 1) * weight + padding
             mCheckBoardPaint.let {
                 //竖线
-                canvas.drawLine(x.toFloat(), padding.toFloat(), x.toFloat(), padding + (boardCount - 1) * weight.toFloat(), it)
+                canvas.drawLine(x, padding, x, padding + (boardCount - 1) * weight, it)
                 //横线
-                canvas.drawLine(padding.toFloat(), y.toFloat(), padding + (boardCount - 1) * weight.toFloat(), y.toFloat(), it)
+                canvas.drawLine(padding, y, padding + (boardCount - 1) * weight, y, it)
             }
         }
     }
@@ -148,19 +145,43 @@ class GameView : View, IGameController {
      **  绘制棋子 Points
      **/
     private fun drawPoints(canvas: Canvas) {
+        val path = Path()
+        var isStartPoint = true
         mPoints?.forEach { point ->
-            val realX = (point.x - 1) * weight.toFloat() + padding
-            val realY = (point.y - 1) * weight.toFloat() + padding
+            val realX = (point.x - 1) * weight + padding
+            val realY = (point.y - 1) * weight + padding
+            if (point.flag) {
+                MLog.info(TAG, "path add $point")
+                if (isStartPoint) {
+                    isStartPoint = false
+                    path.moveTo(realX, realY)
+                } else {
+                    path.lineTo(realX, realY)
+                }
+            }
             mPointPaint.color = point.color
             canvas.drawCircle(realX, realY, radius, mPointPaint)
         }
+
+//        val path1 = Path()
+//        path1.moveTo(180f, 200f)
+//        path1.lineTo(200f, 200f)
+//        path1.lineTo(210f, 210f)
+//        path1.lineTo(200f, 220f)
+//        path1.lineTo(180f, 220f)
+
+        val paint = Paint()
+        paint.color = Color.GREEN
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 10f
+        canvas.drawPath(path, paint)
     }
 
     /**
      *  判断该点是否可以添加棋子
      */
     fun canAddNewPoint(x: Int, y: Int): Boolean {
-        if (x == 0 || x > weight * (boardCount - 1) || y == 0 || y > weight * (boardCount - 1)) {
+        if (x < 1 || x > boardCount || y < 1 || y > boardCount) {
             return false
         }
 
@@ -182,6 +203,7 @@ class GameView : View, IGameController {
     private fun judgeFinish(player: IGamePlayer) {
         mPoints?.forEach { p ->
             if (isFinished(p)) {
+
                 Toast.makeText(context, "${player.name()} 胜利", Toast.LENGTH_SHORT).show()
                 setOnTouchListener { view, motionEvent ->
                     Toast.makeText(context, "请点击开始游戏按钮", Toast.LENGTH_SHORT).show()
@@ -208,23 +230,46 @@ class GameView : View, IGameController {
 
         // 计算横的时候
         if (isHavePoint(x - 1, y, type) && isHavePoint(x - 2, y, type) && isHavePoint(x + 1, y, type) && isHavePoint(x + 2, y, type)) {
+            getPoint(x - 1, y)?.flag = true
+            getPoint(x - 2, y)?.flag = true
+            getPoint(x, y)?.flag = true
+            getPoint(x + 1, y)?.flag = true
+            getPoint(x + 2, y)?.flag = true
             return true
         }
 
         // 计算竖的时候
         if (isHavePoint(x, y - 1, type) && isHavePoint(x, y - 2, type) && isHavePoint(x, y + 1, type) && isHavePoint(x, y + 2, type)) {
+            getPoint(x, y - 1)?.flag = true
+            getPoint(x, y - 2)?.flag = true
+            getPoint(x, y)?.flag = true
+            getPoint(x, y + 1)?.flag = true
+            getPoint(x, y + 2)?.flag = true
             return true
         }
 
         // 计算\的时候
         if (isHavePoint(x - 1, y - 1, type) && isHavePoint(x - 2, y - 2, type)
                 && isHavePoint(x + 1, y + 1, type) && isHavePoint(x + 2, y + 2, type)) {
+            getPoint(x - 1, y - 1)?.flag = true
+            getPoint(x - 2, y - 2)?.flag = true
+            getPoint(x, y)?.flag = true
+            getPoint(x + 1, y + 1)?.flag = true
+            getPoint(x + 2, y + 2)?.flag = true
             return true
         }
 
         // 计算/的时候
-        return (isHavePoint(x - 1, y + 1, type) && isHavePoint(x - 2, y + 2, type)
-                && isHavePoint(x + 1, y - 1, type) && isHavePoint(x + 2, y - 2, type))
+        if (isHavePoint(x - 1, y + 1, type) && isHavePoint(x - 2, y + 2, type)
+                && isHavePoint(x + 1, y - 1, type) && isHavePoint(x + 2, y - 2, type)) {
+            getPoint(x - 1, y + 1)?.flag = true
+            getPoint(x - 2, y + 2)?.flag = true
+            getPoint(x, y)?.flag = true
+            getPoint(x + 1, y - 1)?.flag = true
+            getPoint(x + 2, y - 2)?.flag = true
+            return true
+        }
+        return false
     }
 
     private fun isHavePoint(x: Int, y: Int, type: Int): Boolean {
@@ -239,6 +284,12 @@ class GameView : View, IGameController {
             }
         }
         return false
+    }
+
+    private fun getPoint(x: Int, y: Int): GamePoint? {
+        return mPoints?.find {
+            it.x == x && it.y == y
+        }
     }
 
     override fun addNewPoint(point: Point, player: IGamePlayer): Boolean {

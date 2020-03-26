@@ -5,12 +5,8 @@ import android.graphics.Color
 import android.graphics.Point
 import com.hutcwp.game.wuziqi.GameManager
 import com.hutcwp.game.wuziqi.GamePoint
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import me.hutcwp.log.MLog
 import me.hutcwp.util.SingleToastUtil
-import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 
@@ -41,41 +37,27 @@ class AIPlayer3(private val manager: GameManager) : IGamePlayer {
 
     @SuppressLint("CheckResult")
     override fun startPlay(myPoints: MutableList<Point>, enemyPoints: MutableList<Point>, allFreePoints: MutableList<Point>) {
-        Observable.timer(100, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map {
-                    initWin(myPoints, enemyPoints, allFreePoints)
-                    val result = computerAI(allFreePoints)
-                    result
-                }.subscribe { result ->
-                    MLog.info(TAG, "result=$result")
-                    if (manager.getCurrentUser() != this) {
-                        MLog.debug(TAG, "current is other user play...")
-                    }
+        initWin(myPoints, enemyPoints, allFreePoints)
+        val result = computerAI(allFreePoints)
+        MLog.info(TAG, "result=$result")
+        if (manager.getCurrentUser() != this) {
+            MLog.debug(TAG, "current is other user play...")
+        }
 
-                    if (manager.canAddNewPoint(result)) {
-                        manager.addNewPoint(Point(result.x, result.y), this)
-                    } else {
-                        SingleToastUtil.showToast("当前位置不能放置，请重新选择")
-                        startPlay(myPoints, enemyPoints, allFreePoints)
-                    }
-                }
+        if (manager.canAddNewPoint(result)) {
+            manager.addNewPoint(result, this)
+        } else {
+            SingleToastUtil.showToast("当前位置不能放置，请重新选择")
+            startPlay(myPoints, enemyPoints, allFreePoints)
+        }
     }
 
+    private var wins = Array(16) { Array(16) { BooleanArray(7000) } }
+    private var chessBoard = Array(16) { IntArray(16) }
+    private var winCount = 0
 
-    /*	AI难点解析
-   赢法数组：记录了五子棋说有的赢法，三维数组
-   每一种赢法的统计数组，一维数组
-   如何判断胜负
-   计算机落子规则*/
-
-    var wins = Array(15) { Array(15) { BooleanArray(1500) } }
-    var chessBoard = Array(15) { IntArray(15) }
-    var count = 0
-
-    var myWin = IntArray(count) //玩家赢法数组
-    var enemyWin = IntArray(count) //电脑赢法数组
+    private var myWin = IntArray(winCount) //玩家赢法数组
+    private var enemyWin = IntArray(winCount) //电脑赢法数组
 
 
     init {
@@ -83,65 +65,81 @@ class AIPlayer3(private val manager: GameManager) : IGamePlayer {
     }
 
     private fun initGame() {
-        for (i in 0..14) {
-            for (j in 0..14) {
+        for (i in 1..15) {
+            for (j in 1..15) {
                 chessBoard[i][j] = 0
             }
         }
 
+        MLog.debug(TAG, "横向表")
         //赢法数组
-        for (i in 0..14) {
-            for (j in 0..10) {
+        for (i in 1..15) {
+            for (j in 1..11) {
                 for (k in 0..4) {
-                    wins[i][j + k][count] = true
+                    wins[i][j + k][winCount] = true
                 }
-                count++
-            }
-        }
-        for (i in 0..14) {
-            for (j in 0..10) {
-                for (k in 0..4) {
-                    wins[j + k][i][count] = true
-                }
-                count++
-            }
-        }
-        for (i in 0..10) {
-            for (j in 0..10) {
-                for (k in 0..4) {
-                    wins[i + k][j + k][count] = true
-                }
-                count++
-            }
-        }
-        for (i in 0..10) {
-            for (j in 14 downTo 4) {
-                for (k in 0..4) {
-                    wins[i + k][j - k][count] = true
-                }
-                count++
+                winCount++
+                MLog.debug(TAG, "[（$i,$j） -> ($i,${j + 4})] count:$winCount")
             }
         }
 
-        myWin = IntArray(count) //玩家赢法数组
-        enemyWin = IntArray(count) //电脑赢法数组
+        MLog.debug(TAG, "竖向表")
+        for (i in 1..15) {
+            for (j in 1..11) {
+                for (k in 0..4) {
+                    wins[j + k][i][winCount] = true
+                }
+                winCount++
+                MLog.debug(TAG, "[（$i,$j） -> ($i,${j + 4})] count:$winCount")
+            }
+        }
+
+        MLog.debug(TAG, "\\ 表")
+        for (i in 1..11) {
+            for (j in 1..11) {
+                for (k in 0..4) {
+                    wins[i + k][j + k][winCount] = true
+                }
+                winCount++
+                MLog.debug(TAG, "[（$i,$j） -> (${i + 4},${j + 4})] count:$winCount")
+            }
+        }
+        MLog.debug(TAG, "/ 表")
+        for (i in 1..11) {
+            for (j in 15 downTo 5) {
+                for (k in 0..4) {
+                    wins[i + k][j - k][winCount] = true
+                }
+                winCount++
+                MLog.debug(TAG, "[（$i,$j） -> (${i + 4},${j - 4})] count:$winCount")
+            }
+        }
+
+        MLog.info(TAG, "共有 $winCount 种赢法棋子")
+        myWin = IntArray(winCount) //玩家赢法数组
+        enemyWin = IntArray(winCount) //对方赢法数组
         //初始化赢法数组
-        for (i in 0 until count) {
+        for (i in 0 until winCount) {
             myWin[i] = 0
             enemyWin[i] = 0
         }
     }
 
     private fun initWin(myPoints: MutableList<Point>, enemyPoints: MutableList<Point>, allFreePoints: MutableList<Point>) {
-        myWin = IntArray(count)
-        enemyWin = IntArray(count)
+        myWin = IntArray(winCount)
+        enemyWin = IntArray(winCount)
+        for (i in 0 until winCount) {
+            myWin[i] = 0
+            enemyWin[i] = 0
+        }
+
         myPoints.forEach {
-            val i = it.x - 1
-            val j = it.y - 1
+            val i = it.x
+            val j = it.y
             chessBoard[i][j] = 1 //自己的棋子标识为1
 
             //落下子后需要进行统计
-            for (k in 0 until count) {
+            for (k in 0 until winCount) {
                 if (wins[i][j][k]) { //某种赢的某子true
                     myWin[k]++ //离胜利又进一步
                     enemyWin[k] = 6 //该种赢法计算机没有机会了
@@ -153,12 +151,12 @@ class AIPlayer3(private val manager: GameManager) : IGamePlayer {
         }
 
         enemyPoints.forEach {
-            val i = it.x - 1
-            val j = it.y - 1
+            val i = it.x
+            val j = it.y
             chessBoard[i][j] = 2 //敌人的棋子标识为1
 
             //计算机落完子后需要进行统计
-            for (k in 0 until count) {
+            for (k in 0 until winCount) {
                 if (wins[i][j][k]) { //某种赢的某子true
                     enemyWin[k]++ //离胜利又进一步
                     myWin[k] = 6 //该种赢法计算机没有机会了
@@ -171,18 +169,26 @@ class AIPlayer3(private val manager: GameManager) : IGamePlayer {
     }
 
     private fun computerAI(allFreePoints: MutableList<Point>): Point {
-        val myScore = Array(15) { IntArray(15) }
-        val computerScore = Array(15) { IntArray(15) }
+        val myScore = Array(16) { IntArray(16) }
+        val computerScore = Array(16) { IntArray(16) }
 
         var iMax = 0
         var x = 0
         var y = 0
 
-        for (i in 0..14) {
-            for (j in 0..14) {
+        for (i in 1..15) {
+            for (j in 1..15) {
                 if (chessBoard[i][j] == 0) {
-                    for (k in 0 until count) {
+                    for (k in 0 until winCount) {
                         if (wins[i][j][k]) {
+                            if (myWin[k] == 4) {
+                                MLog.info(TAG, "找到绝杀棋")
+                                return Point(i, j)
+                            } else if (enemyWin[k] == 4) {
+                                MLog.info(TAG, "找到对方绝杀棋")
+                                return Point(i, j)
+                            }
+
                             if (myWin[k] == 1) {
                                 myScore[i][j] += 200
                             } else if (myWin[k] == 2) {
@@ -199,8 +205,6 @@ class AIPlayer3(private val manager: GameManager) : IGamePlayer {
                                 computerScore[i][j] += 800
                             } else if (enemyWin[k] == 3) {
                                 computerScore[i][j] += 2200
-                            } else if (enemyWin[k] == 4) {
-                                computerScore[i][j] += 20000
                             }
                         }
                     }
@@ -237,8 +241,8 @@ class AIPlayer3(private val manager: GameManager) : IGamePlayer {
             return point
         }
 
-        MLog.info(TAG, "computerAI: x=${x + 1},y=${y + 1}")
-        return Point(x + 1, y + 1)
+        MLog.info(TAG, "computerAI: x=${x},y=${y}")
+        return Point(x, y)
     }
 
 

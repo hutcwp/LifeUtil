@@ -28,37 +28,17 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def date = new Date()
-                    def formattedDate = date.format('yyyyMMddHHmmss')
-//                    output.outputFile = new File(output.outputFile.parent,
-//                            output.outputFile.name.replace("-release", "-" + formattedDate)
-//                            //for Debug use output.outputFile = new File(output.outputFile.parent,
-//                            //                             output.outputFile.name.replace("-debug", "-" + formattedDate)
-//                    )
-                }
-            }
-        }
-
-        debug {
-            applicationVariants.all { variant ->
-
-                variant.outputs.each { output ->
-
-                }
-            }
         }
     }
 
     applicationVariants.all { variant ->
         variant.outputs.all {
-            def flavor = variant.name
-            def versionName = variant.versionName
-            def date = new Date()
-            def formattedDate = date.format('yyyy_MM_dd_HH_mm_ss')
-            outputFileName = rootProject.getName() + "prefix_${flavor}_${versionName}_${formattedDate}.apk"
-            println(outputFileName)
+//            def flavor = variant.name
+//            def versionName = variant.versionName
+//            def date = new Date()
+//            def formattedDate = date.format('yyyy_MM_dd_HH_mm_ss')
+//            outputFileName = rootProject.getName() + "prefix_${flavor}_${versionName}_${formattedDate}.apk"
+//            println(outputFileName)
         }
     }
 

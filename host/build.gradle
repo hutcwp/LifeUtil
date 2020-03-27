@@ -124,28 +124,28 @@ autoregister {
 }
 
 
-assemble.doLast {
-    println "after assemble assemble"
-
-    //查找上传的apk文件
-//    def apkDir = new File("build/outputs/apk/release")
-    def apkDir = new File("build/outputs/apk/debug")
-    if (!apkDir.exists()) {
-        throw new RuntimeException("apk output path not exists!")
-    }
-
-    def apk = null
-    for (int i = apkDir.listFiles().length - 1; i >= 0; i--) {
-        File file = apkDir.listFiles()[i]
-        if (file.name.endsWith(".apk")) {
-            apk = file
-            break
-        }
-    }
-    if (apk == null) {
-        throw new RuntimeException("apk file not exists!")
-    }
-
-    print("apk is " + apk.name)
-
-}
+//assemble.doLast {
+//    println "after assemble assemble"
+//
+//    //查找上传的apk文件
+////    def apkDir = new File("build/outputs/apk/release")
+//    def apkDir = new File("build/outputs/apk/debug")
+//    if (!apkDir.exists()) {
+//        throw new RuntimeException("apk output path not exists!")
+//    }
+//
+//    def apk = null
+//    for (int i = apkDir.listFiles().length - 1; i >= 0; i--) {
+//        File file = apkDir.listFiles()[i]
+//        if (file.name.endsWith(".apk")) {
+//            apk = file
+//            break
+//        }
+//    }
+//    if (apk == null) {
+//        throw new RuntimeException("apk file not exists!")
+//    }
+//
+//    print("apk is " + apk.name)
+//
+//}

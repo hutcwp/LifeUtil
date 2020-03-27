@@ -18,10 +18,14 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
         #      - run: curl -X POST ${{ secrets.WeChart_Push_URL }} -H 'content-type:application/json' -d '{ "channelName":"GitHubPlanAssistant","text":"Android程序已成功打包并提交fir.im！" }'
-      - name: Upload APK
+      - name: upload debug apk
         uses: actions/upload-artifact@v1
         with:
-          name: app
+          name: debug
           path: host/build/outputs/apk/debug/host-debug.apk
-
+      - name: upload release apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: host/build/outputs/apk/debug/host-release.apk
 

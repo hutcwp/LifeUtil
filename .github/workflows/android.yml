@@ -24,7 +24,7 @@ jobs:
           name: debug
           path: host/build/outputs/apk/debug/host-debug.apk
       - name: upload release apk
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         with:
           name: release
           path: host/build/outputs/apk/debug/host-release.apk

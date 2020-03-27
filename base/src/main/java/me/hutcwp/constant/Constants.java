@@ -9,5 +9,6 @@ public class Constants {
     public final static class RoutePath {
         public static final String WUZIQI_MAIN_PAGE = "/game/wuziqi/main";
         public static final String SANGUO_MAIN_PAGE = "/game/main";
+        public static final String LUCKY_MAIN_PAGE = "/game/lucky";
     }
 }

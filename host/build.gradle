@@ -27,6 +27,38 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def date = new Date()
+                    def formattedDate = date.format('yyyyMMddHHmmss')
+//                    output.outputFile = new File(output.outputFile.parent,
+//                            output.outputFile.name.replace("-release", "-" + formattedDate)
+//                            //for Debug use output.outputFile = new File(output.outputFile.parent,
+//                            //                             output.outputFile.name.replace("-debug", "-" + formattedDate)
+//                    )
+                }
+            }
+        }
+
+        debug {
+            applicationVariants.all { variant ->
+
+                variant.outputs.each { output ->
+
+                }
+            }
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def flavor = variant.name
+            def versionName = variant.versionName
+            def date = new Date()
+            def formattedDate = date.format('yyyy_MM_dd_HH_mm_ss')
+            outputFileName = rootProject.getName() + "prefix_${flavor}_${versionName}_${formattedDate}.apk"
+            println(outputFileName)
         }
     }
 
@@ -109,4 +141,31 @@ project.ext.registerInfoList = [
 autoregister {
     registerInfo = registerInfoList
     cacheEnabled = true
+}
+
+
+assemble.doLast {
+    println "after assemble assemble"
+
+    //查找上传的apk文件
+    def apkDir = new File("build/outputs/apk/release")
+//    def apkDir = new File("build/outputs/apk/debug")
+    if (!apkDir.exists()) {
+        throw new RuntimeException("apk output path not exists!")
+    }
+
+    def apk = null
+    for (int i = apkDir.listFiles().length - 1; i >= 0; i--) {
+        File file = apkDir.listFiles()[i]
+        if (file.name.endsWith(".apk")) {
+            apk = file
+            break
+        }
+    }
+    if (apk == null) {
+        throw new RuntimeException("apk file not exists!")
+    }
+
+    print("apk is " + apk.name)
+
 }

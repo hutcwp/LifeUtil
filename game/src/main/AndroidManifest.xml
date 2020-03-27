@@ -3,12 +3,13 @@
     package="com.hutcwp.game">
 
     <application>
+        <activity android:name=".luckypan.LuckyMainActivity"></activity>
         <activity
             android:name=".wuziqi.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".sanguo.ui.MainGameActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

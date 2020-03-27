@@ -21,7 +21,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
-          name: app
+          name: app.apk
           path: host/build/outputs/apk/debug/host-debug.apk
 
 

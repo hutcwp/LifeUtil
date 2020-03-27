@@ -10,9 +10,13 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.hutcwp.homepage.rv.DSVOrientation
 import com.hutcwp.homepage.rv.DiscreteScrollView
 import com.hutcwp.homepage.rv.ScaleTransformer
+import com.hutcwp.homepage.update.UpdateAppHttpUtil
+import com.vector.update_app.UpdateCallback
+import com.vector.update_app_kotlin.updateApp
 import me.drakeet.multitype.MultiTypeAdapter
 import me.hutcwp.auto.MainPageManager
 import me.hutcwp.constant.ARoutePath
+import me.hutcwp.constant.Constants
 import me.hutcwp.log.MLog
 import me.hutcwp.view.banner.vp.CustomViewPager
 import me.hutcwp.view.banner.vp.LoopTransformer
@@ -28,6 +32,7 @@ class HomeActivity : AppCompatActivity() {
 //        initViewPager()
 //        initListView()
         initDiscreteRv()
+        checkUpdate()
     }
 
     private fun initDiscreteRv() {
@@ -45,7 +50,6 @@ class HomeActivity : AppCompatActivity() {
                         .build()
         )
     }
-
 
     private fun initViewPager() {
         MLog.info(TAG, "initViewPager")
@@ -71,7 +75,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    fun findPageItems(): List<PageItem> {
+    private fun findPageItems(): List<PageItem> {
         val items = mutableListOf<PageItem>()
         for (page in MainPageManager.getCategoryNames()) {
             MLog.info(TAG, "class=$page , s.key = ${page.name} , s.value = ${page.path}")
@@ -82,7 +86,7 @@ class HomeActivity : AppCompatActivity() {
         return items
     }
 
-    fun checkPath(path: String): Boolean {
+    private fun checkPath(path: String): Boolean {
         try {
             val group = path.substring(1, path.indexOf("/", 1))
             LogisticsCenter.completion(Postcard(path, group))
@@ -90,6 +94,15 @@ class HomeActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun checkUpdate() {
+        val mUpdateUrl = Constants.URL.APP_UPDATE
+        updateApp(mUpdateUrl, UpdateAppHttpUtil()).checkNewApp(object : UpdateCallback() {
+            override fun noNewApp(error: String?) {
+                MLog.error(TAG, "check update error = $error")
+            }
+        })
     }
 
     companion object {

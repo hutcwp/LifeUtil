@@ -38,7 +38,7 @@ android {
 //            def date = new Date()
 //            def formattedDate = date.format('yyyy_MM_dd_HH_mm_ss')
 //            outputFileName = rootProject.getName() + "prefix_${flavor}_${versionName}_${formattedDate}.apk"
-//            println(outputFileName)
+            println(outputFileName)
         }
     }
 

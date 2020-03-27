@@ -27,5 +27,5 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: release
-          path: host/build/outputs/apk/debug/host-release.apk
+          path: host/build/outputs/apk/release/host-release-unsigned.apk
 

@@ -148,8 +148,8 @@ assemble.doLast {
     println "after assemble assemble"
 
     //查找上传的apk文件
-    def apkDir = new File("build/outputs/apk/release")
-//    def apkDir = new File("build/outputs/apk/debug")
+//    def apkDir = new File("build/outputs/apk/release")
+    def apkDir = new File("build/outputs/apk/debug")
     if (!apkDir.exists()) {
         throw new RuntimeException("apk output path not exists!")
     }

@@ -27,6 +27,7 @@ class GameMainActivity : AppCompatActivity() {
         data.add(GameBean("三国志",Constants.RoutePath.SANGUO_MAIN_PAGE))
         data.add(GameBean("五子棋",Constants.RoutePath.WUZIQI_MAIN_PAGE))
         data.add(GameBean("幸运轮盘",Constants.RoutePath.LUCKY_MAIN_PAGE))
+        data.add(GameBean("拼图",Constants.RoutePath.JIGSAW_MAIN_PAGE))
         val adapter = GameAdapter(data)
         rvGame?.adapter = adapter
     }

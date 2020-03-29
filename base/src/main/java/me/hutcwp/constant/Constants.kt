@@ -14,5 +14,6 @@ class Constants {
 
     object URL {
         const val APP_UPDATE = "https://raw.githubusercontent.com/hutcwp/img-floder/master/lifeutil/update.json"
+//        const val APP_UPDATE = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt"
     }
 }

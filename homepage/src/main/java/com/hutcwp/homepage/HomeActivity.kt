@@ -12,6 +12,8 @@ import com.hutcwp.homepage.rv.DiscreteScrollView
 import com.hutcwp.homepage.rv.ScaleTransformer
 import com.hutcwp.homepage.update.UpdateAppHttpUtil
 import com.vector.update_app.UpdateCallback
+import com.vector.update_app.listener.ExceptionHandlerHelper
+import com.vector.update_app.utils.AppUpdateUtils
 import com.vector.update_app_kotlin.updateApp
 import me.drakeet.multitype.MultiTypeAdapter
 import me.hutcwp.auto.MainPageManager
@@ -20,6 +22,8 @@ import me.hutcwp.constant.Constants
 import me.hutcwp.log.MLog
 import me.hutcwp.view.banner.vp.CustomViewPager
 import me.hutcwp.view.banner.vp.LoopTransformer
+import java.io.File
+
 
 @Route(path = ARoutePath.HomePage)
 class HomeActivity : AppCompatActivity() {
@@ -103,6 +107,12 @@ class HomeActivity : AppCompatActivity() {
                 MLog.error(TAG, "check update error = $error")
             }
         })
+        val rawPath = "android.resource://" + packageName + "/" + R.raw.host
+
+        ExceptionHandlerHelper.init {
+            MLog.error(TAG, "error:$it")
+        }
+//        AppUpdateUtils.installApp(this, File(rawPath))
     }
 
     companion object {

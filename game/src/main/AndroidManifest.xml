@@ -3,7 +3,8 @@
     package="com.hutcwp.game">
 
     <application>
-        <activity android:name=".luckypan.LuckyMainActivity"></activity>
+        <activity android:name=".GameMainActivity"></activity>
+        <activity android:name=".luckypan.LuckyMainActivity" />
         <activity
             android:name=".wuziqi.MainActivity"
             android:screenOrientation="portrait" />

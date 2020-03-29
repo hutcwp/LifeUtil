@@ -7,9 +7,10 @@ package me.hutcwp.constant
  */
 class Constants {
     object RoutePath {
+        const val GAME_MAIN_PAGE = "/game/main"
         const val WUZIQI_MAIN_PAGE = "/game/wuziqi/main"
-        const val SANGUO_MAIN_PAGE = "/game/main"
-        const val LUCKY_MAIN_PAGE = "/game/lucky"
+        const val SANGUO_MAIN_PAGE = "/game/sanguo/main"
+        const val LUCKY_MAIN_PAGE = "/game/lucky/main"
     }
 
     object URL {

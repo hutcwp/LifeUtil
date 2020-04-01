@@ -34,6 +34,7 @@ class mApplication : BaseApplication() {
         Stetho.initializeWithDefaults(this);
         webpInit()
         aRouterInit()
+
     }
 
     private fun aRouterInit() {

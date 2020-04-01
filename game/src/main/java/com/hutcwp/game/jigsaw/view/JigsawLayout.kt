@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -28,48 +29,46 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     private val imgViewList: MutableList<GameImageView> = mutableListOf()
-
     private var mWidth: Int = (ResolutionUtils.getScreenWidth(context) * 0.8).toInt() //真实棋盘的宽度
     private var mCurImageView: GameImageView? = null
+    private var mPiece = 3 //分块数
+    private var gapPadding = 5 //间距
 
-    init {
-        val url = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ1kIpNpzm1gnCQ0CdH3RxEfMS1csBr70GYOhqnDnZAf7xB0UDm"
+    private var mFullBitmap: Bitmap? = null
+
+
+    fun setImgUrl(imgUrl: String) {
         val options = RequestOptions().override(mWidth, mWidth)
-        Glide.with(context).asBitmap().load(url).apply(options).into(object : SimpleTarget<Bitmap?>() {
-            override fun onResourceReady(bmp: Bitmap, transition: Transition<in Bitmap?>?) {
+        Glide.with(context).asBitmap().load(imgUrl).apply(options).into(object : SimpleTarget<Bitmap>() {
+            override fun onResourceReady(bmp: Bitmap, transition: Transition<in Bitmap>?) {
                 MLog.debug(TAG, "bitmap=$bmp")
-                initViews(bmp)
+                mFullBitmap = bmp
+                initViews()
             }
         })
     }
 
-    private fun initViews(resource: Bitmap) {
-        val piece = 3f
-        val gameImageWidth = mWidth / piece
-        val weight = gameImageWidth.toInt()
-        var tmp = 0
-
-
-        val imgList = split(resource, 3)
-        imgList?.forEach { it ->
-            val imgView = GameImageView(context)
-            imgView.id = it.index
-            imgView.setPostion(it.index)
-            imgView.setPadding(10, 10, 10, 10)
-            imgView.setImageBitmap(it.bitmap)
-            imgViewList.add(imgView)
+    private fun initViews() {
+        if (mFullBitmap == null) {
+            MLog.error(TAG, "mFullBitmap  is null, return")
         }
 
-        mCurImageView = imgViewList.last()
-        mCurImageView?.setImageResource(R.drawable.enemy)
+        mFullBitmap?.let {
+            initGameImageList(it)
+            addGameView()
+        }
+    }
 
-//        imgViewList.shuffle()
+    private fun addGameView() {
+        val piece = mPiece
+        val weight = mWidth / mPiece //单个图片的width
+        var tmp = 0
 
         removeAllViews()
         imgViewList.forEach {
             val params = LayoutParams(weight, weight)
-            val marginLeft = ((tmp % piece) * weight).toInt()
-            val marginTop = ((tmp / piece.toInt()) * weight).toInt()
+            val marginLeft = ((tmp % piece) * weight)
+            val marginTop = ((tmp / piece) * weight)
             MLog.debug(TAG, "margin: weight=$weight left= $marginLeft, top=$marginTop")
             params.leftMargin = marginLeft
             params.topMargin = marginTop
@@ -77,6 +76,28 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
             it.setOnClickListener(this)
             addView(it)
             tmp++
+        }
+    }
+
+    private fun initGameImageList(resource: Bitmap) {
+        val imgList = split(resource, mPiece)
+        imgViewList.clear()
+        imgList?.forEach { it ->
+            val imgView = GameImageView(context)
+            imgView.id = it.index
+            imgView.setPadding(gapPadding, gapPadding, gapPadding, gapPadding)
+            imgView.setImageBitmap(it.bitmap)
+            imgViewList.add(imgView)
+        }
+
+        mCurImageView = imgViewList.last()
+        mCurImageView?.setBackgroundResource(R.drawable.game_bg_border)
+
+        imgViewList.shuffle()
+        var pos = 0
+        //洗牌后需要重置位置
+        imgViewList.forEach {
+            it.setPostion(pos++)
         }
     }
 
@@ -93,8 +114,7 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
                 val xValue = j * pieceWidth
                 val yValue = i * pieceWidth
                 MLog.debug(TAG, "xValue=$xValue,yValue=$yValue")
-                imagePiece.bitmap = Bitmap.createBitmap(bitmap, xValue, yValue,
-                        pieceWidth, pieceWidth)
+                imagePiece.bitmap = Bitmap.createBitmap(bitmap, xValue, yValue, pieceWidth, pieceWidth)
                 pieces.add(imagePiece)
             }
         }
@@ -103,21 +123,11 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
 
     fun isGameOver(): Boolean {
         for (i in 0 until imgViewList.size) {
-            if (imgViewList[i].getPosition() != i) {
+            if (imgViewList[i].getPosition() != imgViewList[i].id) {
                 return false
             }
         }
         return true
-    }
-
-    class ImagePiece {
-        var index: Int = 0
-        var bitmap: Bitmap? = null
-    }
-
-
-    companion object {
-        const val TAG = "JigsawLayout"
     }
 
     override fun onClick(v: View?) {
@@ -127,6 +137,7 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
                     swapPos(it, v)
                     if (isGameOver()) {
                         finishGame()
+                        showFullBitmap()
                     }
                 }
             }
@@ -143,7 +154,7 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
 
     private fun swapPos(it: GameImageView, imageView: GameImageView) {
         val tmpLp = it.layoutParams
-        val tmpPos= it.getPosition()
+        val tmpPos = it.getPosition()
         it.layoutParams = imageView.layoutParams
         imageView.layoutParams = tmpLp
         it.setPostion(imageView.getPosition())
@@ -154,4 +165,25 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
         addView(it)
         addView(imageView)
     }
+
+    private fun showFullBitmap() {
+        removeAllViews()
+        val img = ImageView(context)
+        val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        mFullBitmap?.let {
+            img.layoutParams = params
+            img.setImageBitmap(mFullBitmap)
+        }
+        addView(img)
+    }
+
+    fun setPiece(pieve: Int) {
+        mPiece = pieve
+        initViews()
+    }
+
+    companion object {
+        const val TAG = "JigsawLayout"
+    }
+
 }

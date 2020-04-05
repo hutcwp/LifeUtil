@@ -3,6 +3,8 @@ package com.hutcwp.game.jigsaw.view
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -22,7 +24,7 @@ import me.hutcwp.util.SingleToastUtil
  * YY: 909076244
  * 拼图游戏
  **/
-class JigsawLayout : RelativeLayout, View.OnClickListener {
+class JigsawLayout : RelativeLayout, View.OnClickListener, IController {
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -35,7 +37,16 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
     private var gapPadding = 5 //间距
 
     private var mFullBitmap: Bitmap? = null
+    private var mGestureDetector: GestureDetector
 
+    init {
+        val jigsawGestureDetector = JigsawGestureDetector(this)
+        mGestureDetector = GestureDetector(context, jigsawGestureDetector)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return mGestureDetector.onTouchEvent(event)
+    }
 
     fun setImgUrl(imgUrl: String) {
         val options = RequestOptions().override(mWidth, mWidth)
@@ -73,7 +84,7 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
             params.leftMargin = marginLeft
             params.topMargin = marginTop
             it.layoutParams = params
-            it.setOnClickListener(this)
+//            it.setOnClickListener(this)
             addView(it)
             tmp++
         }
@@ -131,18 +142,20 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        if (v is GameImageView) {
-            mCurImageView?.let {
-                if (v != it) {
-                    swapPos(it, v)
-                    if (isGameOver()) {
-                        finishGame()
-                        showFullBitmap()
-                    }
-                }
-            }
-        }
+        MLog.debug(TAG, "onClick")
+//        if (v is GameImageView) {
+//            mCurImageView?.let {
+//                if (v != it) {
+//                    swapPos(it, v)
+//                    if (isGameOver()) {
+//                        finishGame()
+//                        showFullBitmap()
+//                    }
+//                }
+//            }
+//        }
     }
+
 
     private fun finishGame() {
         SingleToastUtil.showToast("游戏结束")
@@ -182,8 +195,67 @@ class JigsawLayout : RelativeLayout, View.OnClickListener {
         initViews()
     }
 
+    override fun toLeft() {
+        MLog.debug(TAG, "toLeft")
+        mCurImageView?.let {
+            val row = it.getPosition() / 3
+            val col = it.getPosition() % 3
+            val curPos = it.getPosition()
+            val goal = imgViewList.find { img ->
+                img.getPosition() == curPos - 1
+            }
+            if (col in 1 until mPiece && goal != null) {
+                swapPos(it, goal)
+            }
+        }
+    }
+
+    override fun toTop() {
+        MLog.debug(TAG, "toTop")
+        mCurImageView?.let {
+            val row = it.getPosition() / 3
+            val col = it.getPosition() % 3
+            val curPos = it.getPosition()
+            val goal = imgViewList.find { img ->
+                img.getPosition() == curPos - mPiece
+            }
+            if (row in 1 until mPiece && goal != null) {
+                swapPos(it, goal)
+            }
+        }
+    }
+
+    override fun toRight() {
+        MLog.debug(TAG, "toRight")
+        mCurImageView?.let {
+            val row = it.getPosition() / 3
+            val col = it.getPosition() % 3
+            val curPos = it.getPosition()
+            val goal = imgViewList.find { img ->
+                img.getPosition() == curPos + 1
+            }
+            if (col in 0 until mPiece - 1 && goal != null) {
+                swapPos(it, goal)
+            }
+        }
+    }
+
+    override fun toBottom() {
+        MLog.debug(TAG, "toBottom")
+        mCurImageView?.let {
+            val row = it.getPosition() / 3
+            val col = it.getPosition() % 3
+            val curPos = it.getPosition()
+            val goal = imgViewList.find { img ->
+                img.getPosition() == curPos + mPiece
+            }
+            if (row in 0 until mPiece - 1 && goal != null) {
+                swapPos(it, goal)
+            }
+        }
+    }
+
     companion object {
         const val TAG = "JigsawLayout"
     }
-
 }

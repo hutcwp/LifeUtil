@@ -7,10 +7,10 @@ import com.hutcwp.host.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_splash.*
 import me.hutcwp.constant.ARoutePath
+import me.hutcwp.util.MonitorFPS
 import java.util.concurrent.TimeUnit
 
 /**

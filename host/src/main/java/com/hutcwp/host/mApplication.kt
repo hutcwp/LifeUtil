@@ -8,6 +8,7 @@ import com.facebook.stetho.Stetho
 //import com.hutcwp.homepage.HomePageInitLogic
 import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
+import me.hutcwp.util.MonitorFPS
 //import me.hutcwp.cartoon.app.CartoonInitLogic
 import me.hutcwp.webp.WebpBytebufferDecoder
 import me.hutcwp.webp.WebpDrawable
@@ -35,6 +36,7 @@ class mApplication : BaseApplication() {
         webpInit()
         aRouterInit()
 
+//        MonitorFPS(context, "application").start()
     }
 
     private fun aRouterInit() {

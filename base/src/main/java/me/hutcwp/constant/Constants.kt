@@ -12,6 +12,7 @@ class Constants {
         const val SANGUO_MAIN_PAGE = "/game/sanguo/main"
         const val LUCKY_MAIN_PAGE = "/game/lucky/main"
         const val JIGSAW_MAIN_PAGE = "/game/jigsaw/main"
+        const val IDENTIFY_MAIN_PAGE = "/game/identify/main"
     }
 
     object URL {

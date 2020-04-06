@@ -1,1 +1,2 @@
 include ':read', ':cartoon', ':base', ':host', ':homepage', ':weather', ':game', ':live' ,':blog'
+include ':framwork'

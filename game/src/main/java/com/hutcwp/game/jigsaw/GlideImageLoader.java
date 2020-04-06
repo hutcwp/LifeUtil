@@ -5,9 +5,7 @@ import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.hutcwp.game.R;
-import com.lzy.imagepicker.loader.ImageLoader;
+import com.hutcwp.framwork.imagepicker.loader.ImageLoader;
 
 import java.io.File;
 

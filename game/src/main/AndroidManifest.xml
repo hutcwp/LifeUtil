@@ -4,15 +4,14 @@
 
     <application>
         <activity android:name=".GameMainActivity" />
+
         <activity
             android:name=".jigsaw.MainActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".luckypan.LuckyMainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".wuziqi.MainActivity"
@@ -21,6 +20,10 @@
         <activity
             android:name=".sanguo.ui.MainGameActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".check.ImageIdentifyActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

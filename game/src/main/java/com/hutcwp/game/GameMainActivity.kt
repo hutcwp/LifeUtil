@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.hutcwp.game.check.PicChecker
 import me.hutcwp.constant.Constants
 
 @Route(path = Constants.RoutePath.GAME_MAIN_PAGE)
@@ -15,7 +16,6 @@ class GameMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_main)
-
         initView()
     }
 
@@ -28,6 +28,7 @@ class GameMainActivity : AppCompatActivity() {
         data.add(GameBean("五子棋",Constants.RoutePath.WUZIQI_MAIN_PAGE))
         data.add(GameBean("幸运轮盘",Constants.RoutePath.LUCKY_MAIN_PAGE))
         data.add(GameBean("拼图",Constants.RoutePath.JIGSAW_MAIN_PAGE))
+        data.add(GameBean("识图",Constants.RoutePath.IDENTIFY_MAIN_PAGE))
         val adapter = GameAdapter(data)
         rvGame?.adapter = adapter
     }

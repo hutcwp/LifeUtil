@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LifeUtil.iml" filepath="$PROJECT_DIR$/.idea/LifeUtil.iml" />
-      <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
-      <module fileurl="file://$PROJECT_DIR$/blog/blog.iml" filepath="$PROJECT_DIR$/blog/blog.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cartoon/cartoon.iml" filepath="$PROJECT_DIR$/cartoon/cartoon.iml" />
-      <module fileurl="file://$PROJECT_DIR$/game/game.iml" filepath="$PROJECT_DIR$/game/game.iml" />
-      <module fileurl="file://$PROJECT_DIR$/homepage/homepage.iml" filepath="$PROJECT_DIR$/homepage/homepage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/host/host.iml" filepath="$PROJECT_DIR$/host/host.iml" />
-      <module fileurl="file://$PROJECT_DIR$/live/live.iml" filepath="$PROJECT_DIR$/live/live.iml" />
-      <module fileurl="file://$PROJECT_DIR$/read/read.iml" filepath="$PROJECT_DIR$/read/read.iml" />
-      <module fileurl="file://$PROJECT_DIR$/weather/weather.iml" filepath="$PROJECT_DIR$/weather/weather.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/LifeUtil.iml" filepath="$PROJECT_DIR$/.idea/LifeUtil.iml" group="LifeUtil" />
+      <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" group="LifeUtil/base" />
+      <module fileurl="file://$PROJECT_DIR$/blog/blog.iml" filepath="$PROJECT_DIR$/blog/blog.iml" group="LifeUtil/blog" />
+      <module fileurl="file://$PROJECT_DIR$/cartoon/cartoon.iml" filepath="$PROJECT_DIR$/cartoon/cartoon.iml" group="LifeUtil/cartoon" />
+      <module fileurl="file://$PROJECT_DIR$/framwork/framwork.iml" filepath="$PROJECT_DIR$/framwork/framwork.iml" group="LifeUtil/framwork" />
+      <module fileurl="file://$PROJECT_DIR$/game/game.iml" filepath="$PROJECT_DIR$/game/game.iml" group="LifeUtil/game" />
+      <module fileurl="file://$PROJECT_DIR$/homepage/homepage.iml" filepath="$PROJECT_DIR$/homepage/homepage.iml" group="LifeUtil/homepage" />
+      <module fileurl="file://$PROJECT_DIR$/host/host.iml" filepath="$PROJECT_DIR$/host/host.iml" group="LifeUtil/host" />
+      <module fileurl="file://$PROJECT_DIR$/live/live.iml" filepath="$PROJECT_DIR$/live/live.iml" group="LifeUtil/live" />
+      <module fileurl="file://$PROJECT_DIR$/read/read.iml" filepath="$PROJECT_DIR$/read/read.iml" group="LifeUtil/read" />
+      <module fileurl="file://$PROJECT_DIR$/weather/weather.iml" filepath="$PROJECT_DIR$/weather/weather.iml" group="LifeUtil/weather" />
     </modules>
   </component>
 </project>

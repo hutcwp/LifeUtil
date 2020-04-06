@@ -63,5 +63,6 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
-    compile project(path: ':base')
+    implementation project(path: ':base')
+    implementation project(path: ':framwork')
 }

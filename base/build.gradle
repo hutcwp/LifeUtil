@@ -105,5 +105,6 @@ dependencies {
 
     api 'com.just.agentweb:agentweb:4.1.2' // (必选)
 
-    compile 'com.lzy.widget:imagepicker:0.6.1'
+//    compile 'com.lzy.widget:imagepicker:0.6.1'
+
 }

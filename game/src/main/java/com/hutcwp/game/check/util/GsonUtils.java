@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2017 Baidu, Inc. All Rights Reserved.
  */
-package com.hutcwp.game.check;
+package com.hutcwp.game.check.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,4 +1,4 @@
-package com.hutcwp.game.check;
+package com.hutcwp.game.check.util;
 
 /**
  * Base64 工具类

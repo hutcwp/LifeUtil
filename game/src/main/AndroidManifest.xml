@@ -22,7 +22,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
-            android:name=".check.ImageIdentifyActivity"
+            android:name=".check.ui.ImageIdentifyActivity"
             android:screenOrientation="portrait" />
     </application>
 

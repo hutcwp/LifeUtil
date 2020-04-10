@@ -1,4 +1,4 @@
-package com.hutcwp.game.check;
+package com.hutcwp.game.check.util;
 
 import java.io.*;
 

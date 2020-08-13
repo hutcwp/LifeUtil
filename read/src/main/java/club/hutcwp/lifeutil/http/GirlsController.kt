@@ -1,6 +1,5 @@
 package club.hutcwp.lifeutil.http
 
-import club.hutcwp.lifeutil.entitys.GankGirlPhoto
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -15,8 +14,8 @@ import retrofit2.http.Path
  */
 
 interface GirlsController {
-    @GET("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/6/{page}")
-    fun getGank(@Path("page") page: String): Observable<BaseGankResponse<List<GankGirlPhoto>>>
+    @GET("https://gank.io/api/v2/data/category/Girl/type/Girl/page/{page}/count/10")
+    fun getNewGank(@Path("page") page: String): Observable<NewGankRepsponse>
 
     @GET("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/{page}")
     fun getGankBody(@Path("page") page: String): Observable<ResponseBody>

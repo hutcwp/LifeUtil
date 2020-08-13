@@ -37,11 +37,8 @@ class MainActivity : BaseActivity() {
     }
 
     private var mDrawerLayout: DrawerLayout? = null
-
     private var currentFragmentTag: String? = null
-
     private var fragmentManager: FragmentManager? = null
-
     private var drawerLayout: DrawerLayout? = null
 
     override val layoutId: Int

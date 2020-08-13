@@ -1,23 +1,17 @@
 package club.hutcwp.lifeutil.ui.home.sub.picture
 
 import android.util.Log
-
-import java.util.ArrayList
-
 import club.hutcwp.lifeutil.core.PhotoCatagoryParseImpl
-import club.hutcwp.lifeutil.entitys.GankGirlPhoto
 import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.http.ApiFactory
-import club.hutcwp.lifeutil.http.BaseGankResponse
 import hut.cwp.mvp.MvpPresenter
 import io.reactivex.Observable
 import io.reactivex.Observer
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 
 /**
@@ -36,9 +30,19 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
 
     private val gankObservable: Observable<List<Photo>>
-        get() = ApiFactory.getGirlsController()?.getGank(curPage.toString() + "")?.subscribeOn(Schedulers.io())!!.map { response ->
+        get() = ApiFactory.getGirlsController()?.getNewGank(curPage.toString() + "")?.subscribeOn(Schedulers.io())!!.map { response ->
+            Log.i(TAG, "gankObservable")
             val photos = ArrayList<Photo>()
-            photos.addAll(response.datas!!)
+
+            val photoList = mutableListOf<Photo>()
+            response.data?.forEach {
+                val photo = Photo()
+                photo.date = it.createdAt
+                photo.name = it.title
+                photo.img = it.images.firstOrNull()
+                photoList.add(photo)
+            }
+            photos.addAll(photoList)
             photos
         }
 
@@ -47,6 +51,7 @@ class PicturePresenter : MvpPresenter<IPicture>() {
      */
     private val dataFromServer: Observable<List<Photo>>
         get() {
+            Log.i(TAG, "dataFromServer")
             val url = arguments.getString("url")!! + curPage
             return Observable.just(url)
                     .subscribeOn(Schedulers.io())
@@ -66,6 +71,7 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
 
     private fun getData(observable: Observable<List<Photo>>) {
+        Log.i(TAG, "getData")
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<List<Photo>> {
                     override fun onSubscribe(d: Disposable) {
@@ -96,6 +102,7 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
 
     fun getServer() {
+        Log.i(TAG, "getServer")
         getData(dataFromServer)
     }
 

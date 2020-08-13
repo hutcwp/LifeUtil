@@ -20,10 +20,7 @@ import hut.cwp.mvp.MvpView
 abstract class BaseFragment<P : MvpPresenter<V>, V : MvpView> : MvpFragment<P, V>() {
     private var isViewPrepared: Boolean = false // 标识fragment视图已经初始化完毕
     private var hasFetchData: Boolean = false // 标识已经触发过懒加载数据
-//    lateinit var binding: ViewDataBinding
 
-    //    @get:LayoutRes
-//    protected abstract val layoutId: Int
     lateinit var rootView: View
 
     abstract fun getLayoutId(): Int
@@ -36,7 +33,6 @@ abstract class BaseFragment<P : MvpPresenter<V>, V : MvpView> : MvpFragment<P, V
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(getLayoutId(), container, false)
-        initViews()
         return rootView
     }
 
@@ -71,6 +67,7 @@ abstract class BaseFragment<P : MvpPresenter<V>, V : MvpView> : MvpFragment<P, V
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
         isViewPrepared = true
         lazyFetchDataIfPrepared()
     }

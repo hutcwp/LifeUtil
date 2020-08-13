@@ -5,20 +5,18 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.adpter.PhotoAdapter
 import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import hut.cwp.mvp.BindPresenter
+import kotlinx.android.synthetic.main.read_fragment_gank_girl.*
 
 @BindPresenter(presenter = PicturePresenter::class)
 class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
-
     private var adapter: PhotoAdapter? = null
-
 
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_gank_girl
@@ -38,63 +36,50 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
     }
 
     override fun initViews() {
-        //可能会出现空指针异常
         adapter = PhotoAdapter(context!!, null)
-
-        rootView?.findViewById<RecyclerView>(R.id.grid_recycler)!!.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        rootView?.findViewById<RecyclerView>(R.id.grid_recycler)!!.addItemDecoration(SpacesItemDecoration(14))
-        rootView?.findViewById<RecyclerView>(R.id.grid_recycler)!!.setAdapter(adapter)
+        grid_recycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        grid_recycler.addItemDecoration(SpacesItemDecoration(14))
+        grid_recycler.adapter = adapter
         setting()
     }
 
-    /**
-     * 注意，因放置在initView方法的最后，以避免出现空指针
-     */
-    fun setting() {
-        rootView?.findViewById<SwipeRefreshLayout>(R.id.swipRefreshLayout)!!.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
-        rootView?.findViewById<SwipeRefreshLayout>(R.id.swipRefreshLayout).setOnRefreshListener {
-            presenter.serRefresh(true)
+    private fun setting() {
+        swipRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        swipRefreshLayout.setOnRefreshListener {
+            presenter.resetPage(true)
             getDatasByType()
         }
 
-        rootView?.findViewById<RecyclerView>(R.id.grid_recycler).addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        grid_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!rootView?.findViewById<RecyclerView>(R.id.grid_recycler).canScrollVertically(1)) {
-                    // 此操作先与getDatasByType（）
-                    presenter.serRefresh(false)
+                if (!grid_recycler.canScrollVertically(1)) {
+                    presenter.resetPage(false)
                     getDatasByType()
                 }
             }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-            }
         })
     }
-
 
     override fun showSnack(msg: String) {
         (activity as MainActivity).showSnack(msg)
     }
 
     override fun setRefreshing(status: Boolean) {
-        rootView?.findViewById<SwipeRefreshLayout>(R.id.swipRefreshLayout).setRefreshing(status)
+        swipRefreshLayout.isRefreshing = status
     }
 
     override fun setNewData(data: List<Photo>) {
-        adapter!!.setNewData(data.toMutableList())
+        adapter?.setNewData(data.toMutableList())
     }
 
     override fun addNewData(data: List<Photo>) {
-        adapter!!.addDatas(data)
+        adapter?.addDatas(data)
     }
-
 
     /**
      * Recycler的分割线
      */
     private inner class SpacesItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
-
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
             outRect.left = space
             outRect.right = space
@@ -104,6 +89,4 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
             }
         }
     }
-
-
 }

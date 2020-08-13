@@ -65,11 +65,6 @@ public class RetrofitManager {
                 .build();
     }
 
-
-    /**
-     * 为何要上锁
-     * @return
-     */
     private  Gson gson() {
         if (gson == null) {
             synchronized (RetrofitManager.class) {

@@ -5,11 +5,12 @@ import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.http.ApiFactory
 import hut.cwp.mvp.MvpPresenter
 import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.hutcwp.log.MLog
 import java.util.*
 
@@ -59,32 +60,41 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
     private fun getData(observable: Observable<List<Photo>>) {
         MLog.info(TAG, "getData")
-        observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<List<Photo>> {
-                    override fun onSubscribe(d: Disposable) {
-                        compositeDisposable.add(d)
-                    }
 
-                    override fun onNext(photos: List<Photo>) {
-                        curPage++
-                        if (isRefresh) {
-                            view?.setNewData(photos)
-                        } else {
-                            view?.addNewData(photos)
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        view?.showSnack("加载失败")
-                        view?.setRefreshing(false)
-                    }
-
-                    override fun onComplete() {
-                        view?.showSnack("加载完成")
-                        view?.setRefreshing(false)
-                    }
-                })
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val photoList = getDataAsyc()
+                curPage++
+                if (isRefresh) {
+                    view?.setNewData(photoList)
+                } else {
+                    view?.addNewData(photoList)
+                }
+                view?.showSnack("加载完成")
+                view?.setRefreshing(false)
+            } catch (e: Exception) {
+                view?.showSnack("加载失败")
+                view?.setRefreshing(false)
+            } finally {
+                MLog.info(TAG, "finally")
+            }
+        }
     }
+
+    private suspend fun getDataAsyc() = withContext(Dispatchers.IO) {
+        val response = ApiFactory.getGirlsController()?.getNewGankAsyc(curPage)
+        val photoList = mutableListOf<Photo>()
+        MLog.info(TAG, "get Data from conroutine $response")
+        response?.data?.forEach {
+            val photo = Photo()
+            photo.date = it.createdAt
+            photo.name = it.title
+            photo.img = it.images.firstOrNull()
+            photoList.add(photo)
+        }
+        photoList
+    }
+
 
     fun getServer() {
         MLog.info(TAG, "getServer")

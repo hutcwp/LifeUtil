@@ -2,13 +2,16 @@ package club.hutcwp.lifeutil.ui.home.sub.news
 
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.adpter.ReadAdapter
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import hut.cwp.mvp.BindPresenter
+import kotlinx.android.synthetic.main.read_fragment_category.*
+import kotlinx.android.synthetic.main.read_fragment_category.view.*
+import kotlinx.android.synthetic.main.read_fragment_category.view.recyclerView
+import kotlinx.android.synthetic.main.read_fragment_category.view.swipeRefreshLayout
 
 /**
  * 阅读的子类
@@ -33,22 +36,17 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     }
 
     override fun lazyFetchData() {
-        presenter.getDataFromServer()
+        presenter.getDataFromServerV2()
     }
 
-    /**
-     * 设置监听等
-     */
     private fun setListener() {
-        rootView.run {
-            Log.i(TAG, "setListener run")
-            if (adapter == null) {
-                adapter = ReadAdapter(context!!, listOf<News>().toMutableList())
-            }
-            rootView.findViewById<RecyclerView>(R.id.recyclerView).adapter = adapter
-            rootView.findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(activity)
-            rootView.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout).setOnRefreshListener { presenter.getDataFromServer() }
+        Log.i(TAG, "setListener run")
+        if (adapter == null) {
+            adapter = ReadAdapter(context!!, listOf<News>().toMutableList())
         }
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        swipeRefreshLayout.setOnRefreshListener { presenter.getDataFromServerV2() }
     }
 
     override fun setRefreshing(status: Boolean) {

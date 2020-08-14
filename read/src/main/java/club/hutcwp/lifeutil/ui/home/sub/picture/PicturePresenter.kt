@@ -84,7 +84,9 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
     fun getServer() {
         MLog.info(TAG, "getServer")
-
+        dataFromServer?.subscribe {
+            MLog.info(TAG, "data = $it")
+        }
     }
 
     fun resetPage(isRefresh: Boolean) {

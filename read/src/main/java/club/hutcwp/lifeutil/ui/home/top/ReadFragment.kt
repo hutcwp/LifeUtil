@@ -14,6 +14,8 @@ import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import club.hutcwp.lifeutil.ui.home.sub.news.NewsFragment
 import hut.cwp.mvp.BindPresenter
+import kotlinx.android.synthetic.main.read_fragment_read.*
+import me.hutcwp.log.MLog
 
 @BindPresenter(presenter = ReadPresenter::class)
 class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCategory> {
@@ -29,7 +31,7 @@ class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCate
     }
 
     override fun lazyFetchData() {
-        presenter.getCategory()
+        presenter.getCategoryV2()
     }
 
     /**
@@ -38,12 +40,12 @@ class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCate
      * @param categories 标签类
      */
     override fun initTabLayout(categories: List<ReadCategory>) {
-        Log.i("cwp","initTabLayout")
-        setUpViewPager(rootView.findViewById<ViewPager>(R.id.viewPager), categories)
-        rootView.findViewById<ViewPager>(R.id.viewPager).offscreenPageLimit = rootView.findViewById<ViewPager>(R.id.viewPager).adapter!!.count
-        rootView.findViewById<TabLayout>(R.id.tablayout).setSelectedTabIndicatorColor(ContextCompat.getColor(activity!!, R.color.white))
-        rootView.findViewById<TabLayout>(R.id.tablayout).setupWithViewPager(rootView.findViewById<ViewPager>(R.id.viewPager))
-        rootView.findViewById<TabLayout>(R.id.tablayout).tabMode = TabLayout.MODE_SCROLLABLE
+        MLog.info("cwp", "initTabLayout")
+        setUpViewPager(viewPager, categories)
+        viewPager.offscreenPageLimit = viewPager.adapter?.count ?: 0
+        tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(activity!!, R.color.white))
+        tablayout.setupWithViewPager(viewPager)
+        tablayout.tabMode = TabLayout.MODE_SCROLLABLE
     }
 
     override fun setUpViewPager(viewPager: ViewPager, readCategories: List<ReadCategory>) {

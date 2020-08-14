@@ -20,7 +20,6 @@ import me.hutcwp.log.MLog
 @BindPresenter(presenter = ReadPresenter::class)
 class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCategory> {
 
-
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_read
     }
@@ -34,11 +33,6 @@ class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCate
         presenter.getCategoryV2()
     }
 
-    /**
-     * 初始化TabLayout
-     *
-     * @param categories 标签类
-     */
     override fun initTabLayout(categories: List<ReadCategory>) {
         MLog.info("cwp", "initTabLayout")
         setUpViewPager(viewPager, categories)

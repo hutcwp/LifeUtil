@@ -13,6 +13,7 @@ import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.util.WebUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import me.hutcwp.log.MLog
 
 /**
  * Created by hutcwp on 2017/4/14.
@@ -36,7 +37,10 @@ class ReadAdapter(private val context: Context, var readlist: MutableList<News>?
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ReadHolder, position: Int) {
         val item = readlist!![position]
-        holder.rootView.setOnClickListener { WebUtils.openInternal(context, item.url!!) }
+        holder.rootView.setOnClickListener {
+            MLog.info("ReadAdapter", "item.url = ${item.url}")
+            WebUtils.openInternal(context, item.url!!)
+        }
         //将标题设置为 序号.内容这种格式
         holder.tv_name.text = String.format("%s. %s", position + 1, item.name)
         holder.tv_info.text = "${item.updateTime} • ${item.from}"

@@ -50,7 +50,7 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     }
 
     override fun setRefreshing(status: Boolean) {
-        rootView.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)?.isRefreshing = status
+        swipeRefreshLayout?.isRefreshing = status
     }
 
     override fun setNewData(data: List<News>) {

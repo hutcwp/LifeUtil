@@ -27,18 +27,6 @@ class PicturePresenter : MvpPresenter<IPicture>() {
     private var isRefresh = true
     private val compositeDisposable = CompositeDisposable()
 
-    private val gankObservable: Observable<List<Photo>> = ApiFactory.getGirlsController()?.getNewGank(curPage)?.subscribeOn(Schedulers.io())!!.map { response ->
-        MLog.info(TAG, "gankObservable: a page=$curPage")
-        val photoList = mutableListOf<Photo>()
-        response.data?.forEach {
-            val photo = Photo()
-            photo.date = it.createdAt
-            photo.name = it.title
-            photo.img = it.images.firstOrNull()
-            photoList.add(photo)
-        }
-        photoList
-    }
 
     private val dataFromServer: Observable<List<Photo>>
         get() {
@@ -55,15 +43,11 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
 
     fun getGank() {
-        getData(gankObservable)
-    }
-
-    private fun getData(observable: Observable<List<Photo>>) {
-        MLog.info(TAG, "getData")
-
+        MLog.info(TAG, "getGank")
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val photoList = getDataAsyc()
+                MLog.info(TAG, "getDataAsyc = $photoList")
                 curPage++
                 if (isRefresh) {
                     view?.setNewData(photoList)
@@ -75,6 +59,7 @@ class PicturePresenter : MvpPresenter<IPicture>() {
             } catch (e: Exception) {
                 view?.showSnack("加载失败")
                 view?.setRefreshing(false)
+                MLog.error(TAG, "catch error", e)
             } finally {
                 MLog.info(TAG, "finally")
             }
@@ -92,13 +77,14 @@ class PicturePresenter : MvpPresenter<IPicture>() {
             photo.img = it.images.firstOrNull()
             photoList.add(photo)
         }
+        MLog.info(TAG, "photoList=$photoList")
         photoList
     }
 
 
     fun getServer() {
         MLog.info(TAG, "getServer")
-        getData(dataFromServer)
+
     }
 
     fun resetPage(isRefresh: Boolean) {

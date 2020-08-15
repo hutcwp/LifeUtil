@@ -22,7 +22,7 @@ import me.hutcwp.log.MLog
  * GitHub : github.com/hutcwp
  */
 
-class ReadAdapter(private val context: Context, var readlist: MutableList<News>?) : RecyclerView.Adapter<ReadAdapter.ReadHolder>() {
+class NewsAdapter(private val context: Context, var readlist: MutableList<News>?) : RecyclerView.Adapter<NewsAdapter.ReadHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     //取得data数据
@@ -45,7 +45,7 @@ class ReadAdapter(private val context: Context, var readlist: MutableList<News>?
         holder.tv_name.text = String.format("%s. %s", position + 1, item.name)
         holder.tv_info.text = "${item.updateTime} • ${item.from}"
 
-        val option = RequestOptions().circleCrop()
+        val option = RequestOptions()
         Glide.with(context).load(item.icon).apply(option).into(holder.iv)
     }
 

@@ -2,16 +2,13 @@ package club.hutcwp.lifeutil.ui.home.sub.news
 
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.RecyclerView
 import club.hutcwp.lifeutil.R
-import club.hutcwp.lifeutil.adpter.ReadAdapter
+import club.hutcwp.lifeutil.adpter.NewsAdapter
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import hut.cwp.mvp.BindPresenter
 import kotlinx.android.synthetic.main.read_fragment_category.*
-import kotlinx.android.synthetic.main.read_fragment_category.view.*
-import kotlinx.android.synthetic.main.read_fragment_category.view.recyclerView
-import kotlinx.android.synthetic.main.read_fragment_category.view.swipeRefreshLayout
 
 /**
  * 阅读的子类
@@ -25,7 +22,7 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
             listOf()
         }
 
-    private var adapter: ReadAdapter? = null
+    private var adapter: NewsAdapter? = null
 
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_category
@@ -36,17 +33,24 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     }
 
     override fun lazyFetchData() {
-        presenter.getDataFromServerV2()
+        presenter.getDataFromServer(false)
     }
 
     private fun setListener() {
         Log.i(TAG, "setListener run")
         if (adapter == null) {
-            adapter = ReadAdapter(context!!, listOf<News>().toMutableList())
+            adapter = NewsAdapter(context!!, listOf<News>().toMutableList())
         }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        swipeRefreshLayout.setOnRefreshListener { presenter.getDataFromServerV2() }
+        swipeRefreshLayout.setOnRefreshListener { presenter.getDataFromServer(false) }
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (!recyclerView.canScrollVertically(1)) {
+                   presenter.getDataFromServer(true)
+                }
+            }
+        })
     }
 
     override fun setRefreshing(status: Boolean) {

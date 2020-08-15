@@ -195,7 +195,6 @@ class MainActivity : BaseActivity() {
         currentFragmentTag = goalFragmentTag
     }
 
-
     @Subscribe
     fun onMessageEvent(event: ThemeChangedEvent) {
         Log.d("event", "msg")

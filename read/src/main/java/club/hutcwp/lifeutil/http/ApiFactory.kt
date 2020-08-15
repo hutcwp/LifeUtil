@@ -14,12 +14,12 @@ object ApiFactory {
 
     private var girlsController: GirlsController? = null
 
-    fun getGirlsController(): GirlsController? {
+    fun getGirlsController(): GirlsController {
         if (girlsController == null) {
             synchronized(monitor) {
                 girlsController = RetrofitManager.getInstance().create(GirlsController::class.java)
             }
         }
-        return girlsController
+        return girlsController!!
     }
 }

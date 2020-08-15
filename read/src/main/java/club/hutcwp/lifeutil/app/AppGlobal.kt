@@ -8,7 +8,7 @@ package club.hutcwp.lifeutil.app
  */
 
 object AppGlobal {
-    val CURRENT_INDEX = "currentIndex"
+
 
     val FILE_NAME = "share_data"
 }

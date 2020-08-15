@@ -17,6 +17,7 @@ import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.event.ThemeChangedEvent
 import club.hutcwp.lifeutil.http.ApiFactory
 import club.hutcwp.lifeutil.ui.base.BaseActivity
+import club.hutcwp.lifeutil.ui.home.top.GankFragment
 import club.hutcwp.lifeutil.ui.home.top.PhotoFragment
 import club.hutcwp.lifeutil.ui.home.top.ReadFragment
 import club.hutcwp.lifeutil.ui.setting.AboutActivity
@@ -72,7 +73,7 @@ class MainActivity : BaseActivity() {
                         switchContent(FRAGMENT_TAG_PHOTO)
                     }
                     "test" -> {
-                        SingleToastUtil.showToast("test")
+                        switchContent(FRAGMENT_TAG_ARTICLE)
                     }
                 }
             }
@@ -174,9 +175,11 @@ class MainActivity : BaseActivity() {
 
         var foundFragment = supportFragmentManager.findFragmentByTag(goalFragmentTag)
         if (foundFragment == null) {
-            when (goalFragmentTag) {
-                FRAGMENT_TAG_PHOTO -> foundFragment = PhotoFragment()
-                FRAGMENT_TAG_READING -> foundFragment = ReadFragment()
+            foundFragment = when (goalFragmentTag) {
+                FRAGMENT_TAG_PHOTO -> PhotoFragment()
+                FRAGMENT_TAG_READING -> GankFragment()
+                FRAGMENT_TAG_ARTICLE -> ReadFragment()
+                else -> null
             }
         }
 
@@ -237,6 +240,7 @@ class MainActivity : BaseActivity() {
         private const val CURRENT_FRAGMENT_TAG = "currentIndex"
         private const val FRAGMENT_TAG_PHOTO = "photo"
         private const val FRAGMENT_TAG_READING = "reading"
+        private const val FRAGMENT_TAG_ARTICLE = "article"
     }
 
     private inner class NavigationItemSelected : NavigationView.OnNavigationItemSelectedListener {

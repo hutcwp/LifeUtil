@@ -15,7 +15,7 @@ import me.hutcwp.log.MLog
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
-class ReadPresenter : MvpPresenter<ReadFragment>() {
+class GankPresenter : MvpPresenter<GankFragment>() {
 
     private val TAG = "ReadPresenter"
 
@@ -23,7 +23,7 @@ class ReadPresenter : MvpPresenter<ReadFragment>() {
         MLog.info(TAG, "getCategoryV2")
         GlobalScope.launch(Dispatchers.Main) {
             val readCategories = withContext(Dispatchers.IO) {
-                val readList = ApiFactory.getGirlsController().getArticleList()
+                val readList = ApiFactory.getGirlsController().getReadList()
                 val categoryList = mutableListOf<ReadCategory>()
                 readList.data?.forEach {
                     val readCategory = ReadCategory()

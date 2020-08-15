@@ -1,5 +1,6 @@
 package club.hutcwp.lifeutil.http
 
+import club.hutcwp.lifeutil.entitys.ArticleDetailBean
 import club.hutcwp.lifeutil.entitys.NewRead
 import club.hutcwp.lifeutil.entitys.NewReadInfo
 import club.hutcwp.lifeutil.entitys.RandomGirl
@@ -29,5 +30,12 @@ interface GirlsController {
     @GET("https://gank.io/api/v2/categories/GanHuo")
     suspend fun getReadList(): NewRead
 
+    @GET("https://gank.io/api/v2/data/category/Article/type/{category}/page/{no}/count/10")
+    suspend fun getArticleCategory(@Path("category") category: String, @Path("no") page: Int): NewReadInfo
 
+    @GET("https://gank.io/api/v2/categories/Article")
+    suspend fun getArticleList(): NewRead
+
+    @GET("https://gank.io/api/v2/post/{id}")
+    suspend fun getArticleDetail(@Path("id") id: String): ArticleDetailBean
 }

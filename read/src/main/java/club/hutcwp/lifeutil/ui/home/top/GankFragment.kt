@@ -11,21 +11,20 @@ import club.hutcwp.lifeutil.adpter.ViewPagerAdapter
 import club.hutcwp.lifeutil.entitys.ReadCategory
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
-import club.hutcwp.lifeutil.ui.home.sub.artical.ArticleFragment
 import club.hutcwp.lifeutil.ui.home.sub.news.NewsFragment
 import hut.cwp.mvp.BindPresenter
 import kotlinx.android.synthetic.main.read_fragment_read.*
 import me.hutcwp.log.MLog
 
-@BindPresenter(presenter = ReadPresenter::class)
-class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCategory> {
+@BindPresenter(presenter = GankPresenter::class)
+class GankFragment : BaseFragment<GankPresenter, GankFragment>(), IHome<ReadCategory> {
 
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_read
     }
 
     override fun initViews() {
-        rootView.findViewById<Toolbar>(R.id.toolbar).title = "阅读"
+        rootView.findViewById<Toolbar>(R.id.toolbar).title = "干货"
         (activity as MainActivity).initDrawer(rootView.findViewById<Toolbar>(R.id.toolbar))
     }
 
@@ -45,7 +44,7 @@ class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCate
     override fun setUpViewPager(viewPager: ViewPager, readCategories: List<ReadCategory>) {
         val adapter = ViewPagerAdapter(childFragmentManager)
         for (category in readCategories) {
-            val fragment = ArticleFragment()
+            val fragment = NewsFragment()
             val data = Bundle()
             data.putString("url", category.url)
             fragment.arguments = data

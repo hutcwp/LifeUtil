@@ -181,5 +181,33 @@ public class RandomGirl {
         public void setImages(List<String> images) {
             this.images = images;
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "_id='" + _id + '\'' +
+                    ", author='" + author + '\'' +
+                    ", category='" + category + '\'' +
+                    ", createdAt='" + createdAt + '\'' +
+                    ", desc='" + desc + '\'' +
+                    ", likeCounts=" + likeCounts +
+                    ", publishedAt='" + publishedAt + '\'' +
+                    ", stars=" + stars +
+                    ", title='" + title + '\'' +
+                    ", type='" + type + '\'' +
+                    ", url='" + url + '\'' +
+                    ", views=" + views +
+                    ", images=" + images +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "RandomGirl{" +
+                "counts=" + counts +
+                ", status=" + status +
+                ", data=" + data +
+                '}';
     }
 }

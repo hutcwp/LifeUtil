@@ -1,6 +1,7 @@
 package club.hutcwp.lifeutil.ui
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,7 @@ import club.hutcwp.lifeutil.ui.setting.SettingActivity
 import club.hutcwp.lifeutil.util.DoubleClickExit
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.read_activity_main.*
@@ -34,6 +36,7 @@ import me.hutcwp.log.MLog
 import me.hutcwp.util.SingleToastUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+
 
 @Route(path = "/read/main")
 class MainActivity : BaseActivity() {
@@ -47,8 +50,6 @@ class MainActivity : BaseActivity() {
     override fun initViews(savedInstanceState: Bundle?) {
         initNavigationViewHeader()
         initFragment(savedInstanceState)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
         initBottomNavigationView()
     }
 
@@ -110,9 +111,11 @@ class MainActivity : BaseActivity() {
         refreshHeaderImg(view)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun refreshHeaderImg(parentView: View) {
         val imageView = parentView.findViewById<ImageView>(R.id.iv_header)
-        val tvUpData = parentView.findViewById<TextView>(R.id.tv_update_date)
+        val tvDateYearMonth = parentView.findViewById<TextView>(R.id.tv_date_year_month)
+        val tvDateDay = parentView.findViewById<TextView>(R.id.tv_date_day)
         val tvAuthor = parentView.findViewById<TextView>(R.id.tv_author)
         val tvTitle = parentView.findViewById<TextView>(R.id.tv_title)
         imageView.let { iv ->
@@ -120,18 +123,30 @@ class MainActivity : BaseActivity() {
                 val bean = withContext(Dispatchers.IO) {
                     ApiFactory.getGirlsController().getNewGankRandom()
                 }
+                MLog.info(TAG, "bean=$bean")
                 if (bean.data.isEmpty()) {
                     MLog.error(TAG, "bean data is empty.")
                     return@launch
                 }
                 bean.data[0]?.let {
-                    tvUpData.text = it.publishedAt
-                    tvAuthor.text = it.author
+                    val dateList = doHandleDate(it.publishedAt)
+                    tvDateDay.text = dateList[2]
+                    tvDateYearMonth.text = dateList[0] + "-" + dateList[1]
+                    tvAuthor.text = it.desc
                     tvTitle.text = it.title
-                    Glide.with(iv.context).load(it.images[0]).into(iv)
+                    val options: RequestOptions = RequestOptions().placeholder(R.drawable.drawer_header_bg)
+                    Glide.with(iv.context)
+                            .load(it.images[0])
+                            .apply(options)
+                            .into(iv)
                 }
             }
         }
+    }
+
+    private fun doHandleDate(dateStr: String): List<String> {
+        val date = dateStr.split(" ")[0].split("-")
+        return date
     }
 
     fun initDrawer(toolbar: Toolbar?) {

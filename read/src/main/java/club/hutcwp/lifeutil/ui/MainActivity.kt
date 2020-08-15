@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -55,13 +54,15 @@ class MainActivity : BaseActivity() {
 
     private fun initBottomNavi() {
         val list = mutableListOf<BottomNavigationView.ItemBean>()
-        list.add(BottomNavigationView.ItemBean(R.mipmap.ic_launcher, "read"))
-        list.add(BottomNavigationView.ItemBean(R.mipmap.ic_launcher, "girl"))
-        list.add(BottomNavigationView.ItemBean(R.mipmap.ic_launcher, "test"))
+        list.add(BottomNavigationView.ItemBean(R.drawable.ic_read, "read"))
+        list.add(BottomNavigationView.ItemBean(R.drawable.ic_girl, "girl"))
+        list.add(BottomNavigationView.ItemBean(R.drawable.ic_test, "test"))
         bottomNavigationView.itemBeanList = list
+        bottomNavigationView?.setSelect(list[0].name)
         bottomNavigationView.onItemClickListener = object : BottomNavigationView.OnItemClickListener {
             override fun onClick(v: BottomNavigationView.ItemView) {
                 MLog.info(TAG, "v.itemBean.name=${v.itemBean.name}")
+                bottomNavigationView?.setSelect(v.itemBean.name)
                 when (v.itemBean.name) {
                     "read" -> {
                         switchContent(FRAGMENT_TAG_READING)

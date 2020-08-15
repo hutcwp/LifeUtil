@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -24,17 +25,14 @@ import club.hutcwp.lifeutil.util.DoubleClickExit
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import me.hutcwp.auto.IMainPage
+import kotlinx.android.synthetic.main.read_activity_main.*
 import me.hutcwp.log.MLog
+import me.hutcwp.util.SingleToastUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 @Route(path = "/read/main")
 class MainActivity : BaseActivity() {
-
-    init {
-        MLog.info("hutcwp","初始化")
-    }
 
     private var mDrawerLayout: DrawerLayout? = null
     private var currentFragmentTag: String? = null
@@ -52,6 +50,31 @@ class MainActivity : BaseActivity() {
         initFragment(savedInstanceState)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        initBottomNavi()
+    }
+
+    private fun initBottomNavi() {
+        val list = mutableListOf<BottomNavigationView.ItemBean>()
+        list.add(BottomNavigationView.ItemBean(R.mipmap.ic_launcher, "read"))
+        list.add(BottomNavigationView.ItemBean(R.mipmap.ic_launcher, "girl"))
+        list.add(BottomNavigationView.ItemBean(R.mipmap.ic_launcher, "test"))
+        bottomNavigationView.itemBeanList = list
+        bottomNavigationView.onItemClickListener = object : BottomNavigationView.OnItemClickListener {
+            override fun onClick(v: BottomNavigationView.ItemView) {
+                MLog.info(TAG, "v.itemBean.name=${v.itemBean.name}")
+                when (v.itemBean.name) {
+                    "read" -> {
+                        switchContent(FRAGMENT_TAG_READING)
+                    }
+                    "girl" -> {
+                        switchContent(FRAGMENT_TAG_PHOTO)
+                    }
+                    "test" -> {
+                        SingleToastUtil.showToast("test")
+                    }
+                }
+            }
+        }
     }
 
 
@@ -70,8 +93,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun loadData() {
-
-
     }
 
     private fun initNavigationViewHeader() {
@@ -81,12 +102,6 @@ class MainActivity : BaseActivity() {
         navigationView.setNavigationItemSelectedListener(NavigationItemSelected())
     }
 
-
-    /**
-     * 用来开关DrawerLayout
-     *
-     * @param toolbar
-     */
     fun initDrawer(toolbar: Toolbar?) {
         if (toolbar != null) {
             val mDrawerToggle = object : ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.refresh, R.string.refresh) {
@@ -133,8 +148,7 @@ class MainActivity : BaseActivity() {
      * @param name Fragment的名字
      */
     fun switchContent(name: String?) {
-
-        Log.d("error", "switchContent")
+        MLog.debug(TAG, "switchContent")
         if (currentFragmentTag != null && currentFragmentTag == name)
             return
 
@@ -195,19 +209,16 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
     fun showSnack(msg: String) {
         if (drawerLayout == null) {
             return
         }
-
         showSnack(drawerLayout!!, msg)
     }
 
     companion object {
-
+        const val TAG = "MainActivity"
         private val FRAGMENT_TAG_PHOTO = "photo"
         private val FRAGMENT_TAG_READING = "reading"
     }
-
 }

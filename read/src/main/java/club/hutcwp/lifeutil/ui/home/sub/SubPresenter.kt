@@ -2,6 +2,7 @@ package club.hutcwp.lifeutil.ui.home.sub
 
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.http.ApiFactory
+import club.hutcwp.lifeutil.ui.home.sub.news.INews
 import hut.cwp.mvp.MvpPresenter
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers

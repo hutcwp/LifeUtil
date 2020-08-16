@@ -202,5 +202,35 @@ public class NewGankRepsponse {
         public void setImages(List<String> images) {
             this.images = images;
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "_id='" + _id + '\'' +
+                    ", author='" + author + '\'' +
+                    ", category='" + category + '\'' +
+                    ", createdAt='" + createdAt + '\'' +
+                    ", desc='" + desc + '\'' +
+                    ", likeCounts=" + likeCounts +
+                    ", publishedAt='" + publishedAt + '\'' +
+                    ", stars=" + stars +
+                    ", title='" + title + '\'' +
+                    ", type='" + type + '\'' +
+                    ", url='" + url + '\'' +
+                    ", views=" + views +
+                    ", images=" + images +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "NewGankRepsponse{" +
+                "page=" + page +
+                ", page_count=" + page_count +
+                ", status=" + status +
+                ", total_counts=" + total_counts +
+                ", data=" + data +
+                '}';
     }
 }

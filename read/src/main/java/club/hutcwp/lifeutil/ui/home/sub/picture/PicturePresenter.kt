@@ -70,7 +70,7 @@ class PicturePresenter : MvpPresenter<IPicture>() {
         val response = ApiFactory.getGirlsController()?.getNewGankAsyc(curPage)
         val photoList = mutableListOf<Photo>()
         MLog.info(TAG, "get Data from conroutine $response")
-        response?.data?.forEach {
+        response.data?.forEach {
             val photo = Photo()
             photo.date = it.createdAt
             photo.name = it.title

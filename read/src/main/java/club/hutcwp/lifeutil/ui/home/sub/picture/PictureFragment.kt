@@ -28,11 +28,7 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
     private fun getDatasByType() {
         setRefreshing(true)
-        if (arguments!!.getInt("type") == 0) {
-            presenter.getGank()
-        } else {
-            presenter.getServer()
-        }
+        presenter.getGank()
     }
 
     override fun initViews() {

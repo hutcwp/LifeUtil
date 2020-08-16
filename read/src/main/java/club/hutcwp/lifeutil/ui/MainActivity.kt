@@ -17,9 +17,7 @@ import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.event.ThemeChangedEvent
 import club.hutcwp.lifeutil.http.ApiFactory
 import club.hutcwp.lifeutil.ui.base.BaseActivity
-import club.hutcwp.lifeutil.ui.home.top.GankFragment
-import club.hutcwp.lifeutil.ui.home.top.PhotoFragment
-import club.hutcwp.lifeutil.ui.home.top.ReadFragment
+import club.hutcwp.lifeutil.ui.home.top.*
 import club.hutcwp.lifeutil.ui.setting.AboutActivity
 import club.hutcwp.lifeutil.ui.setting.SettingActivity
 import club.hutcwp.lifeutil.util.DoubleClickExit
@@ -176,9 +174,9 @@ class MainActivity : BaseActivity() {
         var foundFragment = supportFragmentManager.findFragmentByTag(goalFragmentTag)
         if (foundFragment == null) {
             foundFragment = when (goalFragmentTag) {
-                FRAGMENT_TAG_PHOTO -> PhotoFragment()
-                FRAGMENT_TAG_READING -> GankFragment()
-                FRAGMENT_TAG_ARTICLE -> ReadFragment()
+                FRAGMENT_TAG_PHOTO -> WrapPhotoFragment()
+                FRAGMENT_TAG_READING -> WrapGankFragment()
+                FRAGMENT_TAG_ARTICLE -> WrapReadFragment()
                 else -> null
             }
         }

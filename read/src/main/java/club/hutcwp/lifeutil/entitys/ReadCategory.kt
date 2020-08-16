@@ -7,7 +7,12 @@ package club.hutcwp.lifeutil.entitys
  * GitHub : github.com/hutcwp
  */
 
-class ReadCategory {
+class ReadCategory (){
+
+    constructor(name: String?, url: String?):this() {
+        this.name = name
+        this.url = url
+    }
 
     var name: String? = null
     var url: String? = null

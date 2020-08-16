@@ -10,7 +10,7 @@ import hut.cwp.mvp.MvpView
  * YY: 909076244
  * 一级tab接口
  */
-interface IHome<T> : MvpView {
+interface ITop<T> : MvpView {
     fun setUpViewPager(viewPager: ViewPager, categories: List<T>)
     fun initTabLayout(categories: List<T>)
 }

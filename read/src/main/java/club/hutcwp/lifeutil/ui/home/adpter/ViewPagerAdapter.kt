@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.adpter
+package club.hutcwp.lifeutil.ui.home.adpter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

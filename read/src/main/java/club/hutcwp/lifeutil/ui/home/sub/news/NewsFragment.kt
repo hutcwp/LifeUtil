@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import club.hutcwp.lifeutil.R
-import club.hutcwp.lifeutil.adpter.NewsAdapter
+import club.hutcwp.lifeutil.ui.home.adpter.NewsAdapter
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import hut.cwp.mvp.BindPresenter
@@ -60,6 +60,9 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     override fun setNewData(data: List<News>) {
         Log.i(TAG, "setNewData = " + data.size)
         adapter?.setNewData(data.toMutableList())
+    }
+
+    override fun addNewData(data: List<News>) {
     }
 
     override fun addNewData(pos: Int, data: List<News>) {

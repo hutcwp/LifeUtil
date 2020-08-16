@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.adpter
+package club.hutcwp.lifeutil.ui.home.adpter
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import club.hutcwp.lifeutil.R
-import club.hutcwp.lifeutil.adpter.ViewPagerAdapter
+import club.hutcwp.lifeutil.ui.home.adpter.ViewPagerAdapter
 import club.hutcwp.lifeutil.entitys.ReadCategory
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment

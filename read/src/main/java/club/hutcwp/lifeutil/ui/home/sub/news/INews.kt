@@ -1,6 +1,7 @@
 package club.hutcwp.lifeutil.ui.home.sub.news
 
 import club.hutcwp.lifeutil.entitys.News
+import club.hutcwp.lifeutil.ui.home.sub.IBase
 import hut.cwp.mvp.MvpView
 
 /**
@@ -8,9 +9,5 @@ import hut.cwp.mvp.MvpView
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
-interface INews : MvpView {
-    val data: List<News>
-    fun setRefreshing(status: Boolean)
-    fun setNewData(data: List<News>)
-    fun addNewData(pos: Int, data: List<News>)
+interface INews : IBase<News> {
 }

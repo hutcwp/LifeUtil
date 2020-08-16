@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import club.hutcwp.lifeutil.R
-import club.hutcwp.lifeutil.adpter.PhotoAdapter
+import club.hutcwp.lifeutil.ui.home.adpter.PhotoAdapter
 import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
@@ -60,6 +60,9 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
         (activity as MainActivity).showSnack(msg)
     }
 
+    override val data: List<Photo>
+        get() = TODO("Not yet implemented")
+
     override fun setRefreshing(status: Boolean) {
         swipRefreshLayout.isRefreshing = status
     }
@@ -70,6 +73,10 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
     override fun addNewData(data: List<Photo>) {
         adapter?.addDatas(data)
+    }
+
+    override fun addNewData(pos: Int, data: List<Photo>) {
+        TODO("Not yet implemented")
     }
 
     /**

@@ -9,7 +9,9 @@ import hut.cwp.mvp.MvpView
  */
 interface IBase<T> : MvpView {
     fun showSnack(msg: String)
+    val data: List<T>
     fun setRefreshing(status: Boolean)
     fun setNewData(data: List<T>)
     fun addNewData(data: List<T>)
+    fun addNewData(pos: Int, data: List<T>)
 }

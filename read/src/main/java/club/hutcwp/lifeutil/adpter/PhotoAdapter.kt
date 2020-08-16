@@ -26,17 +26,10 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
 
     private var girlList: MutableList<Photo>? = ArrayList()
 
-
     init {
         this.girlList = girlList
-
     }
 
-    /**
-     * 添加数据
-     *
-     * @param datas 新增的数据
-     */
     fun addDatas(datas: List<Photo>?) {
         if (datas == null) {
             return
@@ -45,7 +38,6 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
         notifyItemChanged(itemCount)
     }
 
-    //添加data数据
     fun addData(position: Int, data: List<Photo>) {
         this.girlList!!.addAll(position, data)
         this.notifyItemRangeInserted(position, data.size)
@@ -61,7 +53,6 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
         notifyDataSetChanged()
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GirlViewHolder {
 
         val view = LayoutInflater.from(mContext).inflate(R.layout.read_item_photo, parent,
@@ -70,23 +61,17 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
         return GirlViewHolder(view)
     }
 
-
     override fun onBindViewHolder(holder: GirlViewHolder, position: Int) {
-
         val params = holder.iv.layoutParams
         params.width = 520
         params.height = Random().nextInt(100) + 600
         holder.iv.layoutParams = params
-
         holder.name.text = girlList!![position].name
         holder.date.text = girlList!![position].date
-
         holder.iv.setOnClickListener {
             val intent = PicDetailActivity.newIntent(mContext, girlList!![position].img!!, "")
             mContext.startActivity(intent)
         }
-
-
         //使用params,width 和params.heght 去加载图片
         Glide.with(mContext)
                 .load(girlList!![position]
@@ -95,15 +80,12 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
                 .into(holder.iv)//加载网络图片
     }
 
-
     override fun getItemCount(): Int {
         return if (girlList == null) 0 else girlList!!.size
     }
 
-
     //自定义ViewHolder，用于加载图片
     inner class GirlViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         var iv: ImageView
         var name: TextView
         var date: TextView
@@ -114,6 +96,4 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
             date = view.findViewById<View>(R.id.date) as TextView
         }
     }
-
-
 }

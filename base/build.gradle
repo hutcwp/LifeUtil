@@ -104,4 +104,6 @@ dependencies {
     compile 'com.yanzhenjie.permission:x:2.0.1'
 
     api 'com.just.agentweb:agentweb:4.1.2' // (必选)
+
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 }

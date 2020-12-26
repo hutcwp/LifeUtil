@@ -2,55 +2,80 @@ package club.hutcwp.lifeutil.ui.home.sub.picture
 
 import android.graphics.Rect
 import android.view.View
+import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import club.hutcwp.lifeutil.R
-import club.hutcwp.lifeutil.ui.home.adpter.PhotoAdapter
 import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
+import club.hutcwp.lifeutil.ui.home.adpter.NewPhotoAdapter
+import club.hutcwp.lifeutil.ui.home.other.PicDetailActivity
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import hut.cwp.mvp.BindPresenter
 import kotlinx.android.synthetic.main.read_fragment_gank_girl.*
+
 
 @BindPresenter(presenter = PicturePresenter::class)
 class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
-    private var adapter: PhotoAdapter? = null
+    var adapter: NewPhotoAdapter? = null
+    var hasMore = true
+
+
+    fun updateHasMore(hasMore: Boolean) {
+        this.hasMore = hasMore
+        if (!hasMore) {
+            val footerView = View.inflate(context, R.layout.read_view_item_empty, null)
+            adapter?.setFooterView(footerView)
+        } else {
+            adapter?.removeAllFooterView()
+        }
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_gank_girl
     }
 
     override fun lazyFetchData() {
-        getDatasByType()
-    }
-
-    private fun getDatasByType() {
-        setRefreshing(true)
-        presenter.getGank()
+        presenter.initData()
     }
 
     override fun initViews() {
-        adapter = PhotoAdapter(context!!, null)
+        adapter = NewPhotoAdapter()
+        // 先注册需要点击的子控件id（注意，请不要写在convert方法里）
+        adapter?.addChildClickViewIds(R.id.img)
+        // 设置子控件点击监听
+        adapter?.setOnItemChildClickListener { adapter, view, position ->
+            val item = adapter.data[position] as Photo
+            if (view.id == R.id.img) {
+                val intent = PicDetailActivity.newIntent(context!!, item.img!!, "")
+                startActivity(intent)
+            }
+        }
+//        grid_recycler.layoutManager = LinearLayoutManager(context)
         grid_recycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         grid_recycler.addItemDecoration(SpacesItemDecoration(14))
         grid_recycler.adapter = adapter
         setting()
     }
 
+
     private fun setting() {
         swipRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
         swipRefreshLayout.setOnRefreshListener {
-            presenter.resetPage(true)
-            getDatasByType()
+            presenter.initData()
         }
 
         grid_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!grid_recycler.canScrollVertically(1)) {
-                    presenter.resetPage(false)
-                    getDatasByType()
+                    if (hasMore) {
+                        presenter.loadMore()
+                    }
                 }
             }
         })
@@ -68,11 +93,11 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
     }
 
     override fun setNewData(data: List<Photo>) {
-        adapter?.setNewData(data.toMutableList())
+        adapter?.setNewInstance(data.toMutableList())
     }
 
     override fun addNewData(data: List<Photo>) {
-        adapter?.addDatas(data)
+        adapter?.addData(data)
     }
 
     override fun addNewData(pos: Int, data: List<Photo>) {

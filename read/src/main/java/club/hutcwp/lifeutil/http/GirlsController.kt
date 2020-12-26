@@ -18,7 +18,7 @@ import retrofit2.http.Path
 interface GirlsController {
 
     @GET("https://gank.io/api/v2/data/category/Girl/type/Girl/page/{no}/count/10")
-    suspend fun getNewGankAsyc(@Path("no") page: Int): NewGankRepsponse
+    suspend fun getNewGankAsyc(@Path("no") page: Int): NewGankResponse
 
     @GET("https://gank.io/api/v2/random/category/Girl/type/Girl/count/1")
     suspend fun getNewGankRandom(): RandomGirl

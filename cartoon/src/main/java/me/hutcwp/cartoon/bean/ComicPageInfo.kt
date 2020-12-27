@@ -8,9 +8,7 @@ package me.hutcwp.cartoon.bean
  *
  **/
 data class ComicPageInfo(
-
         val imagePath: String,
         val title: String,
         val comic: Comic
-
 )

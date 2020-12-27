@@ -13,9 +13,13 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.yy.mobile.widget.SlidableLayout
 import com.yy.mobile.widget.SlideDirection
 import kotlinx.android.synthetic.main.crt_activity_demo.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.hutcwp.cartoon.R
 import me.hutcwp.cartoon.bean.ComicPageInfo
-import me.hutcwp.cartoon.core.ComicCore
+import me.hutcwp.cartoon.core.ComicNetCore
 import me.hutcwp.cartoon.core.Params
 import me.hutcwp.cartoon.ui.fragment.FragmentAdapter
 import me.hutcwp.cartoon.ui.fragment.SimpleListQueue
@@ -24,12 +28,7 @@ import me.hutcwp.cartoon.util.SpUtils
 @Route(path = "/cartoon/demo")
 class ComicSlideActivity : FragmentActivity() {
 
-    //    private val dataList = SimpleListQueue<PageInfo>()
     private val dataList = SimpleListQueue<ComicPageInfo>()
-
-//    private val repo = PageInfoRepository()
-
-//    private var offset = 0 //当前移动量？
 
     private lateinit var slidableLayout: SlidableLayout
 
@@ -40,11 +39,27 @@ class ComicSlideActivity : FragmentActivity() {
         slidableLayout = findViewById(R.id.slidable_layout)
 
         initComicCore()
-        loadCurrentPage()
         initRefreshLayout()
-        val adapter = FragmentAdapter(dataList, supportFragmentManager)
-        slidableLayout.setAdapter(adapter)
+        initListener()
+    }
 
+
+    private fun initListener() {
+        btnPre?.setOnClickListener {
+            GlobalScope.launch(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
+                    requestDataAndAddToAdapter(true, 1000L)
+                }
+            }
+        }
+
+        btnNext?.setOnClickListener {
+            GlobalScope.launch(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
+                    requestDataAndAddToAdapter(false, 1000L)
+                }
+            }
+        }
     }
 
     private fun initComicCore() {
@@ -52,7 +67,17 @@ class ComicSlideActivity : FragmentActivity() {
         params.name = "妖神记"
         params.chapter = SpUtils.getInt(KEY_CHAPTER, 1, this@ComicSlideActivity)
         params.page = SpUtils.getInt(KEY_PAGE, 1, this@ComicSlideActivity)
-        ComicCore.init(params)
+
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                ComicNetCore.init(params)
+                loadCurrentPage()
+                runOnUiThread {
+                    val adapter = FragmentAdapter(dataList, supportFragmentManager)
+                    slidableLayout.setAdapter(adapter)
+                }
+            }
+        }
     }
 
     /**
@@ -66,10 +91,18 @@ class ComicSlideActivity : FragmentActivity() {
                 .setRefreshHeader(ClassicsHeader(this))
                 .setRefreshFooter(ClassicsFooter(this))
                 .setOnRefreshListener {
-                    requestDataAndAddToAdapter(true, 1000L)
+                    GlobalScope.launch(Dispatchers.Main) {
+                        withContext(Dispatchers.IO) {
+                            requestDataAndAddToAdapter(true, 1000L)
+                        }
+                    }
                 }
                 .setOnLoadMoreListener {
-                    requestDataAndAddToAdapter(false, 1000L)
+                    GlobalScope.launch(Dispatchers.Main) {
+                        withContext(Dispatchers.IO) {
+                            requestDataAndAddToAdapter(false, 1000L)
+                        }
+                    }
                 }
     }
 
@@ -93,7 +126,7 @@ class ComicSlideActivity : FragmentActivity() {
 
     fun loadCurrentPage() {
         val newDatas = mutableListOf<ComicPageInfo>()
-        ComicCore.mPages.forEach {
+        ComicNetCore.mPages.forEach {
             val title = "${it.chapter}节/${it.page}页"
             val img = it.url
             val comicPageInfo = ComicPageInfo(img, title, it)
@@ -104,53 +137,56 @@ class ComicSlideActivity : FragmentActivity() {
         dataList.setCurPage(page)
     }
 
-    private fun requestDataAndAddToAdapter(insertToFirst: Boolean = true, delayMills: Long = 0L) {
+    private suspend fun requestDataAndAddToAdapter(insertToFirst: Boolean = true, delayMills: Long = 0L) {
         if (insertToFirst) {
-            ComicCore.getPreChapter()
+            ComicNetCore.getPreChapter()
             Log.i(TAG, "load pre chapter.")
             val newDatas = mutableListOf<ComicPageInfo>()
-            ComicCore.mPages.forEach {
+            ComicNetCore.mPages.forEach {
                 val title = "${it.chapter}节/${it.page}页"
                 val img = it.url
                 val comicPageInfo = ComicPageInfo(img, title, it)
                 newDatas.add(comicPageInfo)
             }
-            dataList.addFirst(newDatas)
-            val isLastPage = dataList.size == 0
-            refresh_layout.finishRefresh(0, true, isLastPage)
-            if (!isLastPage) {
-                slidableLayout.slideTo(SlideDirection.Prev)
+            runOnUiThread {
+                dataList.addFirst(newDatas)
+                val isLastPage = dataList.size == 0
+                refresh_layout.finishRefresh(0, true, isLastPage)
+                if (!isLastPage) {
+                    slidableLayout.slideTo(SlideDirection.Prev)
+                }
             }
         } else {
-            ComicCore.getNextChapter()
+            ComicNetCore.getNextChapter()
             val newDatas = mutableListOf<ComicPageInfo>()
             Log.i(TAG, "load next chapter.")
-            ComicCore.mPages.forEach {
+            ComicNetCore.mPages.forEach {
                 val title = "${it.chapter}节/${it.page}页"
                 val img = it.url
                 val comicPageInfo = ComicPageInfo(img, title, it)
                 newDatas.add(comicPageInfo)
             }
             dataList.addLast(newDatas)
-            val isLastPage = dataList.size == 0
-            if (!isLastPage) {
-                slidableLayout.slideTo(SlideDirection.Next)
+            runOnUiThread {
+                val isLastPage = dataList.size == 0
+                if (!isLastPage) {
+                    slidableLayout.slideTo(SlideDirection.Next)
+                }
+                refresh_layout.finishLoadMore(0, true, isLastPage)
             }
-            refresh_layout.finishLoadMore(0, true, isLastPage)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        SpUtils.putInt(KEY_PAGE, ComicCore.mCurrentPage, this@ComicSlideActivity)
-        SpUtils.putInt(KEY_CHAPTER, ComicCore.mCurrentChapter, this@ComicSlideActivity)
+        val page = (dataList.current() as ComicPageInfo).comic.page
+        SpUtils.putInt(KEY_PAGE, page, this@ComicSlideActivity)
+        SpUtils.putInt(KEY_CHAPTER, ComicNetCore.mCurrentChapter, this@ComicSlideActivity)
     }
 
     companion object {
         const val TAG = "ComicSlideActivity"
         private const val KEY_PAGE = "page"
         private const val KEY_CHAPTER = "chapter"
-
     }
-
 }

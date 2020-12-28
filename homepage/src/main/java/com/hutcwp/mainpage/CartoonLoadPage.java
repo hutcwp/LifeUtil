@@ -11,11 +11,11 @@ import me.hutcwp.auto.IMainPage;
 public class CartoonLoadPage implements IMainPage {
     @Override
     public String getName() {
-        return "漫画爬虫";
+        return "漫画List";
     }
 
     @Override
     public String getPath() {
-        return "/cartoon/load";
+        return "/comic/list";
     }
 }

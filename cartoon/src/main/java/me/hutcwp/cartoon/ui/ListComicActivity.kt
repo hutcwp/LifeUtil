@@ -8,47 +8,102 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.drakeet.multitype.MultiTypeAdapter
 import me.hutcwp.cartoon.R
+import me.hutcwp.cartoon.core.ComicNetCore
+import me.hutcwp.cartoon.core.Params
 import me.hutcwp.cartoon.list.ComicItem
 import me.hutcwp.cartoon.list.ComicItemViewBinder
-import me.hutcwp.cartoon.core.ComicCore
-import me.hutcwp.cartoon.core.Params
 import me.hutcwp.cartoon.util.SpUtils
 
 @Route(path = "/comic/list")
 class ListComicActivity : AppCompatActivity() {
 
-    private lateinit var adapter: MultiTypeAdapter
-    private lateinit var items: MutableList<Any>
+    private var adapter: MultiTypeAdapter? = null
+    private var items: MutableList<Any> = mutableListOf()
 
-    private val url = "https://upload.jianshu.io/users/upload_avatars/1846413/f6cede61-2e06-4300-b397-f8c1abff55f2.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96"
+    var hasMore = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         immersive()
         setContentView(R.layout.crt_activity_list_comic)
-        initComicCore()
-        initData()
         initListView()
+        initComicCore()
+
     }
 
     private fun initListView() {
         val recyclerView = findViewById<RecyclerView>(R.id.list)
         adapter = MultiTypeAdapter()
         recyclerView.adapter = adapter
-        adapter.register(ComicItemViewBinder(this@ListComicActivity))
-        adapter.items = items
-        adapter.notifyDataSetChanged()
+        adapter?.register(ComicItemViewBinder(this@ListComicActivity))
+        adapter?.items = items
+        adapter?.notifyDataSetChanged()
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (!recyclerView.canScrollVertically(1)) {
+                    if (hasMore) {
+                        GlobalScope.launch(Dispatchers.Main) {
+                            withContext(Dispatchers.IO) {
+                                ComicNetCore.getNextChapter().forEach {
+                                    val title = "${it.chapter}节/${it.page}页"
+                                    val img = it.url
+                                    val comicItem = ComicItem(title, img)
+                                    items.add(comicItem)
+                                }
+
+                                adapter?.items = items
+
+                                withContext(Dispatchers.Main) {
+                                    adapter?.notifyDataSetChanged()
+                                }
+                            }
+                        }
+                    }
+                } else if (!recyclerView.canScrollVertically(-1)) {
+                    if (hasMore) {
+                        GlobalScope.launch(Dispatchers.Main) {
+                            withContext(Dispatchers.IO) {
+                                val data = mutableListOf<Any>()
+                                ComicNetCore.getPreChapter().forEach {
+                                    val title = "${it.chapter}节/${it.page}页"
+                                    val img = it.url
+                                    val comicItem = ComicItem(title, img)
+                                    data.add(comicItem)
+                                }
+
+                                data.addAll(items)
+                                items = data
+
+                                adapter?.items = items
+                                withContext(Dispatchers.Main) {
+                                    adapter?.notifyDataSetChanged()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 
-    private fun initData() {
+    private suspend fun initData() {
         items = ArrayList()
-        ComicCore.mPages.forEach {
+        ComicNetCore.getCurrentChapter()?.forEach {
             val title = "${it.chapter}节/${it.page}页"
             val img = it.url
             val comicItem = ComicItem(title, img)
             items.add(comicItem)
+        }
+        runOnUiThread {
+            adapter?.items = items
+            adapter?.notifyDataSetChanged()
         }
     }
 
@@ -57,7 +112,13 @@ class ListComicActivity : AppCompatActivity() {
         params.name = "妖神记"
         params.chapter = SpUtils.getInt(KEY_CHAPTER, 1, this@ListComicActivity)
         params.page = SpUtils.getInt(KEY_PAGE, 1, this@ListComicActivity)
-        ComicCore.init(params)
+
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                ComicNetCore.init(params)
+                initData()
+            }
+        }
     }
 
     /**
@@ -79,8 +140,8 @@ class ListComicActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        SpUtils.putInt(KEY_PAGE, ComicCore.mCurrentPage, this)
-        SpUtils.putInt(KEY_CHAPTER, ComicCore.mCurrentChapter, this)
+        SpUtils.putInt(KEY_PAGE, ComicNetCore.mCurrentPage, this)
+        SpUtils.putInt(KEY_CHAPTER, ComicNetCore.mCurrentChapter, this)
     }
 
     companion object {

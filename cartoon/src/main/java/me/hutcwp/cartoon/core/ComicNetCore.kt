@@ -16,6 +16,7 @@ import me.hutcwp.cartoon.net.ComicNetRepo
 object ComicNetCore {
 
     private const val TAG = "ComicNetCore"
+
     var mCurrentChapter = 1
     var mCurrentPage = 1
     var mCurrentName = "comic"
@@ -31,7 +32,6 @@ object ComicNetCore {
 
     private suspend fun initPagesByNet() {
         mPages.clear()
-
         ComicNetRepo.getComicsByChapter(mCurrentChapter)
                 .forEach {
                     Log.i(TAG, "add: id = $it")
@@ -39,7 +39,7 @@ object ComicNetCore {
                 }
     }
 
-    suspend fun getNextChapter() {
+    suspend fun getNextChapter(): MutableList<Comic> {
         mPages.clear()
         mCurrentChapter++
         Log.i(TAG, "before getComicsByChapter")
@@ -49,22 +49,26 @@ object ComicNetCore {
                     mPages.add(Mapper.ComicNetToBean(it))
                 }
         Log.i(TAG, "after getComicsByChapter")
+
+        return mPages
     }
 
-    //
-//    fun getCurrentChapter() {
-//        mPages.clear()
-//        ComicDBRepo.getComicsByChapter(
-//                BasicConfig.getApplicationContext(),
-//                mCurrentName,
-//                mCurrentChapter)
-//                .forEach {
-//                    Log.i(TAG, "add: id = $it")
-//                    mPages.add(Mapper.ComicDBToBean(it))
-//                }
-//    }
-//
-    suspend fun getPreChapter() {
+
+    suspend fun getCurrentChapter(): MutableList<Comic> {
+        if (mPages.isNullOrEmpty()) {
+            return mPages
+        }
+
+        mPages.clear()
+        ComicNetRepo.getComicsByChapter(mCurrentChapter)
+                .forEach {
+                    Log.i(TAG, "add: id = $it")
+                    mPages.add(Mapper.ComicNetToBean(it))
+                }
+        return mPages
+    }
+
+    suspend fun getPreChapter(): MutableList<Comic> {
         mPages.clear()
         mCurrentChapter--
         ComicNetRepo.getComicsByChapter(mCurrentChapter)
@@ -72,6 +76,8 @@ object ComicNetCore {
                     Log.i(TAG, "add: id = $it")
                     mPages.add(Mapper.ComicNetToBean(it))
                 }
+
+        return mPages
     }
 
     fun getNextPage(): Observable<String> {

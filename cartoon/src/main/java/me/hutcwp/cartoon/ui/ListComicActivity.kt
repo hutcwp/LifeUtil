@@ -8,6 +8,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smartrefresh.layout.header.ClassicsHeader
+import kotlinx.android.synthetic.main.crt_activity_demo.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,9 +35,9 @@ class ListComicActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         immersive()
         setContentView(R.layout.crt_activity_list_comic)
+        initRefreshLayout()
         initListView()
         initComicCore()
-
     }
 
     private fun initListView() {
@@ -49,48 +52,70 @@ class ListComicActivity : AppCompatActivity() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!recyclerView.canScrollVertically(1)) {
                     if (hasMore) {
-                        GlobalScope.launch(Dispatchers.Main) {
-                            withContext(Dispatchers.IO) {
-                                ComicNetCore.getNextChapter().forEach {
-                                    val title = "${it.chapter}节/${it.page}页"
-                                    val img = it.url
-                                    val comicItem = ComicItem(title, img)
-                                    items.add(comicItem)
-                                }
 
-                                adapter?.items = items
-
-                                withContext(Dispatchers.Main) {
-                                    adapter?.notifyDataSetChanged()
-                                }
-                            }
-                        }
                     }
                 } else if (!recyclerView.canScrollVertically(-1)) {
                     if (hasMore) {
-                        GlobalScope.launch(Dispatchers.Main) {
-                            withContext(Dispatchers.IO) {
-                                val data = mutableListOf<Any>()
-                                ComicNetCore.getPreChapter().forEach {
-                                    val title = "${it.chapter}节/${it.page}页"
-                                    val img = it.url
-                                    val comicItem = ComicItem(title, img)
-                                    data.add(comicItem)
-                                }
-
-                                data.addAll(items)
-                                items = data
-
-                                adapter?.items = items
-                                withContext(Dispatchers.Main) {
-                                    adapter?.notifyDataSetChanged()
-                                }
-                            }
-                        }
                     }
                 }
             }
         })
+    }
+
+    private fun initRefreshLayout() {
+        refresh_layout
+                .setEnableNestedScroll(true)
+                .setEnableRefresh(true)
+                .setEnableLoadMore(true)
+                .setRefreshHeader(ClassicsHeader(this))
+                .setRefreshFooter(ClassicsFooter(this))
+                .setOnRefreshListener {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        withContext(Dispatchers.IO) {
+                            loadPreData(true)
+                        }
+                        refresh_layout?.finishRefresh()
+                    }
+                }
+                .setOnLoadMoreListener {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        withContext(Dispatchers.IO) {
+                            loadPreData(false)
+                        }
+                        refresh_layout?.finishLoadMore()
+                    }
+                }
+    }
+
+    private suspend fun loadPreData(isPre: Boolean) {
+        var count = 0
+        if (isPre) {
+            ComicNetCore.getPreChapter().forEach {
+                val title = "${it.chapter}节/${it.page}页"
+                val img = it.url
+                val comicItem = ComicItem(title, img)
+                items.add(0, comicItem)
+                count++
+            }
+        } else {
+            ComicNetCore.getNextChapter().forEach {
+                val title = "${it.chapter}节/${it.page}页"
+                val img = it.url
+                val comicItem = ComicItem(title, img)
+                items.add(comicItem)
+                count++
+            }
+        }
+
+        runOnUiThread {
+            adapter?.items = items
+            if (isPre) {
+                adapter?.notifyItemRangeInserted(0, count)
+            } else {
+                adapter?.notifyItemRangeInserted(items.size - count, count)
+                adapter?.notifyItemRangeInserted(items.size - count, count)
+            }
+        }
     }
 
     private suspend fun initData() {

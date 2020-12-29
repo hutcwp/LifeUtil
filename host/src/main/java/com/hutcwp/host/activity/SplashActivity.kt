@@ -57,7 +57,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val COUNT_DOWN_SECOND = 3L
+        const val COUNT_DOWN_SECOND = 0L
         const val TAG = "MainActivity"
     }
 }

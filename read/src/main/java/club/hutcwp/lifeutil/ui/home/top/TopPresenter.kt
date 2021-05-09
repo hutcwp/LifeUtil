@@ -2,7 +2,7 @@ package club.hutcwp.lifeutil.ui.home.top
 
 import club.hutcwp.lifeutil.entitys.ReadCategory
 import club.hutcwp.lifeutil.http.ApiFactory
-import hut.cwp.mvp.MvpPresenter
+import hut.cwp.core.MvpPresenter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

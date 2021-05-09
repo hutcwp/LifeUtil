@@ -9,9 +9,17 @@
     <RelativeLayout
         android:id="@+id/content2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
+        android:layout_height="match_parent" />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:maxWidth="200dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:text="标题" />
 
 </FrameLayout>

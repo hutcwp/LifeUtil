@@ -1,4 +1,4 @@
-package club.hutcwp.lifeutil.ui
+package club.hutcwp.lifeutil.ui.view
 
 import android.content.Context
 import android.graphics.ColorMatrix

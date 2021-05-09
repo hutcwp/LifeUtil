@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">mvppresenter</string>
+
+    <string name="hello_blank_fragment">fragment</string>
+
+</resources>

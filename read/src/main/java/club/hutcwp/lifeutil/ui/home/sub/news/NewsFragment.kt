@@ -7,13 +7,13 @@ import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.ui.home.adpter.NewsAdapter
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.ui.base.BaseFragment
-import hut.cwp.mvp.BindPresenter
+import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.read_fragment_category.*
 
 /**
  * 阅读的子类
  */
-@BindPresenter(presenter = NewsPresenter::class)
+@DelegateBind(presenter = NewsPresenter::class)
 class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     override val data: List<News>
         get() = if (adapter != null && adapter!!.data != null) {

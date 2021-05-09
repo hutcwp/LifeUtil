@@ -20,6 +20,7 @@ import club.hutcwp.lifeutil.ui.base.BaseActivity
 import club.hutcwp.lifeutil.ui.home.top.*
 import club.hutcwp.lifeutil.ui.setting.AboutActivity
 import club.hutcwp.lifeutil.ui.setting.SettingActivity
+import club.hutcwp.lifeutil.ui.view.BottomNavigationView
 import club.hutcwp.lifeutil.util.DoubleClickExit
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
@@ -27,12 +28,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.read_activity_main.*
+import kotlinx.android.synthetic.main.read_drawer_header.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.hutcwp.log.MLog
-import me.hutcwp.util.SingleToastUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -42,9 +43,8 @@ class MainActivity : BaseActivity() {
 
     private var currentFragmentTag: String? = null
 
-    override val layoutId: Int
-        get() = R.layout.read_activity_main
 
+    override val layoutId = R.layout.read_activity_main
 
     override fun initViews(savedInstanceState: Bundle?) {
         initNavigationViewHeader()
@@ -54,23 +54,23 @@ class MainActivity : BaseActivity() {
 
     private fun initBottomNavigationView() {
         val list = mutableListOf<BottomNavigationView.ItemBean>()
-        list.add(BottomNavigationView.ItemBean(R.drawable.ic_read, "read"))
-        list.add(BottomNavigationView.ItemBean(R.drawable.ic_girl, "girl"))
-        list.add(BottomNavigationView.ItemBean(R.drawable.ic_test, "test"))
+        list.add(BottomNavigationView.ItemBean(R.drawable.ic_read, TAB_NAME_READ))
+        list.add(BottomNavigationView.ItemBean(R.drawable.ic_girl, TAB_NAME_GIRL))
+        list.add(BottomNavigationView.ItemBean(R.drawable.ic_test, TAB_NAME_TEST))
         bottomNavigationView.itemBeanList = list
         bottomNavigationView?.setSelect(list[0].name)
         bottomNavigationView.onItemClickListener = object : BottomNavigationView.OnItemClickListener {
             override fun onClick(v: BottomNavigationView.ItemView) {
-                MLog.info(TAG, "v.itemBean.name=${v.itemBean.name}")
+                MLog.info(TAG, "bottomNavigationView click: name=${v.itemBean.name}")
                 bottomNavigationView?.setSelect(v.itemBean.name)
                 when (v.itemBean.name) {
-                    "read" -> {
+                    TAB_NAME_READ -> {
                         switchContent(FRAGMENT_TAG_READING)
                     }
-                    "girl" -> {
+                    TAB_NAME_GIRL -> {
                         switchContent(FRAGMENT_TAG_PHOTO)
                     }
-                    "test" -> {
+                    TAB_NAME_TEST -> {
                         switchContent(FRAGMENT_TAG_ARTICLE)
                     }
                 }
@@ -97,14 +97,32 @@ class MainActivity : BaseActivity() {
 
     private fun initNavigationViewHeader() {
         navigation?.inflateHeaderView(R.layout.read_drawer_header)
-        navigation?.setNavigationItemSelectedListener(NavigationItemSelected())
+        navigation?.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_read -> {
+                    menuItem.isChecked = true
+                    switchContent(FRAGMENT_TAG_READING)
+                }
+                R.id.navigation_photo -> {
+                    menuItem.isChecked = true
+                    switchContent(FRAGMENT_TAG_PHOTO)
+                }
+                R.id.navigation_setting -> {
+                    menuItem.isChecked = true
+                    SettingActivity.createActivity(this@MainActivity)
+                }
+                R.id.navigation_item_about -> startActivity(Intent(this@MainActivity, AboutActivity::class.java))
+            }
+            drawerLayout?.closeDrawer(GravityCompat.START)
+            false
+        }
         addHeaderImg()
     }
 
     private fun addHeaderImg() {
         val view = navigation.getHeaderView(0)
-        val ivRefresh = view.findViewById<ImageView>(R.id.iv_refresh)
-        ivRefresh?.setOnClickListener {
+//        val ivRefresh = view.findViewById<ImageView>(R.id.iv_refresh)
+        iv_refresh?.setOnClickListener {
             refreshHeaderImg(view)
         }
         refreshHeaderImg(view)
@@ -211,8 +229,9 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (EventBus.getDefault().isRegistered(this))
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
+        }
     }
 
     override fun onBackPressed() {
@@ -233,33 +252,17 @@ class MainActivity : BaseActivity() {
         }
     }
 
+
     companion object {
-        const val TAG = "MainActivity"
+        private const val TAG = "MainActivity"
+
         private const val CURRENT_FRAGMENT_TAG = "currentIndex"
         private const val FRAGMENT_TAG_PHOTO = "photo"
         private const val FRAGMENT_TAG_READING = "reading"
         private const val FRAGMENT_TAG_ARTICLE = "article"
-    }
 
-    private inner class NavigationItemSelected : NavigationView.OnNavigationItemSelectedListener {
-        override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-            when (menuItem.itemId) {
-                R.id.navigation_read -> {
-                    menuItem.isChecked = true
-                    switchContent(FRAGMENT_TAG_READING)
-                }
-                R.id.navigation_photo -> {
-                    menuItem.isChecked = true
-                    switchContent(FRAGMENT_TAG_PHOTO)
-                }
-                R.id.navigation_setting -> {
-                    menuItem.isChecked = true
-                    SettingActivity.createActivity(this@MainActivity)
-                }
-                R.id.navigation_item_about -> startActivity(Intent(this@MainActivity, AboutActivity::class.java))
-            }
-            drawerLayout?.closeDrawer(GravityCompat.START)
-            return false
-        }
+        private const val TAB_NAME_READ = "read"
+        private const val TAB_NAME_GIRL = "girl"
+        private const val TAB_NAME_TEST = "test"
     }
 }

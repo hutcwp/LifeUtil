@@ -6,17 +6,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import club.hutcwp.lifeutil.R
-import club.hutcwp.lifeutil.ui.home.adpter.ViewPagerAdapter
 import club.hutcwp.lifeutil.entitys.ReadCategory
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
+import club.hutcwp.lifeutil.ui.home.adpter.ViewPagerAdapter
 import club.hutcwp.lifeutil.ui.home.sub.news.NewsFragment
 import com.google.android.material.tabs.TabLayout
-import hut.cwp.mvp.BindPresenter
+import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.top_fragment_read.*
 import me.hutcwp.log.MLog
 
-@BindPresenter(presenter = TopPresenter::class)
+@DelegateBind(presenter = TopPresenter::class)
 open class TopFragment : BaseFragment<TopPresenter, TopFragment>(), ITop<ReadCategory> {
 
     open val title = "title"

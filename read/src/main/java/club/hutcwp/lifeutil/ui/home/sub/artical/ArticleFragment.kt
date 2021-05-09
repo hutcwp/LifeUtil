@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.ui.base.BaseFragment
-import hut.cwp.mvp.BindPresenter
+import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.read_fragment_category.*
 
 /**
  * 阅读的子类
  */
-@BindPresenter(presenter = ArticlePresenter::class)
+@DelegateBind(presenter = ArticlePresenter::class)
 class ArticleFragment : BaseFragment<ArticlePresenter, IArticle>(), IArticle {
     override val data: List<News>
         get() = if (adapter != null && adapter!!.data != null) {

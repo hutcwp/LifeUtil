@@ -2,7 +2,7 @@ package club.hutcwp.lifeutil.ui.home.top;
 
 import org.jetbrains.annotations.NotNull;
 
-import hut.cwp.mvp.BindPresenter;
+import hut.cwp.annotations.mvp.DelegateBind;
 
 /**
  * @ProjectName: LifeUtil$
@@ -12,7 +12,7 @@ import hut.cwp.mvp.BindPresenter;
  * @Author: caiwenpeng
  * @CreateDate: 2020/8/16$ 5:54 PM$
  */
-@BindPresenter(presenter = WrapGankPresenter.class)
+@DelegateBind(presenter = WrapGankPresenter.class)
 public class WrapGankFragment extends TopFragment {
 
     @NotNull

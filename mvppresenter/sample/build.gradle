@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "hut.cwp.mvppresenter"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+def rxjava_version = '2.1.11'
+def rxandroid_version = '2.0.1'
+def rxlifecycle_version = '2.0.1'
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
+    implementation project(path: ':mvppresenter-annotations')
+    implementation project(path: ':mvppresenter')
+    annotationProcessor project(':mvppresenter-compiler')
+
+//    implementation project(path: ':liba')
+
+
+//    implementation 'hutcwp:mvppresenter-annotations:1.1'
+//    implementation 'hutcwp:mvppresenter:1.1'
+//    annotationProcessor 'hutcwp:mvppresenter-compiler:1.1'
+
+
+    implementation("io.reactivex.rxjava2:rxjava:${rxjava_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+    implementation("io.reactivex.rxjava2:rxandroid:${rxandroid_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
+    implementation("com.trello.rxlifecycle2:rxlifecycle:${rxlifecycle_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
+    implementation("com.trello.rxlifecycle2:rxlifecycle-android:${rxlifecycle_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.trello.rxlifecycle2', module: 'rxlifecycle'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxandroid'
+    }
+    implementation("com.trello.rxlifecycle2:rxlifecycle-components:${rxlifecycle_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxandroid'
+    }
+    implementation('com.jakewharton.rxrelay2:rxrelay:2.0.0') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
+
+
+}

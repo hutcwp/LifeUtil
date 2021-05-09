@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.ui.home.other.PicDetailActivity
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import me.hutcwp.util.RoutePath
 import java.util.*
 
 /**
@@ -69,8 +71,13 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
         holder.name.text = girlList!![position].name
         holder.date.text = girlList!![position].date
         holder.iv.setOnClickListener {
-            val intent = PicDetailActivity.newIntent(mContext, girlList!![position].img!!, "")
-            mContext.startActivity(intent)
+            val imageUrl = girlList!![position].img!!
+            val imageTitle = girlList!![position].name!!
+            ARouter.getInstance()
+                    .build(RoutePath.PIC_DETAIL_ACTIVITY)
+                    .withString(PicDetailActivity.EXTRA_IMAGE_URL, imageUrl)
+                    .withString(PicDetailActivity.EXTRA_IMAGE_TITLE, imageTitle)
+                    .navigation()
         }
         //使用params,width 和params.heght 去加载图片
         Glide.with(mContext)

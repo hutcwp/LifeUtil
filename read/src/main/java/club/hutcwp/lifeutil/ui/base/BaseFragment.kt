@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.snackbar.Snackbar
-import hut.cwp.mvp.MvpFragment
-import hut.cwp.mvp.MvpPresenter
-import hut.cwp.mvp.MvpView
+import hut.cwp.core.MvpFragment
+import hut.cwp.core.MvpPresenter
+import hut.cwp.core.MvpView
+
 
 /**
  * Created by hutcwp on 2017/4/15.

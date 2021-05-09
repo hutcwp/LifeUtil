@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import androidx.fragment.app.Fragment;
 import club.hutcwp.lifeutil.ui.home.sub.artical.ArticleFragment;
-import hut.cwp.mvp.BindPresenter;
+import hut.cwp.annotations.mvp.DelegateBind;
 
 /**
  * @ProjectName: LifeUtil$
@@ -14,7 +14,7 @@ import hut.cwp.mvp.BindPresenter;
  * @Author: caiwenpeng
  * @CreateDate: 2020/8/16$ 6:00 PM$
  */
-@BindPresenter(presenter = WrapReadPresenter.class)
+@DelegateBind(presenter = WrapReadPresenter.class)
 public class WrapReadFragment extends TopFragment {
     @NotNull
     @Override

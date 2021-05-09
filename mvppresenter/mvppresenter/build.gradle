@@ -1,0 +1,142 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+//apply from: 'https://raw.githubusercontent.com/adwiv/android-fat-aar/master/fat-aar.gradle'
+//apply from: 'fat-aar.gradle'
+apply from: rootProject.file ('jcenter-push-android.gradle')
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+    }
+}
+
+def rxjava_version = '2.1.11'
+def rxandroid_version = '2.0.1'
+def rxlifecycle_version = '2.0.1'
+
+dependencies {
+
+//    implementation 'hutcwp:mvppresenter-annotations:1.1'
+    implementation project(':mvppresenter:mvppresenter-annotations')
+
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
+    implementation("io.reactivex.rxjava2:rxjava:${rxjava_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+    implementation("io.reactivex.rxjava2:rxandroid:${rxandroid_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
+    implementation("com.trello.rxlifecycle2:rxlifecycle:${rxlifecycle_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
+    implementation("com.trello.rxlifecycle2:rxlifecycle-android:${rxlifecycle_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.trello.rxlifecycle2', module: 'rxlifecycle'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxandroid'
+    }
+    implementation("com.trello.rxlifecycle2:rxlifecycle-components:${rxlifecycle_version}") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxandroid'
+    }
+    implementation('com.jakewharton.rxrelay2:rxrelay:2.0.0') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
+//    implementation 'org.jetbrains:annotations-java5:15.0'
+}
+
+
+def siteUrl = 'https://github.com/hutcwp/mvppresenter.git'
+def gitUrl = 'hhttps://github.com/hutcwp/mvppresenter.git'
+version = "${mvppresenter_version}"
+group = "hutcwp"
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'use java annotation to create presenter'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'you id'
+                        name 'hutcwp'
+                        email 'hutcwp@foxmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+Properties properties = new Properties()
+
+
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        userOrg ="jfrogcwp"
+        repo = "maven"
+        name = "MvpPresenter"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+
+javadoc { //jav doc采用utf-8编码否则会报“GBK的不可映射字符”错误
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+    }
+}

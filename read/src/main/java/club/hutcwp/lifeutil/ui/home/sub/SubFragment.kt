@@ -2,19 +2,18 @@ package club.hutcwp.lifeutil.ui.home.sub
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import club.hutcwp.lifeutil.ui.home.adpter.NewsAdapter
 import club.hutcwp.lifeutil.ui.home.sub.news.INews
-import hut.cwp.mvp.BindPresenter
+import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.read_fragment_category.*
 import me.hutcwp.log.MLog
 
 /**
  * 阅读的子类
  */
-@BindPresenter(presenter = SubPresenter::class)
+@DelegateBind(presenter = SubPresenter::class)
 open abstract class SubFragment : BaseFragment<SubPresenter, INews>(), INews {
     override val data: List<News>
         get() = if (adapter != null && adapter!!.data != null) {

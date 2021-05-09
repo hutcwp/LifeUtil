@@ -1,8 +1,9 @@
 package club.hutcwp.lifeutil.ui.home.sub.artical
 
+import androidx.fragment.app.Fragment
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.http.ApiFactory
-import hut.cwp.mvp.MvpPresenter
+import hut.cwp.core.MvpPresenter
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -23,7 +24,7 @@ class ArticlePresenter : MvpPresenter<IArticle>() {
     private val TAG = "NewsPresenter"
 
     fun getDataFromServer(infalteNextPage: Boolean) {
-        val type = arguments.getString("url") ?: ""
+        val type = arguments?.getString("url") ?: ""
         view?.setRefreshing(true)
         MLog.info(TAG, "getDataFromServerV2: type=$type")
         if (infalteNextPage) {

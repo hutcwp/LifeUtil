@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import androidx.fragment.app.Fragment;
 import club.hutcwp.lifeutil.ui.home.sub.picture.PictureFragment;
-import hut.cwp.mvp.BindPresenter;
+import hut.cwp.annotations.mvp.DelegateBind;
 
 /**
  * @ProjectName: LifeUtil$
@@ -14,7 +14,7 @@ import hut.cwp.mvp.BindPresenter;
  * @Author: caiwenpeng
  * @CreateDate: 2020/8/16$ 7:13 PM$
  */
-@BindPresenter(presenter = WrapPhotoPresenter.class)
+@DelegateBind(presenter = WrapPhotoPresenter.class)
 public class WrapPhotoFragment extends TopFragment {
 
     @NotNull

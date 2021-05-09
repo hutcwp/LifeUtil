@@ -1,1 +1,5 @@
-include ':read', ':cartoon', ':base', ':host', ':homepage', ':weather', ':game', ':blog'
+include  ':cartoon', ':base', ':host', ':homepage', ':weather', ':game', ':blog'
+include ':read'
+include ':mvppresenter:mvppresenter'
+include ':mvppresenter:mvppresenter-annotations'
+include ':mvppresenter:mvppresenter-compiler'

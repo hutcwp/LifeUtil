@@ -1,34 +1,49 @@
 package club.hutcwp.lifeutil.ui.home.other
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
 import club.hutcwp.lifeutil.R
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import kotlinx.android.synthetic.main.read_activity_girl_picture.*
+import me.hutcwp.util.RoutePath
 
+
+@Route(path = RoutePath.PIC_DETAIL_ACTIVITY, name = "图片详情页面")
 class PicDetailActivity : AppCompatActivity() {
+
+    @JvmField
+    @Autowired(name = EXTRA_IMAGE_URL)
+    var imageUrl: String = ""
+
+    @JvmField
+    @Autowired(name = EXTRA_IMAGE_TITLE)
+    var imageTitle: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.read_activity_girl_picture)
-        val manager = supportFragmentManager
-        val transaction = manager.beginTransaction()
-        val fragment = PicDetailFragment()
+        ARouter.getInstance().inject(this)
+        initFragment()
+        initData()
+    }
+
+    private fun initData() {
+        tv_title?.text = imageTitle
+    }
+
+    private fun initFragment() {
+        val fragment = PicDetailFragment.newInstance(imageUrl)
+        val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.content2, fragment)
         transaction.commit()
     }
 
-    companion object {
-        var EXTRA_IMAGE_URL = "image_url"
-        val EXTRA_IMAGE_TITLE = "image_title"
 
-        fun newIntent(context: Context, url: String, desc: String): Intent {
-            val intent = Intent(context, PicDetailActivity::class.java)
-            EXTRA_IMAGE_URL = url
-            intent.putExtra(EXTRA_IMAGE_URL, url)
-            intent.putExtra(EXTRA_IMAGE_TITLE, desc)
-            return intent
-        }
+    companion object {
+        const val EXTRA_IMAGE_URL = "image_url"
+        const val EXTRA_IMAGE_TITLE = "image_title"
     }
 }

@@ -2,9 +2,7 @@ package club.hutcwp.lifeutil.ui.home.sub.picture
 
 import android.graphics.Rect
 import android.view.View
-import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import club.hutcwp.lifeutil.R
@@ -13,13 +11,13 @@ import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import club.hutcwp.lifeutil.ui.home.adpter.NewPhotoAdapter
 import club.hutcwp.lifeutil.ui.home.other.PicDetailActivity
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemChildClickListener
-import hut.cwp.mvp.BindPresenter
+import com.alibaba.android.arouter.launcher.ARouter
+import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.read_fragment_gank_girl.*
+import me.hutcwp.util.RoutePath
 
 
-@BindPresenter(presenter = PicturePresenter::class)
+@DelegateBind(presenter = PicturePresenter::class)
 class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
     var adapter: NewPhotoAdapter? = null
@@ -52,11 +50,17 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
         adapter?.setOnItemChildClickListener { adapter, view, position ->
             val item = adapter.data[position] as Photo
             if (view.id == R.id.img) {
-                val intent = PicDetailActivity.newIntent(context!!, item.img!!, "")
-                startActivity(intent)
+
+                val imageUrl = item.img!!
+                val imageTitle = item.name!!
+                ARouter.getInstance()
+                        .build(RoutePath.PIC_DETAIL_ACTIVITY)
+                        .withString(PicDetailActivity.EXTRA_IMAGE_URL, imageUrl)
+                        .withString(PicDetailActivity.EXTRA_IMAGE_TITLE, imageTitle)
+                        .navigation()
             }
         }
-//        grid_recycler.layoutManager = LinearLayoutManager(context)
+
         grid_recycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         grid_recycler.addItemDecoration(SpacesItemDecoration(14))
         grid_recycler.adapter = adapter
@@ -86,7 +90,7 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
     }
 
     override val data: List<Photo>
-        get() = TODO("Not yet implemented")
+        get() = adapter!!.data
 
     override fun setRefreshing(status: Boolean) {
         swipRefreshLayout.isRefreshing = status
@@ -101,7 +105,7 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
     }
 
     override fun addNewData(pos: Int, data: List<Photo>) {
-        TODO("Not yet implemented")
+
     }
 
     /**

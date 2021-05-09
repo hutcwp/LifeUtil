@@ -1,24 +1,51 @@
 package club.hutcwp.lifeutil.ui.home.other
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-
-import com.bumptech.glide.Glide
-
+import androidx.fragment.app.Fragment
 import club.hutcwp.lifeutil.R
+import com.bumptech.glide.Glide
+import hut.cwp.util.MLog
+import kotlinx.android.synthetic.main.read_fragment_girl_pic.*
 
 class PicDetailFragment : Fragment() {
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.read_fragment_girl_pic, container, false)
-        Log.d("url", PicDetailActivity.EXTRA_IMAGE_URL)
-        Glide.with(activity!!).load(PicDetailActivity.EXTRA_IMAGE_URL).into(view.findViewById<View>(R.id.image) as ImageView)
-        return view
+        return inflater.inflate(R.layout.read_fragment_girl_pic, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initData()
+    }
+
+    private fun initData() {
+        val imageUrl = arguments?.getString(PARAM_IMAGE_URL) ?: ""
+        MLog.debug(TAG, "image url = $imageUrl")
+
+        iv_image?.let {
+            Glide.with(it)
+                    .load(imageUrl)
+                    .into(it)
+        }
+    }
+
+
+    companion object {
+        private const val TAG = "PicDetailFragment"
+        private const val PARAM_IMAGE_URL = "PARAM_IMAGE_URL"
+
+        fun newInstance(imageUrl: String): PicDetailFragment {
+            val args = Bundle().apply {
+                this.putString(PARAM_IMAGE_URL, imageUrl)
+            }
+
+            val fragment = PicDetailFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

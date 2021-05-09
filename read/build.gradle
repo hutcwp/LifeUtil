@@ -78,8 +78,16 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.1.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
 
-    implementation 'hutcwp:mvppresenter:1.0.9'
-    annotationProcessor 'hutcwp:mvppresenter-compiler:1.0.8'
+//    implementation 'hutcwp:mvppresenter:1.0.9'
+//    annotationProcessor 'hutcwp:mvppresenter-compiler:1.0.8'
+
+    implementation (project(path: ':mvppresenter:mvppresenter-annotations')){
+        exclude group: 'org.jetbrains', module: 'annotations-java5'
+    }
+    implementation project(path: ':mvppresenter:mvppresenter')
+    kapt project(':mvppresenter:mvppresenter-compiler')
+    annotationProcessor project(':mvppresenter:mvppresenter-compiler')
+
 //    compile project(path: ':cartoon')
     compile project(path: ':base')
 

@@ -18,7 +18,7 @@
             android:layout_above="@+id/bottomNavigationView"
             android:orientation="vertical"/>
 
-        <club.hutcwp.lifeutil.ui.BottomNavigationView
+        <club.hutcwp.lifeutil.ui.view.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="60dp"

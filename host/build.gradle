@@ -68,6 +68,7 @@ dependencies {
     compile project(path: ':base')
     compile project(path: ':homepage')
     compile project(path: ':read')
+    compile project(path: ':tiktok')
     compile project(path: ':weather')
     compile project(path: ':game')
     compile project(path: ':blog')

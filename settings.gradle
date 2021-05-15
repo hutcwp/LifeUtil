@@ -1,5 +1,7 @@
+include ':tiktok'
 include  ':cartoon', ':base', ':host', ':homepage', ':weather', ':game', ':blog'
 include ':read'
+include ':tiktok'
 include ':mvppresenter:mvppresenter'
 include ':mvppresenter:mvppresenter-annotations'
 include ':mvppresenter:mvppresenter-compiler'

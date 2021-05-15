@@ -9,4 +9,6 @@ object RoutePath {
 
     const val PIC_DETAIL_ACTIVITY =  "/read/picDetail"
 
+    const val TIKTOK_MAIN =  "/tiktok/main"
+
 }

@@ -8,3 +8,12 @@
 /captures
 .externalNativeBuild
 /.idea
+
+
+*.iml
+/.idea/caches
+/.idea/modules.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.cxx
+

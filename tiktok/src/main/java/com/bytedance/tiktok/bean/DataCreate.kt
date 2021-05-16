@@ -17,6 +17,7 @@ class DataCreate {
         videoBeanOne.coverRes = R.mipmap.cover1
         videoBeanOne.content = "#街坊 #颜值打分 给自己颜值打100分的女生集合"
         videoBeanOne.videoRes = R.raw.video1
+        videoBeanOne.videoURL = "http://www.w3school.com.cn/example/html5/mov_bbb.mp4"
         videoBeanOne.distance = 7.9f
         videoBeanOne.isFocused = false
         videoBeanOne.isLiked = true

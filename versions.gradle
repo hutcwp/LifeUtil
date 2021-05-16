@@ -1,0 +1,238 @@
+ext.deps = [:]
+
+def versions = [:]
+versions.android_gradle_plugin = "3.5.4"
+
+//androix相关库
+//versions.appcompat = "1.2.0"
+//versions.extensions = "2.2.0"
+
+//界面组件库
+versions.MultiImageSelector = "1.2"
+versions.stetho = "1.3.1"
+versions.brvah = "3.0.4"
+versions.immersionbar = "3.0.0"
+versions.multitype = "4.2.0"
+versions.circle_iv = "3.1.0"
+
+
+//okHttp
+versions.logging_interceptor = "3.9.1"
+versions.adapter_rxjava2 = "2.4.0"
+versions.converter_gson = "2.4.0"
+versions.rxpermissions = "0.11"
+versions.okhttp3 = "3.12.12"
+
+
+//rxJava
+versions.rxlifecycle_components = "3.1.0"
+versions.rxlifecycle_android = "3.1.0"
+versions.rxlifecycle_kotlin = "3.1.0"
+versions.rxlifecycle = "3.1.0"
+versions.rxandroid = "2.0.2"
+versions.rxbinding = "2.1.1"
+versions.rxjava2 = "2.2.0"
+
+
+//第三方库依赖
+versions.arouter_compiler = "1.5.1"
+versions.arouter_api = "1.5.1"
+versions.glide_compiler = "4.11.0"
+versions.glide = "4.11.0"
+versions.umeng_common = "9.3.3"
+versions.umeng_asms = "1.1.4"
+versions.bugly_native = "3.7.7"
+versions.bugly = "3.3.3"
+versions.eventbus = "3.2.0"
+versions.mmkv = "1.2.7"
+versions.im = "5.1.138"
+versions.gson = "2.8.6"
+versions.liteavSdk = "8.4.9947"
+
+versions.lifecycle = "2.2.0"
+//versions.arch = "2.1.0"
+versions.glide_webp_decoder = "2.0.${versions.glide}"
+
+//测试框架
+versions.testespresso = "3.3.0"
+versions.testrunner = "1.0.2"
+versions.junit = "4.13.1"
+
+versions.leakcanary = "2.6"
+
+versions.aria = "3.8.15"
+
+versions.klog = "1.6.0"
+
+versions.permission = "2.0.1"
+
+versions.agentweb = "4.1.2"
+
+versions.smartrefresh = "1.1.0-alpha-23"
+
+def deps = [:]
+//gradle插件依赖
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+
+//kotlin版本
+deps.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+deps.kotlin_jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+//androidx依赖
+def support = [:]
+support.constraint_layout = 'androidx.constraintlayout:constraintlayout:2.0.4'
+support.recyclerview = 'androidx.recyclerview:recyclerview:1.1.0'
+support.percent = 'androidx.percentlayout:percentlayout:1.0.0'
+support.design = 'com.google.android.material:material:1.0.0'
+support.annotations = "androidx.annotation:annotation:1.0.0"
+support.app_compat = 'androidx.appcompat:appcompat:1.2.0'
+support.cardview = 'androidx.cardview:cardview:1.0.0'
+support.multidex = 'androidx.multidex:multidex:2.0.1'
+support.viewpage2 = "androidx.viewpager2:viewpager2:1.0.0"
+support.room = "androidx.room:room-runtime:2.2.6"
+support.room_compiler = "androidx.room:room-compiler:2.2.6"
+deps.support = support
+
+
+// ViewModel
+deps.lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+// LiveData
+deps.lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+// Lifecycles only (without ViewModel or LiveData)
+deps.lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
+// Saved state module for ViewModel
+deps.lifecycle_viewmodel_savedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
+// Annotation processor
+deps.lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+// alternately - if using Java8, use the following instead of lifecycle-compiler
+//implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+// optional - helpers for implementing LifecycleOwner in a Service
+deps.lifecycle_service = "androidx.lifecycle:lifecycle-service:$versions.lifecycle"
+// optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+deps.lifecycle_process = "androidx.lifecycle:lifecycle-process:$versions.lifecycle"
+// optional - ReactiveStreams support for LiveData
+deps.lifecycle_reactivestreams_ktx = "androidx.lifecycle:lifecycle-reactivestreams-ktx:$versions.lifecycle"
+// optional - Test helpers for LiveData
+//testImplementation "androidx.arch.core:core-testing:$arch_version"
+
+
+deps.activity_ktx = "androidx.activity:activity-ktx:1.1.0"
+deps.fragment_ktx = "androidx.fragment:fragment-ktx:1.2.5"
+
+
+//界面组件库
+deps.immersionbar_components = "com.gyf.immersionbar:immersionbar-components:$versions.immersionbar"
+deps.immersionbar_ktx = "com.gyf.immersionbar:immersionbar-ktx:$versions.immersionbar"
+deps.immersionbar_base = "com.gyf.immersionbar:immersionbar:$versions.immersionbar"
+deps.brvah = "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.brvah"
+deps.multitype = "com.drakeet.multitype:multitype:$versions.multitype"
+deps.circle_iv = "de.hdodenhof:circleimageview:$versions.circle_iv"
+deps.stetho = "com.facebook.stetho:stetho:$versions.stetho"
+deps.smartrefresh = "com.scwang.smartrefresh:SmartRefreshLayout:$versions.smartrefresh"
+
+
+//okHttp
+deps.logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.logging_interceptor"
+deps.adapter_rxjava2 = "com.squareup.retrofit2:adapter-rxjava2:$versions.adapter_rxjava2"
+deps.converter_gson = "com.squareup.retrofit2:converter-gson:$versions.converter_gson"
+deps.okhttp3 = "com.squareup.okhttp3:okhttp:$versions.okhttp3"
+
+
+//rxJava
+deps.rxpermissions = "com.github.tbruyelle:rxpermissions:$versions.rxpermissions"
+deps.rxbindding = "com.jakewharton.rxbinding2:rxbinding:$versions.rxbinding"
+deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
+//rxlife
+deps.rxlifecycle_components = "com.trello.rxlifecycle3:rxlifecycle-components:$versions.rxlifecycle_components"
+deps.rxlifecycle_android = "com.trello.rxlifecycle3:rxlifecycle-android:$versions.rxlifecycle_android"
+deps.rxlifecycle_kotlin = "com.trello.rxlifecycle3:rxlifecycle-kotlin:$versions.rxlifecycle_kotlin"
+deps.rxlifecycle = "com.trello.rxlifecycle3:rxlifecycle:$versions.rxlifecycle"
+
+
+//第三方库依赖
+deps.MultiImageSelector = "com.github.lovetuzitong:MultiImageSelector:$versions.MultiImageSelector"
+deps.glide_compiler = "com.github.bumptech.glide:compiler:$versions.glide_compiler"
+deps.glide = "com.github.bumptech.glide:glide:$versions.glide"
+deps.glide_webp_decoder = "com.github.zjupure:webpdecoder:$versions.glide_webp_decoder"
+deps.arouter_compiler = "com.alibaba:arouter-compiler:$versions.arouter_compiler"
+deps.arouter_api = "com.alibaba:arouter-api:$versions.arouter_api"
+deps.eventbus = "org.greenrobot:eventbus:$versions.eventbus"
+deps.gson = "com.google.code.gson:gson:$versions.gson"
+deps.mmkv = "com.tencent:mmkv-static:$versions.mmkv"
+//友盟统计
+deps.umeng_common = "com.umeng.umsdk:common:$versions.umeng_common"
+deps.umeng_asms = "com.umeng.umsdk:asms:$versions.umeng_asms"
+//imsdk
+deps.im = "com.tencent.imsdk:imsdk-smart:$versions.im"
+//bugly
+deps.bugly_native = "com.tencent.bugly:nativecrashreport:$versions.bugly_native"
+deps.bugly = "com.tencent.bugly:crashreport:$versions.bugly"
+//短视频播放器
+deps.liteavSdk = "com.tencent.liteav:LiteAVSDK_Professional:$versions.liteavSdk"
+
+
+//测试相关
+deps.junit = "junit:junit:$versions.junit"
+deps.testrunner = 'androidx.test.ext:junit:1.1.1'
+deps.testespresso = "androidx.test.espresso:espresso-core:$versions.testespresso"
+
+deps.leakcanary = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
+
+deps.aria_core = "com.arialyy.aria:core:$versions.aria"
+deps.aria_compiler = "com.arialyy.aria:compiler:$versions.aria"
+
+//klog
+deps.klog = "com.github.zhaokaiqiang.klog:library:$versions.klog"
+
+deps.permission = "com.yanzhenjie.permission:x:$versions.permission"
+
+deps.agentweb = "com.just.agentweb:agentweb:$versions.agentweb"
+
+
+
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 17
+build_versions.target_sdk = 28
+build_versions.build_tools_version = '28.0.3'
+ext.build_versions = build_versions
+
+def app_version = [:]
+app_version.version_code = 100
+app_version.version_name = "1.0.0"
+ext.app_version = app_version
+
+
+ext.proguard = true
+ext.ndkAbi = 'armeabi-v7a'
+ext.noffmpeg = false
+ext.noijkplay = false
+ext.aekit_version = '1.0.19-cloud'
+ext.liteavSdk = "com.tencent.liteav:LiteAVSDK_Professional:7.9.9568"
+
+
+def addRepos(RepositoryHandler handler) {
+    handler.mavenLocal()
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/releases/' }
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    handler.maven { url 'https://dl.bintray.com/umsdk/release' }
+    //Add the JitPack repository
+    handler.maven { url "https://jitpack.io" }
+    handler.maven { url "http://developer.huawei.com/repo/" }
+    handler.mavenCentral()
+    handler.jcenter()
+
+    handler.flatDir {
+        dirs 'src/main/jniLibs'
+        dirs project('tc:cloudapp').file('libs')
+        dirs project('lib_common').file('libs')
+    }
+
+    handler.google()
+}
+
+ext.addRepos = this.&addRepos

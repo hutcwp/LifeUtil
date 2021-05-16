@@ -11,6 +11,9 @@ class VideoBean {
     /** 视频播放资源  */
     var videoRes = 0
 
+    /** 视频网络地址 */
+    var videoURL = ""
+
     /** 封面图片资源  */
     var coverRes = 0
 

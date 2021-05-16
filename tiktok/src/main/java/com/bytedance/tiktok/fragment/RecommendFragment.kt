@@ -169,8 +169,16 @@ class RecommendFragment : BaseFragment() {
      * 自动播放视频
      */
     private fun autoPlayVideo(position: Int, ivCover: ImageView) {
-        val bgVideoPath = "android.resource://" + activity!!.packageName + "/" + DataCreate.datas[position].videoRes
-        videoView!!.setVideoPath(bgVideoPath)
+        val videoUrl = DataCreate.datas[position].videoURL
+        val videoLocalPath = "android.resource://" + activity!!.packageName + "/" + DataCreate.datas[position].videoRes
+
+        val playPath = if (videoUrl.isNotEmpty()) {
+            videoUrl
+        } else {
+            videoLocalPath
+        }
+
+        videoView!!.setVideoPath(playPath)
         videoView!!.start()
         videoView!!.setOnPreparedListener { mp: MediaPlayer ->
             mp.isLooping = true

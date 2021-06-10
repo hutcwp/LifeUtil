@@ -115,4 +115,10 @@ dependencies {
     api deps.circle_iv
     api deps.brvah
 
+
+    api deps.junit
+    api deps.testrunner
+    api deps.testespresso
+
+    api deps.androidx_ktx
 }

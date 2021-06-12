@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="club.hutcwp.lifeutil">
+    package="com.hutcwp.read">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,9 +12,9 @@
         android:theme="@style/KaleTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="club.hutcwp.lifeutil.ui.MainActivity" />
-        <activity android:name=".ui.setting.SettingActivity" />
-        <activity android:name=".ui.setting.AboutActivity" />
+        <activity android:name="com.hutcwp.read.ui.MainActivity" />
+        <activity android:name="com.hutcwp.read.ui.setting.SettingActivity" />
+        <activity android:name="com.hutcwp.read.ui.setting.AboutActivity" />
 
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
@@ -23,7 +23,7 @@
             android:theme="@style/FinestWebViewTheme.Light" />
 
         <activity
-            android:name=".ui.home.other.PicDetailActivity"
+            android:name="com.hutcwp.read.ui.home.other.PicDetailActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
     </application>

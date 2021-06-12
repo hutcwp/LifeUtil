@@ -1,4 +1,4 @@
-package me.hutcwp.cartoon.net;
+package com.hutcwp.read.http;
 
 import java.io.Serializable;
 import java.util.List;

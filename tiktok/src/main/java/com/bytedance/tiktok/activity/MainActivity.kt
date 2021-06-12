@@ -12,7 +12,7 @@ import com.bytedance.tiktok.fragment.PersonalHomeFragment
 import com.bytedance.tiktok.utils.RxBus
 import com.example.tiktok.R
 import kotlinx.android.synthetic.main.activity_main.*
-import me.hutcwp.other.RoutePath
+import me.hutcwp.constants.RoutePath
 import java.util.*
 
 /**

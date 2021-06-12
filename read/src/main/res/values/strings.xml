@@ -17,11 +17,8 @@
     <string name="done">确定</string>
     <string name="cancel">取消</string>
 
-    <string name="open_source">• 和风天气提供天气数据\n• 百度定位提供定位服务\n• www.egouz.com网站的图片\n• 『Gank』『煎蛋』『妹子图』提供妹纸数据\n• 学习项目地址: https://github.com/li-yu/FakeWeather/blob/master/README.md
-    </string>
 
-    <string name="contact_me">• @hutcwp\n• hutcwp@foxmail.com
-    </string>
+    <string name="contact_me">你猜不透的->未知领域</string>
 
     <string-array name="color_name">
         <item>青石色</item>

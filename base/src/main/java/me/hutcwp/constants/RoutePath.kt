@@ -1,4 +1,4 @@
-package me.hutcwp.other
+package me.hutcwp.constants
 
 /**
  *  author : kevin

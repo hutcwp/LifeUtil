@@ -14,7 +14,7 @@ import com.hutcwp.read.ui.home.adpter.NewPhotoAdapter
 import com.hutcwp.read.ui.other.PicDetailActivity
 import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.read_fragment_gank_girl.*
-import me.hutcwp.other.RoutePath
+import me.hutcwp.constants.RoutePath
 import me.hutcwp.util.ResolutionUtils
 
 

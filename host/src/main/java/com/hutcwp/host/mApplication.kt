@@ -10,6 +10,7 @@ import com.hutcwp.host.activity.CrashActivity
 import com.hutcwp.host.activity.SplashActivity
 import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
+import me.hutcwp.constants.AppConfig
 //import me.hutcwp.cartoon.app.CartoonInitLogic
 import me.hutcwp.webp.WebpBytebufferDecoder
 import me.hutcwp.webp.WebpDrawable
@@ -32,6 +33,7 @@ class mApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+        initAppConfig()
         BasicConfig.setApplicationContext(applicationContext)
         if (isDebug()) {
 //            Stetho.initializeWithDefaults(this)
@@ -53,6 +55,14 @@ class mApplication : BaseApplication() {
                 .apply()
     }
 
+    private fun initAppConfig() {
+        AppConfig.app = this
+        AppConfig.appVersionCode = BuildConfig.VERSION_CODE
+        AppConfig.appVersionName = BuildConfig.VERSION_NAME
+//        AppConfig.isLogRelease = BuildConfig.IS_SHOW_LOG
+//        AppConfig.channel = ChannelReaderUtil.getChannel(this) ?: "unknown"
+//        AppConfig.mid = TVCUtils.getDevUUID(this)
+    }
     private fun aRouterInit() {
         if (isDebug()) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog()     // 打印日志

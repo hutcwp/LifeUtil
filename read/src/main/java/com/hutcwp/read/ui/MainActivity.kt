@@ -4,14 +4,17 @@ package com.hutcwp.read.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
+import com.hutcwp.common.mvp.BaseActivity
 import com.hutcwp.read.R
 import com.hutcwp.read.event.ThemeChangedEvent
 import com.hutcwp.read.http.ApiFactory
@@ -20,20 +23,14 @@ import com.hutcwp.read.ui.setting.AboutActivity
 import com.hutcwp.read.ui.setting.SettingActivity
 import com.hutcwp.read.ui.view.BottomNavigationView
 import com.hutcwp.read.util.DoubleClickExit
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.snackbar.Snackbar
-import com.hutcwp.common.mvp.BaseActivity
 import kotlinx.android.synthetic.main.read_activity_main.*
 import kotlinx.android.synthetic.main.read_drawer_header.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.hutcwp.constants.RoutePath
 import me.hutcwp.log.MLog
-import me.hutcwp.other.RoutePath
-import me.hutcwp.util.SingleToastUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -46,19 +43,15 @@ class MainActivity : BaseActivity() {
 
     override fun bindLayout() = R.layout.read_activity_main
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-    }
 
     override fun initData(savedInstanceState: Bundle?) {
-        initNavigationViewHeader()
         initFragment(savedInstanceState)
-        initBottomNavigationView()
     }
 
     override fun initView() {
+        initNavigationViewHeader()
 
+        initBottomNavigationView()
     }
 
 
@@ -103,7 +96,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initNavigationViewHeader() {
-        navigation?.inflateHeaderView(R.layout.read_drawer_header)
+        val headerView = navigation?.inflateHeaderView(R.layout.read_drawer_header)
         navigation?.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_read -> {
@@ -118,25 +111,24 @@ class MainActivity : BaseActivity() {
                     menuItem.isChecked = true
                     SettingActivity.createActivity(this@MainActivity)
                 }
-                R.id.navigation_item_about -> startActivity(Intent(this@MainActivity, AboutActivity::class.java))
+                R.id.navigation_item_about -> {
+                    startActivity(Intent(this@MainActivity, AboutActivity::class.java))
+                }
             }
             drawerLayout?.closeDrawer(GravityCompat.START)
             false
         }
-        addHeaderImg()
-    }
 
-    private fun addHeaderImg() {
-        val view = navigation.getHeaderView(0)
-//        val ivRefresh = view.findViewById<ImageView>(R.id.iv_refresh)
-        iv_refresh?.setOnClickListener {
-            refreshHeaderImg(view)
+        val ivRefresh = headerView?.findViewById<ImageView>(R.id.iv_refresh)
+        ivRefresh?.setOnClickListener {
+            refreshHeaderImg()
         }
-        refreshHeaderImg(view)
+        refreshHeaderImg()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun refreshHeaderImg(parentView: View) {
+    private fun refreshHeaderImg() {
+        val parentView = navigation.getHeaderView(0)
         val imageView = parentView.findViewById<ImageView>(R.id.iv_header)
         val tvDateYearMonth = parentView.findViewById<TextView>(R.id.tv_date_year_month)
         val tvDateDay = parentView.findViewById<TextView>(R.id.tv_date_day)
@@ -144,31 +136,34 @@ class MainActivity : BaseActivity() {
         val tvTitle = parentView.findViewById<TextView>(R.id.tv_title)
         imageView.let { iv ->
             GlobalScope.launch(Dispatchers.Main) {
-                val bean = withContext(Dispatchers.IO) {
+                val response = withContext(Dispatchers.IO) {
                     ApiFactory.getGirlsController().getNewGankRandom()
                 }
-                MLog.info(TAG, "bean=$bean")
-                if (bean.data.isEmpty()) {
-                    MLog.error(TAG, "bean data is empty.")
+
+                MLog.info(TAG, "getNewGankRandom: response=$response")
+                if (response.data?.isEmpty() != false) {
+                    MLog.error(TAG, "bean data is empty!")
                     return@launch
                 }
-                bean.data[0]?.let {
-                    val dateList = doHandleDate(it.publishedAt)
+
+                response.data[0]?.let {
+                    val dateList = formatDataStr(it.publishedAt)
                     tvDateDay.text = dateList[2]
                     tvDateYearMonth.text = dateList[0] + "-" + dateList[1]
                     tvAuthor.text = it.desc
                     tvTitle.text = it.title
-                    val options: RequestOptions = RequestOptions().placeholder(R.drawable.drawer_header_bg)
+
                     Glide.with(iv.context)
                             .load(it.images[0])
-                            .apply(options)
+//                            .placeholder(R.drawable.drawer_header_bg)
+                            .error(R.drawable.drawer_header_bg)
                             .into(iv)
                 }
             }
         }
     }
 
-    private fun doHandleDate(dateStr: String): List<String> {
+    private fun formatDataStr(dateStr: String): List<String> {
         val date = dateStr.split(" ")[0].split("-")
         return date
     }
@@ -223,7 +218,6 @@ class MainActivity : BaseActivity() {
 
     @Subscribe
     fun onMessageEvent(event: ThemeChangedEvent) {
-        Log.d("event", "msg")
         this.recreate()
     }
 
@@ -251,10 +245,6 @@ class MainActivity : BaseActivity() {
                 super.onBackPressed()
             }
         }
-    }
-
-    fun showSnack(msg: String) {
-        SingleToastUtil.showToast(msg)
     }
 
 

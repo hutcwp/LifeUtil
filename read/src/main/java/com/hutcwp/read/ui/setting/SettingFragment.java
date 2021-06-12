@@ -10,10 +10,12 @@ import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.Nullable;
+
 import com.hutcwp.read.R;
-import com.hutcwp.read.app.AppGlobal;
+import me.hutcwp.constants.AppGlobal;
 import com.hutcwp.read.util.FileSizeUtil;
 import com.hutcwp.read.util.FileUtil;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -32,13 +34,13 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.setting);
+        addPreferencesFromResource(R.xml.read_preference_setting);
 
         cleanCache = findPreference("clean_cache");
         theme = findPreference("theme_color");
 
         String[] colorNames = getActivity().getResources().getStringArray(R.array.color_name);
-        SharedPreferences sp = getActivity().getSharedPreferences(AppGlobal.INSTANCE.getFILE_NAME(),
+        SharedPreferences sp = getActivity().getSharedPreferences(AppGlobal.INSTANCE.getSHARE_FILE_NAME(),
                 Context.MODE_PRIVATE);
         int currentThemeIndex = sp.getInt("theme", 0);
 
@@ -50,10 +52,9 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         }
 
         cleanCache.setSummary(
-                FileSizeUtil.INSTANCE.
-                        getAutoFileOrFilesSize(
-                                FileUtil.INSTANCE.getInternalCacheDir(BasicConfig.getApplicationContext()),
-                                FileUtil.INSTANCE.getExternalCacheDir(BasicConfig.getApplicationContext())));
+                FileSizeUtil.INSTANCE.getAutoFileOrFilesSize(
+                        FileUtil.INSTANCE.getInternalCacheDir(BasicConfig.getApplicationContext()),
+                        FileUtil.INSTANCE.getExternalCacheDir(BasicConfig.getApplicationContext())));
         theme.setOnPreferenceClickListener(this);
         cleanCache.setOnPreferenceClickListener(this);
 
@@ -84,8 +85,6 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
 
                         }
                     });
-
-
         } else if (preference == theme) {
             new ColorChooserDialog.Builder((SettingActivity) getActivity(), R.string.theme)
                     .customColors(R.array.colors, null)

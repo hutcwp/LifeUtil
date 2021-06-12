@@ -14,7 +14,7 @@ import com.hutcwp.read.ui.other.PicDetailActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import me.hutcwp.other.RoutePath
+import me.hutcwp.constants.RoutePath
 import java.util.*
 
 /**

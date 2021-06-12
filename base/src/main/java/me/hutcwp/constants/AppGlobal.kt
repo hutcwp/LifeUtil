@@ -1,4 +1,4 @@
-package com.hutcwp.read.app
+package me.hutcwp.constants
 
 /**
  * Created by hutcwp on 2017/4/15.
@@ -10,5 +10,7 @@ package com.hutcwp.read.app
 object AppGlobal {
 
 
-    val FILE_NAME = "share_data"
+    val SHARE_FILE_NAME = "share_data"
+
+    val FL_CUR_THEME_SP = "cur_app_theme"
 }

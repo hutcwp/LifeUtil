@@ -1,38 +1,29 @@
-package com.hutcwp.read.ui.home.sub.picture
+package com.hutcwp.read.ui.home.impl.picture
 
 import android.graphics.Rect
+import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.hutcwp.read.R
 import com.hutcwp.read.entitys.Photo
-import com.hutcwp.read.ui.MainActivity
 import com.hutcwp.read.ui.base.BaseFragment
 import com.hutcwp.read.ui.home.adpter.NewPhotoAdapter
-import com.hutcwp.read.ui.home.other.PicDetailActivity
-import com.alibaba.android.arouter.launcher.ARouter
+import com.hutcwp.read.ui.other.PicDetailActivity
 import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.read_fragment_gank_girl.*
 import me.hutcwp.other.RoutePath
+import me.hutcwp.util.ResolutionUtils
 
 
 @DelegateBind(presenter = PicturePresenter::class)
 class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
-    var adapter: NewPhotoAdapter? = null
-    var hasMore = true
+    private val photoAdapter by lazy { NewPhotoAdapter() }
 
-
-    fun updateHasMore(hasMore: Boolean) {
-        this.hasMore = hasMore
-        if (!hasMore) {
-            val footerView = View.inflate(context, R.layout.read_view_item_empty, null)
-            adapter?.setFooterView(footerView)
-        } else {
-            adapter?.removeAllFooterView()
-        }
-    }
+    private var hasMore = true
 
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_gank_girl
@@ -43,14 +34,10 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
     }
 
     override fun initViews() {
-        adapter = NewPhotoAdapter()
-        // 先注册需要点击的子控件id（注意，请不要写在convert方法里）
-        adapter?.addChildClickViewIds(R.id.img)
-        // 设置子控件点击监听
-        adapter?.setOnItemChildClickListener { adapter, view, position ->
+        photoAdapter.addChildClickViewIds(R.id.iv_img)
+        photoAdapter.setOnItemChildClickListener { adapter, view, position ->
             val item = adapter.data[position] as Photo
-            if (view.id == R.id.img) {
-
+            if (view.id == R.id.iv_img) {
                 val imageUrl = item.img!!
                 val imageTitle = item.name!!
                 ARouter.getInstance()
@@ -61,22 +48,20 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
             }
         }
 
-        grid_recycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        grid_recycler.addItemDecoration(SpacesItemDecoration(14))
-        grid_recycler.adapter = adapter
-        setting()
+        rv_pic.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        rv_pic.addItemDecoration(SpacesItemDecoration(ResolutionUtils.convertDpToPixel(2f, context).toInt()))
+        rv_pic.adapter = photoAdapter
     }
 
-
-    private fun setting() {
+    override fun setListener() {
         swipRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
         swipRefreshLayout.setOnRefreshListener {
             presenter.initData()
         }
 
-        grid_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        rv_pic.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!grid_recycler.canScrollVertically(1)) {
+                if (!rv_pic.canScrollVertically(1)) {
                     if (hasMore) {
                         presenter.loadMore()
                     }
@@ -85,27 +70,47 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
         })
     }
 
-    override fun showSnack(msg: String) {
-        (activity as MainActivity).showSnack(msg)
-    }
-
-    override val data: List<Photo>
-        get() = adapter!!.data
+    override val data: List<Photo> get() = photoAdapter.data
 
     override fun setRefreshing(status: Boolean) {
         swipRefreshLayout.isRefreshing = status
     }
 
     override fun setNewData(data: List<Photo>) {
-        adapter?.setNewInstance(data.toMutableList())
+        photoAdapter.setNewInstance(data.toMutableList())
     }
 
     override fun addNewData(data: List<Photo>) {
-        adapter?.addData(data)
+        photoAdapter.addData(data)
     }
 
     override fun addNewData(pos: Int, data: List<Photo>) {
 
+    }
+
+    override fun hasMore(hasMore: Boolean) {
+        this.hasMore = hasMore
+        if (!hasMore) {
+            val footerView = View.inflate(context, R.layout.read_view_item_empty, null)
+            photoAdapter.setFooterView(footerView)
+        } else {
+            photoAdapter.removeAllFooterView()
+        }
+    }
+
+
+    companion object {
+
+        private const val PARAM_URL = "url"
+
+        fun instance(url: String): PictureFragment {
+            val fragment = PictureFragment()
+            val data = Bundle().apply {
+                this.putString(PARAM_URL, url)
+            }
+            fragment.arguments = data
+            return fragment
+        }
     }
 
     /**
@@ -116,9 +121,7 @@ class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
             outRect.left = space
             outRect.right = space
             outRect.bottom = space
-            if (parent.getChildAdapterPosition(view) == 0) {
-                outRect.top = space
-            }
+            outRect.top = space
         }
     }
 }

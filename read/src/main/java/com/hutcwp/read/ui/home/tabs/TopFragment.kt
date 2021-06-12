@@ -1,6 +1,5 @@
-package com.hutcwp.read.ui.home.top
+package com.hutcwp.read.ui.home.tabs
 
-import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -10,7 +9,6 @@ import com.hutcwp.read.entitys.ReadCategory
 import com.hutcwp.read.ui.MainActivity
 import com.hutcwp.read.ui.base.BaseFragment
 import com.hutcwp.read.ui.home.adpter.ViewPagerAdapter
-import com.hutcwp.read.ui.home.sub.news.NewsFragment
 import com.google.android.material.tabs.TabLayout
 import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.top_fragment_read.*
@@ -46,16 +44,13 @@ open class TopFragment : BaseFragment<TopPresenter, TopFragment>(), ITop<ReadCat
     override fun setUpViewPager(viewPager: ViewPager, readCategories: List<ReadCategory>) {
         val adapter = ViewPagerAdapter(childFragmentManager)
         for (category in readCategories) {
-            val fragment = getFragment()
-            val data = Bundle()
-            data.putString("url", category.url)
-            fragment.arguments = data
-            adapter.addFrag(fragment, category.name!!)
+            val fragment = getFragment(category)
+            adapter.addFragment(fragment, category.name)
         }
         viewPager.adapter = adapter
     }
 
-    open fun getFragment(): Fragment {
-        return NewsFragment()
+    open fun getFragment(category: ReadCategory): Fragment {
+        return Fragment()
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * @Package: com.hutcwp.lifeutil.entitys$
  * @ClassName: ArticleDetailBean$
  * @Description:
- * @Author: caiwenpeng
+ * @Author: kevin
  * @CreateDate: 2020/8/16$ 12:25 AM$
  */
 public class ArticleDetailBean {

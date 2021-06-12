@@ -1,4 +1,4 @@
-package com.hutcwp.read.ui.home.top
+package com.hutcwp.read.ui.home.tabs
 
 import com.hutcwp.read.entitys.ReadCategory
 import com.hutcwp.read.http.ApiFactory
@@ -8,7 +8,7 @@ import com.hutcwp.read.http.ApiFactory
  * @Package: com.hutcwp.lifeutil.ui.home.top$
  * @ClassName: ReadPresenter2$
  * @Description:
- * @Author: caiwenpeng
+ * @Author: kevin
  * @CreateDate: 2020/8/16$ 6:01 PM$
  */
 class WrapReadPresenter : TopPresenter() {

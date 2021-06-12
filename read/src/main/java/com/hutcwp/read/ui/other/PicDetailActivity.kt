@@ -1,4 +1,4 @@
-package com.hutcwp.read.ui.home.other
+package com.hutcwp.read.ui.other
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

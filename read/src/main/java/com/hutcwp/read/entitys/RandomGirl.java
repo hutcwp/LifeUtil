@@ -8,7 +8,7 @@ import java.util.List;
  * @Package: com.hutcwp.lifeutil.entitys$
  * @ClassName: RandomGirl$
  * @Description:
- * @Author: caiwenpeng
+ * @Author: kevin
  * @CreateDate: 2020/8/15$ 6:58 PM$
  */
 public class RandomGirl {

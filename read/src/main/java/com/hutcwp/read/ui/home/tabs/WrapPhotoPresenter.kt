@@ -1,4 +1,4 @@
-package com.hutcwp.read.ui.home.top
+package com.hutcwp.read.ui.home.tabs
 
 import com.hutcwp.read.entitys.ReadCategory
 
@@ -7,7 +7,7 @@ import com.hutcwp.read.entitys.ReadCategory
  * @Package: com.hutcwp.lifeutil.ui.home.top$
  * @ClassName: WrapPhotoPresenter$
  * @Description:
- * @Author: caiwenpeng
+ * @Author: kevin
  * @CreateDate: 2020/8/16$ 7:15 PM$
  */
 internal class WrapPhotoPresenter : TopPresenter() {

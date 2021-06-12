@@ -1,7 +1,7 @@
-package com.hutcwp.read.ui.home.sub.artical
+package com.hutcwp.read.ui.home.impl.artical
 
 import com.hutcwp.read.entitys.News
-import com.hutcwp.read.ui.home.sub.IBase
+import com.hutcwp.read.ui.home.impl.IBase
 
 /**
  * Created by hutcwp on 2018/10/13 22:39

@@ -7,13 +7,4 @@ package com.hutcwp.read.entitys
  * GitHub : github.com/hutcwp
  */
 
-class ReadCategory (){
-
-    constructor(name: String?, url: String?):this() {
-        this.name = name
-        this.url = url
-    }
-
-    var name: String? = null
-    var url: String? = null
-}
+class ReadCategory(val name: String, val url: String)

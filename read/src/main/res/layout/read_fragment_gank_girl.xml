@@ -4,13 +4,7 @@
     android:layout_height="match_parent"
     android:background="#bbc7b0"
     android:orientation="vertical"
-    tools:context=".ui.home.sub.picture.PictureFragment">
-
-
-    <ImageView
-        android:id="@+id/pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    tools:context=".ui.home.impl.picture.PictureFragment">
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -18,9 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--本文主角-->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/grid_recycler"
+            android:id="@+id/rv_pic"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

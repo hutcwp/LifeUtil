@@ -1,11 +1,12 @@
-package com.hutcwp.read.ui.home.sub.artical
+package com.hutcwp.read.ui.home.impl.artical
 
-import android.util.Log
+import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hutcwp.read.R
 import com.hutcwp.read.entitys.News
 import com.hutcwp.read.ui.base.BaseFragment
+import com.hutcwp.read.ui.home.adpter.ArticleAdapter
 import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.read_fragment_category.*
 
@@ -14,39 +15,33 @@ import kotlinx.android.synthetic.main.read_fragment_category.*
  */
 @DelegateBind(presenter = ArticlePresenter::class)
 class ArticleFragment : BaseFragment<ArticlePresenter, IArticle>(), IArticle {
-    override val data: List<News>
-        get() = if (adapter != null && adapter!!.data != null) {
-            adapter!!.data!!
-        } else {
-            listOf()
-        }
 
-    private var adapter: ArticleAdapter? = null
+    private val adapter: ArticleAdapter by lazy { ArticleAdapter() }
 
-    override fun getLayoutId(): Int {
-        return R.layout.read_fragment_category
-    }
+    override val data: List<News> = adapter.data
+
+    override fun getLayoutId(): Int = R.layout.read_fragment_category
 
     override fun initViews() {
+        initAdapter()
         setListener()
     }
 
     override fun lazyFetchData() {
-        presenter.getDataFromServer(false)
+        presenter.getDataFromServer(true)
     }
 
-    private fun setListener() {
-        Log.i(TAG, "setListener run")
-        if (adapter == null) {
-            adapter = ArticleAdapter(context!!, listOf<News>().toMutableList())
-        }
+    override fun setListener() {
+        swipeRefreshLayout.setOnRefreshListener { presenter.getDataFromServer(true) }
+    }
+
+    private fun initAdapter() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        swipeRefreshLayout.setOnRefreshListener { presenter.getDataFromServer(false) }
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!recyclerView.canScrollVertically(1)) {
-                   presenter.getDataFromServer(true)
+                    presenter.getDataFromServer(false)
                 }
             }
         })
@@ -57,20 +52,34 @@ class ArticleFragment : BaseFragment<ArticlePresenter, IArticle>(), IArticle {
     }
 
     override fun setNewData(data: List<News>) {
-        Log.i(TAG, "setNewData = " + data.size)
-        adapter?.setNewData(data.toMutableList())
+        adapter.setNewInstance(data.toMutableList())
     }
 
     override fun addNewData(data: List<News>) {
-        TODO("Not yet implemented")
+
     }
 
     override fun addNewData(pos: Int, data: List<News>) {
-        Log.i(TAG, "addNewData = " + data.size)
-        adapter?.addData(pos, data)
+        adapter.addData(pos, data)
     }
 
+    override fun hasMore(hasMore: Boolean) {
+
+    }
+
+
     companion object {
-        const val TAG = "NewsFragment"
+
+        private const val TAG = "ArticleFragment"
+        private const val PARAM_URL = "url"
+
+        fun instance(url: String): ArticleFragment {
+            val fragment = ArticleFragment()
+            val data = Bundle().apply {
+                this.putString(PARAM_URL, url)
+            }
+            fragment.arguments = data
+            return fragment
+        }
     }
 }

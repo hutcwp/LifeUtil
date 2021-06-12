@@ -17,7 +17,7 @@ import me.hutcwp.log.MLog
  * @Package:        com.hutcwp.lifeutil.ui$
  * @ClassName:      BottoNavigationView$
  * @Description:
- * @Author:         caiwenpeng
+ * @Author:         kevin
  * @CreateDate:     2020/8/15$ 3:07 PM$
  */
 class BottomNavigationView : LinearLayout, View.OnClickListener {

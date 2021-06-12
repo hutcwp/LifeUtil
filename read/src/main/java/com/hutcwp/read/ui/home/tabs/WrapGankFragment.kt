@@ -1,23 +1,23 @@
-package com.hutcwp.read.ui.home.top;
+package com.hutcwp.read.ui.home.tabs
 
-import org.jetbrains.annotations.NotNull;
-
-import hut.cwp.annotations.mvp.DelegateBind;
+import androidx.fragment.app.Fragment
+import com.hutcwp.read.entitys.ReadCategory
+import com.hutcwp.read.ui.home.impl.news.NewsFragment
+import hut.cwp.annotations.mvp.DelegateBind
 
 /**
- * @ProjectName: LifeUtil$
- * @Package: com.hutcwp.lifeutil.ui.home.top$
  * @ClassName: WrapGankFragment$
  * @Description:
- * @Author: caiwenpeng
+ * @Author: kevin
  * @CreateDate: 2020/8/16$ 5:54 PM$
  */
-@DelegateBind(presenter = WrapGankPresenter.class)
-public class WrapGankFragment extends TopFragment {
+@DelegateBind(presenter = WrapGankPresenter::class)
+class WrapGankFragment : TopFragment() {
 
-    @NotNull
-    @Override
-    public String getTitle() {
-        return "干货";
+    override val title: String
+        get() = "干货"
+
+    override fun getFragment(category: ReadCategory): Fragment {
+        return NewsFragment.instance(category.url)
     }
 }

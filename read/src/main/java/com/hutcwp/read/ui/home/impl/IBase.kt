@@ -1,4 +1,4 @@
-package com.hutcwp.read.ui.home.sub
+package com.hutcwp.read.ui.home.impl
 
 import hut.cwp.core.MvpView
 
@@ -15,4 +15,5 @@ interface IBase<T> : MvpView {
     fun setNewData(data: List<T>)
     fun addNewData(data: List<T>)
     fun addNewData(pos: Int, data: List<T>)
+    fun hasMore(hasMore: Boolean)
 }

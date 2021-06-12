@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.hutcwp.read.R
 import com.hutcwp.read.event.ThemeChangedEvent
 import com.hutcwp.read.http.ApiFactory
-import com.hutcwp.read.ui.home.top.*
+import com.hutcwp.read.ui.home.tabs.*
 import com.hutcwp.read.ui.setting.AboutActivity
 import com.hutcwp.read.ui.setting.SettingActivity
 import com.hutcwp.read.ui.view.BottomNavigationView

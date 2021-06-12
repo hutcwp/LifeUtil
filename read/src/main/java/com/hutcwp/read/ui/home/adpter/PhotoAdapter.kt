@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hutcwp.read.R
 import com.hutcwp.read.entitys.Photo
-import com.hutcwp.read.ui.home.other.PicDetailActivity
+import com.hutcwp.read.ui.other.PicDetailActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -98,9 +98,9 @@ class PhotoAdapter(private val mContext: Context, girlList: MutableList<Photo>?)
         var date: TextView
 
         init {
-            iv = view.findViewById<View>(R.id.img) as ImageView
-            name = view.findViewById<View>(R.id.name) as TextView
-            date = view.findViewById<View>(R.id.date) as TextView
+            iv = view.findViewById<View>(R.id.iv_img) as ImageView
+            name = view.findViewById<View>(R.id.tv_name) as TextView
+            date = view.findViewById<View>(R.id.tv_date) as TextView
         }
     }
 }

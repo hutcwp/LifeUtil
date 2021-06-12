@@ -32,6 +32,10 @@ abstract class BaseFragment<P : MvpPresenter<V>, V : MvpView> : MvpFragment<P, V
     //懒加载
     protected abstract fun lazyFetchData()
 
+    open fun setListener() {
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(getLayoutId(), container, false)
         return rootView
@@ -69,6 +73,7 @@ abstract class BaseFragment<P : MvpPresenter<V>, V : MvpView> : MvpFragment<P, V
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        setListener()
         isViewPrepared = true
         lazyFetchDataIfPrepared()
     }
@@ -85,8 +90,8 @@ abstract class BaseFragment<P : MvpPresenter<V>, V : MvpView> : MvpFragment<P, V
         snackbar.show()
     }
 
-    companion object {
 
-        private val TAG = "BaseFragment"
+    companion object {
+        private const val TAG = "BaseFragment"
     }
 }

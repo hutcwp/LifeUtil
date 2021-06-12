@@ -26,7 +26,7 @@ class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager)
         return mFragmentList.size
     }
 
-    fun addFrag(fragment: Fragment, title: String) {
+    fun addFragment(fragment: Fragment, title: String) {
         mFragmentList.add(fragment)
         mFragmentTitleList.add(title)
     }

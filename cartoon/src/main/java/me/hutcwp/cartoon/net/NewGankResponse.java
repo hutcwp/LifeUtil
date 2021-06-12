@@ -8,7 +8,7 @@ import java.util.List;
  * @Package: com.hutcwp.lifeutil.http$
  * @ClassName: NewGankRepsponse$
  * @Description:
- * @Author: caiwenpeng
+ * @Author: kevin
  * @CreateDate: 2020/8/13$ 8:58 PM$
  */
 public class NewGankResponse {

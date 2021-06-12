@@ -1,11 +1,10 @@
-package com.hutcwp.read.ui.home.top
+package com.hutcwp.read.ui.home.tabs
 
 import androidx.viewpager.widget.ViewPager
 import hut.cwp.core.MvpView
 
 /**
  * Created by hutcwp on 2018/10/13 01:39
- *
  *
  * 一级tab接口
  */

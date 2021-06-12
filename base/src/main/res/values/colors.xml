@@ -21,7 +21,7 @@
     <color name="colorCancel">#F44336</color>
 
 
-    <color name="line">#e0e0e0</color>
+    <color name="divide_line">#e0e0e0</color>
     <color name="colorTextDark">#424242</color>
     <color name="colorTextDark2nd">#757575</color>
     <color name="actionColor">#FF4081</color>

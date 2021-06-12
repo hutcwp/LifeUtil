@@ -4,7 +4,8 @@ package com.hutcwp.read.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -50,7 +51,6 @@ class MainActivity : BaseActivity() {
 
     override fun initView() {
         initNavigationViewHeader()
-
         initBottomNavigationView()
     }
 
@@ -134,30 +134,45 @@ class MainActivity : BaseActivity() {
         val tvDateDay = parentView.findViewById<TextView>(R.id.tv_date_day)
         val tvAuthor = parentView.findViewById<TextView>(R.id.tv_author)
         val tvTitle = parentView.findViewById<TextView>(R.id.tv_title)
+        val ivRefresh = parentView.findViewById<ImageView>(R.id.iv_refresh)
+
         imageView.let { iv ->
             GlobalScope.launch(Dispatchers.Main) {
-                val response = withContext(Dispatchers.IO) {
-                    ApiFactory.getGirlsController().getNewGankRandom()
-                }
+                val rotateAnim = RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotateAnim.duration = 500
+                rotateAnim.repeatCount = Animation.INFINITE
+                rotateAnim.repeatMode = Animation.REVERSE
+                ivRefresh.startAnimation(rotateAnim)
 
-                MLog.info(TAG, "getNewGankRandom: response=$response")
-                if (response.data?.isEmpty() != false) {
-                    MLog.error(TAG, "bean data is empty!")
-                    return@launch
-                }
+                try {
+                    val response = withContext(Dispatchers.IO) {
+                        ApiFactory.getGirlsController().getNewGankRandom()
+                    }
 
-                response.data[0]?.let {
-                    val dateList = formatDataStr(it.publishedAt)
-                    tvDateDay.text = dateList[2]
-                    tvDateYearMonth.text = dateList[0] + "-" + dateList[1]
-                    tvAuthor.text = it.desc
-                    tvTitle.text = it.title
+                    MLog.info(TAG, "getNewGankRandom: response=$response")
+                    if (response.data?.isEmpty() != false) {
+                        MLog.error(TAG, "bean data is empty!")
+                        return@launch
+                    }
 
-                    Glide.with(iv.context)
-                            .load(it.images[0])
+                    response.data[0]?.let {
+                        val dateList = formatDataStr(it.publishedAt)
+                        tvDateDay.text = dateList[2]
+                        tvDateYearMonth.text = dateList[0] + "-" + dateList[1]
+                        tvAuthor.text = it.desc
+                        tvTitle.text = it.title
+
+                        Glide.with(iv.context)
+                                .load(it.images[0])
 //                            .placeholder(R.drawable.drawer_header_bg)
-                            .error(R.drawable.drawer_header_bg)
-                            .into(iv)
+                                .error(R.drawable.drawer_header_bg)
+                                .into(iv)
+                    }
+                } catch (e: Exception) {
+                    MLog.error(TAG, "getNewGankRandom error, see error below:", e)
+                } finally {
+                    ivRefresh.clearAnimation()
+                    rotateAnim.cancel()
                 }
             }
         }

@@ -18,6 +18,7 @@
             android:layout_above="@+id/bottomNavigationView"
             android:orientation="vertical" />
 
+
         <com.hutcwp.read.ui.view.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
@@ -27,6 +28,12 @@
             android:orientation="horizontal"
             android:padding="8dp"
             android:visibility="visible" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout_content"
+            android:background="#8e8e8e" />
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

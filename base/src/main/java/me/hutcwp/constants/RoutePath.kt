@@ -7,10 +7,14 @@ package me.hutcwp.constants
  */
 object RoutePath {
 
-    const val PIC_DETAIL_ACTIVITY =  "/read/picDetail"
+    const val PIC_DETAIL_ACTIVITY = "/read/picDetail"
 
-    const val TIKTOK_MAIN =  "/tiktok/main"
+    const val TIKTOK_MAIN = "/tiktok/main"
 
     const val READ_MAIN = "/read/main"
+
+
+    const val SIMPLE_WEB = "/web/simple"
+    const val WEB_MAIN = "/web/main"
 
 }

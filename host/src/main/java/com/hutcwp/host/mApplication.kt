@@ -10,7 +10,7 @@ import com.hutcwp.host.activity.CrashActivity
 import com.hutcwp.host.activity.SplashActivity
 import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
-import me.hutcwp.cartoon.app.CartoonInitLogic
+//import me.hutcwp.cartoon.app.CartoonInitLogic
 import me.hutcwp.webp.WebpBytebufferDecoder
 import me.hutcwp.webp.WebpDrawable
 import me.hutcwp.webp.WebpResourceDecoder
@@ -19,14 +19,14 @@ import java.nio.ByteBuffer
 
 /**
  * Created by hutcwp on 2019-06-02 02:43
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 class mApplication : BaseApplication() {
 
     override fun initLogic() {
         registerAppLogicClass(HomePageInitLogic::class)
-        registerAppLogicClass(CartoonInitLogic::class)
+//        registerAppLogicClass(CartoonInitLogic::class)
     }
 
     override fun onCreate() {

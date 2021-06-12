@@ -9,8 +9,8 @@ import me.hutcwp.cartoon.R
 /**
  *
  * Created by hutcwp on 2019-06-01 01:44
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class ViewDelegate(activity: MainActivity) {

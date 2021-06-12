@@ -14,7 +14,7 @@ import club.hutcwp.lifeutil.ui.home.other.PicDetailActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import hut.cwp.annotations.mvp.DelegateBind
 import kotlinx.android.synthetic.main.read_fragment_gank_girl.*
-import me.hutcwp.util.RoutePath
+import me.hutcwp.other.RoutePath
 
 
 @DelegateBind(presenter = PicturePresenter::class)

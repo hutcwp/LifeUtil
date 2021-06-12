@@ -7,8 +7,8 @@ import me.hutcwp.BasicConfig;
 
 /**
  * Created by hutcwp on 2019-12-10 21:01
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class CommonPref extends SharedPref {
     public static final String COMMONREF_NAME = "CommonPref";

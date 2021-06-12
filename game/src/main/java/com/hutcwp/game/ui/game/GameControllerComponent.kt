@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.game_layout_controller.*
 /**
  *
  * Created by hutcwp on 2019-06-24 20:29
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class GameControllerComponent : BaseComponent() {

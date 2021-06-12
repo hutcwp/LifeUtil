@@ -13,8 +13,8 @@ import me.hutcwp.log.MLog
 
 /**
  * Created by hutcwp on 2018/10/13 22:33
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 class NewsPresenter : MvpPresenter<INews>() {
 

@@ -55,9 +55,9 @@ dependencies {
 
 
     // Room 不知道为什么这里也要导入一份
-    implementation 'androidx.room:room-runtime:2.0.0'
+//    implementation 'androidx.room:room-runtime:2.0.0'
 //    annotationProcessor 'androidx.room:room-compiler:2.0.0'
-    kapt 'android.arch.persistence.room:compiler:2.0.0'
+//    kapt 'android.arch.persistence.room:compiler:2.0.0'
 
     implementation 'com.alibaba:arouter-api:1.5.0'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'

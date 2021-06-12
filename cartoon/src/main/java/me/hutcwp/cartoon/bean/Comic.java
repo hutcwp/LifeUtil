@@ -4,8 +4,8 @@ import android.graphics.drawable.Drawable;
 
 /**
  * Created by hutcwp on 2019-06-01 23:23
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class Comic {
 

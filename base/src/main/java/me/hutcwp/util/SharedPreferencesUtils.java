@@ -14,8 +14,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by hutcwp on 2019-12-10 21:03
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class SharedPreferencesUtils {
     private static String TAG = "SharedPreferencesUtils";

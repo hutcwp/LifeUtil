@@ -3,8 +3,8 @@ package com.hutcwp.game.bean
 /**
  *
  * Created by hutcwp on 2019-06-25 16:23
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  * 角色类，所有的人物都继承于这个类
  **/
 open class Role() {

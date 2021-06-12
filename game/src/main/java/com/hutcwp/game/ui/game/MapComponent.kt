@@ -13,8 +13,8 @@ import com.hutcwp.game.ui.view.RoleView
 /**
  *
  * Created by hutcwp on 2019-06-24 20:20
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class MapComponent private constructor() : BaseComponent() {

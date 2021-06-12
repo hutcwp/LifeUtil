@@ -10,8 +10,8 @@ import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Created by hutcwp on 2019-06-24 21:06
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class FontUtil {
 

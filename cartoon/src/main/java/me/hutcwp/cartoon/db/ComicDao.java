@@ -10,8 +10,8 @@ import androidx.room.Update;
 
 /**
  * Created by hutcwp on 2019-06-01 17:07
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 @Dao
 public interface ComicDao {

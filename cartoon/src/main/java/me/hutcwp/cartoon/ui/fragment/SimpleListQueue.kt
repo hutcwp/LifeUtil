@@ -5,8 +5,8 @@ import me.hutcwp.cartoon.bean.SimpleQueue
 /**
  *
  * Created by hutcwp on 2019-06-02 18:25
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class SimpleListQueue<Element>(

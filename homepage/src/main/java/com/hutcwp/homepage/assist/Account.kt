@@ -5,8 +5,8 @@ import me.hutcwp.util.CommonPref
 /**
  *
  * Created by hutcwp on 2019-12-10 21:31
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 object Account {

@@ -12,8 +12,8 @@ import org.greenrobot.eventbus.EventBus
 /**
  *
  * Created by hutcwp on 2019-06-23 18:48
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  * 游戏主程序
  **/
 class GameManager private constructor() : IGameCore {

@@ -1,39 +1,31 @@
 package club.hutcwp.lifeutil.ui.setting
 
+
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-
-
 import androidx.annotation.ColorInt
-
-import com.afollestad.materialdialogs.color.ColorChooserDialog
-
-import org.greenrobot.eventbus.EventBus
-
 import androidx.appcompat.widget.Toolbar
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.app.AppGlobal
 import club.hutcwp.lifeutil.event.ThemeChangedEvent
-import club.hutcwp.lifeutil.ui.base.BaseActivity
 import club.hutcwp.lifeutil.util.ThemeUtil
+import com.afollestad.materialdialogs.color.ColorChooserDialog
+import com.hutcwp.common.mvp.BaseActivity
+import org.greenrobot.eventbus.EventBus
 
 class SettingActivity : BaseActivity(), ColorChooserDialog.ColorCallback {
 
-    override val layoutId: Int
-        get() = R.layout.read_activity_setting
 
+    override fun bindLayout() = R.layout.read_activity_setting
 
-    override fun initViews(savedInstanceState: Bundle?) {
-
-        setDisplayHomeAsUpEnabled(true)
-
-        fragmentManager.beginTransaction().replace(R.id.contentLayout, SettingFragment()).commit()
+    override fun initData(savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
     }
 
-    override fun loadData() {
-
+    override fun initView() {
+        fragmentManager.beginTransaction().replace(R.id.contentLayout, SettingFragment()).commit()
     }
 
     override fun onColorSelection(dialog: ColorChooserDialog, @ColorInt selectedColor: Int) {

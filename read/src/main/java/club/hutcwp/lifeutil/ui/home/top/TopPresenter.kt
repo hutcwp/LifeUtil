@@ -12,8 +12,8 @@ import me.hutcwp.log.MLog
 
 /**
  * Created by hutcwp on 2018/10/13 17:05
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 open class TopPresenter : MvpPresenter<TopFragment>() {
 

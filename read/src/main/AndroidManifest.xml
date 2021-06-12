@@ -12,17 +12,20 @@
         android:theme="@style/KaleTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="club.hutcwp.lifeutil.ui.MainActivity">
-        </activity>
+        <activity android:name="club.hutcwp.lifeutil.ui.MainActivity" />
+        <activity android:name=".ui.setting.SettingActivity" />
+        <activity android:name=".ui.setting.AboutActivity" />
+
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="sensor"
             android:theme="@style/FinestWebViewTheme.Light" />
-        <activity android:name=".ui.home.other.PicDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".ui.setting.SettingActivity" />
-        <activity android:name=".ui.setting.AboutActivity" />
+
+        <activity
+            android:name=".ui.home.other.PicDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
     </application>
 
 </manifest>

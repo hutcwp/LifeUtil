@@ -12,8 +12,8 @@ import me.hutcwp.log.MLog
 
 /**
  * Created by hutcwp on 2018/10/13 20:45
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 class PicturePresenter : MvpPresenter<IPicture>() {
 

@@ -11,8 +11,8 @@ import club.hutcwp.lifeutil.entitys.News
 
 /**
  * Created by hutcwp on 2018/10/14 17:04
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 class NewsParseImpl : IParse<News>() {
 

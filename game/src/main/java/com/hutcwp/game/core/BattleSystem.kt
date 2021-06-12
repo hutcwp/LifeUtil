@@ -8,8 +8,8 @@ import java.lang.StringBuilder
 /**
  *
  * Created by hutcwp on 2019-06-25 22:06
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  * 战斗系统类
  **/
 enum class BattleSystem {

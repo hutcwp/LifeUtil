@@ -7,8 +7,8 @@ import java.util.List;
 
 /**
  * Created by hutcwp on 2019-06-01 17:37
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class ComicDBRepo {
 

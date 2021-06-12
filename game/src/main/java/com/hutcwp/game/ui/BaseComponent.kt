@@ -12,8 +12,8 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  *
  * Created by hutcwp on 2019-06-24 20:22
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 open class BaseComponent : Fragment(), IEventCompat {

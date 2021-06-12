@@ -15,8 +15,8 @@ import me.hutcwp.util.SingleToastUtil
 /**
  *
  * Created by hutcwp on 2019-12-10 17:50
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  * 可以复制的Layout
  **/
 class CopyableLayout : RelativeLayout {

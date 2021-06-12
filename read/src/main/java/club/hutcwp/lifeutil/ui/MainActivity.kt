@@ -5,8 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentTransaction
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.event.ThemeChangedEvent
 import club.hutcwp.lifeutil.http.ApiFactory
-import club.hutcwp.lifeutil.ui.base.BaseActivity
 import club.hutcwp.lifeutil.ui.home.top.*
 import club.hutcwp.lifeutil.ui.setting.AboutActivity
 import club.hutcwp.lifeutil.ui.setting.SettingActivity
@@ -25,8 +24,8 @@ import club.hutcwp.lifeutil.util.DoubleClickExit
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.hutcwp.common.mvp.BaseActivity
 import kotlinx.android.synthetic.main.read_activity_main.*
 import kotlinx.android.synthetic.main.read_drawer_header.*
 import kotlinx.coroutines.Dispatchers
@@ -34,23 +33,31 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.hutcwp.log.MLog
+import me.hutcwp.other.RoutePath
+import me.hutcwp.util.SingleToastUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 
-@Route(path = "/read/main")
+@Route(path = RoutePath.READ_MAIN, name = "阅读首页")
 class MainActivity : BaseActivity() {
 
     private var currentFragmentTag: String? = null
 
 
-    override val layoutId = R.layout.read_activity_main
+    override fun bindLayout() = R.layout.read_activity_main
 
-    override fun initViews(savedInstanceState: Bundle?) {
+
+    override fun initData(savedInstanceState: Bundle?) {
         initNavigationViewHeader()
         initFragment(savedInstanceState)
         initBottomNavigationView()
     }
+
+    override fun initView() {
+
+    }
+
 
     private fun initBottomNavigationView() {
         val list = mutableListOf<BottomNavigationView.ItemBean>()
@@ -90,9 +97,6 @@ class MainActivity : BaseActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(CURRENT_FRAGMENT_TAG, currentFragmentTag)
-    }
-
-    override fun loadData() {
     }
 
     private fun initNavigationViewHeader() {
@@ -247,9 +251,7 @@ class MainActivity : BaseActivity() {
     }
 
     fun showSnack(msg: String) {
-        drawerLayout?.let {
-            showSnack(drawerLayout, msg)
-        }
+        SingleToastUtil.showToast(msg)
     }
 
 

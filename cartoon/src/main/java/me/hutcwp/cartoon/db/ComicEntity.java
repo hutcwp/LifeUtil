@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey;
 
 /**
  * Created by hutcwp on 2019-06-01 16:53
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  * 漫画实体类
  **/
 @Entity

@@ -13,8 +13,8 @@ import me.hutcwp.log.MLog
 
 /**
  * Created by hutcwp on 2019-11-04 16:06
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 @Route(path = "/host/schema")
 class SchemaFilterActivity : Activity() {

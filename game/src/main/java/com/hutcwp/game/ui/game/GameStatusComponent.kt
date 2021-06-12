@@ -18,8 +18,8 @@ import me.hutcwp.log.MLog
 /**
  *
  * Created by hutcwp on 2019-06-23 21:55
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class GameStatusComponent private constructor() : BaseComponent() {

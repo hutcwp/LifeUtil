@@ -8,8 +8,8 @@ import java.util.*
 
 /**
  * Created by hutcwp on 2019-12-10 20:54
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 open class SharedPref(private val mPref: SharedPreferences) {
 

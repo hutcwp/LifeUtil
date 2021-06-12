@@ -47,11 +47,7 @@ android {
 }
 
 dependencies {
-    // 解决support包重复导入问题
-//    implementation 'androidx.appcompat:appcompat:1.0.2'
-    configurations {
-        all*.exclude group: 'com.android.support', module: 'support-v13'
-    }
+
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -78,22 +74,19 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.1.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
 
-//    implementation 'hutcwp:mvppresenter:1.0.9'
-//    annotationProcessor 'hutcwp:mvppresenter-compiler:1.0.8'
 
-    implementation (project(path: ':mvppresenter:mvppresenter-annotations')){
+    implementation(project(path: ':mvppresenter:mvppresenter-annotations')) {
         exclude group: 'org.jetbrains', module: 'annotations-java5'
     }
     implementation project(path: ':mvppresenter:mvppresenter')
     kapt project(':mvppresenter:mvppresenter-compiler')
     annotationProcessor project(':mvppresenter:mvppresenter-compiler')
+    
+    implementation project(path: ':base')
+    implementation project(path: ':common')
 
-//    compile project(path: ':cartoon')
-    compile project(path: ':base')
-
-    implementation 'com.alibaba:arouter-api:1.5.0'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
-    kapt 'com.alibaba:arouter-compiler:1.2.2'
+    implementation deps.arouter_api
+    kapt deps.arouter_compiler
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8"
 }

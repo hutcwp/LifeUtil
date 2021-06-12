@@ -5,8 +5,8 @@ import android.os.Build;
 
 /**
  * Created by hutcwp on 2019-06-25 15:13
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class ActivityCheckUtils {
 

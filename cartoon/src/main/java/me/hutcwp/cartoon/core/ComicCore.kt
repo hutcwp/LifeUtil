@@ -10,8 +10,8 @@ import me.hutcwp.cartoon.db.Mapper
 
 /**
  * Created by hutcwp on 2019-06-01 23:09
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 object ComicCore {
 

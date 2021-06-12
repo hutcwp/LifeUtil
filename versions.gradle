@@ -90,8 +90,8 @@ support.app_compat = 'androidx.appcompat:appcompat:1.2.0'
 support.cardview = 'androidx.cardview:cardview:1.0.0'
 support.multidex = 'androidx.multidex:multidex:2.0.1'
 support.viewpage2 = "androidx.viewpager2:viewpager2:1.0.0"
-support.room = "androidx.room:room-runtime:2.2.6"
-support.room_compiler = "androidx.room:room-compiler:2.2.6"
+support.room = "androidx.room:room-runtime:2.3.0"
+support.room_compiler = "androidx.room:room-compiler:2.3.0"
 deps.support = support
 
 

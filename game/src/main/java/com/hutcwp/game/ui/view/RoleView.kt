@@ -9,8 +9,8 @@ import com.hutcwp.game.R
 /**
  *
  * Created by hutcwp on 2019-06-25 17:40
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class RoleView(context: Context?, attrs: AttributeSet?) : RelativeLayout(context, attrs) ,View.OnClickListener{

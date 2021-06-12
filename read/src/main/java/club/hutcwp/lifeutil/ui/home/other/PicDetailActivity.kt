@@ -7,7 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import kotlinx.android.synthetic.main.read_activity_girl_picture.*
-import me.hutcwp.util.RoutePath
+import me.hutcwp.other.RoutePath
 
 
 @Route(path = RoutePath.PIC_DETAIL_ACTIVITY, name = "图片详情页面")

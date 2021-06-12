@@ -8,8 +8,8 @@ import me.hutcwp.BasicConfig;
 
 /**
  * Created by hutcwp on 2019-12-10 17:58
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class SingleToastUtil {
     private static String oldMsg;

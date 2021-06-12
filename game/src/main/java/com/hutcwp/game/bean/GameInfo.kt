@@ -5,8 +5,8 @@ import com.hutcwp.game.core.GameManager
 /**
  *
  * Created by hutcwp on 2019-06-23 18:49
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class GameInfo() {

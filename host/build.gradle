@@ -64,14 +64,14 @@ dependencies {
     //用于chrome远程调试
     debugCompile 'com.facebook.stetho:stetho:1.5.0'
 
-    compile project(path: ':cartoon')
+//    compile project(path: ':cartoon')
     compile project(path: ':base')
     compile project(path: ':homepage')
     compile project(path: ':read')
-    compile project(path: ':tiktok')
-    compile project(path: ':weather')
-    compile project(path: ':game')
-    compile project(path: ':blog')
+//    compile project(path: ':tiktok')
+//    compile project(path: ':weather')
+//    compile project(path: ':game')
+//    compile project(path: ':blog')
 
     // 本地异常捕捉框架：https://github.com/Ereza/CustomActivityOnCrash
     implementation 'cat.ereza:customactivityoncrash:2.2.0'

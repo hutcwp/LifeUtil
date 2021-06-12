@@ -13,12 +13,11 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import club.hutcwp.lifeutil.BuildConfig
 import club.hutcwp.lifeutil.R
-import club.hutcwp.lifeutil.ui.base.BaseActivity
 import club.hutcwp.lifeutil.util.WebUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.hutcwp.common.mvp.BaseActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -44,15 +43,15 @@ class AboutActivity : BaseActivity() {
 
     private var disposable: Disposable? = null
 
-    override val layoutId: Int
-        get() = R.layout.read_activity_about
 
-    override fun initViews(savedInstanceState: Bundle?) {
-        setDisplayHomeAsUpEnabled(true)
+    override fun bindLayout() = R.layout.read_activity_about
+
+    override fun initData(savedInstanceState: Bundle?) {
+//        setDisplayHomeAsUpEnabled(true)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         tvVersion = findViewById<View>(R.id.tv_app_version) as TextView
-        tvVersion!!.text = "v" + BuildConfig.VERSION_NAME
+        tvVersion!!.text = "v" + BuildConfig.BUILD_TYPE
         imageSwitcher = findViewById<View>(R.id.imageSwitcher) as ImageSwitcher
         imageSwitcher!!.setFactory {
             val imageView = ImageView(this@AboutActivity)
@@ -65,6 +64,19 @@ class AboutActivity : BaseActivity() {
                 R.anim.zoom_out)
     }
 
+    override fun initView() {
+        TODO("Not yet implemented")
+    }
+
+    override fun requestData() {
+        super.requestData()
+        imageSwitcher!!.post { loadImage() }
+        disposable = Observable.interval(5, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { loadImage() }
+    }
+
+
     private fun loadImage() {
         Glide.with(this).asDrawable()
                 .load(imageUrls[Random().nextInt(imageUrls.size)])
@@ -73,13 +85,6 @@ class AboutActivity : BaseActivity() {
                         imageSwitcher?.setImageDrawable(resource)
                     }
                 })
-    }
-
-    override fun loadData() {
-        imageSwitcher!!.post { loadImage() }
-        disposable = Observable.interval(5, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { loadImage() }
     }
 
     fun onClick(v: View) {

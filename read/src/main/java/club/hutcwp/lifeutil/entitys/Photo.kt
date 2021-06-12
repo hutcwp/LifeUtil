@@ -2,8 +2,8 @@ package club.hutcwp.lifeutil.entitys
 
 /**
  * Created by hutcwp on 2018/10/15 19:24
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 
 /**

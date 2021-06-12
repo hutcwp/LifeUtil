@@ -17,8 +17,8 @@ import me.hutcwp.log.MLog
 /**
  *
  * Created by hutcwp on 2019-06-25 14:43
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class WelcomeComponent : BaseComponent() {

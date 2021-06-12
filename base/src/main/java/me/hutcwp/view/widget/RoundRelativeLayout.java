@@ -18,8 +18,8 @@ import me.hutcwp.base.R;
 
 /**
  * Created by hutcwp on 2019-11-28 21:18
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  * 矩形圆角控件
  **/
 public class RoundRelativeLayout extends RelativeLayout {

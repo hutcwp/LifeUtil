@@ -1,7 +1,7 @@
 package com.hutcwp.mainpage
 
 import me.hutcwp.auto.IMainPage
-import me.hutcwp.util.RoutePath
+import me.hutcwp.other.RoutePath
 
 /**
  *  author : kevin

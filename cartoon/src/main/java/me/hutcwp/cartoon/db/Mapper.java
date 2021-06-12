@@ -6,8 +6,8 @@ import me.hutcwp.cartoon.net.ComicResponse;
 
 /**
  * Created by hutcwp on 2019-06-01 23:25
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class Mapper {
 

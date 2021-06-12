@@ -16,8 +16,8 @@ import me.hutcwp.util.ResolutionUtils
 /**
  *
  * Created by hutcwp on 2019-06-25 19:17
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 class BattleSceneComponent private constructor() : DialogFragment() {

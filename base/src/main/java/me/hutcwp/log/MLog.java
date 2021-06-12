@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 
 /**
  * Created by hutcwp on 2019-06-06 12:12
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public final class MLog {
 

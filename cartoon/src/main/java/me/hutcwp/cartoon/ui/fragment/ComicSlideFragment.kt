@@ -21,8 +21,8 @@ import me.hutcwp.cartoon.util.startAnimation
 /**
  *
  * Created by hutcwp on 2019-06-02 18:17
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  *
  **/
 

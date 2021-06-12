@@ -7,8 +7,8 @@ import androidx.viewpager.widget.ViewPager
 /**
  *
  * Created by hutcwp on 2019-10-22 16:16
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ * 
  *
  **/
 

@@ -5,8 +5,8 @@ import hut.cwp.core.MvpView
 
 /**
  * Created by hutcwp on 2018/10/13 01:39
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  * 一级tab接口
  */
 interface ITop<T> : MvpView {

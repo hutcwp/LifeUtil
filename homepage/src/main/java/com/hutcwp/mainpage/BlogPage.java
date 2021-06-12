@@ -4,8 +4,8 @@ import me.hutcwp.auto.IMainPage;
 
 /**
  * Created by hutcwp on 2019-11-04 15:39
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 public class BlogPage implements IMainPage {
 

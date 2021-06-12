@@ -4,8 +4,8 @@ import me.hutcwp.auto.IMainPage;
 
 /**
  * Created by hutcwp on 2019-06-09 23:33
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 
 public class CartoonLoadPage implements IMainPage {

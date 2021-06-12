@@ -1,4 +1,4 @@
-package me.hutcwp.util
+package me.hutcwp.other
 
 /**
  *  author : kevin
@@ -10,5 +10,7 @@ object RoutePath {
     const val PIC_DETAIL_ACTIVITY =  "/read/picDetail"
 
     const val TIKTOK_MAIN =  "/tiktok/main"
+
+    const val READ_MAIN = "/read/main"
 
 }

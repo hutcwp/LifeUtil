@@ -8,8 +8,8 @@ import androidx.room.RoomDatabase;
 
 /**
  * Created by hutcwp on 2019-06-01 03:30
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  **/
 @Database(entities = {ComicEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

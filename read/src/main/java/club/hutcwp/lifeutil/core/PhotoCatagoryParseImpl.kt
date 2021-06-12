@@ -12,8 +12,8 @@ import club.hutcwp.lifeutil.entitys.NormalPhoto
 
 /**
  * Created by hutcwp on 2018/10/14 16:46
- * email: caiwenpeng@yy.com
- * YY: 909076244
+ *
+ *
  */
 class PhotoCatagoryParseImpl : IParse<NormalPhoto>() {
 

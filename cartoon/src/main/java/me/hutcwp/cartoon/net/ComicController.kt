@@ -13,7 +13,7 @@ interface ComicController {
 
     //http://localhost:8080/carton/getpages
 
-    @GET("http://192.168.1.102:8080/carton/getpages")
+    @GET("http://192.168.1.104:8080/carton/getpages")
     suspend fun getCartonByChapter(@Query("carton_id") page: Int, @Query("chapter") rows: Int): List<ComicResponse>
 
 }

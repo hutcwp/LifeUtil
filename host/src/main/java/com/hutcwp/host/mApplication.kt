@@ -1,7 +1,6 @@
 package com.hutcwp.host
 
-import android.annotation.SuppressLint
-import android.content.Context
+//import me.hutcwp.cartoon.app.CartoonInitLogic
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
@@ -11,7 +10,6 @@ import com.hutcwp.host.activity.SplashActivity
 import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
 import me.hutcwp.constants.AppConfig
-//import me.hutcwp.cartoon.app.CartoonInitLogic
 import me.hutcwp.webp.WebpBytebufferDecoder
 import me.hutcwp.webp.WebpDrawable
 import me.hutcwp.webp.WebpResourceDecoder
@@ -20,8 +18,6 @@ import java.nio.ByteBuffer
 
 /**
  * Created by hutcwp on 2019-06-02 02:43
- *
- *
  */
 class mApplication : BaseApplication() {
 
@@ -32,7 +28,6 @@ class mApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        context = applicationContext
         initAppConfig()
         BasicConfig.setApplicationContext(applicationContext)
         if (isDebug()) {
@@ -63,6 +58,7 @@ class mApplication : BaseApplication() {
 //        AppConfig.channel = ChannelReaderUtil.getChannel(this) ?: "unknown"
 //        AppConfig.mid = TVCUtils.getDevUUID(this)
     }
+
     private fun aRouterInit() {
         if (isDebug()) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog()     // 打印日志
@@ -84,10 +80,4 @@ class mApplication : BaseApplication() {
                 .prepend(ByteBuffer::class.java, WebpDrawable::class.java, byteDecoder)
     }
 
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        @JvmStatic
-        var context: Context? = null
-            private set
-    }
 }

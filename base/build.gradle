@@ -114,6 +114,8 @@ dependencies {
     api deps.multitype
     api deps.circle_iv
     api deps.brvah
+    api deps.immersionbar_base
+    api deps.immersionbar_ktx
 
 
     api deps.junit

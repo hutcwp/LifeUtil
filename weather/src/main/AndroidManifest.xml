@@ -5,7 +5,6 @@
 
     <application
         android:allowBackup="true"
-        android:networkSecurityConfig="@xml/wea_network_security_config"
         android:supportsRtl="true"
         android:theme="@style/KaleTheme">
 

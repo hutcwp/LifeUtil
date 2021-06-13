@@ -23,7 +23,9 @@ class WebInputActivity : AppCompatActivity() {
     private fun setListener() {
         btn_confirm?.setOnClickListener {
             var webStr = et_web.text.toString()
-            if (!webStr.contains("https://") || !webStr.contains("http://")) {
+            if (webStr.contains("https://") || webStr.contains("http://")) {
+
+            } else {
                 webStr = "https://$webStr"
             }
 

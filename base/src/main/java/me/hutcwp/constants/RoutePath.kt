@@ -17,4 +17,7 @@ object RoutePath {
     const val SIMPLE_WEB = "/web/simple"
     const val WEB_MAIN = "/web/main"
 
+
+    const val MUSIC_MAIN = "/music/main"
+
 }

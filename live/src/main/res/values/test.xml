@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test_healthy_live">严禁直播中抽烟、喝酒，严禁酒后直播表现耍酒疯、酣睡等醉态，违反的用户将永久封禁直播，乃至封禁账号。
+        \n\n温馨提醒：网络巡警24小时监视，请主播们以身作则，传播正能量。严禁通过第三方进行充值，请大家谨防受骗。</string>
+
+    <string-array name="test_content">
+        <item>老铁666，这一波操作猛如虎！</item>
+        <item>你是哪里人啊？我的第六感你应该是河南人</item>
+        <item>相见恨晚啊！老铁</item>
+        <item>你的眼神使我心里着迷，啊啊啊啊</item>
+        <item>噗哈哈哈，笑死我了！！！</item>
+        <item>想听你唱歌诶~</item>
+        <item>你好漂亮，好喜欢你哦~</item>
+        <item>Hello，妹子，我关注你啦~</item>
+        <item>你的衣服在哪里买的？给个淘宝链接？</item>
+        <item>你的口红是香奈儿吗？超喜欢的</item>
+        <item>小猫咪，我明天就高考了，可以给我加油嘛？</item>
+        <item>我有一点点酷，一点点可爱，还有好多好多喜欢你</item>
+        <item>治愈了我这几天郁闷的心情，比心啊♡。</item>
+        <item>哇！好听！</item>
+        <item>听到这个消息我很难受</item>
+        <item>我喜欢阅读和欣赏音乐。</item>
+        <item>那家伙～多少次了，也没脸</item>
+        <item>小白鞋怎么～，他就是不答应。 </item>
+        <item>那个姜老板是个土鳖财主，贪财～</item>
+        <item>那小子是个～，你可不能理他。 </item>
+        <item>我从小就是个大胆，不知什么是害怕，人家都说我..</item>
+        <item>stay close</item>
+        <item>be right back，bro，兄弟我马上就回来</item>
+        <item>某人长得难看或者笨就说他包子</item>
+        <item>就不去，就不去</item>
+        <item>气死我了</item>
+        <item>666</item>
+        <item>扎心了老铁</item>
+        <item>猥琐发育，不要浪！</item>
+        <item>请求集合</item>
+        <item>过你就像过清晨的马路</item>
+        <item>you sun of bench</item>
+        <item>哈喽！</item>
+        <item>阿拉是上海人</item>
+        <item>美女早上好啊</item>
+        <item>那么嗨的吗？</item>
+        <item>我觉得我有超能力</item>
+        <item>你累不累啊，在我心里跑了那么久</item>
+        <item>你知道你和猪八戒有什么区别吗？没区别</item>
+        <item>唐僧有宝马，你没有!</item>
+        <item>666666666666666666666666666</item>
+        <item>2333333333333333</item>
+        <item>红红火火恍恍惚惚~</item>
+        <item>呵呵</item>
+        <item>谢谢你</item>
+        <item>先下啦，拜拜</item>
+        <item>2*3 2*3 2*3</item>
+        <item>six,six,six</item>
+        <item>很有国际范~</item>
+        <item>下次直播啥时候？</item>
+        <item>你唱的歌让我沉迷！</item>
+        <item>我是你的小迷弟</item>
+        <item>这不是宋慧乔吗？</item>
+        <item>知道啦，姐姐，注意休息</item>
+        <item>能不能唱首气球？</item>
+        <item>小猫咪辛苦了</item>
+        <item>准备好了吗？我要给你刷火箭了</item>
+        <item>可以和你吃个饭吗？</item>
+        <item>嘿，美女，今晚一起看个电影？</item>
+        <item>We are family！</item>
+        <item>给我你的爱爱爱~</item>
+        <item>那必须的！</item>
+
+    </string-array>
+
+    <string-array name="test_usernames">
+        <item>我叫陈大卫</item>
+        <item>夏一季夏天</item>
+        <item>好丽友Mary</item>
+        <item>翟志强</item>
+        <item>繁花-扶桑</item>
+        <item>qcl_union~</item>
+        <item>後來1573</item>
+        <item>小黑龙yc</item>
+        <item>平子he</item>
+        <item>J.zen</item>
+        <item>uu没有感情</item>
+        <item>架子鼓少女xing</item>
+        <item>白鬼顾</item>
+        <item>J-777琦琦琦琦</item>
+        <item>木星有光</item>
+        <item>J-777琦琦琦琦</item>
+        <item>冰摇柠檬茶不加茶</item>
+        <item>PartiQuler</item>
+        <item>Aka不好好睡觉</item>
+        <item>我在学校听着课</item>
+        <item>遥望明月山长水阔</item>
+        <item>风沙星辰0417</item>
+        <item>ripaxb</item>
+        <item>火山大静静</item>
+        <item>J仲夏酒的糖</item>
+        <item>泉目RG</item>
+        <item>_椰椰椰_</item>
+        <item>ielstudy</item>
+        <item>你的甜酒-</item>
+        <item>飘渺大虫子</item>
+        <item>是尤大宝的尤宝妹啊</item>
+        <item>J_zaaaa</item>
+        <item>薄荷心180518</item>
+        <item>名模-A</item>
+        <item>飘渺大虫子</item>
+        <item>寡虎难抵众狼</item>
+        <item>LIQIAN1997</item>
+        <item>我头上长蘑菇了</item>
+        <item>xiangnizenmeban</item>
+        <item>带带大师兄</item>
+        <item>Oppa</item>
+    </string-array>
+
+
+    <string-array name="test_atusernames">
+        <item>Oppa</item>
+        <item>想吃喵的鲸鱼</item>
+        <item>金坷垃</item>
+        <item>橙橙爱晨</item>
+        <item>成都</item>
+        <item>日天日地</item>
+        <item>艾斯德斯</item>
+        <item>史蒂夫</item>
+        <item>凯哥哥</item>
+        <item>蝴蝶飞飞</item>
+        <item>传送带</item>
+        <item>哥仨勾搭上</item>
+        <item>范德萨</item>
+        <item>淡粉色的回忆</item>
+        <item>一瞬晨昏遇见</item>
+        <item>_Mango很二</item>
+        <item>你和他的它</item>
+        <item>魏老板的小橙</item>
+        <item>余禾0127</item>
+        <item>白阁阁</item>
+        <item>freedom鲸</item>
+        <item>何年君</item>
+        <item>CICIsamako</item>
+        <item>小时候就会飞1707</item>
+        <item>lluuuuyou</item>
+        <item>LemonBreeze</item>
+        <item>cxk的小可爱-ws</item>
+        <item>你说你一毕了业不会再回望以前</item>
+        <item>不动声色的喵</item>
+        <item>jason</item>
+        <item>希啊阿希</item>
+        <item>cate</item>
+        <item>TracyMcg</item>
+        <item>JaceMan8</item>
+        <item>科比布莱恩特</item>
+        <item>james哈登</item>
+        <item>火爆哥</item>
+    </string-array>
+
+    <string-array name="test_giftname">
+        <item>飞机</item>
+        <item>鲜花</item>
+        <item>心</item>
+        <item>足球</item>
+        <item>星星</item>
+        <item>气球</item>
+        <item>叶子</item>
+        <item>杯子</item>
+        <item>游艇</item>
+        <item>盾牌</item>
+        <item>城堡</item>
+        <item>汽车</item>
+        <item>芒果</item>
+        <item>西瓜</item>
+    </string-array>
+
+    <string-array name="test_giftid">
+        <item>@drawable/ic_gift_air</item>
+        <item>@drawable/ic_gift_flower</item>
+        <item>@drawable/ic_gift_heart</item>
+        <item>@drawable/ic_gift_football</item>
+        <item>@drawable/ic_gift_star</item>
+        <item>@drawable/ic_gift_balloon</item>
+        <item>@drawable/ic_gift_leaf</item>
+        <item>@drawable/ic_gift_cup</item>
+        <item>@drawable/ic_gift_yacht</item>
+        <item>@drawable/ic_gift_shield</item>
+        <item>@drawable/ic_gift_castle</item>
+        <item>@drawable/ic_gift_car</item>
+        <item>@drawable/ic_gift_mango</item>
+        <item>@drawable/ic_gift_watermelon</item>
+    </string-array>
+
+    <string-array name="test_giftnum">
+        <item>x1</item>
+        <item>x10</item>
+        <item>x99</item>
+        <item>x999</item>
+        <item>x9999</item>
+    </string-array>
+
+    <string-array name="test_system_news">
+        <item>系统消息：你成为了新的粉丝，欢迎欢迎。</item>
+        <item>系统消息：恭喜你成为了主播的守护骑士，你们正式成为了好友！</item>
+        <item>系统消息：点击关注主播，不要错过了主播的下一场直播！</item>
+        <item>系统消息：你向FaceBook分享了本场直播。</item>
+        <item>系统消息：你向微信分享了本场直播。</item>
+        <item>系统消息：你向Twitter分享了本场直播。</item>
+        <item>系统消息：本场直播点赞到达99次！</item>
+        <item>系统消息：本场直播点赞到达999次！</item>
+        <item>系统消息：本场直播点赞到达9999次！</item>
+        <item>系统消息：本场直播点赞到达99999次！</item>
+        <item>系统消息：主播已经开放连麦功能，点击我要上麦申请和主播连麦互动！</item>
+        <item>系统消息：主播暂时离开一会，不要离开，马上回来。</item>
+        <item>系统消息：网络似乎失去了连接，正在重试中!</item>
+        <item>系统消息：当前网络正常。</item>
+    </string-array>
+
+    <string-array name="test_activity_news">
+        <item>送礼可以让主播积攒人气，送个礼试试看！</item>
+        <item>成为VIP用户即可享受多种特权，赶紧来体验吧！</item>
+        <item>加入主播后宫粉丝团，找到你的组织，为他/她疯狂打Call！</item>
+        <item>主播连连看，想认识更多的人吗，点击此处进行随机连麦！</item>
+    </string-array>
+</resources>

@@ -1,4 +1,4 @@
-package com.hutcwp.live
+package com.hutcwp.live.chat.bean
 
 import com.google.gson.annotations.SerializedName
 

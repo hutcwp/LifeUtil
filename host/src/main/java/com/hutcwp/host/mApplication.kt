@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.hutcwp.homepage.HomePageInitLogic
 import com.hutcwp.host.activity.CrashActivity
 import com.hutcwp.host.activity.SplashActivity
+import com.ryan.baselib.util.AppUtils
 import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
 import me.hutcwp.constants.AppConfig
@@ -28,6 +29,8 @@ class mApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+        AppUtils.init(this)
         initAppConfig()
         BasicConfig.setApplicationContext(applicationContext)
         if (isDebug()) {

@@ -1,13 +1,13 @@
-package com.hutcwp.live
+package com.hutcwp.live.chat.binder.other
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.drakeet.multitype.ItemViewBinder
-import com.drakeet.multitype.ItemViewDelegate
+import com.hutcwp.live.R
+import com.hutcwp.live.chat.bean.Foo
 
 /**
  * Description:

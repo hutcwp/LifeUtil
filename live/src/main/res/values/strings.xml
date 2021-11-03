@@ -1,1 +1,15 @@
-<resources></resources>
+<resources>
+
+    <string name="str_to">：</string>
+    <string name="str_at">\@</string>
+    <string name="str_send_to">我给主播赠送了</string>
+    <string name="str_news">News</string>
+
+    <string name="username">可爱的小猫咪</string>
+    <string name="viewers_num">2000</string>
+    <string name="viewers">观众 8</string>
+    <string name="say_something">Say Hello</string>
+
+    <string name="live_test_healthy_live">健康直播</string>
+
+</resources>

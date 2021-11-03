@@ -1,4 +1,4 @@
-package com.hutcwp.live
+package com.hutcwp.live.chat.binder.other
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.drakeet.multitype.ItemViewBinder
+import com.hutcwp.live.R
+import com.hutcwp.live.chat.bean.Data
 
 /**
  * Description:
@@ -18,7 +20,7 @@ class DataType2ViewBinder : ItemViewBinder<Data, DataType2ViewBinder.ViewHolder>
         return ViewHolder(inflater.inflate(R.layout.item_text, parent, false))
     }
 
-    override fun onBindViewHolder(holder: DataType2ViewBinder.ViewHolder, item: Data) {
+    override fun onBindViewHolder(holder: ViewHolder, item: Data) {
         holder.setTitle(item.title)
     }
 

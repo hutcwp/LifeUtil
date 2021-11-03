@@ -10,6 +10,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_splash.*
+import me.hutcwp.constants.RoutePath
 import java.util.concurrent.TimeUnit
 
 /**
@@ -46,7 +47,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun toHomePage() {
-        ARouter.getInstance().build("/homepage/home").navigation()
+        ARouter.getInstance().build(RoutePath.LIVE_CHANNEL).navigation()
 //        ARouter.getInstance().build("/homepage/assist").navigation()
         finish()
     }

@@ -20,4 +20,7 @@ object RoutePath {
 
     const val MUSIC_MAIN = "/music/main"
 
+
+    const val LIVE_CHANNEL = "/live/channel"
+
 }

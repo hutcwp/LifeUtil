@@ -77,6 +77,7 @@ dependencies {
     implementation project(path: ':cartoon')
     implementation project(path: ':weather')
     implementation project(path: ':homepage')
+    implementation project(path: ':live')
 
     // 本地异常捕捉框架：https://github.com/Ereza/CustomActivityOnCrash
     implementation 'cat.ereza:customactivityoncrash:2.2.0'

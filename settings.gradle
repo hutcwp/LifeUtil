@@ -1,12 +1,21 @@
 include ':notebook'
 include ':common'
+include ':base'
 include ':tiktok'
-include  ':cartoon', ':base', ':host', ':homepage', ':weather', ':game', ':blog'
+include ':cartoon'
 include ':read'
-include ':tiktok'
+include ':game'
+include ':blog'
+include ':weather'
+include ':homepage'
+include ':live'
+
 include ':uamp:common'
 include ':uamp:automotive'
 include ':uamp:app'
+
 include ':mvppresenter:mvppresenter'
 include ':mvppresenter:mvppresenter-annotations'
 include ':mvppresenter:mvppresenter-compiler'
+
+include ':host'

@@ -3,6 +3,7 @@ package com.hutcwp.live.chat;
 import android.content.res.TypedArray;
 
 import com.hutcwp.live.R;
+import com.hutcwp.live.chat.bean.EntMsgBean;
 import com.hutcwp.live.chat.bean.MyChatMsg;
 import com.ryan.baselib.util.AppUtils;
 
@@ -125,5 +126,11 @@ public class TestUtils {
         String[] array = AppUtils.getContext().getResources().getStringArray(R.array.test_activity_news);
         return array[new Random().nextInt(array.length)];
 
+    }
+
+
+    public static EntMsgBean getEntMsg(){
+        EntMsgBean entMsgBean = new EntMsgBean(getRandomUserName());
+        return entMsgBean;
     }
 }

@@ -1,17 +1,11 @@
-package com.hutcwp.live.chat.binder.chat
+package com.hutcwp.live.chat.intepreter
 
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
-import com.drakeet.multitype.ItemViewBinder
 import com.hutcwp.live.R
 import com.hutcwp.live.chat.bean.MyChatMsg
 import com.ryan.baselib.util.AppUtils
@@ -20,22 +14,17 @@ import com.ryan.baselib.util.DensityUtils
 import com.ryan.baselib.widget.CenteredImageSpan
 
 /**
- * 送礼的Holder
- *
- * @author RyanLee
+ *  author : kevin
+ *  date : 2021/11/6 1:32 AM
+ *  description :
  */
-class GiftNewsHolder : ItemViewBinder<MyChatMsg, GiftNewsHolder.ViewHolder>() {
+class GiftInterpreter : IParseSpan<MyChatMsg> {
 
 
-    override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder {
-        return ViewHolder(inflater.inflate(R.layout.live_layout_gift_text, parent, false))
-    }
+    override fun parse(data: MyChatMsg): Spannable {
 
-
-    override fun onBindViewHolder(holder: ViewHolder, data: MyChatMsg) {
-
-        val strTo: String = AppUtils.getContext().getResources().getString(R.string.str_to)
-        val strSendTo: String = AppUtils.getContext().getResources().getString(R.string.str_send_to)
+        val strTo: String = AppUtils.getContext().resources.getString(R.string.str_to)
+        val strSendTo: String = AppUtils.getContext().resources.getString(R.string.str_send_to)
         val builder = SpannableStringBuilder()
         if (data.headLight > 0) {
             // 设置头灯
@@ -43,7 +32,7 @@ class GiftNewsHolder : ItemViewBinder<MyChatMsg, GiftNewsHolder.ViewHolder>() {
             resId = when (data.headLight) {
                 MyChatMsg.HEAD_LIGHT_VIP -> R.drawable.ic_vip
                 MyChatMsg.HEAD_LIGHT_DIAMOND -> R.drawable.ic_diamond
-                else -> return
+                else -> -1
             }
             builder.append(" ")
             val imageNewSize: Int = DensityUtils.dp2px(AppUtils.getContext(), 24f)
@@ -64,11 +53,9 @@ class GiftNewsHolder : ItemViewBinder<MyChatMsg, GiftNewsHolder.ViewHolder>() {
         //设置用户名颜色
         colorSpan = ForegroundColorSpan(ContextCompat.getColor(AppUtils.getContext(), R.color.color_chat_username))
         builder.setSpan(colorSpan, 0, data.sendUserName.length + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
-        holder.tips.text = builder
+
+        return builder
     }
 
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tips: TextView = itemView.findViewById(R.id.tv_gift_msg)
-    }
 }

@@ -11,6 +11,7 @@
         android:lineSpacingExtra="@dimen/dp3"
         android:textColor="#deab06"
         android:textSize="@dimen/sp14"
+        android:text="sdfdsfdsf"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

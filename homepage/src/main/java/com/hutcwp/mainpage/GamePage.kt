@@ -15,6 +15,6 @@ class GamePage : IMainPage {
     }
 
     override fun getPath(): String {
-        return "/game/main"
+        return "/game/srw"
     }
 }

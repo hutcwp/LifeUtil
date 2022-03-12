@@ -11,5 +11,17 @@ import com.hutcwp.srw.info.Robot
  */
 class RobotSprite(val context: Context, val robot: Robot, val params: RobotParams) : BaseSprite(BaseUI(context), params.pos, params.resId) {
 
+    fun beAttack(robot: Robot) {
+        val attack = robot.attack
+        this.robot.hp = this.robot.hp - attack
+        if (this.robot.hp <= 0) {
+            showDestroyAnim()
+        }
+    }
+
+    private fun showDestroyAnim() {
+
+    }
+
 
 }

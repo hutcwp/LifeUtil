@@ -19,4 +19,6 @@ interface IControllerMenu {
 
     fun select(sprite: BaseSprite)
 
+    fun attack()
+
 }

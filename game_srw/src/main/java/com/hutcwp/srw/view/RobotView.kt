@@ -25,7 +25,7 @@ class RobotView @JvmOverloads constructor(
         tv_name?.text = robot.name
         tv_level?.text = "LV" + robot.level
         tv_type?.text = "" + robot.type
-        tv_hp?.text = "HP: 380/380"
+        tv_hp?.text = "HP: ${robot.hp}/${robot.maxHp}"
     }
 
 }

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="名字"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_level"
@@ -19,7 +19,7 @@
         android:layout_below="@id/tv_name"
         android:text="LV1"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_type"
@@ -32,15 +32,15 @@
         android:layout_toRightOf="@id/tv_level"
         android:text="类型"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_hp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_type"
-        android:text="HP"
+        android:text="HP: 3434"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="16sp" />
 
 </RelativeLayout>

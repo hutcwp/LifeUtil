@@ -57,8 +57,8 @@ class MapView @JvmOverloads constructor(
 
         val x = sprite.pos.x
         val y = sprite.pos.y
-        val marginStart = y * MainGameActivity.UNIT_MAP
-        val marginTop = x * MainGameActivity.UNIT_MAP
+        val marginStart = x * MainGameActivity.UNIT_MAP
+        val marginTop = y * MainGameActivity.UNIT_MAP
 
         val lp = FrameLayout.LayoutParams(MainGameActivity.UNIT_MAP, MainGameActivity.UNIT_MAP).apply {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -110,8 +110,8 @@ class MapView @JvmOverloads constructor(
         if (this.contains(sprite.view)) {
             val x = sprite.pos.x
             val y = sprite.pos.y
-            val marginStart = y * MainGameActivity.UNIT_MAP
-            val marginTop = x * MainGameActivity.UNIT_MAP
+            val marginStart = x * MainGameActivity.UNIT_MAP
+            val marginTop = y * MainGameActivity.UNIT_MAP
 
             val lp = FrameLayout.LayoutParams(MainGameActivity.UNIT_MAP, MainGameActivity.UNIT_MAP).apply {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -135,11 +135,23 @@ class MapView @JvmOverloads constructor(
         }
     }
 
+    fun showAttackRange(pos: Pos, range: Int) {
+        mapSpriteSpriteList.forEach {
+            val absX = Math.abs(it.pos.x - pos.x)
+            val absY = Math.abs(it.pos.y - pos.y)
+            if (absX + absY < range) {
+                it.view.alpha = 0.5f
+            }
+        }
+    }
+
     fun showNormalRange() {
         mapSpriteSpriteList.forEach {
             it.view.alpha = 1f
         }
     }
+
+
 
     fun canMove(pos: Pos): Boolean {
         return mapSpriteSpriteList.find { it.pos == pos && it.view.alpha == 0.5f } != null

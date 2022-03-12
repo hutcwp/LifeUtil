@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hutcwp.srw.controller.GameController
 import com.hutcwp.srw.view.MapView
+import kotlinx.android.synthetic.main.activity_main_game.*
 
 @Route(path = "/game/srw")
 class MainGameActivity : AppCompatActivity() {
@@ -27,6 +28,7 @@ class MainGameActivity : AppCompatActivity() {
 
     private fun initData() {
         gameController = GameController(map!!)
+        gcLayout?.gameController = gameController
     }
 
 

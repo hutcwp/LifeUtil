@@ -13,7 +13,7 @@ interface IControllerMenu {
 
     fun status()
 
-    fun turn()
+    fun finish()
 
     fun skill()
 

@@ -20,6 +20,8 @@ class RobotParams(val resId: Int, val pos: Pos) {
 
 class Pos(val x: Int, val y: Int) {
 
+    constructor(pos: Pos) : this(pos.x, pos.y)
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -31,6 +33,7 @@ class Pos(val x: Int, val y: Int) {
 
         return true
     }
+
 
     override fun hashCode(): Int {
         var result = x

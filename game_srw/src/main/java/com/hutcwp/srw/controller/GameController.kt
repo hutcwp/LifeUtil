@@ -2,6 +2,7 @@ package com.hutcwp.srw.controller
 
 import android.widget.Toast
 import com.hutcwp.srw.BattleUtil
+import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.R
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.info.Robot
@@ -16,9 +17,6 @@ import me.hutcwp.log.MLog
  */
 class GameController(private val mapView: MapView) : IControllerMenu, IGameController {
 
-    private var robotSpriteList: MutableList<RobotSprite> = mutableListOf()
-    private var mapSpriteList: MutableList<MapSprite> = mutableListOf()
-    private var selectSprite: SelectSprite? = null
     private var curSprite: BaseSprite? = null
 
     private var curRobotSprite: RobotSprite? = null
@@ -26,59 +24,14 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
     private var menuStatus: MenuStatus = MenuStatus.Normal
 
 
-    private val dataMock = TestMockData()
-
     init {
         mapView.gameController = this
-        initMap()
-        initRobot()
-        initSelect()
+        GameMain.initGame(mapView)
     }
 
-    private fun initSelect() {
-        val params = RobotParams.Builder().apply {
-            this.pos = Pos(2, 3)
-            this.resId = R.drawable.icon_select
-        }.build()
-        selectSprite = SelectSprite(mapView.context, params)
-        mapView.initSelect(selectSprite!!)
-    }
-
-    private fun initRobot() {
-        robotSpriteList.let {
-            it.add(dataMock.createRobot(mapView.context,
-                    Robot(1, 1, "刚达R", 4, 100, 400), R.drawable.robot_1, 4, 2))
-            it.add(dataMock.createRobot(mapView.context,
-                    Robot(1, 1, "魔神Z", 4, 80, 340), R.drawable.robot_2, 6, 6))
-
-            mapView.initRobots(it)
-        }
-    }
-
-    private fun initMap() {
-        mapSpriteList.let {
-            for (x in 0..MAP_WIDTH_SIZE) {
-                for (y in 0..MAP_HEIGHT_SIZE) {
-                    it.add(createMap(R.drawable.a_01, Pos(x, y)))
-                }
-            }
-            mapView.initMap(it)
-        }
-    }
-
-
-    private fun createMap(resId: Int, pos: Pos): MapSprite {
-        return MapSprite(mapView.context, resId, pos)
-    }
-
-
-    fun updateSpritePos(sprite: BaseSprite, pos: Pos) {
-        sprite.pos = pos
-        mapView.updateViewPos(sprite)
-    }
 
     fun updateSelectSpritePos(pos: Pos) {
-        updateSpritePos(selectSprite!!, pos)
+        GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
     }
 
     fun changeMapSelectStatus(status: MenuStatus) {
@@ -89,20 +42,13 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
         return (pos.x in 0..MAP_WIDTH_SIZE) && (pos.y in 0..MAP_HEIGHT_SIZE)
     }
 
-    fun findRobotByPos(pos: Pos): RobotSprite? {
-        return robotSpriteList?.find { it.pos == pos }
-    }
-
-    fun findMapByPos(pos: Pos): MapSprite? {
-        return mapSpriteList?.find { it.pos == pos }
-    }
 
     override fun move() {
         changeMapSelectStatus(MenuStatus.Move)
         mapView.dismissMenu()
 
         val range = 3
-        mapView.showMoveRange(selectSprite!!.pos, range)
+        mapView.showMoveRange(GameMain.getSelectPos(), range)
     }
 
     override fun attack() {
@@ -110,7 +56,7 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
         mapView.dismissMenu()
 
         val range = 3
-        mapView.showAttackRange(selectSprite!!.pos, range)
+        mapView.showAttackRange(GameMain.getSelectPos(), range)
     }
 
     override fun status() {
@@ -122,14 +68,13 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
             is RobotSprite -> {
                 mapView.post {
                     mapView.showRobotView((curSprite as RobotSprite).robot)
-
                 }
             }
         }
     }
 
-    override fun turn() {
-
+    override fun finish() {
+        curRobotSprite?.updateMoveAvailable(false)
     }
 
     override fun skill() {
@@ -149,8 +94,8 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
                 if (!mapView.canMove(sprite.pos)) {
                     return
                 }
-                updateSpritePos(curSprite!!, sprite.pos)
-                updateSpritePos(selectSprite!!, sprite.pos)
+                GameMain.updateSpritePos(curSprite!!, sprite.pos)
+                GameMain.updateSpritePos(GameMain.selectSprite!!, sprite.pos)
                 mapView.showNormalRange()
                 changeMapSelectStatus(MenuStatus.Normal)
             }
@@ -167,39 +112,38 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
 
         curSprite = sprite
         status()
-
     }
 
 
     override fun up() {
         MLog.debug(TAG, "up")
-        val pos = Pos(selectSprite!!.pos.x, selectSprite!!.pos.y - 1)
+        val pos = Pos(GameMain.selectSprite!!.pos.x, GameMain.selectSprite!!.pos.y - 1)
         if (canMoveToPos(pos)) {
-            updateSpritePos(selectSprite!!, pos)
+            GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
     }
 
     override fun down() {
         MLog.debug(TAG, "down")
-        val pos = Pos(selectSprite!!.pos.x, selectSprite!!.pos.y + 1)
+        val pos = Pos(GameMain.selectSprite!!.pos.x, GameMain.selectSprite!!.pos.y + 1)
         if (canMoveToPos(pos)) {
-            updateSpritePos(selectSprite!!, pos)
+            GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
     }
 
     override fun left() {
         MLog.debug(TAG, "left")
-        val pos = Pos(selectSprite!!.pos.x - 1, selectSprite!!.pos.y)
+        val pos = Pos(GameMain.selectSprite!!.pos.x - 1, GameMain.selectSprite!!.pos.y)
         if (canMoveToPos(pos)) {
-            updateSpritePos(selectSprite!!, pos)
+            GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
     }
 
     override fun right() {
         MLog.debug(TAG, "right")
-        val pos = Pos(selectSprite!!.pos.x + 1, selectSprite!!.pos.y)
+        val pos = Pos(GameMain.selectSprite!!.pos.x + 1, GameMain.selectSprite!!.pos.y)
         if (canMoveToPos(pos)) {
-            updateSpritePos(selectSprite!!, pos)
+            GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
     }
 
@@ -207,12 +151,12 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
         MLog.debug(TAG, "ok")
         when (menuStatus) {
             MenuStatus.Normal -> {
-                findRobotByPos(selectSprite!!.pos)?.let {
+                GameMain.findRobotByPos(GameMain.getSelectPos())?.let {
                     select(it)
                 }
             }
             MenuStatus.Move -> {
-                findMapByPos(selectSprite!!.pos)?.let {
+                GameMain.findMapByPos(GameMain.getSelectPos())?.let {
                     select(it)
                 }
             }

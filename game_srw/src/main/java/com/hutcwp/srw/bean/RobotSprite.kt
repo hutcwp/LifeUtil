@@ -23,5 +23,12 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
 
     }
 
+    fun updateMoveAvailable(canMove: Boolean) {
+        if (canMove) {
+            view.alpha = 1f
+        } else {
+            view.alpha = 0.5f
+        }
+    }
 
 }

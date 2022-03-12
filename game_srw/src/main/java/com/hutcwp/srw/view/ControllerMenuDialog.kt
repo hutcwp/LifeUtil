@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager
 import com.hutcwp.srw.R
 import com.hutcwp.srw.info.Robot
 import kotlinx.android.synthetic.main.layout_controller_menu.*
-import kotlinx.android.synthetic.main.layout_game_controller.*
 import me.hutcwp.util.ResolutionUtils
 
 /**
@@ -69,6 +68,9 @@ class ControllerMenuDialog(private var robot: Robot) : DialogFragment() {
         }
         btn_status?.setOnClickListener {
             iControllerMenu?.status()
+        }
+        btn_wait?.setOnClickListener {
+            iControllerMenu?.finish()
         }
     }
 

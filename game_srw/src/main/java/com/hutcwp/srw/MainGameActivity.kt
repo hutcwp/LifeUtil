@@ -3,37 +3,58 @@ package com.hutcwp.srw
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hutcwp.srw.controller.GameController
-import com.hutcwp.srw.view.MapView
+import com.hutcwp.srw.controller.IGameController
+import com.hutcwp.srw.controller.ISceneSwitch
+import com.hutcwp.srw.info.Robot
 import kotlinx.android.synthetic.main.activity_main_game.*
 
 @Route(path = "/game/srw")
-class MainGameActivity : AppCompatActivity() {
+class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
-    var map: MapView? = null
-    var gameController: GameController? = null
+
+    var mainGameScene: MainGameScene? = null
+    var battleScene: BattleScene? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
 
-        initMapView()
-        initData()
+        switchMainScene()
     }
 
-    private fun initMapView() {
-        map = findViewById(R.id.game_map)
-        map?.activity = this
+
+    override fun switchMainScene() {
+        if (mainGameScene == null) {
+            mainGameScene = MainGameScene()
+        }
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fl_container, mainGameScene!!)
+                .commitAllowingStateLoss()
     }
 
-    private fun initData() {
-        gameController = GameController(map!!)
+    override fun switchBattleScene(leftRobot: Robot, rightRobot: Robot) {
+        if (battleScene == null) {
+            battleScene = BattleScene(this).apply {
+                this.updateRobots(leftRobot, rightRobot)
+            }
+        }
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fl_container, battleScene!!)
+                .commitAllowingStateLoss()
+    }
+
+    fun setGameController(gameController: IGameController) {
         gcLayout?.gameController = gameController
     }
 
 
     companion object {
         const val UNIT_MAP = 60
+
+        const val SCENE_BATTLE = 0
+        const val SCENE_MAIN_MAP = 1
     }
 
 }

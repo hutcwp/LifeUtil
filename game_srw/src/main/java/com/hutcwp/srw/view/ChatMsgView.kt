@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
 import com.hutcwp.srw.R
+import kotlinx.android.synthetic.main.view_chat_msg.view.*
 
 /**
  *  author : kevin
@@ -18,5 +19,9 @@ class ChatMsgView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.view_chat_msg, this)
+    }
+
+    fun setChatMsg(msg: String) {
+        tv_chat_msg?.text = msg
     }
 }

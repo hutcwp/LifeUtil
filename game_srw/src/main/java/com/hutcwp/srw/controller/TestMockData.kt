@@ -1,11 +1,12 @@
 package com.hutcwp.srw.controller
 
 import android.content.Context
-import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.R
 import com.hutcwp.srw.RobotsFactoryService
 import com.hutcwp.srw.bean.*
+import com.hutcwp.srw.info.Operator
 import com.hutcwp.srw.info.Robot
+import com.hutcwp.srw.info.battle.Weapon
 
 /**
  *  author : kevin
@@ -14,10 +15,10 @@ import com.hutcwp.srw.info.Robot
  */
 class TestMockData {
 
-    fun createRobot(context: Context, robot: Robot, resId: Int, posX: Int, posY: Int): RobotSprite {
+    fun createRobot(context: Context, robot: Robot, pos: Pos): RobotSprite {
         val params = RobotParams.Builder().apply {
-            this.pos = Pos(posX, posY)
-            this.resId = resId
+            this.pos = Pos(pos.x, pos.y)
+            this.resId = robot.attribute.iconId
         }.build()
 
         val robot = RobotsFactoryService.friendRobotFactory.createRobot(context, robot, params)
@@ -38,12 +39,22 @@ class TestMockData {
     fun createRobotList(context: Context): MutableList<RobotSprite> {
         val robotSpriteList = mutableListOf<RobotSprite>()
         robotSpriteList.let {
+            it.add(createRobot(
+                    context,
+                    Robot(
+                            Robot.Attributes(1, 1, R.drawable.img_bule_43, R.drawable.robot_1, 1, "刚达R", 4, 100, 400),
+                            listOf(Weapon(120, "光剑")),
+                            Operator("大卫", R.drawable.peple_46)
+                    ), Pos(3, 5)
+            )
+            )
             it.add(createRobot(context,
-                    Robot(1, 1, 1, "刚达R", 4, 100, 400),
-                    R.drawable.robot_1, 4, 2))
-            it.add(createRobot(context,
-                    Robot(0, 1, 1, "扎古", 4, 80, 340),
-                    R.drawable.icon_enemy_33, 6, 6))
+                    Robot(
+                            Robot.Attributes(0, 1, R.drawable.img_enemy_9, R.drawable.icon_enemy_33, 1, "扎古", 4, 80, 340),
+                            listOf(Weapon(120, "光剑")),
+                            Operator("大卫", R.drawable.peple_46)), Pos(3, 6)
+            )
+            )
         }
 
         return robotSpriteList

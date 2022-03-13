@@ -24,7 +24,7 @@ class BattleSimpleDetail @JvmOverloads constructor(
 
 
     fun updateData(robot: Robot) {
-        tv_hp?.text = "Hp: ${robot.hp} / ${robot.maxHp}"
+        tv_hp?.text = "Hp: ${robot.attribute.hp} / ${robot.attribute.maxHp}"
     }
 
 }

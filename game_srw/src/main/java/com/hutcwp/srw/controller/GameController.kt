@@ -15,7 +15,7 @@ import me.hutcwp.log.MLog
  *  date : 2022/3/6 6:49 PM
  *  description :
  */
-class GameController(private val mapView: MapView) : IControllerMenu, IGameController {
+class GameController(private val sceneSwitch: ISceneSwitch, private val mapView: MapView) : IControllerMenu, IGameController {
 
 //    private var curSprite: BaseSprite? = null
 
@@ -48,7 +48,7 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
         changeMapSelectStatus(MenuStatus.Move)
         mapView.dismissMenu()
 
-        val range = curRobotSprite!!.robot.move
+        val range = curRobotSprite!!.robot.attribute.move
         mapView.showMoveRange(curRobotSprite!!.pos, range)
     }
 
@@ -107,7 +107,8 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
                     BattleUtil.attack(curRobotSprite!!, sprite)
                     mapView.showNormalRange()
                     changeMapSelectStatus(MenuStatus.Normal)
-                    GameMain.showBattleActivity(mapView.context, curRobotSprite!!.robot, sprite.robot)
+//                    GameMain.showBattleActivity(mapView.context, curRobotSprite!!.robot, sprite.robot)
+                    sceneSwitch.switchBattleScene(curRobotSprite!!.robot, sprite.robot)
                 }
             }
         }

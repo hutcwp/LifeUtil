@@ -33,7 +33,7 @@ object GameMain {
     fun takeTurn() {
         isPlayerTurn = !isPlayerTurn
         if (!isPlayerTurn) {
-            robotSpriteList?.filter { it.robot.code == 0 }?.let {
+            robotSpriteList?.filter { it.robot.attribute.code == 0 }?.let {
                 ai.compute(it)
             }
         }

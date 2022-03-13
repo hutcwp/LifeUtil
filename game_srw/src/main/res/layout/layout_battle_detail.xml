@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.hutcwp.srw.view.ChatMsgView
-        android:id="@+id/tv_chat_msg"
+        android:id="@+id/view_chat_msg"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         app:layout_constraintStart_toStartOf="parent"

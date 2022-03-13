@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
 import com.hutcwp.srw.R
+import com.hutcwp.srw.info.Robot
+import kotlinx.android.synthetic.main.view_battle_scene.view.*
 
 /**
  *  author : kevin
@@ -19,5 +21,10 @@ class BattleSceneLayout @JvmOverloads constructor(
         View.inflate(context, R.layout.view_battle_scene, this)
     }
 
+
+    fun updateRobots(left: Robot, right: Robot) {
+        iv_left?.setImageResource(left.attribute.imgId)
+        iv_right?.setImageResource(right.attribute.imgId)
+    }
 
 }

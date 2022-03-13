@@ -5,9 +5,11 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.view.contains
 import androidx.fragment.app.FragmentActivity
+import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.MainGameActivity
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.controller.GameController
+import com.hutcwp.srw.controller.MenuStatus
 import com.hutcwp.srw.info.Robot
 
 /**
@@ -79,30 +81,49 @@ class MapView @JvmOverloads constructor(
         controllerMenuDialog?.dismissAllowingStateLoss()
     }
 
-    fun selectSprite(sprite: BaseSprite, isMove: Boolean) {
-        if (!isMove) {
-            val pos = sprite.pos
-            gameController?.updateSelectSpritePos(pos)
-            when (sprite) {
-                is MapSprite -> {
-                    dismissMenu()
-                }
-                is RobotSprite -> {
-                    if (controllerMenuDialog == null) {
-                        controllerMenuDialog = ControllerMenuDialog.newInstance(sprite.robot)
-                        controllerMenuDialog?.iControllerMenu = gameController
-                    }
-                    controllerMenuDialog?.updateRobot(sprite.robot)
-                    ControllerMenuDialog.showMenu(controllerMenuDialog!!, activity!!.supportFragmentManager)
-                }
-            }
-        } else {
-            if (sprite is MapSprite) {
-                if (sprite.view.alpha == 0.5f) {
+//    /**
+//     * 选中视图，光标位置移动
+//     */
+//    fun selectSprite(sprite: BaseSprite, menuStatus: MenuStatus) {
+////        val pos = sprite.pos
+////        GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
+//
+//        when (menuStatus) {
+//            MenuStatus.Normal -> {
+////                showNormalRange()
+//                when (sprite) {
+//                    is MapSprite -> {
+////                        dismissMenu()
+//                    }
+//                    is RobotSprite -> {
+//                        showControllerMenuDialog(sprite)
+//                    }
+//                }
+//            }
+//            MenuStatus.Attack -> {
+//                if (sprite is MapSprite) {
+//                    if (sprite.view.alpha == 0.5f) {
+//
+//                    }
+//                }
+//            }
+//
+//            MenuStatus.Move -> {
+//
+//            }
+//        }
+//    }
 
-                }
-            }
+    /**
+     * 展示控制菜单
+     */
+    fun showControllerMenuDialog(sprite: RobotSprite) {
+        if (controllerMenuDialog == null) {
+            controllerMenuDialog = ControllerMenuDialog.newInstance(sprite.robot)
+            controllerMenuDialog?.iControllerMenu = gameController
         }
+        controllerMenuDialog?.updateRobot(sprite.robot)
+        ControllerMenuDialog.showMenu(controllerMenuDialog!!, activity!!.supportFragmentManager)
     }
 
     fun updateViewPos(sprite: BaseSprite?) {
@@ -150,7 +171,6 @@ class MapView @JvmOverloads constructor(
             it.view.alpha = 1f
         }
     }
-
 
 
     fun canMove(pos: Pos): Boolean {

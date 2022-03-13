@@ -39,11 +39,11 @@ class TestMockData {
         val robotSpriteList = mutableListOf<RobotSprite>()
         robotSpriteList.let {
             it.add(createRobot(context,
-                    Robot(1, 1, "刚达R", 4, 100, 400),
+                    Robot(1, 1, 1, "刚达R", 4, 100, 400),
                     R.drawable.robot_1, 4, 2))
             it.add(createRobot(context,
-                    Robot(1, 1, "魔神Z", 4, 80, 340),
-                    R.drawable.robot_2, 6, 6))
+                    Robot(0, 1, 1, "扎古", 4, 80, 340),
+                    R.drawable.icon_enemy_33, 6, 6))
         }
 
         return robotSpriteList

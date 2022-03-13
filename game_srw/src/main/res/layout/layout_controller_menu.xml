@@ -45,8 +45,8 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:text="待命"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_status" />
+        app:layout_constraintStart_toStartOf="@id/btn_skill"
+        app:layout_constraintTop_toBottomOf="@id/btn_skill" />
 
 
     <FrameLayout

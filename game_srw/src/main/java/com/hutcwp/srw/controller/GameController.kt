@@ -17,7 +17,7 @@ import me.hutcwp.log.MLog
  */
 class GameController(private val mapView: MapView) : IControllerMenu, IGameController {
 
-    private var curSprite: BaseSprite? = null
+//    private var curSprite: BaseSprite? = null
 
     private var curRobotSprite: RobotSprite? = null
 
@@ -30,16 +30,17 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
     }
 
 
-    fun updateSelectSpritePos(pos: Pos) {
-        GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
-    }
-
-    fun changeMapSelectStatus(status: MenuStatus) {
+    private fun changeMapSelectStatus(status: MenuStatus) {
         menuStatus = status
     }
 
-    fun canMoveToPos(pos: Pos): Boolean {
+    private fun canMoveToPos(pos: Pos): Boolean {
         return (pos.x in 0..MAP_WIDTH_SIZE) && (pos.y in 0..MAP_HEIGHT_SIZE)
+    }
+
+    private fun resetToNormalStatus() {
+        changeMapSelectStatus(MenuStatus.Normal)
+        mapView.showNormalRange()
     }
 
 
@@ -47,34 +48,35 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
         changeMapSelectStatus(MenuStatus.Move)
         mapView.dismissMenu()
 
-        val range = 3
-        mapView.showMoveRange(GameMain.getSelectPos(), range)
+        val range = curRobotSprite!!.robot.move
+        mapView.showMoveRange(curRobotSprite!!.pos, range)
     }
 
     override fun attack() {
         changeMapSelectStatus(MenuStatus.Attack)
         mapView.dismissMenu()
 
-        val range = 3
-        mapView.showAttackRange(GameMain.getSelectPos(), range)
+        val range = 4
+        mapView.showAttackRange(curRobotSprite!!.pos, range)
     }
 
     override fun status() {
-        curSprite ?: return
-        when (curSprite) {
-            is MapSprite -> {
-
-            }
-            is RobotSprite -> {
-                mapView.post {
-                    mapView.showRobotView((curSprite as RobotSprite).robot)
-                }
-            }
-        }
+//        curSprite ?: return
+//        when (curSprite) {
+//            is MapSprite -> {
+//
+//            }
+//            is RobotSprite -> {
+//                mapView.post {
+//                    mapView.showRobotView((curSprite as RobotSprite).robot)
+//                }
+//            }
+//        }
     }
 
     override fun finish() {
-        curRobotSprite?.updateMoveAvailable(false)
+//        curRobotSprite?.updateMoveAvailable(false)
+        GameMain.takeTurn()
     }
 
     override fun skill() {
@@ -84,9 +86,8 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
     override fun select(sprite: BaseSprite) {
         when (menuStatus) {
             MenuStatus.Normal -> {
-                mapView.selectSprite(sprite, false)
-                mapView.showNormalRange()
                 if (sprite is RobotSprite) {
+                    mapView.showControllerMenuDialog(sprite)
                     curRobotSprite = sprite
                 }
             }
@@ -94,8 +95,9 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
                 if (!mapView.canMove(sprite.pos)) {
                     return
                 }
-                GameMain.updateSpritePos(curSprite!!, sprite.pos)
-                GameMain.updateSpritePos(GameMain.selectSprite!!, sprite.pos)
+
+                GameMain.updateSpritePos(curRobotSprite!!, sprite.pos)
+//                GameMain.updateSpritePos(GameMain.selectSprite!!, sprite.pos)
                 mapView.showNormalRange()
                 changeMapSelectStatus(MenuStatus.Normal)
             }
@@ -105,12 +107,10 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
                     BattleUtil.attack(curRobotSprite!!, sprite)
                     mapView.showNormalRange()
                     changeMapSelectStatus(MenuStatus.Normal)
-
                 }
             }
         }
 
-        curSprite = sprite
         status()
     }
 
@@ -160,17 +160,17 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
                     select(it)
                 }
             }
+            MenuStatus.Attack -> {
+                GameMain.findRobotByPos(GameMain.getSelectPos())?.let {
+                    select(it)
+                }
+            }
         }
     }
 
     override fun cancel() {
         MLog.debug(TAG, "cancel")
         resetToNormalStatus()
-    }
-
-    private fun resetToNormalStatus() {
-        changeMapSelectStatus(MenuStatus.Normal)
-        mapView.showNormalRange()
     }
 
 

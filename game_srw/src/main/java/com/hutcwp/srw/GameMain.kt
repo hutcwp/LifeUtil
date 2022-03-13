@@ -1,5 +1,6 @@
 package com.hutcwp.srw
 
+import com.hutcwp.srw.ai.AI
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.controller.TestMockData
 import com.hutcwp.srw.view.MapView
@@ -13,6 +14,8 @@ object GameMain {
 
     private val dataMock = TestMockData()
 
+    private val ai = AI()
+
     var robotSpriteList: MutableList<RobotSprite> = mutableListOf()
     var mapSpriteList: MutableList<MapSprite> = mutableListOf()
     var selectSprite: SelectSprite? = null
@@ -25,6 +28,11 @@ object GameMain {
 
     fun takeTurn() {
         isPlayerTurn = !isPlayerTurn
+        if (!isPlayerTurn) {
+            robotSpriteList?.filter { it.robot.code == 0 }?.let {
+                ai.compute(it)
+            }
+        }
     }
 
 
@@ -51,6 +59,7 @@ object GameMain {
     fun findRobotByPos(pos: Pos): RobotSprite? {
         return robotSpriteList.find { it.pos == pos }
     }
+
 
     fun findMapByPos(pos: Pos): MapSprite? {
         return mapSpriteList.find { it.pos == pos }

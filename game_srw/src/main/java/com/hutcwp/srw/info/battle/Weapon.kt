@@ -5,5 +5,5 @@ package com.hutcwp.srw.info.battle
  *  date : 2022/3/13 4:10 PM
  *  description :
  */
-open class Weapon(val attackValue: Int, Name: String) {
+open class Weapon(val attackValue: Int, val Name: String) {
 }

@@ -10,7 +10,7 @@
         android:layout_height="80dp"
         android:layout_marginHorizontal="20dp"
         android:textColor="@color/white"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_chater"

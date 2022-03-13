@@ -9,8 +9,11 @@ import com.hutcwp.srw.bean.BaseSprite
 import com.hutcwp.srw.controller.IGameController
 import com.hutcwp.srw.controller.ISceneSwitch
 import com.hutcwp.srw.info.Robot
+import com.hutcwp.srw.info.battle.BattleStep
+import com.hutcwp.srw.info.battle.TextBattleStep
 import com.hutcwp.srw.view.IControllerMenu
 import kotlinx.android.synthetic.main.layout_scene_battle.*
+import java.util.*
 
 /**
  *  author : kevin
@@ -19,12 +22,16 @@ import kotlinx.android.synthetic.main.layout_scene_battle.*
  */
 class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameController {
 
-    val chatMsg: List<String> = listOf("来玩啊", "走着瞧！")
+    var chatMsg: MutableList<String> = mutableListOf("战斗开始")
 
     var curIndex = 0
 
     var leftRobot: Robot? = null
     var rightRobot: Robot? = null
+
+    var firstAction = true //是否先手
+
+    var battleStepQueue: Queue<BattleStep> = LinkedList<BattleStep>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -40,9 +47,51 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
     private fun initData() {
         (activity as MainGameActivity).setGameController(this)
         curIndex = 0
-        showChatMsg()
         initBattleInfo()
+
+        createBattleStep()
+
+        runAllTask()
+
+        showChatMsg()
     }
+
+    private fun runAllTask() {
+        while (battleStepQueue.isNotEmpty()) {
+            battleStepQueue.poll()?.run()
+        }
+    }
+
+    /**
+     * 生成战斗步骤
+     */
+    private fun createBattleStep() {
+        leftRobot ?: return
+        rightRobot ?: return
+
+        var attacker: Robot? = null
+        var defender: Robot? = null
+        if (firstAction) {
+            attacker = rightRobot
+            defender = leftRobot
+        } else {
+            attacker = leftRobot
+            defender = rightRobot
+        }
+
+
+        battleStepQueue.add(attack(attacker!!, defender!!))
+        if (GameMain.isAlive(defender)) {
+            battleStepQueue.add(attack(defender, attacker))
+        }
+
+    }
+
+
+    fun attack(attacker: Robot, defender: Robot): TextBattleStep {
+        return TextBattleStep(chatMsg, attacker, defender)
+    }
+
 
     private fun initBattleInfo() {
         ly_battle_scene?.updateRobots(leftRobot!!, rightRobot!!)
@@ -58,9 +107,15 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
         }
     }
 
-    fun updateRobots(leftRobot: Robot, rightRobot: Robot) {
+    fun updateRobots(firstAction: Boolean = true, leftRobot: Robot, rightRobot: Robot) {
+        this.firstAction = true
         this.leftRobot = leftRobot
         this.rightRobot = rightRobot
+    }
+
+
+    fun turnNextStep() {
+
     }
 
     override fun up() {

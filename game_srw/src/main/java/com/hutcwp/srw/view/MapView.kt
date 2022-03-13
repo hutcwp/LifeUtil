@@ -181,5 +181,14 @@ class MapView @JvmOverloads constructor(
 
     }
 
+    fun removeRobotSprite(robotSprite: RobotSprite) {
+        for (i in 0..childCount){
+            if(robotSprite.view == getChildAt(i)){
+                removeView(robotSprite.view)
+                return
+            }
+        }
+    }
+
 
 }

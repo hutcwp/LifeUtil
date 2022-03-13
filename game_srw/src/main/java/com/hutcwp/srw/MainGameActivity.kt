@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.activity_main_game.*
 class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
 
-    var mainGameScene: MainGameScene? = null
-    var battleScene: BattleScene? = null
+    var mainGameScene: MainGameScene = MainGameScene()
+    var battleScene: BattleScene = BattleScene(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,24 +24,23 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
 
     override fun switchMainScene() {
-        if (mainGameScene == null) {
-            mainGameScene = MainGameScene()
-        }
+        mainGameScene = MainGameScene()
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fl_container, mainGameScene!!)
+                .hide(battleScene!!)
+                .add(R.id.fl_container, mainGameScene!!)
+                .show(mainGameScene)
                 .commitAllowingStateLoss()
     }
 
     override fun switchBattleScene(leftRobot: Robot, rightRobot: Robot) {
-        if (battleScene == null) {
-            battleScene = BattleScene(this).apply {
-                this.updateRobots(leftRobot, rightRobot)
-            }
-        }
+
+        battleScene!!.updateRobots(true, leftRobot, rightRobot)
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fl_container, battleScene!!)
+                .hide(mainGameScene!!)
+                .add(R.id.fl_container, battleScene!!)
+                .show(battleScene)
                 .commitAllowingStateLoss()
     }
 

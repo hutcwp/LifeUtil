@@ -107,6 +107,7 @@ class GameController(private val mapView: MapView) : IControllerMenu, IGameContr
                     BattleUtil.attack(curRobotSprite!!, sprite)
                     mapView.showNormalRange()
                     changeMapSelectStatus(MenuStatus.Normal)
+                    GameMain.showBattleActivity(mapView.context, curRobotSprite!!.robot, sprite.robot)
                 }
             }
         }

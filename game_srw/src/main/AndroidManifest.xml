@@ -3,7 +3,9 @@
     package="com.hutcwp.srw">
 
     <application>
-        <activity android:name=".MainGameActivity"></activity>
+        <activity android:name=".MainGameActivity">
+        </activity>
+        <activity android:name=".view.BattleActivity"/>
     </application>
 
 </manifest>

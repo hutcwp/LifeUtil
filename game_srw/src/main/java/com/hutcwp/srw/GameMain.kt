@@ -1,8 +1,12 @@
 package com.hutcwp.srw
 
+import android.content.Context
+import android.content.Intent
 import com.hutcwp.srw.ai.AI
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.controller.TestMockData
+import com.hutcwp.srw.info.Robot
+import com.hutcwp.srw.view.BattleActivity
 import com.hutcwp.srw.view.MapView
 
 /**
@@ -69,4 +73,7 @@ object GameMain {
         return Pos(selectSprite!!.pos)
     }
 
+    fun showBattleActivity(context: Context, left: Robot, right: Robot) {
+        context.startActivity(Intent(context, BattleActivity::class.java))
+    }
 }

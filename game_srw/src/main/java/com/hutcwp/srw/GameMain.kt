@@ -26,6 +26,8 @@ object GameMain {
 
     var mapView: MapView? = null
 
+    private var hasInit = false
+
 
     fun takeTurn() {
         isPlayerTurn = !isPlayerTurn
@@ -38,11 +40,14 @@ object GameMain {
 
 
     fun initGame(mapView: MapView) {
-        this.mapView = mapView
-        mapSpriteList = dataMock.createMapList(mapView.context)
-        robotSpriteList = dataMock.createRobotList(mapView.context)
-        selectSprite = dataMock.createSelectSprite(mapView.context)
+        if (!hasInit) {
+            mapSpriteList = dataMock.createMapList(mapView.context)
+            robotSpriteList = dataMock.createRobotList(mapView.context)
+            selectSprite = dataMock.createSelectSprite(mapView.context)
+        }
 
+        hasInit = true
+        this.mapView = mapView
         mapSpriteList.let {
             mapView.initMap(it)
         }

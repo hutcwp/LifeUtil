@@ -1,8 +1,12 @@
 package com.hutcwp.srw.view
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.hutcwp.srw.R
 import com.hutcwp.srw.info.Robot
@@ -26,5 +30,39 @@ class BattleSceneLayout @JvmOverloads constructor(
         iv_left?.setImageResource(left.attribute.imgId)
         iv_right?.setImageResource(right.attribute.imgId)
     }
+
+    fun showWeaponAnim(isLeft: Boolean) {
+        val imageView = ImageView(context)
+        imageView.layoutParams = FrameLayout.LayoutParams(100, 40)
+        imageView.setImageResource(R.drawable.weapon_daodan)
+
+        fl_anim?.removeAllViews()
+        fl_anim?.addView(imageView)
+
+        val x = if (isLeft) {
+            floatArrayOf(30f, 120f, 240f, 300f, 500f)
+        } else {
+            floatArrayOf(50f, 400f, 300f, 180f, 30f)
+        }
+        val objectAnim: ObjectAnimator = ObjectAnimator.ofFloat(imageView, "translationX", *x)
+        objectAnim.duration = 2000
+        objectAnim.start()
+        objectAnim.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(p0: Animator?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+                fl_anim?.removeAllViews()
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+            }
+
+            override fun onAnimationRepeat(p0: Animator?) {
+            }
+        })
+    }
+
 
 }

@@ -109,7 +109,7 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
                     mapView.showNormalRange()
                     changeMapSelectStatus(MenuStatus.Normal)
 //                    GameMain.showBattleActivity(mapView.context, curRobotSprite!!.robot, sprite.robot)
-                    sceneSwitch.switchBattleScene(curRobotSprite!!.robot, sprite.robot)
+                    sceneSwitch.switchBattleScene(curRobotSprite!!, sprite)
                 }
             }
         }

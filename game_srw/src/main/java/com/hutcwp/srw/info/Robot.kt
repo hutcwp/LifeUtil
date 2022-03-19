@@ -22,15 +22,6 @@ class Robot(val attribute: Robot.Attributes, val weapons: List<Weapon>, val oper
                      val maxHp: Int = hp) {
     }
 
-    fun useWeapon(): Weapon? {
-        return weapons[0]
-    }
 
-    fun beAttacked(hitValue: Int) {
-        attribute.hp -= hitValue
-        if (attribute.hp <= 0) {
-            GameMain.destroyRobot(this)
-        }
-    }
 
 }

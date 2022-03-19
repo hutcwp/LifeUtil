@@ -81,39 +81,6 @@ class MapView @JvmOverloads constructor(
         controllerMenuDialog?.dismissAllowingStateLoss()
     }
 
-//    /**
-//     * 选中视图，光标位置移动
-//     */
-//    fun selectSprite(sprite: BaseSprite, menuStatus: MenuStatus) {
-////        val pos = sprite.pos
-////        GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
-//
-//        when (menuStatus) {
-//            MenuStatus.Normal -> {
-////                showNormalRange()
-//                when (sprite) {
-//                    is MapSprite -> {
-////                        dismissMenu()
-//                    }
-//                    is RobotSprite -> {
-//                        showControllerMenuDialog(sprite)
-//                    }
-//                }
-//            }
-//            MenuStatus.Attack -> {
-//                if (sprite is MapSprite) {
-//                    if (sprite.view.alpha == 0.5f) {
-//
-//                    }
-//                }
-//            }
-//
-//            MenuStatus.Move -> {
-//
-//            }
-//        }
-//    }
-
     /**
      * 展示控制菜单
      */

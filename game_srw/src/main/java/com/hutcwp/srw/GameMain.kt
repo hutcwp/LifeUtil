@@ -83,17 +83,13 @@ object GameMain {
         return robotSpriteList.find { it.robot == robot } != null
     }
 
-    fun attack(attacker: Robot, defender: Robot) {
+    fun attack(attacker: RobotSprite, defender: RobotSprite) {
         defender.beAttacked(attacker.useWeapon()!!.attackValue)
     }
 
-    fun destroyRobot(robot: Robot) {
-        robotSpriteList?.find { it.robot == robot }?.let {
-            robotSpriteList.remove(it)
-            findSpriteByRobot(robot)?.let {
-                mapView?.removeRobotSprite(it)
-            }
-        }
+    fun destroyRobot(robotSprite: RobotSprite) {
+        mapView?.removeRobotSprite(robotSprite)
     }
+
 
 }

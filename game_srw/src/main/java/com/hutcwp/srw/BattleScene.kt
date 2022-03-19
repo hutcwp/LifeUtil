@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.hutcwp.srw.bean.BaseSprite
+import com.hutcwp.srw.bean.RobotSprite
+import com.hutcwp.srw.controller.BattleController
 import com.hutcwp.srw.controller.IGameController
 import com.hutcwp.srw.controller.ISceneSwitch
-import com.hutcwp.srw.info.Robot
-import com.hutcwp.srw.info.battle.BattleStep
-import com.hutcwp.srw.info.battle.TextBattleStep
-import com.hutcwp.srw.view.IControllerMenu
+import com.hutcwp.srw.info.battle.Weapon
+import com.hutcwp.srw.music.BackgroundMusic
 import kotlinx.android.synthetic.main.layout_scene_battle.*
-import java.util.*
+import me.hutcwp.BaseConfig
 
 /**
  *  author : kevin
@@ -22,101 +21,99 @@ import java.util.*
  */
 class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameController {
 
-    var chatMsg: MutableList<String> = mutableListOf("战斗开始")
+    private var chatMsg: MutableList<String> = mutableListOf("战斗开始")
 
-    var curIndex = 0
+    private var curIndex = 0
 
-    var leftRobot: Robot? = null
-    var rightRobot: Robot? = null
+    private var leftRobot: RobotSprite? = null
+    private var rightRobot: RobotSprite? = null
 
-    var firstAction = true //是否先手
 
-    var battleStepQueue: Queue<BattleStep> = LinkedList<BattleStep>()
+    private var battleController: BattleController? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.layout_scene_battle, container, false)
-        return root
+        return inflater.inflate(R.layout.layout_scene_battle, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
-    }
-
-    private fun initData() {
+        //设置手柄控制器
         (activity as MainGameActivity).setGameController(this)
-        curIndex = 0
-        initBattleInfo()
-
-        createBattleStep()
-
-        runAllTask()
-
-        showChatMsg()
-    }
-
-    private fun runAllTask() {
-        while (battleStepQueue.isNotEmpty()) {
-            battleStepQueue.poll()?.run()
-        }
     }
 
     /**
-     * 生成战斗步骤
+     * 更新对战血条信息
      */
-    private fun createBattleStep() {
-        leftRobot ?: return
-        rightRobot ?: return
-
-        var attacker: Robot? = null
-        var defender: Robot? = null
-        if (firstAction) {
-            attacker = rightRobot
-            defender = leftRobot
-        } else {
-            attacker = leftRobot
-            defender = rightRobot
-        }
-
-
-        battleStepQueue.add(attack(attacker!!, defender!!))
-        if (GameMain.isAlive(defender)) {
-            battleStepQueue.add(attack(defender, attacker))
-        }
-
-    }
-
-
-    fun attack(attacker: Robot, defender: Robot): TextBattleStep {
-        return TextBattleStep(chatMsg, attacker, defender)
-    }
-
-
-    private fun initBattleInfo() {
-        ly_battle_scene?.updateRobots(leftRobot!!, rightRobot!!)
-        ly_battle_detail?.updateRobots(leftRobot!!, rightRobot!!)
+    fun updateBattleInfo(leftRobot: RobotSprite, rightRobot: RobotSprite) {
+        ly_battle_scene?.updateRobots(leftRobot.robot, rightRobot.robot)
+        ly_battle_detail?.updateRobots(leftRobot.robot, rightRobot.robot)
     }
 
     fun showChatMsg() {
-        if (curIndex <= chatMsg.lastIndex) {
-            ly_battle_detail?.setChatMsg(chatMsg.get(curIndex))
-            curIndex++
+        battleController?.startBattle()
+//        if (curIndex <= chatMsg.lastIndex) {
+//            ly_battle_detail?.setChatMsg(chatMsg.get(curIndex))
+//            curIndex++
+//        } else {
+//            onFinish()
+//            sceneSwitch.switchMainScene()
+//        }
+    }
+
+    /**
+     * 初始化战斗
+     */
+    fun initRobots(leftRobot: RobotSprite, rightRobot: RobotSprite) {
+        this.leftRobot = leftRobot
+        this.rightRobot = rightRobot
+
+        battleController = BattleController(this, leftRobot, rightRobot)
+        battleController?.initBattle()
+
+        curIndex = 0
+//        showChatMsg()
+    }
+
+    private fun playBGM() {
+        val path = "audio/music2/82.mp3"
+        BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).playBackgroundMusic(path, true)
+    }
+
+    fun showAttackAnim(robotSprite: RobotSprite, weapon: Weapon) {
+        if (robotSprite == leftRobot) {
+            showLeftAttackAnim(robotSprite, weapon)
         } else {
-            sceneSwitch.switchMainScene()
+            showRightAttackAnim(robotSprite, weapon)
         }
     }
 
-    fun updateRobots(firstAction: Boolean = true, leftRobot: Robot, rightRobot: Robot) {
-        this.firstAction = true
-        this.leftRobot = leftRobot
-        this.rightRobot = rightRobot
+    private fun showRightAttackAnim(rightRobot: RobotSprite, weapon: Weapon) {
+        ly_battle_scene?.showWeaponAnim(false)
+    }
+
+    private fun showLeftAttackAnim(robotSprite: RobotSprite, weapon: Weapon) {
+        ly_battle_scene?.showWeaponAnim(true)
+    }
+
+
+    /**
+     * 战斗结束，回收工作
+     */
+    fun onFinish() {
+        this.leftRobot = null
+        this.rightRobot = null
+        this.curIndex = 0
+        this.battleController = null
+        BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).stopBackgroundMusic()
     }
 
 
     fun turnNextStep() {
 
     }
+
+//    =====================操作控制器==============
 
     override fun up() {
     }

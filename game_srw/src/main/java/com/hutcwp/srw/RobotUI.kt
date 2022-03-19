@@ -2,17 +2,22 @@ package com.hutcwp.srw
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.ImageView
 
 /**
  *  author : kevin
- *  date : 2022/3/6 1:46 PM
+ *  date : 2022/3/19 2:30 AM
  *  description :
  */
-open class BaseUI @JvmOverloads constructor(
+class RobotUI @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
+) : BaseUI(context, attrs, defStyleAttr) {
 
 
+
+
+
+    fun showDestroyAnim() {
+
+    }
 
 }

@@ -27,10 +27,10 @@ allprojects {
         google()
         jcenter()
 //        maven { url 'https://dl.bintray.com/jfrogcwp/maven' }  //这一行代码
+        maven { url 'https://jitpack.io' }
         maven {
             url 'https://maven.google.com/'
             name 'Google'
-            maven { url 'https://jitpack.io' }
         }
     }
 }

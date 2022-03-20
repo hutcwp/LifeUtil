@@ -21,8 +21,8 @@ class BattleDetailLayout @JvmOverloads constructor(
         View.inflate(context, R.layout.layout_battle_detail, this)
     }
 
-    fun setChatMsg(msg: String) {
-        view_chat_msg?.setChatMsg(msg)
+    fun setChatMsg(speakImg: Int, msg: String) {
+        view_chat_msg?.setChatMsg(speakImg, msg)
     }
 
     fun updateRobots(leftRobot: Robot, rightRobot: Robot) {

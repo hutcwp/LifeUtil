@@ -9,6 +9,7 @@ import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.controller.BattleController
 import com.hutcwp.srw.controller.IGameController
 import com.hutcwp.srw.controller.ISceneSwitch
+import com.hutcwp.srw.info.Operator
 import com.hutcwp.srw.info.battle.Weapon
 import com.hutcwp.srw.music.BackgroundMusic
 import kotlinx.android.synthetic.main.layout_scene_battle.*
@@ -63,8 +64,12 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
         ly_battle_detail?.updateRobots(leftRobot.robot, rightRobot.robot)
     }
 
-    fun showChatMsg(msg: String) {
-        ly_battle_detail?.setChatMsg(msg)
+    fun showChatMsg(msg: String, resId: Int = -1) {
+        ly_battle_detail?.setChatMsg(resId, msg)
+    }
+
+    fun showChatMsg(msg: String, operator: Operator) {
+        ly_battle_detail?.setChatMsg(operator.resId, msg)
     }
 
     /**

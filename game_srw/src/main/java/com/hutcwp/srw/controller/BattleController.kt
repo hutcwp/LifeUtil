@@ -20,7 +20,7 @@ class BattleController(private val battleScene: BattleScene,
 
     private var battleStepQueue: Queue<Runnable> = LinkedList<Runnable>()
 
-    fun initBattle(isAuto:Boolean) {
+    fun initBattle(isAuto: Boolean) {
         this.isAuto = isAuto
 
         battleScene.updateBattleInfo(leftRobotSprite, rightRobotSprite)
@@ -59,7 +59,7 @@ class BattleController(private val battleScene: BattleScene,
         battleStepQueue.clear()
 
         battleStepQueue.add(Runnable {
-            battleScene.showChatMsg("来啊，看我的！")
+            battleScene.showChatMsg("来啊，看我的！", attacker.robot.operator)
             battleScene.showAttackAnim(attacker, attacker.useWeapon()!!)
 
 
@@ -67,7 +67,7 @@ class BattleController(private val battleScene: BattleScene,
                 defender.beAttackByWeapon(attacker.robot, attacker.useWeapon()!!)
                 battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
                 battleScene.showChatMsg("${defender.robot.attribute.name} 受到 " +
-                        "${attacker.useWeapon()!!.attackValue} 伤害")
+                        "${attacker.useWeapon()!!.attackValue} 伤害", defender.robot.operator)
             })
 
             if (!defender.isAlive()) {
@@ -75,7 +75,7 @@ class BattleController(private val battleScene: BattleScene,
             } else {
 
                 battleStepQueue.add(Runnable {
-                    battleScene.showChatMsg("接招！")
+                    battleScene.showChatMsg("接招！", defender.robot.operator)
                     battleScene.showAttackAnim(defender, defender.useWeapon()!!)
 
                     attacker.beAttackByWeapon(defender.robot, defender.useWeapon()!!)
@@ -83,7 +83,7 @@ class BattleController(private val battleScene: BattleScene,
                     battleStepQueue.offer(Runnable {
                         battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
                         battleScene.showChatMsg("${attacker.robot.attribute.name} 受到 " +
-                                "${defender.useWeapon()!!.attackValue} 伤害")
+                                "${defender.useWeapon()!!.attackValue} 伤害", attacker.robot.operator)
                     })
                 })
             }

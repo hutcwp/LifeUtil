@@ -21,7 +21,10 @@ class ChatMsgView @JvmOverloads constructor(
         View.inflate(context, R.layout.view_chat_msg, this)
     }
 
-    fun setChatMsg(msg: String) {
+    fun setChatMsg(speakerImg: Int, msg: String) {
         tv_chat_msg?.text = msg
+        if (speakerImg > 0) {
+            iv_speaker?.setImageResource(speakerImg)
+        }
     }
 }

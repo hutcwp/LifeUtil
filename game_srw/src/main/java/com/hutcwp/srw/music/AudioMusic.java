@@ -1,22 +1,18 @@
 package com.hutcwp.srw.music;
 
-/**
- * author : kevin
- * date : 2022/3/18 11:30 PM
- * description :
- */
-
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.util.Log;
 
 /**
- * This class is used for controlling background music
+ * author : kevin
+ * date : 2022/3/20 8:01 PM
+ * description :
  */
-public class BackgroundMusic {
+public class AudioMusic {
 
-    private static BackgroundMusic backgroundMusic = null;
+    private static AudioMusic AudioMusic = null;
     private static final String TAG = "Bg_Music";
     private float mLeftVolume;
     private float mRightVolume;
@@ -25,16 +21,16 @@ public class BackgroundMusic {
     private boolean mIsPaused;
     private String mCurrentPath;
 
-    private BackgroundMusic(Context context) {
+    private AudioMusic(Context context) {
         this.mContext = context;
         initData();
     }
 
-    public static BackgroundMusic getInstance(Context context) {
-        if (backgroundMusic == null) {
-            backgroundMusic = new BackgroundMusic(context);
+    public static AudioMusic getInstance(Context context) {
+        if (AudioMusic == null) {
+            AudioMusic = new AudioMusic(context);
         }
-        return backgroundMusic;
+        return AudioMusic;
     }
 
     // 初始化一些数据
@@ -52,28 +48,23 @@ public class BackgroundMusic {
      * @param path   :assets中的音频路径
      * @param isLoop :是否循环播放
      */
-    public void playBackgroundMusic(String path, boolean isLoop) {
+    public void playAudioMusic(String path, boolean isLoop) {
         if (mCurrentPath == null) {
-// 这是第一次播放背景音乐--- it is the first time to play background music
-// 或者是执行end()方法后，重新被叫---or end() was called
             mBackgroundMediaPlayer = createMediaplayerFromAssets(path);
             mCurrentPath = path;
         } else {
             if (!mCurrentPath.equals(path)) {
-// 播放一个新的背景音乐--- play new background music
-// 释放旧的资源并生成一个新的----release old resource and create a new one
                 if (mBackgroundMediaPlayer != null) {
                     mBackgroundMediaPlayer.release();
                 }
                 mBackgroundMediaPlayer = createMediaplayerFromAssets(path);
-// 记录这个路径---record the path
+
                 mCurrentPath = path;
             }
         }
         if (mBackgroundMediaPlayer == null) {
-            Log.e(TAG, "playBackgroundMusic: background media player is null");
+            Log.e(TAG, "playAudioMusic: background media player is null");
         } else {
-// 若果音乐正在播放或已近中断，停止它---if the music is playing or paused, stop it
             mBackgroundMediaPlayer.stop();
             mBackgroundMediaPlayer.setLooping(isLoop);
             try {
@@ -82,7 +73,7 @@ public class BackgroundMusic {
                 mBackgroundMediaPlayer.start();
                 this.mIsPaused = false;
             } catch (Exception e) {
-                Log.e(TAG, "playBackgroundMusic: error state");
+                Log.e(TAG, "playAudioMusic: error state");
             }
         }
     }
@@ -90,7 +81,7 @@ public class BackgroundMusic {
     /**
      * 停止播放背景音乐
      */
-    public void stopBackgroundMusic() {
+    public void stopAudioMusic() {
         if (mBackgroundMediaPlayer != null) {
             mBackgroundMediaPlayer.stop();
             this.mIsPaused = false;
@@ -100,7 +91,7 @@ public class BackgroundMusic {
     /**
      * 暂停播放背景音乐
      */
-    public void pauseBackgroundMusic() {
+    public void pauseAudioMusic() {
         if (mBackgroundMediaPlayer != null
                 && mBackgroundMediaPlayer.isPlaying()) {
             mBackgroundMediaPlayer.pause();
@@ -111,7 +102,7 @@ public class BackgroundMusic {
     /**
      * 继续播放背景音乐
      */
-    public void resumeBackgroundMusic() {
+    public void resumeAudioMusic() {
         if (mBackgroundMediaPlayer != null && this.mIsPaused) {
             mBackgroundMediaPlayer.start();
             this.mIsPaused = false;
@@ -121,7 +112,7 @@ public class BackgroundMusic {
     /**
      * 重新播放背景音乐
      */
-    public void rewindBackgroundMusic() {
+    public void rewindAudioMusic() {
         if (mBackgroundMediaPlayer != null) {
             mBackgroundMediaPlayer.stop();
             try {
@@ -130,7 +121,7 @@ public class BackgroundMusic {
                 mBackgroundMediaPlayer.start();
                 this.mIsPaused = false;
             } catch (Exception e) {
-                Log.e(TAG, "rewindBackgroundMusic: error state");
+                Log.e(TAG, "rewindAudioMusic: error state");
             }
         }
     }
@@ -140,7 +131,7 @@ public class BackgroundMusic {
      *
      * @return：返回的boolean值代表是否正在播放
      */
-    public boolean isBackgroundMusicPlaying() {
+    public boolean isAudioMusicPlaying() {
         boolean ret = false;
         if (mBackgroundMediaPlayer == null) {
             ret = false;

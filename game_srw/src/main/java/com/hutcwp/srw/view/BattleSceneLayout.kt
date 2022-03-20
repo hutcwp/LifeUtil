@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.hutcwp.srw.R
 import com.hutcwp.srw.info.Robot
+import com.hutcwp.srw.music.AudioMusic
 import kotlinx.android.synthetic.main.view_battle_scene.view.*
 
 /**
@@ -57,6 +58,8 @@ class BattleSceneLayout @JvmOverloads constructor(
 
             override fun onAnimationEnd(p0: Animator?) {
                 fl_anim?.removeAllViews()
+                val path = "audio/wav/boom.mp3"
+                AudioMusic.getInstance(context).playAudioMusic(path, false)
             }
 
             override fun onAnimationCancel(p0: Animator?) {

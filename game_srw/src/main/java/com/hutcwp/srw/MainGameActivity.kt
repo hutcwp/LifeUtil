@@ -8,10 +8,8 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.controller.IGameController
 import com.hutcwp.srw.controller.ISceneSwitch
-import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.music.BackgroundMusic
 import kotlinx.android.synthetic.main.activity_main_game.*
-import me.hutcwp.util.RxUtils
 
 @Route(path = "/game/srw")
 class MainGameActivity : AppCompatActivity(), ISceneSwitch {
@@ -27,7 +25,7 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
         switchMainScene()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            switchBattleScene(GameMain.robotSpriteList[0], GameMain.robotSpriteList[1])
+            switchBattleScene(true, GameMain.robotSpriteList[1], GameMain.robotSpriteList[0])
         }, 1000)
 
 //        playBGM()
@@ -56,27 +54,30 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
     }
 
-    override fun switchBattleScene(leftRobot: RobotSprite, rightRobot: RobotSprite) {
+    override fun switchBattleScene(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite) {
 
         if (battleScene == null) {
             battleScene = BattleScene(this)
 
-            battleScene!!.initRobots(leftRobot, rightRobot)
+            battleScene?.let {
+                it.initRobots(isAuto, leftRobot, rightRobot)
 
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.fl_container, battleScene!!)
-                    .show(battleScene!!)
-                    .commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.fl_container, it)
+                        .show(it)
+                        .commitAllowingStateLoss()
+            }
+
         } else {
-            battleScene!!.initRobots( leftRobot, rightRobot)
+            battleScene?.let {
+                it.initRobots(isAuto, leftRobot, rightRobot)
 
-            supportFragmentManager.beginTransaction()
-                    .hide(mainGameScene!!)
-                    .show(battleScene!!)
-                    .commitAllowingStateLoss()
-
+                supportFragmentManager.beginTransaction()
+                        .hide(it)
+                        .show(it)
+                        .commitAllowingStateLoss()
+            }
         }
-
     }
 
     fun setGameController(gameController: IGameController) {

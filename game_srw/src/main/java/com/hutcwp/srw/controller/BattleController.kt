@@ -11,40 +11,42 @@ import java.util.*
  *  date : 2022/3/20 12:12 AM
  *  description :
  */
-class BattleController(val battleScene: BattleScene, val leftRobotSprite: RobotSprite, val rightRobotSprite: RobotSprite) {
+class BattleController(private val battleScene: BattleScene,
+                       private val leftRobotSprite: RobotSprite,
+                       private val rightRobotSprite: RobotSprite) {
 
 
-    private var firstAction = true //是否先手
+    private var isAuto = true //是否先手
 
     private var battleStepQueue: Queue<Runnable> = LinkedList<Runnable>()
 
-    fun initBattle() {
-        this.firstAction = true
+    fun initBattle(isAuto:Boolean) {
+        this.isAuto = isAuto
 
         battleScene.updateBattleInfo(leftRobotSprite, rightRobotSprite)
-        playBGM()
-        startBattle()
+        playBGM(rightRobotSprite.robot.operator.bgmPath)
+        initBattleData()
     }
 
-    fun startBattle() {
-        var attacker: RobotSprite? = null
-        var defender: RobotSprite? = null
-        if (firstAction) {
-            attacker = rightRobotSprite
-            defender = leftRobotSprite
-        } else {
-            attacker = leftRobotSprite
-            defender = rightRobotSprite
-        }
-
+    /**
+     * 计算战斗数据
+     */
+    private fun initBattleData() {
         battleScene.showChatMsg("开始战斗...")
 
-        createBattleStep(attacker, defender)
+        if (isAuto) {
+            createBattleStep(rightRobotSprite, leftRobotSprite)
+        } else {
+            createBattleStep(leftRobotSprite, rightRobotSprite)
+        }
     }
 
-    fun startPlayBattle() {
+    /**
+     * 播放战斗步骤
+     */
+    fun playBattle() {
         if (battleStepQueue.isNotEmpty()) {
-            battleStepQueue.poll().run()
+            battleStepQueue.poll()?.run()
         } else {
             finish()
         }
@@ -59,7 +61,14 @@ class BattleController(val battleScene: BattleScene, val leftRobotSprite: RobotS
         battleStepQueue.add(Runnable {
             battleScene.showChatMsg("来啊，看我的！")
             battleScene.showAttackAnim(attacker, attacker.useWeapon()!!)
-            defender.beAttackByWeapon(attacker.robot, attacker.useWeapon()!!)
+
+
+            battleStepQueue.offer(Runnable {
+                defender.beAttackByWeapon(attacker.robot, attacker.useWeapon()!!)
+                battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
+                battleScene.showChatMsg("${defender.robot.attribute.name} 受到 " +
+                        "${attacker.useWeapon()!!.attackValue} 伤害")
+            })
 
             if (!defender.isAlive()) {
                 this.finish()
@@ -70,13 +79,19 @@ class BattleController(val battleScene: BattleScene, val leftRobotSprite: RobotS
                     battleScene.showAttackAnim(defender, defender.useWeapon()!!)
 
                     attacker.beAttackByWeapon(defender.robot, defender.useWeapon()!!)
+
+                    battleStepQueue.offer(Runnable {
+                        battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
+                        battleScene.showChatMsg("${attacker.robot.attribute.name} 受到 " +
+                                "${defender.useWeapon()!!.attackValue} 伤害")
+                    })
                 })
             }
         })
     }
 
-    private fun playBGM() {
-        val path = "audio/music2/82.mp3"
+    private fun playBGM(path: String?) {
+        path ?: return
         BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).playBackgroundMusic(path, true)
     }
 
@@ -84,7 +99,7 @@ class BattleController(val battleScene: BattleScene, val leftRobotSprite: RobotS
         BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).stopBackgroundMusic()
     }
 
-    fun finish() {
+    private fun finish() {
         stopBGM()
         battleScene.onFinish()
     }

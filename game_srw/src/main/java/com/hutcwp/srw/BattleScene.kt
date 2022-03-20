@@ -34,20 +34,34 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initDataFirst()
+    }
+
+    /**
+     * 初始化数据，视图第一次创建的时候，特殊处理
+     */
+    private fun initDataFirst() {
         //设置手柄控制器
         (activity as MainGameActivity).setGameController(this)
         showChatMsg("开始战斗...")
-
+        updateRobotInfo(leftRobot!!, rightRobot!!)
     }
 
     /**
      * 更新对战血条信息
      */
     fun updateBattleInfo(leftRobot: RobotSprite, rightRobot: RobotSprite) {
-        ly_battle_scene?.updateRobots(leftRobot.robot, rightRobot.robot)
-        ly_battle_detail?.updateRobots(leftRobot.robot, rightRobot.robot)
+        updateRobotImg(leftRobot, rightRobot)
+        updateRobotInfo(leftRobot, rightRobot)
     }
 
+    fun updateRobotImg(leftRobot: RobotSprite, rightRobot: RobotSprite) {
+        ly_battle_scene?.updateRobots(leftRobot.robot, rightRobot.robot)
+    }
+
+    fun updateRobotInfo(leftRobot: RobotSprite, rightRobot: RobotSprite) {
+        ly_battle_detail?.updateRobots(leftRobot.robot, rightRobot.robot)
+    }
 
     fun showChatMsg(msg: String) {
         ly_battle_detail?.setChatMsg(msg)
@@ -56,12 +70,12 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
     /**
      * 初始化战斗
      */
-    fun initRobots(leftRobot: RobotSprite, rightRobot: RobotSprite) {
+    fun initRobots(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite) {
         this.leftRobot = leftRobot
         this.rightRobot = rightRobot
 
         battleController = BattleController(this, leftRobot, rightRobot)
-        battleController?.initBattle()
+        battleController?.initBattle(isAuto)
     }
 
     fun showAttackAnim(robotSprite: RobotSprite, weapon: Weapon) {
@@ -73,11 +87,11 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
     }
 
     private fun showRightAttackAnim(rightRobot: RobotSprite, weapon: Weapon) {
-        ly_battle_scene?.showWeaponAnim(false)
+        ly_battle_scene?.showWeaponAnim(false, weapon)
     }
 
     private fun showLeftAttackAnim(robotSprite: RobotSprite, weapon: Weapon) {
-        ly_battle_scene?.showWeaponAnim(true)
+        ly_battle_scene?.showWeaponAnim(true, weapon)
     }
 
     /**
@@ -107,7 +121,7 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
     }
 
     override fun ok() {
-        battleController?.startPlayBattle()
+        battleController?.playBattle()
     }
 
     override fun cancel() {

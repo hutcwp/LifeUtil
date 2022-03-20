@@ -5,5 +5,5 @@ package com.hutcwp.srw.info
  *  date : 2022/3/13 4:23 PM
  *  description : 驾驶员
  */
-class Operator(val name: String, val resId: Int) {
+class Operator(val name: String, val resId: Int, val bgmPath: String?) {
 }

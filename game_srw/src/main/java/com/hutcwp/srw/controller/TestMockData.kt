@@ -1,6 +1,7 @@
 package com.hutcwp.srw.controller
 
 import android.content.Context
+import com.hutcwp.srw.BgmConstants
 import com.hutcwp.srw.R
 import com.hutcwp.srw.RobotsFactoryService
 import com.hutcwp.srw.bean.*
@@ -42,17 +43,17 @@ class TestMockData {
             it.add(createRobot(
                     context,
                     Robot(
-                            Robot.Attributes(1, 1, R.drawable.img_bule_43, R.drawable.robot_1, 1, "刚达R", 4, 100, 400),
-                            listOf(Weapon(120, "光剑")),
-                            Operator("大卫", R.drawable.peple_46)
+                            Robot.Attributes(1, 1, R.drawable.img_blue_gangda, R.drawable.robot_1, 1, "刚达R", 4, 100, 400),
+                            listOf(Weapon(80, "光剑")),
+                            Operator("大卫", R.drawable.peple_46, BgmConstants.DaWei)
                     ), Pos(3, 5)
             )
             )
             it.add(createRobot(context,
                     Robot(
-                            Robot.Attributes(0, 1, R.drawable.img_enemy_9, R.drawable.icon_enemy_33, 1, "扎古", 4, 80, 340),
+                            Robot.Attributes(0, 1, R.drawable.img_enemy_kulou, R.drawable.icon_enemy_33, 1, "扎古", 4, 80, 340),
                             listOf(Weapon(120, "光剑")),
-                            Operator("大卫", R.drawable.peple_46)), Pos(3, 6)
+                            Operator("AI", R.drawable.peple_3, BgmConstants.DaWei)), Pos(3, 6)
             )
             )
         }

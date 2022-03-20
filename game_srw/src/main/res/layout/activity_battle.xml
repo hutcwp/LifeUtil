@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <com.hutcwp.srw.view.BattleSceneLayout
+    <com.hutcwp.srw.view.BattleSceneAnimLayout
         android:id="@+id/ly_battle_scene"
         android:layout_width="match_parent"
         android:layout_height="200dp"

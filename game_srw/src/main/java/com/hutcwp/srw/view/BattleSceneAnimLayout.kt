@@ -11,15 +11,16 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.hutcwp.srw.R
 import com.hutcwp.srw.info.Robot
+import com.hutcwp.srw.info.battle.Weapon
 import com.hutcwp.srw.music.AudioMusic
 import kotlinx.android.synthetic.main.view_battle_scene.view.*
 
 /**
  *  author : kevin
  *  date : 2022/3/13 11:16 AM
- *  description :
+ *  description : 战斗动画
  */
-class BattleSceneLayout @JvmOverloads constructor(
+class BattleSceneAnimLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
@@ -33,7 +34,7 @@ class BattleSceneLayout @JvmOverloads constructor(
         iv_right?.setImageResource(right.attribute.imgId)
     }
 
-    fun showWeaponAnim(isLeft: Boolean) {
+    fun showWeaponAnim(isLeft: Boolean,weapon: Weapon) {
         val imageView = ImageView(context)
         val lp = FrameLayout.LayoutParams(100, 40)
         lp.gravity = Gravity.CENTER_VERTICAL
@@ -46,7 +47,10 @@ class BattleSceneLayout @JvmOverloads constructor(
         val x = if (isLeft) {
             floatArrayOf(30f, 120f, 240f, 300f, 400f, 560f)
         } else {
-            floatArrayOf(520f, 400f, 300f, 240f, 180f, 30f)
+            imageView.pivotX = (imageView.width /2).toFloat();
+            imageView.pivotY = (imageView.height /2).toFloat();//支点在图片中心
+            imageView.rotation = 180f
+            floatArrayOf(520f, 400f, 300f, 240f, 180f, 160f)
         }
         val objectAnim: ObjectAnimator = ObjectAnimator.ofFloat(imageView, "translationX", *x)
         objectAnim.duration = 2000

@@ -1,7 +1,6 @@
 package com.hutcwp.srw.controller
 
 import com.hutcwp.srw.bean.RobotSprite
-import com.hutcwp.srw.info.Robot
 
 /**
  *  author : kevin
@@ -12,7 +11,7 @@ interface ISceneSwitch {
 
     fun switchMainScene()
 
-    fun switchBattleScene(leftRobot: RobotSprite, rightRobot: RobotSprite)
+    fun switchBattleScene(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite)
 
 //    fun showBattleScene(leftRobot: Robot, rightRobot: Robot)
 }

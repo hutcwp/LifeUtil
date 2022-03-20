@@ -3,9 +3,13 @@
     package="com.hutcwp.srw">
 
     <application>
-        <activity android:name=".MainGameActivity">
+        <activity
+            android:name=".MainGameActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         </activity>
-        <activity android:name=".view.BattleActivity"/>
+        <activity android:name=".view.BattleActivity" />
     </application>
 
 </manifest>

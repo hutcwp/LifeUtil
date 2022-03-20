@@ -21,13 +21,9 @@ import me.hutcwp.BaseConfig
  */
 class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameController {
 
-    private var chatMsg: MutableList<String> = mutableListOf("战斗开始")
-
-    private var curIndex = 0
 
     private var leftRobot: RobotSprite? = null
     private var rightRobot: RobotSprite? = null
-
 
     private var battleController: BattleController? = null
 
@@ -40,6 +36,8 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
         super.onViewCreated(view, savedInstanceState)
         //设置手柄控制器
         (activity as MainGameActivity).setGameController(this)
+        showChatMsg("开始战斗...")
+
     }
 
     /**
@@ -50,15 +48,9 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
         ly_battle_detail?.updateRobots(leftRobot.robot, rightRobot.robot)
     }
 
-    fun showChatMsg() {
-        battleController?.startBattle()
-//        if (curIndex <= chatMsg.lastIndex) {
-//            ly_battle_detail?.setChatMsg(chatMsg.get(curIndex))
-//            curIndex++
-//        } else {
-//            onFinish()
-//            sceneSwitch.switchMainScene()
-//        }
+
+    fun showChatMsg(msg: String) {
+        ly_battle_detail?.setChatMsg(msg)
     }
 
     /**
@@ -70,14 +62,6 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
 
         battleController = BattleController(this, leftRobot, rightRobot)
         battleController?.initBattle()
-
-        curIndex = 0
-//        showChatMsg()
-    }
-
-    private fun playBGM() {
-        val path = "audio/music2/82.mp3"
-        BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).playBackgroundMusic(path, true)
     }
 
     fun showAttackAnim(robotSprite: RobotSprite, weapon: Weapon) {
@@ -96,22 +80,17 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
         ly_battle_scene?.showWeaponAnim(true)
     }
 
-
     /**
      * 战斗结束，回收工作
      */
     fun onFinish() {
         this.leftRobot = null
         this.rightRobot = null
-        this.curIndex = 0
         this.battleController = null
         BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).stopBackgroundMusic()
+        sceneSwitch.switchMainScene()
     }
 
-
-    fun turnNextStep() {
-
-    }
 
 //    =====================操作控制器==============
 
@@ -128,7 +107,7 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
     }
 
     override fun ok() {
-        showChatMsg()
+        battleController?.startPlayBattle()
     }
 
     override fun cancel() {

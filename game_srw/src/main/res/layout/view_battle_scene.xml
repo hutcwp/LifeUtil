@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
         android:src="@drawable/img_bule_43" />
 
     <ImageView
@@ -19,12 +20,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
         android:src="@drawable/img_enemy_9" />
 
     <FrameLayout
         android:id="@+id/fl_anim"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"
+        android:layout_marginVertical="40dp"
+        android:layout_marginHorizontal="30dp" />
 
 </RelativeLayout>

@@ -104,8 +104,6 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
             }
             MenuStatus.Attack -> {
                 if (sprite is RobotSprite) {
-                    Toast.makeText(mapView.context, "攻击它！", Toast.LENGTH_SHORT).show()
-                    BattleUtil.attack(curRobotSprite!!, sprite)
                     mapView.showNormalRange()
                     changeMapSelectStatus(MenuStatus.Normal)
 //                    GameMain.showBattleActivity(mapView.context, curRobotSprite!!.robot, sprite.robot)

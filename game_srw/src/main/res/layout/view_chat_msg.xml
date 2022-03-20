@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:apps="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/tv_chat_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_marginHorizontal="20dp"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"
+    android:paddingTop="30dp"
+    tools:background="@color/black">
 
     <ImageView
         android:id="@+id/iv_chater"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_below="@id/tv_chat_msg"
         android:src="@drawable/peple_46" />
+
+    <TextView
+        android:id="@+id/tv_chat_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_toRightOf="@id/iv_chater"
+        android:text="这是对话的地方"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 </RelativeLayout>

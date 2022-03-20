@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -33,16 +34,18 @@ class BattleSceneLayout @JvmOverloads constructor(
 
     fun showWeaponAnim(isLeft: Boolean) {
         val imageView = ImageView(context)
-        imageView.layoutParams = FrameLayout.LayoutParams(100, 40)
+        val lp = FrameLayout.LayoutParams(100, 40)
+        lp.gravity = Gravity.CENTER_VERTICAL
+        imageView.layoutParams = lp
         imageView.setImageResource(R.drawable.weapon_daodan)
 
         fl_anim?.removeAllViews()
         fl_anim?.addView(imageView)
 
         val x = if (isLeft) {
-            floatArrayOf(30f, 120f, 240f, 300f, 500f)
+            floatArrayOf(30f, 120f, 240f, 300f, 400f, 560f)
         } else {
-            floatArrayOf(50f, 400f, 300f, 180f, 30f)
+            floatArrayOf(520f, 400f, 300f, 240f, 180f, 30f)
         }
         val objectAnim: ObjectAnimator = ObjectAnimator.ofFloat(imageView, "translationX", *x)
         objectAnim.duration = 2000

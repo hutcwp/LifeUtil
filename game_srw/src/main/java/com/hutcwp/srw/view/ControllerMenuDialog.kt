@@ -34,10 +34,10 @@ class ControllerMenuDialog(private var robot: Robot) : DialogFragment() {
                 setBackgroundDrawableResource(R.color.transparent)
                 addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
                 attributes.apply {
-                    gravity = Gravity.BOTTOM
+                    setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM)
                     dimAmount = 0.0f
-                    width = WindowManager.LayoutParams.MATCH_PARENT
-                    height = ResolutionUtils.convertDpToPixel(220f, context).toInt()
+                    width = ResolutionUtils.convertDpToPixel(400f, context).toInt()
+                    height = ResolutionUtils.convertDpToPixel(200f, context).toInt()
                 }
             }
         }
@@ -84,8 +84,6 @@ class ControllerMenuDialog(private var robot: Robot) : DialogFragment() {
         robotView.updateData(robot)
         return robotView
     }
-
-
 
 
     companion object {

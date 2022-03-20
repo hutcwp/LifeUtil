@@ -1,6 +1,5 @@
 package com.hutcwp.srw.info
 
-import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.info.battle.Weapon
 
 /**

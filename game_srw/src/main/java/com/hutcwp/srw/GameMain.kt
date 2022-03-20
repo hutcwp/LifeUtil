@@ -2,6 +2,7 @@ package com.hutcwp.srw
 
 import com.hutcwp.srw.ai.AI
 import com.hutcwp.srw.bean.*
+import com.hutcwp.srw.constants.LevelConfig
 import com.hutcwp.srw.controller.TestMockData
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.view.MapView
@@ -17,7 +18,7 @@ object GameMain {
 
     private val ai = AI()
 
-    var robotSpriteList: MutableList<RobotSprite> = mutableListOf()
+    var robotSpriteList: List<RobotSprite> = mutableListOf()
     var mapSpriteList: MutableList<MapSprite> = mutableListOf()
     var selectSprite: SelectSprite? = null
 
@@ -45,9 +46,9 @@ object GameMain {
 
     private fun initGame(mapView: MapView, no: Int) {
         if (!hasInit) {
-            mapSpriteList = dataMock.createMapListFromLevel(mapView.context,no)
-            robotSpriteList = dataMock.createRobotList(mapView.context)
-            selectSprite = dataMock.createSelectSprite(mapView.context)
+            mapSpriteList = dataMock.createMapListFromLevel(mapView.context, LevelConfig.No1.mapList)
+            robotSpriteList = LevelConfig.No1.blueRobotList + LevelConfig.No1.redRobotList
+            selectSprite = dataMock.createSelectSpriteFromPos(mapView.context,LevelConfig.No1.blueRobotList[0].pos)
         }
 
         hasInit = true

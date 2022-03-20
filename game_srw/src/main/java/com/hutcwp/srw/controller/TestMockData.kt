@@ -5,7 +5,6 @@ import com.hutcwp.srw.constants.BgmConstants
 import com.hutcwp.srw.R
 import com.hutcwp.srw.RobotsFactoryService
 import com.hutcwp.srw.bean.*
-import com.hutcwp.srw.constants.MapConstants
 import com.hutcwp.srw.info.Operator
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.info.battle.Weapon
@@ -27,8 +26,7 @@ class TestMockData {
         return robot
     }
 
-    fun createMapListFromLevel(context: Context, no: Int): MutableList<MapSprite> {
-        val mapList = MapConstants.N0_1
+    fun createMapListFromLevel(context: Context, mapList: Array<IntArray>): MutableList<MapSprite> {
         val mapSpriteList = mutableListOf<MapSprite>()
 
         for (y in mapList.indices) {
@@ -76,6 +74,7 @@ class TestMockData {
         return robotSpriteList
     }
 
+
     fun createSelectSprite(context: Context): SelectSprite {
         val params = RobotParams.Builder().apply {
             this.pos = Pos(2, 3)
@@ -83,5 +82,15 @@ class TestMockData {
         }.build()
         return SelectSprite(context, params)
     }
+
+
+    fun createSelectSpriteFromPos(context: Context,pos: Pos): SelectSprite {
+        val params = RobotParams.Builder().apply {
+            this.pos = pos
+            this.resId = R.drawable.icon_select
+        }.build()
+        return SelectSprite(context, params)
+    }
+
 
 }

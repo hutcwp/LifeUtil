@@ -39,8 +39,8 @@ class MapView @JvmOverloads constructor(
         }
     }
 
-    fun initRobots(robotSpriteList: MutableList<RobotSprite>) {
-        addRobotList(robotSpriteList.toList())
+    fun initRobots(robotSpriteList: List<RobotSprite>) {
+        addRobotList(robotSpriteList)
     }
 
     fun initSelect(selectSprite: SelectSprite) {

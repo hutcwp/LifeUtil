@@ -26,8 +26,7 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
 
     init {
         mapView.gameController = this
-
-        GameMain.initGame(mapView)
+        GameMain.switchLevel(mapView, 1)
     }
 
 

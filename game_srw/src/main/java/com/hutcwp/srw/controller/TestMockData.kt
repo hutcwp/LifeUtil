@@ -1,10 +1,11 @@
 package com.hutcwp.srw.controller
 
 import android.content.Context
-import com.hutcwp.srw.BgmConstants
+import com.hutcwp.srw.constants.BgmConstants
 import com.hutcwp.srw.R
 import com.hutcwp.srw.RobotsFactoryService
 import com.hutcwp.srw.bean.*
+import com.hutcwp.srw.constants.MapConstants
 import com.hutcwp.srw.info.Operator
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.info.battle.Weapon
@@ -26,11 +27,25 @@ class TestMockData {
         return robot
     }
 
+    fun createMapListFromLevel(context: Context, no: Int): MutableList<MapSprite> {
+        val mapList = MapConstants.N0_1
+        val mapSpriteList = mutableListOf<MapSprite>()
+
+        for (y in mapList.indices) {
+            for (x in mapList[y].indices) {
+                val res = mapList[y][x]
+                mapSpriteList.add(MapSprite(context, res, Pos(x, y)))
+            }
+        }
+
+        return mapSpriteList
+    }
+
     fun createMapList(context: Context): MutableList<MapSprite> {
         val mapSpriteList = mutableListOf<MapSprite>()
         for (x in 0..GameController.MAP_WIDTH_SIZE) {
             for (y in 0..GameController.MAP_HEIGHT_SIZE) {
-                mapSpriteList.add(MapSprite(context, R.drawable.a_01, Pos(x, y)))
+                mapSpriteList.add(MapSprite(context, R.drawable.map_a_01, Pos(x, y)))
             }
         }
 

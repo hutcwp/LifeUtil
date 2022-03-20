@@ -24,9 +24,9 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
         switchMainScene()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            switchBattleScene(true, GameMain.robotSpriteList[1], GameMain.robotSpriteList[0])
-        }, 1000)
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            switchBattleScene(true, GameMain.robotSpriteList[1], GameMain.robotSpriteList[0])
+//        }, 1000)
 
 //        playBGM()
     }

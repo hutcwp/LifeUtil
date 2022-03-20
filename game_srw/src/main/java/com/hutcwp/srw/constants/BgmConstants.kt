@@ -1,4 +1,4 @@
-package com.hutcwp.srw
+package com.hutcwp.srw.constants
 
 /**
  *  author : kevin

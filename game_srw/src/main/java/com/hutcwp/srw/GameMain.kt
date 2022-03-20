@@ -38,10 +38,14 @@ object GameMain {
         }
     }
 
+    fun switchLevel(mapView: MapView, no: Int) {
+        initGame(mapView, no)
+    }
 
-    fun initGame(mapView: MapView) {
+
+    private fun initGame(mapView: MapView, no: Int) {
         if (!hasInit) {
-            mapSpriteList = dataMock.createMapList(mapView.context)
+            mapSpriteList = dataMock.createMapListFromLevel(mapView.context,no)
             robotSpriteList = dataMock.createRobotList(mapView.context)
             selectSprite = dataMock.createSelectSprite(mapView.context)
         }

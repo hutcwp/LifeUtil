@@ -40,11 +40,14 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
     override fun switchMainScene() {
         if (mainGameScene == null) {
             mainGameScene = MainGameScene()
+            mainGameScene?.initDataCGameController()
             supportFragmentManager.beginTransaction()
                     .add(R.id.fl_container, mainGameScene!!)
                     .show(mainGameScene!!)
                     .commitAllowingStateLoss()
         } else {
+            mainGameScene?.initDataCGameController()
+
             supportFragmentManager.beginTransaction()
                     .hide(battleScene!!)
                     .show(mainGameScene!!)

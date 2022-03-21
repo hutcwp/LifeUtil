@@ -36,7 +36,12 @@ class MainGameScene : Fragment() {
 
     private fun initData() {
         gameController = GameController(activity as MainGameActivity, map!!)
-        (activity as MainGameActivity).setGameController(gameController!!)
+        initDataCGameController()
+    }
+
+    fun initDataCGameController(){
+        gameController?:return
+        (activity as MainGameActivity)?.setGameController(gameController!!)
     }
 
 

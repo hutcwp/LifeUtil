@@ -102,6 +102,10 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
                 changeMapSelectStatus(MenuStatus.Normal)
             }
             MenuStatus.Attack -> {
+                if (sprite == curRobotSprite) {
+                    return
+                }
+
                 if (sprite is RobotSprite) {
                     mapView.showNormalRange()
                     changeMapSelectStatus(MenuStatus.Normal)

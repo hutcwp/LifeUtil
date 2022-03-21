@@ -63,30 +63,40 @@ class BattleController(private val battleScene: BattleScene,
             battleScene.showAttackAnim(attacker, attacker.useWeapon()!!)
 
 
-            battleStepQueue.offer(Runnable {
+            battleStepQueue.add(Runnable {
                 defender.beAttackByWeapon(attacker.robot, attacker.useWeapon()!!)
                 battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
                 battleScene.showChatMsg("${defender.robot.attribute.name} 受到 " +
                         "${attacker.useWeapon()!!.attackValue} 伤害", defender.robot.operator)
+
+
+                if (!defender.isAlive()) {
+
+                    battleScene.showChatMsg("${defender.robot.attribute.name} 倒下了～")
+                } else {
+
+                    battleStepQueue.add(Runnable {
+                        battleScene.showChatMsg("接招！", defender.robot.operator)
+                        battleScene.showAttackAnim(defender, defender.useWeapon()!!)
+
+                        attacker.beAttackByWeapon(defender.robot, defender.useWeapon()!!)
+
+                        battleStepQueue.offer(Runnable {
+                            battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
+                            battleScene.showChatMsg("${attacker.robot.attribute.name} 受到 " +
+                                    "${defender.useWeapon()!!.attackValue} 伤害", attacker.robot.operator)
+
+                            if(!attacker.isAlive()){
+                                battleScene.showChatMsg("${defender.robot.attribute.name} 倒下了～")
+                            }
+
+                        })
+                    })
+                }
+
             })
 
-            if (!defender.isAlive()) {
-                this.finish()
-            } else {
 
-                battleStepQueue.add(Runnable {
-                    battleScene.showChatMsg("接招！", defender.robot.operator)
-                    battleScene.showAttackAnim(defender, defender.useWeapon()!!)
-
-                    attacker.beAttackByWeapon(defender.robot, defender.useWeapon()!!)
-
-                    battleStepQueue.offer(Runnable {
-                        battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
-                        battleScene.showChatMsg("${attacker.robot.attribute.name} 受到 " +
-                                "${defender.useWeapon()!!.attackValue} 伤害", attacker.robot.operator)
-                    })
-                })
-            }
         })
     }
 

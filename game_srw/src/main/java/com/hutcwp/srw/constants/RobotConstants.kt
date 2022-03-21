@@ -10,7 +10,7 @@ import com.hutcwp.srw.info.Robot
  */
 object RobotConstants {
 
-    val GangDa = Robot.Attributes(1, 1, R.drawable.img_blue_gangda, R.drawable.robot_1, 1, "刚达R", 4, 100, 400)
+    val GangDa = Robot.Attributes(1, 1, R.drawable.img_blue_gangda, R.drawable.robot_1, 1, "刚达R", 4, 100, 200)
 
 
 

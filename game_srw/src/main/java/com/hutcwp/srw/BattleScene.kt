@@ -81,8 +81,8 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
 
         battleController = BattleController(this, leftRobot, rightRobot)
         battleController?.initBattle(isAuto)
-//        (activity as MainGameActivity).setGameController(this)
 
+        (activity as? MainGameActivity)?.setGameController(this)
     }
 
     fun showAttackAnim(robotSprite: RobotSprite, weapon: Weapon) {

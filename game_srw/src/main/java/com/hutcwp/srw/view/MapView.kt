@@ -2,14 +2,13 @@ package com.hutcwp.srw.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.FrameLayout
 import androidx.core.view.contains
 import androidx.fragment.app.FragmentActivity
-import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.MainGameActivity
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.controller.GameController
-import com.hutcwp.srw.controller.MenuStatus
 import com.hutcwp.srw.info.Robot
 
 /**
@@ -31,15 +30,20 @@ class MapView @JvmOverloads constructor(
     var mapSpriteSpriteList: List<MapSprite> = mutableListOf()
     var robotSpriteList: List<RobotSprite> = mutableListOf()
 
+    var mapWidth = 0
+    var mapHeight = 0
 
     fun initMap(mapSpriteSpriteList: List<MapSprite>) {
         this.mapSpriteSpriteList = mapSpriteSpriteList
         mapSpriteSpriteList.forEach {
             addViewToMap(it)
+            mapWidth = Math.max(mapWidth, it.pos.x)
+            mapHeight = Math.max(mapHeight, it.pos.y)
         }
     }
 
     fun initRobots(robotSpriteList: List<RobotSprite>) {
+        this.robotSpriteList = robotSpriteList
         addRobotList(robotSpriteList)
     }
 
@@ -76,6 +80,13 @@ class MapView @JvmOverloads constructor(
         addView(view)
     }
 
+    fun posInMapRange(pos: Pos): Boolean {
+        return (pos.x in 0 until mapWidth) && (pos.y in 0 until mapHeight)
+    }
+
+    fun posHasRobot(pos: Pos): Boolean {
+        return robotSpriteList.find { it.pos == pos } != null
+    }
 
     fun dismissMenu() {
         controllerMenuDialog?.dismissAllowingStateLoss()
@@ -113,12 +124,25 @@ class MapView @JvmOverloads constructor(
         }
     }
 
+
+    /**
+     *  移动状态下，找地图可移动的mapSprite
+     */
+    fun canMove(pos: Pos): Boolean {
+        return mapSpriteSpriteList.find { it.pos == pos && it.isEnable() } != null
+    }
+
     fun showMoveRange(pos: Pos, range: Int) {
         mapSpriteSpriteList.forEach {
             val absX = Math.abs(it.pos.x - pos.x)
             val absY = Math.abs(it.pos.y - pos.y)
-            if (absX + absY < range) {
-                it.view.alpha = 0.5f
+            val inMoveRange = (absX + absY <= range)
+            //移动范围内，地图内，没有机器人
+            if (inMoveRange && posInMapRange(it.pos) && posHasRobot(it.pos).not()) {
+                it.showEnable()
+                Log.i("test", "show enable x=${it.pos.x} , y=${it.pos.y}")
+            } else {
+                it.showUnable()
             }
         }
     }
@@ -127,30 +151,27 @@ class MapView @JvmOverloads constructor(
         mapSpriteSpriteList.forEach {
             val absX = Math.abs(it.pos.x - pos.x)
             val absY = Math.abs(it.pos.y - pos.y)
-            if (absX + absY < range) {
-                it.view.alpha = 0.5f
+            val inAttackRange = (absX + absY <= range)
+            //是否在攻击范围内
+            if (inAttackRange) {
+                it.showEnable()
+            } else {
+                it.showUnable()
             }
         }
     }
 
-    fun showNormalRange() {
+    fun resetNormalMap() {
         mapSpriteSpriteList.forEach {
-            it.view.alpha = 1f
+            it.showEnable()
         }
     }
 
 
-    fun canMove(pos: Pos): Boolean {
-        return mapSpriteSpriteList.find { it.pos == pos && it.view.alpha == 0.5f } != null
-    }
-
-    fun showRobotView(robot: Robot) {
-
-    }
 
     fun removeRobotSprite(robotSprite: RobotSprite) {
-        for (i in 0..childCount){
-            if(robotSprite.view == getChildAt(i)){
+        for (i in 0..childCount) {
+            if (robotSprite.view == getChildAt(i)) {
                 removeView(robotSprite.view)
                 return
             }

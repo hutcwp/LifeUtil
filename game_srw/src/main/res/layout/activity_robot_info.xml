@@ -9,6 +9,7 @@
     tools:context="com.hutcwp.RobotInfoActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -80,7 +81,8 @@
             android:id="@+id/iv_robot"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:src="@drawable/img_blue_gangda"
+            android:layout_margin="10dp"
+            android:src="@drawable/r_img_2"
             app:layout_constraintBottom_toBottomOf="@id/cl_basic_info"
             app:layout_constraintLeft_toRightOf="@id/cl_basic_info" />
 
@@ -125,7 +127,7 @@
 
             <TextView
                 android:id="@+id/tv_hp"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="Hp  304/304"
@@ -135,7 +137,7 @@
 
             <TextView
                 android:id="@+id/tv_exp"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="EXP          146"
@@ -145,7 +147,7 @@
 
             <TextView
                 android:id="@+id/tv_up_exp"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="升级还需   24"

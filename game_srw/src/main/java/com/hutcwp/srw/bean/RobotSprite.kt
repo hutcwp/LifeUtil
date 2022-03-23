@@ -26,7 +26,6 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
     }
 
     private fun showDestroyAnim() {
-
     }
 
     fun useWeapon(): Weapon? {
@@ -41,6 +40,7 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
         this.robot.attribute.hp = this.robot.attribute.hp - attack
         if (this.robot.attribute.hp <= 0) {
             this.robot.attribute.hp = 0
+            GameMain.destroyRobot(this)
             showDestroyAnim()
         }
     }

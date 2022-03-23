@@ -10,7 +10,7 @@ import java.io.Serializable
  */
 class Robot(val attribute: Robot.Attributes, val weapons: List<Weapon>, val operator: Operator) : BaseInfo(attribute.type), Serializable {
 
-    class Attributes(val code: Int, //阵营 0红色阵营 1蓝色阵营
+    class Attributes(val team: Int, //阵营 0红色阵营 1蓝色阵营
                      var type: Int, // 0海，1陆 ，2空
                      val imgId: Int, //机器人图片
                      val iconId: Int, //机器人地图图标

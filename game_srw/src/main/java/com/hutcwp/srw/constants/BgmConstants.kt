@@ -7,6 +7,8 @@ package com.hutcwp.srw.constants
  */
 object BgmConstants {
 
-    const val DaWei = "audio/music2/82.mp3"
+    const val DaWei = "audio/music2/80.mp3"
+    const val GaiTa = "audio/music2/81.mp3"
+    const val JinZ = "audio/music2/82.mp3"
 
 }

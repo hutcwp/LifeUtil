@@ -62,6 +62,6 @@ fun Robot.Attributes.expStr(): String {
 }
 
 fun Robot.Attributes.upExpStr(): String {
-    return "升级还需    ？？？"
+    return "升级还需    30"
 }
 

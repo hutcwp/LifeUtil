@@ -34,7 +34,7 @@ object GameMain {
         isPlayerTurn = !isPlayerTurn
         updateActionStatus()
         if (!isPlayerTurn) {
-            robotSpriteList?.filter { it.robot.attribute.code == 0 }?.let {
+            robotSpriteList?.filter { it.robot.attribute.team == 0 }?.let {
                 ai.compute(it)
             }
         }
@@ -98,9 +98,9 @@ object GameMain {
         return robotSpriteList.find { it.robot == robot } != null
     }
 
-    fun attack(attacker: RobotSprite, defender: RobotSprite) {
-        defender.beAttacked(attacker.useWeapon()!!.attackValue)
-    }
+//    fun attack(attacker: RobotSprite, defender: RobotSprite) {
+//        defender.beAttacked(attacker.useWeapon()!!.attackValue)
+//    }
 
     fun destroyRobot(robotSprite: RobotSprite) {
         mapView?.removeRobotSprite(robotSprite)

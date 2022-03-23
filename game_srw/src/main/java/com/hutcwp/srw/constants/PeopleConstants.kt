@@ -9,8 +9,11 @@ import com.hutcwp.srw.info.Operator
  * description :
  */
 object PeopleConstants {
-    var DaWei = Operator("大卫", R.drawable.p_6, BgmConstants.DaWei)
     var HuaiTe = Operator("怀特", R.drawable.p_6, BgmConstants.DaWei)
+    var DaWei = Operator("大卫", R.drawable.p_6, BgmConstants.DaWei)
+    var JiaDai = Operator("加代", R.drawable.p_7, BgmConstants.JinZ)
+    var Long = Operator("龙", R.drawable.p_8, BgmConstants.GaiTa)
+//    var HuaiTe = Operator("怀特", R.drawable.p_6, BgmConstants.DaWei)
 
     //    public Operator DaWei = new Operator("大卫", R.drawable.p_6, BgmConstants.DaWei);
     //    public Operator DaWei = new Operator("大卫", R.drawable.p_6, BgmConstants.DaWei);

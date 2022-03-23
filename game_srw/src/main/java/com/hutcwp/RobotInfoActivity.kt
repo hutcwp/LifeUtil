@@ -2,7 +2,9 @@ package com.hutcwp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.hutcwp.srw.R
+import com.hutcwp.srw.constants.RobotConstants
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.util.*
 import kotlinx.android.synthetic.main.activity_robot_info.*
@@ -15,10 +17,27 @@ class RobotInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_robot_info)
 
+
+
         robot = intent?.extras?.get(PARAM_ROBOT) as Robot?
         robot ?: return
 
         updateRobotInfo(robot!!)
+        changeUIStyle(robot!!.attribute.team)
+    }
+
+    //如果是红色方，机器人图片在左边
+    private fun changeUIStyle(type: Int) {
+        if (type == RobotConstants.TEAM_RED) {
+            val lp = iv_robot.layoutParams as ConstraintLayout.LayoutParams
+            lp.startToStart = R.id.cl_container
+            iv_robot.layoutParams = lp
+
+            val lp2 = cl_basic_info.layoutParams as ConstraintLayout.LayoutParams
+            lp2.startToStart = -1
+            lp2.endToEnd = R.id.cl_container
+            cl_basic_info.layoutParams = lp2
+        }
     }
 
 
@@ -42,7 +61,7 @@ class RobotInfoActivity : AppCompatActivity() {
         }
 
         robot.operator.let {
-            tv_operator_name?.text = it.name
+            tv_operator_name?.text = "驾驶员   ${it.name}"
             iv_operator_avatar?.setImageResource(it.resId)
         }
     }

@@ -1,8 +1,12 @@
 package com.hutcwp.srw.view
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.contains
 import androidx.fragment.app.FragmentActivity
@@ -107,10 +111,12 @@ class MapView @JvmOverloads constructor(
     fun updateViewPos(sprite: BaseSprite?) {
         sprite ?: return
         if (this.contains(sprite.view)) {
+
             val x = sprite.pos.x
             val y = sprite.pos.y
             val marginStart = x * MainGameActivity.UNIT_MAP
             val marginTop = y * MainGameActivity.UNIT_MAP
+            Log.d("hutcwp", "更新到pos" + sprite.pos.toString())
 
             val lp = FrameLayout.LayoutParams(MainGameActivity.UNIT_MAP, MainGameActivity.UNIT_MAP).apply {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -122,6 +128,37 @@ class MapView @JvmOverloads constructor(
             sprite.view.layoutParams = lp
             sprite.view.invalidate()
         }
+    }
+
+    fun updatePosWithAnim(sprite: BaseSprite, oldPos: Pos, newPos: Pos) {
+        val durX = (newPos.x - oldPos.x) * sprite.view.width.toFloat()
+        val durY = (newPos.y - oldPos.y) * sprite.view.height.toFloat()
+
+        val objectAnimatorX = ObjectAnimator.ofFloat(sprite.view, "translationX", 0f, durX)
+        val objectAnimatorY = ObjectAnimator.ofFloat(sprite.view, "translationY", 0f, durY)
+        val animatorSet = AnimatorSet()
+        animatorSet.playSequentially(objectAnimatorX,objectAnimatorY)
+
+        animatorSet.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(p0: Animator?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+                sprite.view.translationX = 0f
+                sprite.view.translationY = 0f
+                sprite.pos = newPos
+                updateViewPos(sprite)
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+            }
+
+            override fun onAnimationRepeat(p0: Animator?) {
+            }
+
+        })
+        animatorSet.start();
     }
 
 
@@ -166,7 +203,6 @@ class MapView @JvmOverloads constructor(
             it.showEnable()
         }
     }
-
 
 
     fun removeRobotSprite(robotSprite: RobotSprite) {

@@ -63,8 +63,10 @@ object GameMain {
     }
 
     fun updateSpritePos(sprite: BaseSprite, pos: Pos) {
-        sprite.pos = pos
-        mapView?.updateViewPos(sprite)
+        mapView?.updatePosWithAnim(sprite,sprite.pos,pos)
+
+
+//        mapView?.updateViewPos(sprite)
     }
 
     fun findRobotByPos(pos: Pos): RobotSprite? {

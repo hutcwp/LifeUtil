@@ -7,6 +7,7 @@ import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.view.IControllerMenu
 import com.hutcwp.srw.view.MapView
 import me.hutcwp.log.MLog
+import me.hutcwp.util.ResolutionUtils
 
 /**
  *  author : kevin
@@ -109,6 +110,7 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
         if (mapView.posInMapRange(pos)) {
             GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
+        changeMapPos(false)
     }
 
     override fun down() {
@@ -117,6 +119,8 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
         if (mapView.posInMapRange(pos)) {
             GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
+
+        changeMapPos(true)
     }
 
     override fun left() {
@@ -162,9 +166,24 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
     }
 
 
+    private fun changeMapPos(isDown: Boolean) {
+        if (isDown) {
+            if (mapView.bottom - (mapView.scrollY) > ResolutionUtils.getScreenHeight(mapView.context)) {
+                mapView.scrollY += MAP_MOVE_SPEED
+            }
+        } else {
+            if (mapView.top + (mapView.scrollY) > 0) {
+                mapView.scrollY -= MAP_MOVE_SPEED
+            }
+        }
+    }
+
+
     companion object {
         const val TAG = "GameController"
         const val MAP_WIDTH_SIZE = 16
         const val MAP_HEIGHT_SIZE = 16
+
+        const val MAP_MOVE_SPEED = 30
     }
 }

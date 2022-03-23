@@ -51,6 +51,12 @@ public class MapConstants {
             {Shui, Shui, Shui, Shui, Shan, Shan, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
             {Shui, Shui, Shui, Shui, Shui, Shan, Shan, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
             {Shui, Shui, Shui, Shui, Shui, Shui, Grass, Tree2, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
+
+            {Shui, Shui, Shui, Shui, Shui, Shui, Shan, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
+            {Shui, Shui, Shui, Shui, Shui, Shui, Shan, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
+            {Shui, Shui, Shui, Shui, Shui, Shui, Shan, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
+            {Shui, Shui, Shui, Shui, Shui, Shui, Shan, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
+            {Shui, Shui, Shui, Shui, Shui, Shui, Shan, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
             {Shui, Shui, Shui, Shui, Shui, Shui, Shan, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass, Grass},
 
     };

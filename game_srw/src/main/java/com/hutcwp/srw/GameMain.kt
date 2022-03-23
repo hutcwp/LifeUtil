@@ -32,10 +32,17 @@ object GameMain {
 
     fun takeTurn() {
         isPlayerTurn = !isPlayerTurn
+        updateActionStatus()
         if (!isPlayerTurn) {
             robotSpriteList?.filter { it.robot.attribute.code == 0 }?.let {
                 ai.compute(it)
             }
+        }
+    }
+
+    fun updateActionStatus() {
+        robotSpriteList?.forEach {
+            it.updateAction(true)
         }
     }
 
@@ -48,7 +55,7 @@ object GameMain {
         if (!hasInit) {
             mapSpriteList = dataMock.createMapListFromLevel(mapView.context, LevelConfig.No1.mapList)
             robotSpriteList = LevelConfig.No1.blueRobotList + LevelConfig.No1.redRobotList
-            selectSprite = dataMock.createSelectSpriteFromPos(mapView.context,LevelConfig.No1.blueRobotList[0].pos)
+            selectSprite = dataMock.createSelectSpriteFromPos(mapView.context, LevelConfig.No1.blueRobotList[0].pos)
         }
 
         hasInit = true
@@ -60,10 +67,11 @@ object GameMain {
             mapView.initRobots(it)
         }
         mapView.initSelect(selectSprite!!)
+        updateActionStatus()
     }
 
     fun updateSpritePos(sprite: BaseSprite, pos: Pos) {
-        mapView?.updatePosWithAnim(sprite,sprite.pos,pos)
+        mapView?.updatePosWithAnim(sprite, sprite.pos, pos)
 
 
 //        mapView?.updateViewPos(sprite)

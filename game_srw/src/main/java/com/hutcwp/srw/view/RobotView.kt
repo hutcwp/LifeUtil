@@ -22,7 +22,7 @@ class RobotView @JvmOverloads constructor(
     }
 
     fun updateData(robot: Robot) {
-        tv_name?.text = robot.attribute.name
+        tv_robot_name?.text = robot.attribute.name
         tv_level?.text = "LV" + robot.attribute.level
         tv_type?.text = "" + robot.type
         tv_hp?.text = "HP: ${robot.attribute.hp}/${robot.attribute.maxHp}"

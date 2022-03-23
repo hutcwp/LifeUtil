@@ -1,5 +1,8 @@
 package com.hutcwp.srw.controller
 
+import android.content.Intent
+import android.os.Bundle
+import com.hutcwp.RobotInfoActivity
 import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.bean.BaseSprite
 import com.hutcwp.srw.bean.Pos
@@ -56,11 +59,20 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
     }
 
     override fun status() {
+        curRobotSprite ?: return
 
+        val intent = Intent(mapView.context, RobotInfoActivity::class.java)
+        val bundle = Bundle().apply {
+            this.putSerializable(RobotInfoActivity.PARAM_ROBOT, curRobotSprite!!.robot)
+        }
+        intent.putExtras(bundle)
+
+        mapView.context.startActivity(intent)
     }
 
     override fun finish() {
 //        curRobotSprite?.updateMoveAvailable(false)
+        mapView.dismissMenu()
         GameMain.takeTurn()
     }
 
@@ -69,6 +81,7 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
     }
 
     override fun select(sprite: BaseSprite) {
+
         when (menuStatus) {
             MenuStatus.Normal -> {
                 if (sprite is RobotSprite) {
@@ -96,11 +109,11 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
                     changeMapSelectStatus(MenuStatus.Normal)
 
                     sceneSwitch.switchBattleScene(true, sprite, curRobotSprite!!)
+                    curRobotSprite!!.updateAction(false)
                 }
             }
         }
 
-        status()
     }
 
 

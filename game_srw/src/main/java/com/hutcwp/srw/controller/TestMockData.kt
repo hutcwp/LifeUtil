@@ -50,39 +50,6 @@ class TestMockData {
         return mapSpriteList
     }
 
-    fun createRobotList(context: Context): MutableList<RobotSprite> {
-        val robotSpriteList = mutableListOf<RobotSprite>()
-        robotSpriteList.let {
-            it.add(createRobot(
-                    context,
-                    Robot(
-                            Robot.Attributes(1, 1, R.drawable.img_blue_gangda, R.drawable.robot_1, 1, "刚达R", 4, 100, 400),
-                            listOf(Weapon(80, "光剑")),
-                            Operator("大卫", R.drawable.peple_46, BgmConstants.DaWei)
-                    ), Pos(3, 5)
-            )
-            )
-            it.add(createRobot(context,
-                    Robot(
-                            Robot.Attributes(0, 1, R.drawable.img_enemy_kulou, R.drawable.icon_enemy_33, 1, "扎古", 4, 80, 340),
-                            listOf(Weapon(120, "光剑")),
-                            Operator("AI", R.drawable.peple_3, BgmConstants.DaWei)), Pos(3, 6)
-            )
-            )
-        }
-
-        return robotSpriteList
-    }
-
-
-    fun createSelectSprite(context: Context): SelectSprite {
-        val params = RobotParams.Builder().apply {
-            this.pos = Pos(2, 3)
-            this.resId = R.drawable.icon_select
-        }.build()
-        return SelectSprite(context, params)
-    }
-
 
     fun createSelectSpriteFromPos(context: Context,pos: Pos): SelectSprite {
         val params = RobotParams.Builder().apply {
@@ -91,6 +58,5 @@ class TestMockData {
         }.build()
         return SelectSprite(context, params)
     }
-
 
 }

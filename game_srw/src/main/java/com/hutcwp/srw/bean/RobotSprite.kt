@@ -14,6 +14,9 @@ import com.hutcwp.srw.info.battle.Weapon
  */
 class RobotSprite(val context: Context, val robot: Robot, val params: RobotParams) : BaseSprite(RobotUI(context), params.pos, params.resId) {
 
+
+    var canAction: Boolean = true //是否还可以行动
+
     fun beAttack(robot: Robot) {
         val attack = robot.attribute.attack
         this.robot.attribute.hp = this.robot.attribute.hp - attack
@@ -37,7 +40,7 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
         val attack = weapon.attackValue
         this.robot.attribute.hp = this.robot.attribute.hp - attack
         if (this.robot.attribute.hp <= 0) {
-            this.robot.attribute.hp =0
+            this.robot.attribute.hp = 0
             showDestroyAnim()
         }
     }
@@ -57,7 +60,7 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
         if (canMove) {
             view.alpha = 1f
         } else {
-            view.alpha = 0.5f
+            view.alpha = 0.3f
         }
     }
 
@@ -65,8 +68,15 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
         (view as RobotUI).showDestroyAnim()
     }
 
+    fun updateAction(canAction: Boolean) {
+        this.canAction = canAction
+
+        updateMoveAvailable(canAction)
+    }
+
     fun showAttackAnim() {
 
     }
+
 
 }

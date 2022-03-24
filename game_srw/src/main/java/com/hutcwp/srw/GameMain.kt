@@ -3,6 +3,7 @@ package com.hutcwp.srw
 import com.hutcwp.srw.ai.AI
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.constants.LevelConfig
+import com.hutcwp.srw.constants.RobotConstants
 import com.hutcwp.srw.controller.TestMockData
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.view.MapView
@@ -101,6 +102,22 @@ object GameMain {
 //    fun attack(attacker: RobotSprite, defender: RobotSprite) {
 //        defender.beAttacked(attacker.useWeapon()!!.attackValue)
 //    }
+
+    fun blueRobotSpriteList(): List<RobotSprite> {
+        return robotSpriteList.filter {
+            it.robot.attribute.team == RobotConstants.TEAM_BLUE
+        }
+    }
+
+    fun redRobotSpriteList(): List<RobotSprite> {
+        return robotSpriteList.filter {
+            it.robot.attribute.team == RobotConstants.TEAM_RED
+        }
+    }
+
+    fun hasRobot(pos: Pos): Boolean {
+        return robotSpriteList.find { it.pos == pos } != null
+    }
 
     fun destroyRobot(robotSprite: RobotSprite) {
         mapView?.removeRobotSprite(robotSprite)

@@ -2,6 +2,7 @@ package com.hutcwp.srw.controller
 
 import com.hutcwp.srw.BattleScene
 import com.hutcwp.srw.bean.RobotSprite
+import com.hutcwp.srw.compute.BattleCenter
 import com.hutcwp.srw.music.BackgroundMusic
 import me.hutcwp.BaseConfig
 import java.util.*
@@ -66,8 +67,11 @@ class BattleController(private val battleScene: BattleScene,
             battleStepQueue.add(Runnable {
                 defender.beAttackByWeapon(attacker, attacker.useWeapon()!!)
                 battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
+
+                val attackValue = BattleCenter.attackValue(attacker, defender, attacker.useWeapon()!!)
+
                 battleScene.showChatMsg("${defender.robot.attribute.name} 受到 " +
-                        "${attacker.useWeapon()!!.attackValue} 伤害", defender.robot.operator)
+                        "$attackValue 伤害", defender.robot.operator)
 
 
                 if (!defender.isAlive()) {
@@ -83,10 +87,14 @@ class BattleController(private val battleScene: BattleScene,
 
                         battleStepQueue.offer(Runnable {
                             battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
-                            battleScene.showChatMsg("${attacker.robot.attribute.name} 受到 " +
-                                    "${defender.useWeapon()!!.attackValue} 伤害", attacker.robot.operator)
 
-                            if(!attacker.isAlive()){
+                            val attackValue = BattleCenter.attackValue(defender, attacker, defender.useWeapon()!!)
+
+
+                            battleScene.showChatMsg("${attacker.robot.attribute.name} 受到 " +
+                                    "$attackValue 伤害", attacker.robot.operator)
+
+                            if (!attacker.isAlive()) {
                                 battleScene.showChatMsg("${defender.robot.attribute.name} 倒下了～")
                             }
 

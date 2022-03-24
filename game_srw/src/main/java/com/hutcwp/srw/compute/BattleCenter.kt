@@ -16,7 +16,7 @@ object BattleCenter {
      */
     fun attackValue(attack: RobotSprite, defend: RobotSprite, weapon: Weapon): Int {
 //        when(defend) //todo 要计算当前所处的地形
-        var value = attack.robot.attribute.attack + weapon.attackValue - defend.robot.attribute.defend
+        var value =  weapon.attackValue - defend.robot.attribute.defend
         value = 0.coerceAtLeast(value)
         return value
     }

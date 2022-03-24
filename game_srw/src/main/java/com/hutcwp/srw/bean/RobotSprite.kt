@@ -37,9 +37,6 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
      * 被什么武器攻击了
      */
     fun beAttackByWeapon(robot: RobotSprite, weapon: Weapon) {
-        val attack = weapon.attackValue
-        this.robot.attribute.hp = this.robot.attribute.hp - attack
-
         val attackValue = BattleCenter.attackValue(robot, this, weapon)
         this.robot.attribute.hp -= attackValue
 

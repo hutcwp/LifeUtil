@@ -6,4 +6,8 @@ package com.hutcwp.srw.info.battle
  *  description :
  */
 class LightSword : Weapon(120, "光剑") {
+
+    override fun weaAttack(): Int {
+        return super.weaAttack() - 20
+    }
 }

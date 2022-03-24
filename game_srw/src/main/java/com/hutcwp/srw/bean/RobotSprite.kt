@@ -4,6 +4,7 @@ import android.content.Context
 import com.hutcwp.srw.BaseUI
 import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.RobotUI
+import com.hutcwp.srw.compute.BattleCenter
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.info.battle.Weapon
 
@@ -35,9 +36,13 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
     /**
      * 被什么武器攻击了
      */
-    fun beAttackByWeapon(robot: Robot, weapon: Weapon) {
+    fun beAttackByWeapon(robot: RobotSprite, weapon: Weapon) {
         val attack = weapon.attackValue
         this.robot.attribute.hp = this.robot.attribute.hp - attack
+
+        val attackValue = BattleCenter.attackValue(robot, this, weapon)
+        this.robot.attribute.hp -= attackValue
+
         if (this.robot.attribute.hp <= 0) {
             this.robot.attribute.hp = 0
             GameMain.destroyRobot(this)
@@ -49,12 +54,6 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
         return this.robot.attribute.hp > 0
     }
 
-    fun beAttacked(hitValue: Int) {
-        robot.attribute.hp -= hitValue
-        if (robot.attribute.hp <= 0) {
-            GameMain.destroyRobot(this)
-        }
-    }
 
     fun updateMoveAvailable(canMove: Boolean) {
         if (canMove) {

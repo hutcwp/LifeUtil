@@ -64,7 +64,7 @@ class BattleController(private val battleScene: BattleScene,
 
 
             battleStepQueue.add(Runnable {
-                defender.beAttackByWeapon(attacker.robot, attacker.useWeapon()!!)
+                defender.beAttackByWeapon(attacker, attacker.useWeapon()!!)
                 battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
                 battleScene.showChatMsg("${defender.robot.attribute.name} 受到 " +
                         "${attacker.useWeapon()!!.attackValue} 伤害", defender.robot.operator)
@@ -79,7 +79,7 @@ class BattleController(private val battleScene: BattleScene,
                         battleScene.showChatMsg("接招！", defender.robot.operator)
                         battleScene.showAttackAnim(defender, defender.useWeapon()!!)
 
-                        attacker.beAttackByWeapon(defender.robot, defender.useWeapon()!!)
+                        attacker.beAttackByWeapon(defender, defender.useWeapon()!!)
 
                         battleStepQueue.offer(Runnable {
                             battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)

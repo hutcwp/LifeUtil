@@ -46,6 +46,8 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment(), IGameCont
         (activity as MainGameActivity).setGameController(this)
         showChatMsg("开始战斗...")
         updateRobotInfo(leftRobot!!, rightRobot!!)
+
+        battleController?.initBattle(true)
     }
 
     /**

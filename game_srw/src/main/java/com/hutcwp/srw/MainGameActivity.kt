@@ -10,6 +10,7 @@ import com.hutcwp.srw.controller.IGameController
 import com.hutcwp.srw.controller.ISceneSwitch
 import com.hutcwp.srw.music.BackgroundMusic
 import kotlinx.android.synthetic.main.activity_main_game.*
+import me.hutcwp.BaseConfig
 
 @Route(path = "/game/srw")
 class MainGameActivity : AppCompatActivity(), ISceneSwitch {
@@ -28,16 +29,12 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 //            switchBattleScene(true, GameMain.robotSpriteList[1], GameMain.robotSpriteList[0])
 //        }, 1000)
 
-//        playBGM()
-    }
-
-    private fun playBGM() {
-        val path = "audio/music2/87.mp3"
-        BackgroundMusic.getInstance(this).playBackgroundMusic(path, true)
     }
 
 
     override fun switchMainScene() {
+        playBGM()
+
         if (mainGameScene == null) {
             mainGameScene = MainGameScene()
             mainGameScene?.initDataCGameController()
@@ -58,7 +55,6 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
     }
 
     override fun switchBattleScene(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite) {
-
         if (battleScene == null) {
             battleScene = BattleScene(this)
 
@@ -70,7 +66,6 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
                         .show(it)
                         .commitAllowingStateLoss()
             }
-
         } else {
             battleScene?.let {
                 it.initRobots(isAuto, leftRobot, rightRobot)
@@ -87,6 +82,17 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
         gcLayout?.gameController = gameController
     }
 
+
+    private fun playBGM() {
+        val path = "audio/music2/87.mp3"
+        BackgroundMusic.getInstance(BaseConfig.getApplicationContext())
+                .playBackgroundMusic(path, true)
+    }
+
+    private fun stopBGM() {
+        BackgroundMusic.getInstance(BaseConfig.getApplicationContext())
+                .stopBackgroundMusic()
+    }
 
     companion object {
         const val UNIT_MAP = 60

@@ -1,12 +1,15 @@
 package com.hutcwp.srw
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.hutcwp.srw.controller.GameController
+import com.hutcwp.srw.music.BackgroundMusic
 import com.hutcwp.srw.view.MapView
+import me.hutcwp.BaseConfig
 
 /**
  *  author : kevin
@@ -39,10 +42,14 @@ class MainGameScene : Fragment() {
         initDataCGameController()
     }
 
-    fun initDataCGameController(){
-        gameController?:return
+    fun initDataCGameController() {
+        gameController ?: return
         (activity as MainGameActivity)?.setGameController(gameController!!)
     }
+
+
+
+
 
 
     companion object {

@@ -1,8 +1,6 @@
 package com.hutcwp.srw
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hutcwp.srw.bean.RobotSprite
@@ -37,19 +35,16 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
         if (mainGameScene == null) {
             mainGameScene = MainGameScene()
-            mainGameScene?.initDataCGameController()
             supportFragmentManager.beginTransaction()
                     .add(R.id.fl_container, mainGameScene!!)
                     .show(mainGameScene!!)
                     .commitAllowingStateLoss()
         } else {
-            mainGameScene?.initDataCGameController()
-
+            mainGameScene?.initDataWithContext(false)
             supportFragmentManager.beginTransaction()
                     .hide(battleScene!!)
                     .show(mainGameScene!!)
                     .commitAllowingStateLoss()
-
         }
 
     }
@@ -59,8 +54,7 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
             battleScene = BattleScene(this)
 
             battleScene?.let {
-                it.initRobots(isAuto, leftRobot, rightRobot)
-
+                it.updateBattleParams(isAuto, leftRobot, rightRobot)
                 supportFragmentManager.beginTransaction()
                         .add(R.id.fl_container, it)
                         .show(it)
@@ -68,14 +62,23 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
             }
         } else {
             battleScene?.let {
-                it.initRobots(isAuto, leftRobot, rightRobot)
-
+                it.updateBattleParams(isAuto, leftRobot, rightRobot)
+                it.initWithContext(false)
                 supportFragmentManager.beginTransaction()
                         .hide(it)
                         .show(it)
                         .commitAllowingStateLoss()
             }
         }
+    }
+
+    override fun froze() {
+        gcLayout?.isEnabled = false
+    }
+
+    override fun unfroze() {
+        gcLayout?.isEnabled = true
+
     }
 
     fun setGameController(gameController: IGameController) {

@@ -14,13 +14,19 @@ class AI {
 
     fun compute(robotSprite: List<RobotSprite>) {
         robotSprite.forEach {
+            //move
             nearPos(it)?.let { pos ->
                 GameMain.updateSpritePos(it, pos)
             }
+
+            //attack
+            GameMain
         }
 
         GameMain.takeTurn()
     }
+
+
 
 
     /**

@@ -13,5 +13,10 @@ interface ISceneSwitch {
 
     fun switchBattleScene(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite)
 
+    //冻结控制器
+    fun froze()
+
+    //解冻控制器
+    fun unfroze()
 //    fun showBattleScene(leftRobot: Robot, rightRobot: Robot)
 }

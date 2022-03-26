@@ -14,7 +14,7 @@ import java.util.*
  */
 class BattleController(private val battleScene: BattleScene,
                        private val leftRobotSprite: RobotSprite,
-                       private val rightRobotSprite: RobotSprite) {
+                       private val rightRobotSprite: RobotSprite) : IGameController {
 
 
     private var isAuto = true //是否先手
@@ -121,5 +121,27 @@ class BattleController(private val battleScene: BattleScene,
         stopBGM()
         battleScene.onFinish()
     }
+
+//    =====================操作控制器==============
+
+    override fun up() {
+    }
+
+    override fun down() {
+    }
+
+    override fun left() {
+    }
+
+    override fun right() {
+    }
+
+    override fun ok() {
+        playBattle()
+    }
+
+    override fun cancel() {
+    }
+
 
 }

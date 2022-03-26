@@ -4,6 +4,7 @@ import com.hutcwp.srw.ai.AI
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.constants.LevelConfig
 import com.hutcwp.srw.constants.RobotConstants
+import com.hutcwp.srw.controller.ISceneSwitch
 import com.hutcwp.srw.controller.TestMockData
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.view.MapView
@@ -22,6 +23,7 @@ object GameMain {
     var robotSpriteList: List<RobotSprite> = mutableListOf()
     var mapSpriteList: MutableList<MapSprite> = mutableListOf()
     var selectSprite: SelectSprite? = null
+    var switchScene: ISceneSwitch? = null
 
 
     var isPlayerTurn = true //是否是玩家回合
@@ -61,7 +63,8 @@ object GameMain {
 
         hasInit = true
         this.mapView = mapView
-        mapSpriteList.let {
+        this.switchScene = mapView.activity as ISceneSwitch
+        this.mapSpriteList.let {
             mapView.initMap(it)
         }
         robotSpriteList.let {

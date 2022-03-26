@@ -127,4 +127,16 @@ object GameMain {
     }
 
 
+    /**
+     * 是否启用游戏控制器
+     */
+    fun gameControllerEnable(enAble: Boolean) {
+        if (enAble) {
+            (mapView?.activity as? MainGameActivity)?.froze()
+        } else {
+            (mapView?.activity as? MainGameActivity)?.unfroze()
+        }
+    }
+
+
 }

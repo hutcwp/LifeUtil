@@ -1,6 +1,7 @@
 package com.hutcwp.srw.controller
 
 import com.hutcwp.srw.BattleScene
+import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.compute.BattleCenter
 import com.hutcwp.srw.music.BackgroundMusic
@@ -62,7 +63,6 @@ class BattleController(private val battleScene: BattleScene,
         battleStepQueue.add(Runnable {
             battleScene.showChatMsg("来啊，看我的！", attacker.robot.operator)
             battleScene.showAttackAnim(attacker, attacker.useWeapon()!!)
-
 
             battleStepQueue.add(Runnable {
                 defender.beAttackByWeapon(attacker, attacker.useWeapon()!!)

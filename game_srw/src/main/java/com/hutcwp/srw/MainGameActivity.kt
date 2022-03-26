@@ -23,6 +23,9 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
         switchMainScene()
 
+//        gcLayout?.post {
+//            GameMain.gameControllerEnable(false)
+//        }
 //        Handler(Looper.getMainLooper()).postDelayed({
 //            switchBattleScene(true, GameMain.robotSpriteList[1], GameMain.robotSpriteList[0])
 //        }, 1000)
@@ -73,12 +76,11 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
     }
 
     override fun froze() {
-        gcLayout?.isEnabled = false
+        gcLayout?.enable = true
     }
 
     override fun unfroze() {
-        gcLayout?.isEnabled = true
-
+        gcLayout?.enable = false
     }
 
     fun setGameController(gameController: IGameController) {

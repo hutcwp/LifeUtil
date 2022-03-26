@@ -27,6 +27,7 @@ class MainGameScene : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initDataWithContext(true)
+
     }
 
     private fun initMapView(rootView: View) {

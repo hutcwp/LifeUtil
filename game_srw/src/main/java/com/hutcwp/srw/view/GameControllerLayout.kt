@@ -7,6 +7,7 @@ import android.widget.RelativeLayout
 import com.hutcwp.srw.R
 import com.hutcwp.srw.controller.IGameController
 import kotlinx.android.synthetic.main.layout_game_controller.view.*
+import me.hutcwp.log.MLog
 
 /**
  *  author : kevin
@@ -15,34 +16,50 @@ import kotlinx.android.synthetic.main.layout_game_controller.view.*
  */
 class GameControllerLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : RelativeLayout(context, attrs, defStyleAttr) {
+) : RelativeLayout(context, attrs, defStyleAttr), View.OnClickListener {
 
     var gameController: IGameController? = null
+    var enable: Boolean = true //是否开启手柄控制
 
     init {
         View.inflate(context, R.layout.layout_game_controller, this)
-
         initView()
     }
 
     private fun initView() {
-        btn_up?.setOnClickListener {
-            gameController?.up()
+        btn_up?.setOnClickListener(this)
+        btn_down?.setOnClickListener(this)
+        btn_left?.setOnClickListener(this)
+        btn_right?.setOnClickListener(this)
+        btn_ok?.setOnClickListener(this)
+        btn_cancel?.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View?) {
+        view ?: return
+        if (enable.not()) {
+            MLog.info("GameControllerLayout", "手柄控制器开关未开!")
+            return
         }
-        btn_down?.setOnClickListener {
-            gameController?.down()
-        }
-        btn_left?.setOnClickListener {
-            gameController?.left()
-        }
-        btn_right?.setOnClickListener {
-            gameController?.right()
-        }
-        btn_ok?.setOnClickListener {
-            gameController?.ok()
-        }
-        btn_cancel?.setOnClickListener {
-            gameController?.cancel()
+        when (view.id) {
+            R.id.btn_up -> {
+                gameController?.up()
+            }
+            R.id.btn_down -> {
+                gameController?.down()
+            }
+            R.id.btn_left -> {
+                gameController?.left()
+            }
+            R.id.btn_right -> {
+                gameController?.right()
+            }
+            R.id.btn_ok -> {
+                gameController?.ok()
+            }
+            R.id.btn_cancel -> {
+                gameController?.cancel()
+            }
         }
     }
 

@@ -27,4 +27,12 @@ class ChatMsgView @JvmOverloads constructor(
             iv_speaker?.setImageResource(speakerImg)
         }
     }
+
+    fun showNextView(show: Boolean) {
+        if (show) {
+            tv_next?.visibility = View.VISIBLE
+        } else {
+            tv_next?.visibility = View.GONE
+        }
+    }
 }

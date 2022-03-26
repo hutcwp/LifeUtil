@@ -25,6 +25,10 @@ class BattleDetailLayout @JvmOverloads constructor(
         view_chat_msg?.setChatMsg(speakImg, msg)
     }
 
+    fun showNextIcon(show: Boolean) {
+        view_chat_msg?.showNextView(show)
+    }
+
     fun updateRobots(leftRobot: Robot, rightRobot: Robot) {
         battle_simple_detail_left?.updateData(leftRobot)
         battle_simple_detail_right?.updateData(rightRobot)

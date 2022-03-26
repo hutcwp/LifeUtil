@@ -8,7 +8,6 @@ import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.compute.BattleCenter
 import com.hutcwp.srw.music.BackgroundMusic
 import me.hutcwp.BaseConfig
-import java.util.*
 
 /**
  *  author : kevin
@@ -37,6 +36,7 @@ class BattleController(private val battleScene: BattleScene,
      */
     private fun initBattleData() {
         battleScene.showChatMsg("开始战斗...")
+        battleScene.showNextTip(true)
 
         if (isAuto) {
             createBattleStep(rightRobotSprite, leftRobotSprite)
@@ -155,14 +155,21 @@ class BattleController(private val battleScene: BattleScene,
     }
 
 
+    /**
+     * 封装用来战斗的任务；
+     * 处理了控制开关，继续提示等逻辑
+     * 业务只需要关心真是的战斗逻辑
+     */
     open inner class BattleTask : ITask {
         override fun start() {
             GameMain.gameControllerEnable(false)
+            battleScene.showNextTip(false)
         }
 
         override fun end() {
             taskController.taskFinish()
             GameMain.gameControllerEnable(true)
+            battleScene.showNextTip(true)
         }
 
     }

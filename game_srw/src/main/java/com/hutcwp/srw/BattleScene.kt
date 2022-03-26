@@ -107,6 +107,13 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment() {
     }
 
     /**
+     * 展示下一个独白的提示
+     */
+    fun showNextTip(show: Boolean) {
+        ly_battle_detail?.showNextIcon(show)
+    }
+
+    /**
      * 播放攻击动画
      */
     fun showAttackAnim(robotSprite: RobotSprite, weapon: Weapon, task: ITask) {

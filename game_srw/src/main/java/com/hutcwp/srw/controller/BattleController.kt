@@ -2,6 +2,8 @@ package com.hutcwp.srw.controller
 
 import com.hutcwp.srw.BattleScene
 import com.hutcwp.srw.GameMain
+import com.hutcwp.srw.ITask
+import com.hutcwp.srw.TaskController
 import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.compute.BattleCenter
 import com.hutcwp.srw.music.BackgroundMusic
@@ -19,8 +21,8 @@ class BattleController(private val battleScene: BattleScene,
 
 
     private var isAuto = true //是否先手
+    private var taskController = TaskController()
 
-    private var battleStepQueue: Queue<Runnable> = LinkedList<Runnable>()
 
     fun initBattle(isAuto: Boolean) {
         this.isAuto = isAuto
@@ -46,11 +48,11 @@ class BattleController(private val battleScene: BattleScene,
     /**
      * 播放战斗步骤
      */
-    fun playBattle() {
-        if (battleStepQueue.isNotEmpty()) {
-            battleStepQueue.poll()?.run()
-        } else {
+    private fun playBattle() {
+        if (taskController.isEmpty()) {
             finish()
+        } else {
+            taskController.runTask()
         }
     }
 
@@ -58,14 +60,36 @@ class BattleController(private val battleScene: BattleScene,
      * 生成战斗步骤
      */
     private fun createBattleStep(attacker: RobotSprite, defender: RobotSprite) {
-        battleStepQueue.clear()
+        val defendTask = object : BattleTask() {
+            override fun start() {
+                super.start()
+                battleScene.showChatMsg("接招！", defender.robot.operator)
+                battleScene.showAttackAnim(defender, defender.useWeapon()!!, this)
+            }
 
-        battleStepQueue.add(Runnable {
-            battleScene.showChatMsg("来啊，看我的！", attacker.robot.operator)
-            battleScene.showAttackAnim(attacker, attacker.useWeapon()!!)
+            override fun end() {
+                super.end()
+                attacker.beAttackByWeapon(defender, defender.useWeapon()!!)
+                battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
+                val attackValue = BattleCenter.attackValue(defender, attacker, defender.useWeapon()!!)
+                battleScene.showChatMsg("${attacker.robot.attribute.name} 受到 " +
+                        "$attackValue 伤害", attacker.robot.operator)
 
-            battleStepQueue.add(Runnable {
-                defender.beAttackByWeapon(attacker, attacker.useWeapon()!!)
+                if (!attacker.isAlive()) {
+                    battleScene.showChatMsg("${defender.robot.attribute.name} 倒下了～")
+                }
+            }
+        }
+
+        val attackTask = object : BattleTask() {
+            override fun start() {
+                super.start()
+                battleScene.showChatMsg("来啊，看我的！", attacker.robot.operator)
+                battleScene.showAttackAnim(attacker, attacker.useWeapon()!!, this)
+            }
+
+            override fun end() {
+                super.end()
                 battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
 
                 val attackValue = BattleCenter.attackValue(attacker, defender, attacker.useWeapon()!!)
@@ -73,39 +97,26 @@ class BattleController(private val battleScene: BattleScene,
                 battleScene.showChatMsg("${defender.robot.attribute.name} 受到 " +
                         "$attackValue 伤害", defender.robot.operator)
 
-
                 if (!defender.isAlive()) {
-
                     battleScene.showChatMsg("${defender.robot.attribute.name} 倒下了～")
                 } else {
-
-                    battleStepQueue.add(Runnable {
-                        battleScene.showChatMsg("接招！", defender.robot.operator)
-                        battleScene.showAttackAnim(defender, defender.useWeapon()!!)
-
-                        attacker.beAttackByWeapon(defender, defender.useWeapon()!!)
-
-                        battleStepQueue.offer(Runnable {
-                            battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
-
-                            val attackValue = BattleCenter.attackValue(defender, attacker, defender.useWeapon()!!)
-
-
-                            battleScene.showChatMsg("${attacker.robot.attribute.name} 受到 " +
-                                    "$attackValue 伤害", attacker.robot.operator)
-
-                            if (!attacker.isAlive()) {
-                                battleScene.showChatMsg("${defender.robot.attribute.name} 倒下了～")
-                            }
-
-                        })
-                    })
+                    addBattleTask(defendTask)
                 }
+            }
+        }
 
-            })
+        addBattleTask(attackTask)
+    }
 
 
-        })
+    /**
+     * 添加战斗任务
+     */
+    private fun addBattleTask(battleTask: ITask) {
+        val task = taskController.createTask(battleTask)
+        taskController.let {
+            it.addTask(task)
+        }
     }
 
     private fun playBGM(path: String?) {
@@ -143,5 +154,17 @@ class BattleController(private val battleScene: BattleScene,
     override fun cancel() {
     }
 
+
+    open inner class BattleTask : ITask {
+        override fun start() {
+            GameMain.gameControllerEnable(false)
+        }
+
+        override fun end() {
+            taskController.taskFinish()
+            GameMain.gameControllerEnable(true)
+        }
+
+    }
 
 }

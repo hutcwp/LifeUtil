@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import com.hutcwp.srw.ITask
 import com.hutcwp.srw.R
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.info.battle.Weapon
@@ -34,7 +35,7 @@ class BattleSceneAnimLayout @JvmOverloads constructor(
         iv_right?.setImageResource(right.attribute.imgId)
     }
 
-    fun showWeaponAnim(isLeft: Boolean,weapon: Weapon) {
+    fun showWeaponAnim(isLeft: Boolean, weapon: Weapon, task: ITask) {
         val imageView = ImageView(context)
         val lp = FrameLayout.LayoutParams(100, 40)
         lp.gravity = Gravity.CENTER_VERTICAL
@@ -47,8 +48,8 @@ class BattleSceneAnimLayout @JvmOverloads constructor(
         val x = if (isLeft) {
             floatArrayOf(30f, 120f, 240f, 300f, 400f, 560f)
         } else {
-            imageView.pivotX = (imageView.width /2).toFloat();
-            imageView.pivotY = (imageView.height /2).toFloat();//支点在图片中心
+            imageView.pivotX = (imageView.width / 2).toFloat();
+            imageView.pivotY = (imageView.height / 2).toFloat();//支点在图片中心
             imageView.rotation = 180f
             floatArrayOf(520f, 400f, 300f, 240f, 180f, 160f)
         }
@@ -64,6 +65,7 @@ class BattleSceneAnimLayout @JvmOverloads constructor(
                 fl_anim?.removeAllViews()
                 val path = "audio/wav/boom.mp3"
                 AudioMusic.getInstance(context).playAudioMusic(path, false)
+                task.end()
             }
 
             override fun onAnimationCancel(p0: Animator?) {

@@ -109,20 +109,20 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment() {
     /**
      * 播放攻击动画
      */
-    fun showAttackAnim(robotSprite: RobotSprite, weapon: Weapon) {
+    fun showAttackAnim(robotSprite: RobotSprite, weapon: Weapon, task: ITask) {
         if (robotSprite == leftRobot) {
-            showLeftAttackAnim(robotSprite, weapon)
+            showLeftAttackAnim(robotSprite, weapon, task)
         } else {
-            showRightAttackAnim(robotSprite, weapon)
+            showRightAttackAnim(robotSprite, weapon, task)
         }
     }
 
-    private fun showRightAttackAnim(rightRobot: RobotSprite, weapon: Weapon) {
-        ly_battle_scene?.showWeaponAnim(false, weapon)
+    private fun showRightAttackAnim(rightRobot: RobotSprite, weapon: Weapon, task: ITask) {
+        ly_battle_scene?.showWeaponAnim(false, weapon, task)
     }
 
-    private fun showLeftAttackAnim(robotSprite: RobotSprite, weapon: Weapon) {
-        ly_battle_scene?.showWeaponAnim(true, weapon)
+    private fun showLeftAttackAnim(robotSprite: RobotSprite, weapon: Weapon, task: ITask) {
+        ly_battle_scene?.showWeaponAnim(true, weapon, task)
     }
 
     /**

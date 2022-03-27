@@ -90,6 +90,8 @@ class BattleController(private val battleScene: BattleScene,
 
             override fun end() {
                 super.end()
+                defender.beAttackByWeapon(attacker, attacker.useWeapon()!!)
+
                 battleScene.updateRobotInfo(leftRobotSprite, rightRobotSprite)
 
                 val attackValue = BattleCenter.attackValue(attacker, defender, attacker.useWeapon()!!)

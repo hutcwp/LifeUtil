@@ -1,9 +1,12 @@
 package com.hutcwp.srw.ai
 
+import android.os.Handler
+import android.os.Looper
 import com.hutcwp.srw.GameMain
+import com.hutcwp.srw.ITask
+import com.hutcwp.srw.TaskController
 import com.hutcwp.srw.bean.Pos
 import com.hutcwp.srw.bean.RobotSprite
-import kotlin.random.Random
 
 /**
  *  author : kevin
@@ -12,21 +15,62 @@ import kotlin.random.Random
  */
 class AI {
 
+    var enemyActionController: TaskController = TaskController()
+
+    var handle: Handler = Handler(Looper.getMainLooper())
+
+
     fun compute(robotSprite: List<RobotSprite>) {
         robotSprite.forEach {
-            //move
-            nearPos(it)?.let { pos ->
-                GameMain.updateSpritePos(it, pos)
-            }
-
-            //attack
-            GameMain
+            addEnemyTask(it)
         }
 
-        GameMain.takeTurn()
+        enemyActionController.runTask()
+//        GameMain.takeTurn()
     }
 
+    fun addEnemyTask(robotSprite: RobotSprite) {
+        val moveTask = enemyActionController.createTask(object : EnemyActionTask("moveTask") {
+            override fun start() {
+                //move
+                nearPos(robotSprite)?.let { pos ->
+                    GameMain.updateSpritePos(robotSprite, pos)
+                }
 
+                handle?.postDelayed({
+                    this.end()//需要主动调用结束，用于异步的情况下触发回调时机
+
+                },2000)
+            }
+
+            override fun end() {
+                super.end()
+            }
+        })
+
+        val battleTask = enemyActionController.createTask(object : EnemyActionTask("battleTask") {
+            override fun start() {
+                //attack
+                findAttackRobotSprite(robotSprite)?.let { blueRobot ->
+                    GameMain.showBattleAI(robotSprite, blueRobot)
+                }
+            }
+
+            override fun end() {
+                super.end()
+            }
+        })
+
+        enemyActionController.addTask(moveTask)
+        enemyActionController.addTask(battleTask)
+    }
+
+    /**
+     * 寻找攻击目标
+     */
+    private fun findAttackRobotSprite(robotSprite: RobotSprite): RobotSprite? {
+        return GameMain.blueRobotSpriteList().firstOrNull()
+    }
 
 
     /**
@@ -63,4 +107,31 @@ class AI {
         return Math.abs(pos1.x - pos2.x) + Math.abs(pos1.y - pos2.y)
     }
 
+    /**
+     * 外部帮忙调用下战斗任务结束
+     */
+    fun finishBattleTask() {
+        enemyActionController.taskFinish()
+        if (enemyActionController.isEmpty()) {
+            GameMain.takeTurn()
+        } else {
+            enemyActionController.runTask()
+        }
+    }
+
+
+    /**
+     * 敌人行动任务
+     */
+    open inner class EnemyActionTask(val name:String) : ITask {
+
+        override fun start() {
+
+        }
+
+        override fun end() {
+            enemyActionController.taskFinish()
+            enemyActionController.runTask()
+        }
+    }
 }

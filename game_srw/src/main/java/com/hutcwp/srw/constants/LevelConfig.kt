@@ -62,11 +62,11 @@ object LevelConfig {
 //                        listOf(WeaponConstant.Daodan),
 //                        PeopleConstants.AI),
 //                        Pos(10, 14)),
-//                createRobotSprite(Robot(
-//                        RobotConstants.ZhaKe1,
-//                        listOf(WeaponConstant.Daodan),
-//                        PeopleConstants.AI),
-//                        Pos(10, 13)),
+                createRobotSprite(Robot(
+                        RobotConstants.ZhaKe1,
+                        listOf(WeaponConstant.Daodan),
+                        PeopleConstants.AI),
+                        Pos(10, 13)),
                 createRobotSprite(Robot(
                         RobotConstants.ZhaKe2,
                         listOf(WeaponConstant.Daodan),

@@ -1,5 +1,6 @@
 package com.hutcwp.srw
 
+import me.hutcwp.log.MLog
 import java.util.*
 
 /**
@@ -8,6 +9,8 @@ import java.util.*
  *  description : 任务管理器。任务顺序执行
  */
 class TaskController {
+
+    private val TAG = "TaskController"
 
     private val queue: Deque<IRealTask> = LinkedList<IRealTask>()
 
@@ -18,11 +21,13 @@ class TaskController {
     fun createTask(callback: ITask): IRealTask {
         return object : IRealTask {
             override fun start() {
+                MLog.info(TAG,"${this@TaskController} taskRunning -> true")
                 taskRunning = true
                 callback.start()
             }
 
             override fun end() {
+                MLog.info(TAG,"${this@TaskController} taskRunning -> true")
                 taskRunning = false
                 callback.end()
             }
@@ -30,11 +35,12 @@ class TaskController {
     }
 
     fun addTask(task: IRealTask, insertHead: Boolean = false) {
-        queue.addFirst(task)
+        queue.addLast(task)
     }
 
     fun taskFinish() {
         taskRunning = false
+        MLog.info(TAG,"${this@TaskController} taskRunning -> false")
     }
 
     fun isEmpty(): Boolean {

@@ -37,10 +37,18 @@ object GameMain {
         isPlayerTurn = !isPlayerTurn
         updateActionStatus()
         if (!isPlayerTurn) {
-            robotSpriteList?.filter { it.robot.attribute.team == 0 }?.let {
+            robotSpriteList.filter { it.robot.attribute.team == 0 }?.let {
                 ai.compute(it)
             }
         }
+    }
+
+    fun finishBattleTaskAI() {
+        ai.finishBattleTask()
+    }
+
+    fun showBattleAI(leftRobotSprite: RobotSprite, rightRobotSprite: RobotSprite) {
+        switchScene?.switchBattleScene(false, leftRobotSprite, rightRobotSprite)
     }
 
     fun updateActionStatus() {
@@ -137,7 +145,6 @@ object GameMain {
             (mapView?.activity as? MainGameActivity)?.unfroze()
         }
     }
-
 
 
 }

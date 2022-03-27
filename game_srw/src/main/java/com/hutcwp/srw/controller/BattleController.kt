@@ -129,6 +129,9 @@ class BattleController(private val battleScene: BattleScene,
     }
 
     private fun finish() {
+        if(isAuto.not()){
+            GameMain.finishBattleTaskAI()
+        }
         stopBGM()
         battleScene.onFinish()
     }

@@ -7,6 +7,9 @@ import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.controller.IGameController
 import com.hutcwp.srw.controller.ISceneSwitch
 import com.hutcwp.srw.music.BackgroundMusic
+import com.hutcwp.srw.scene.BattleScene
+import com.hutcwp.srw.scene.IScene
+import com.hutcwp.srw.scene.MainGameScene
 import kotlinx.android.synthetic.main.activity_main_game.*
 import me.hutcwp.BaseConfig
 
@@ -35,7 +38,7 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
                     .show(mainGameScene!!)
                     .commitAllowingStateLoss()
         } else {
-            mainGameScene?.initDataWithContext(false)
+            (mainGameScene as IScene).initWithContext(false)
             supportFragmentManager.beginTransaction()
                     .hide(battleScene!!)
                     .show(mainGameScene!!)
@@ -75,7 +78,7 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
     }
 
     //设置游戏手柄控制器
-    fun setGameController(gameController: IGameController) {
+    override fun setGameController(gameController: IGameController) {
         gcLayout?.gameController = gameController
     }
 

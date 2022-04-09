@@ -1,10 +1,8 @@
-package com.hutcwp.srw
+package com.hutcwp.srw.scene
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import com.hutcwp.srw.ITask
+import com.hutcwp.srw.R
 import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.controller.BattleController
 import com.hutcwp.srw.controller.ISceneSwitch
@@ -13,50 +11,21 @@ import com.hutcwp.srw.info.battle.Weapon
 import com.hutcwp.srw.music.BackgroundMusic
 import kotlinx.android.synthetic.main.layout_scene_battle.*
 import me.hutcwp.BaseConfig
+import me.hutcwp.log.MLog
 
 /**
  *  author : kevin
  *  date : 2022/3/13 1:55 PM
- *  description :
+ *  description : 战斗场景
  */
-class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment() {
+class BattleScene(private val sceneSwitch: ISceneSwitch) : BaseScene(R.layout.layout_scene_battle), IScene {
 
 
     private var leftRobot: RobotSprite? = null
     private var rightRobot: RobotSprite? = null
-    private var isAuto = false
+    private var isUserCmd = false
 
     private var battleController: BattleController? = null
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_scene_battle, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initWithContext(true)
-    }
-
-    fun initWithContext(initFirst: Boolean) {
-        if (initFirst) {
-            initSceneFirst()
-        }
-
-        battleController = BattleController(this, this.leftRobot!!, this.rightRobot!!)
-        battleController?.initBattle(isAuto)
-        //设置手柄控制器
-        (activity as MainGameActivity).setGameController(battleController!!)
-    }
-
-    /**
-     * 初始化数据，视图第一次创建的时候，特殊处理
-     */
-    private fun initSceneFirst() {
-        showChatMsg("开始战斗...")
-        updateRobotInfo(leftRobot!!, rightRobot!!)
-        battleController?.initBattle(true)
-    }
 
     /**
      * 初始化战斗参数
@@ -65,15 +34,28 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment() {
      * @param rightRobot 右边的机器人
      */
     fun updateBattleParams(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite) {
-        this.isAuto = isAuto
+        this.isUserCmd = isAuto
         this.leftRobot = leftRobot
         this.rightRobot = rightRobot
     }
 
+
+    override fun firstInitView(rootView: View) {
+    }
+
+    override fun initData() {
+        MLog.debug(TAG, "initData")
+        initBattleInfo(leftRobot!!, rightRobot!!)
+        battleController = BattleController(this, this.leftRobot!!, this.rightRobot!!)
+        battleController?.initBattle(isUserCmd)
+        //设置手柄控制器
+        (activity as ISceneSwitch).setGameController(battleController!!)
+    }
+
     /**
-     * 更新对战血条信息
+     * 更新对战信息
      */
-    fun updateBattleInfo(leftRobot: RobotSprite, rightRobot: RobotSprite) {
+    private fun initBattleInfo(leftRobot: RobotSprite, rightRobot: RobotSprite) {
         updateRobotImg(leftRobot, rightRobot)
         updateRobotInfo(leftRobot, rightRobot)
     }
@@ -81,12 +63,12 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment() {
     /**
      * 更新对战机器人图片
      */
-    fun updateRobotImg(leftRobot: RobotSprite, rightRobot: RobotSprite) {
+    private fun updateRobotImg(leftRobot: RobotSprite, rightRobot: RobotSprite) {
         ly_battle_scene?.updateRobots(leftRobot.robot, rightRobot.robot)
     }
 
     /**
-     * 更新机器人信息，血条之类的
+     * 更新机器人对战信息（命中率，血条等）
      */
     fun updateRobotInfo(leftRobot: RobotSprite, rightRobot: RobotSprite) {
         ly_battle_detail?.updateRobots(leftRobot.robot, rightRobot.robot)
@@ -118,29 +100,45 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : Fragment() {
      */
     fun showAttackAnim(robotSprite: RobotSprite, weapon: Weapon, task: ITask) {
         if (robotSprite == leftRobot) {
-            showLeftAttackAnim(robotSprite, weapon, task)
+            showLeftAttackAnim(weapon, task)
         } else {
-            showRightAttackAnim(robotSprite, weapon, task)
+            showRightAttackAnim(weapon, task)
         }
     }
 
-    private fun showRightAttackAnim(rightRobot: RobotSprite, weapon: Weapon, task: ITask) {
+    private fun showRightAttackAnim(weapon: Weapon, task: ITask) {
         ly_battle_scene?.showWeaponAnim(false, weapon, task)
     }
 
-    private fun showLeftAttackAnim(robotSprite: RobotSprite, weapon: Weapon, task: ITask) {
+    private fun showLeftAttackAnim(weapon: Weapon, task: ITask) {
         ly_battle_scene?.showWeaponAnim(true, weapon, task)
+    }
+
+    fun switchMainScene() {
+        sceneSwitch.switchMainScene()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        MLog.debug(TAG, "hide?=$hidden")
+
+        if (hidden) {
+            MLog.debug(TAG, "hide")
+            recycle()
+            battleController?.recycle()
+        }
     }
 
     /**
      * 战斗结束，回收工作
      */
-    fun onFinish() {
+    private fun recycle() {
         this.leftRobot = null
         this.rightRobot = null
         this.battleController = null
+        this.isUserCmd = false
+        this.battleController = null
         BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).stopBackgroundMusic()
-        sceneSwitch.switchMainScene()
     }
 
 

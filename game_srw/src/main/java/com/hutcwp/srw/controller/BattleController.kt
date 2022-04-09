@@ -1,12 +1,12 @@
 package com.hutcwp.srw.controller
 
-import com.hutcwp.srw.BattleScene
 import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.ITask
 import com.hutcwp.srw.TaskController
 import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.compute.BattleCenter
 import com.hutcwp.srw.music.BackgroundMusic
+import com.hutcwp.srw.scene.BattleScene
 import me.hutcwp.BaseConfig
 
 /**
@@ -19,30 +19,21 @@ class BattleController(private val battleScene: BattleScene,
                        private val rightRobotSprite: RobotSprite) : IGameController {
 
 
-    private var isAuto = true //是否先手
+    private var isUserCmd = true //是否用户操作
     private var taskController = TaskController()
 
 
     fun initBattle(isAuto: Boolean) {
-        this.isAuto = isAuto
-
-        battleScene.updateBattleInfo(leftRobotSprite, rightRobotSprite)
-        playBGM(rightRobotSprite.robot.operator.bgmPath)
-        initBattleData()
-    }
-
-    /**
-     * 计算战斗数据
-     */
-    private fun initBattleData() {
+        this.isUserCmd = isAuto
         battleScene.showChatMsg("开始战斗...")
         battleScene.showNextTip(true)
 
-        if (isAuto) {
+        if (isUserCmd) {
             createBattleStep(rightRobotSprite, leftRobotSprite)
         } else {
             createBattleStep(leftRobotSprite, rightRobotSprite)
         }
+        playBGM(rightRobotSprite.robot.operator.bgmPath)
     }
 
     /**
@@ -50,10 +41,14 @@ class BattleController(private val battleScene: BattleScene,
      */
     private fun playBattle() {
         if (taskController.isEmpty()) {
-            finish()
-        } else {
-            taskController.runTask()
+            battleScene.switchMainScene() //触发切换页面
+            if (isUserCmd.not()) {
+                GameMain.finishBattleTaskAI()
+            }
+            return
         }
+
+        taskController.runTask()
     }
 
     /**
@@ -116,9 +111,7 @@ class BattleController(private val battleScene: BattleScene,
      */
     private fun addBattleTask(battleTask: ITask) {
         val task = taskController.createTask(battleTask)
-        taskController.let {
-            it.addTask(task)
-        }
+        taskController.addTask(task)
     }
 
     private fun playBGM(path: String?) {
@@ -130,12 +123,10 @@ class BattleController(private val battleScene: BattleScene,
         BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).stopBackgroundMusic()
     }
 
-    private fun finish() {
-        if(isAuto.not()){
-            GameMain.finishBattleTaskAI()
-        }
+    //回收工作
+    fun recycle() {
         stopBGM()
-        battleScene.onFinish()
+        this.isUserCmd = false
     }
 
 //    =====================操作控制器==============
@@ -176,7 +167,6 @@ class BattleController(private val battleScene: BattleScene,
             GameMain.gameControllerEnable(true)
             battleScene.showNextTip(true)
         }
-
     }
 
 }

@@ -90,7 +90,7 @@ class AI {
         var pos = moreLastRobotSprite?.pos
         var rang = 1
         var count = 0
-        while (pos != null && GameMain.hasRobot(pos)) {
+        while (pos != null && GameMain.existRobot(pos)) {
             val x = (-rang..rang).random()
             val y = (-rang..rang).random()
             if (count > 8) {

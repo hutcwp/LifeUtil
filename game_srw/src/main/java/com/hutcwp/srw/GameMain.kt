@@ -63,42 +63,37 @@ object GameMain {
     }
 
     fun updateActionStatus() {
-        robotSpriteList?.forEach {
+        robotSpriteList.forEach {
             it.updateAction(true)
         }
     }
 
 
+    //更新UI
+
     fun updateSpritePos(sprite: BaseSprite, pos: Pos) {
         mapView?.updatePosWithAnim(sprite, sprite.pos, pos)
-
-//        mapView?.updateViewPos(sprite)
     }
+
+    fun destroyRobot(robotSprite: RobotSprite) {
+        mapView?.removeRobotSprite(robotSprite)
+    }
+
+
 
     fun findRobotByPos(pos: Pos): RobotSprite? {
         return robotSpriteList.find { it.pos == pos }
     }
 
-
     fun findMapByPos(pos: Pos): MapSprite? {
         return mapSpriteList.find { it.pos == pos }
     }
 
-    fun findSpriteByRobot(robot: Robot): RobotSprite? {
-        return robotSpriteList?.find { it.robot == robot }
-    }
 
     fun getSelectPos(): Pos {
         return Pos(selectSprite!!.pos)
     }
 
-    fun isAlive(robot: Robot): Boolean {
-        return robotSpriteList.find { it.robot == robot } != null
-    }
-
-//    fun attack(attacker: RobotSprite, defender: RobotSprite) {
-//        defender.beAttacked(attacker.useWeapon()!!.attackValue)
-//    }
 
     fun blueRobotSpriteList(): List<RobotSprite> {
         return robotSpriteList.filter {
@@ -112,13 +107,10 @@ object GameMain {
         }
     }
 
-    fun hasRobot(pos: Pos): Boolean {
+    fun existRobot(pos: Pos): Boolean {
         return robotSpriteList.find { it.pos == pos } != null
     }
 
-    fun destroyRobot(robotSprite: RobotSprite) {
-        mapView?.removeRobotSprite(robotSprite)
-    }
 
 
     /**
@@ -131,6 +123,5 @@ object GameMain {
             (mapView?.activity as? MainGameActivity)?.unfroze()
         }
     }
-
 
 }

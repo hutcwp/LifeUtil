@@ -9,6 +9,9 @@ import com.hutcwp.srw.bean.RobotSprite
  */
 interface ISceneSwitch {
 
+    //设置手柄控制器
+    fun setGameController(gameController: IGameController)
+
     fun switchMainScene()
 
     fun switchBattleScene(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite)

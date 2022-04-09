@@ -137,7 +137,7 @@ class MapView @JvmOverloads constructor(
         val objectAnimatorX = ObjectAnimator.ofFloat(sprite.view, "translationX", 0f, durX)
         val objectAnimatorY = ObjectAnimator.ofFloat(sprite.view, "translationY", 0f, durY)
         val animatorSet = AnimatorSet()
-        animatorSet.playSequentially(objectAnimatorX,objectAnimatorY)
+        animatorSet.playSequentially(objectAnimatorX, objectAnimatorY)
 
         animatorSet.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator?) {
@@ -214,5 +214,8 @@ class MapView @JvmOverloads constructor(
         }
     }
 
+    fun clearMap() {
+        removeAllViews()
+    }
 
 }

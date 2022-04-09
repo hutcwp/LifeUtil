@@ -22,19 +22,11 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
         setContentView(R.layout.activity_main_game)
 
         switchMainScene()
-
-//        gcLayout?.post {
-//            GameMain.gameControllerEnable(false)
-//        }
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            switchBattleScene(true, GameMain.robotSpriteList[1], GameMain.robotSpriteList[0])
-//        }, 1000)
-
     }
 
 
     override fun switchMainScene() {
-        playBGM()
+        playMainBGM()
 
         if (mainGameScene == null) {
             mainGameScene = MainGameScene()
@@ -49,7 +41,6 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
                     .show(mainGameScene!!)
                     .commitAllowingStateLoss()
         }
-
     }
 
     override fun switchBattleScene(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite) {
@@ -83,21 +74,18 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
         gcLayout?.enable = false
     }
 
+    //设置游戏手柄控制器
     fun setGameController(gameController: IGameController) {
         gcLayout?.gameController = gameController
     }
 
 
-    private fun playBGM() {
+    private fun playMainBGM() {
         val path = "audio/music2/87.mp3"
         BackgroundMusic.getInstance(BaseConfig.getApplicationContext())
                 .playBackgroundMusic(path, true)
     }
 
-    private fun stopBGM() {
-        BackgroundMusic.getInstance(BaseConfig.getApplicationContext())
-                .stopBackgroundMusic()
-    }
 
     companion object {
         const val UNIT_MAP = 60

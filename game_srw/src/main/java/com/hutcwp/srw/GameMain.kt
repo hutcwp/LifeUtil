@@ -1,13 +1,13 @@
 package com.hutcwp.srw
 
-import com.hutcwp.srw.ai.AI
 import com.hutcwp.srw.bean.*
-import com.hutcwp.srw.constants.LevelConfig
 import com.hutcwp.srw.constants.RobotConstants
 import com.hutcwp.srw.controller.ISceneSwitch
-import com.hutcwp.srw.controller.TestMockData
 import com.hutcwp.srw.info.Robot
+import com.hutcwp.srw.service.ActionManager
+import com.hutcwp.srw.service.LevelManager
 import com.hutcwp.srw.view.MapView
+import me.hutcwp.log.MLog
 
 /**
  *  author : kevin
@@ -16,35 +16,46 @@ import com.hutcwp.srw.view.MapView
  */
 object GameMain {
 
-    private val dataMock = TestMockData()
+    private const val TAG = "GameMain"
 
-    private val ai = AI()
 
     var robotSpriteList: List<RobotSprite> = mutableListOf()
     var mapSpriteList: MutableList<MapSprite> = mutableListOf()
     var selectSprite: SelectSprite? = null
+
     var switchScene: ISceneSwitch? = null
-
-
-    var isPlayerTurn = true //是否是玩家回合
 
     var mapView: MapView? = null
 
-    private var hasInit = false
 
+    /**
+     * 这个方法只在关卡重置时调用
+     */
+    fun switchLevel(mapView: MapView, no: Int) {
+        MLog.info(TAG, "switchLevel")
+        initGame(mapView, mapView.activity as ISceneSwitch, no)
+    }
+
+    private fun initGame(mapView: MapView, switchScene: ISceneSwitch, no: Int) {
+        mapSpriteList = LevelManager.getMapSprite(mapView.context)
+        robotSpriteList = LevelManager.getRobotSprite()
+        selectSprite = LevelManager.getSelectSprite(mapView.context)
+
+        this.mapView = mapView
+        this.switchScene = switchScene
+        mapView.clearMap()
+        mapView.initMap(mapSpriteList)
+        mapView.initRobots(robotSpriteList)
+        mapView.initSelect(selectSprite!!)
+        updateActionStatus()
+    }
 
     fun takeTurn() {
-        isPlayerTurn = !isPlayerTurn
-        updateActionStatus()
-        if (!isPlayerTurn) {
-            robotSpriteList.filter { it.robot.attribute.team == 0 }?.let {
-                ai.compute(it)
-            }
-        }
+        ActionManager.takeTurn()
     }
 
     fun finishBattleTaskAI() {
-        ai.finishBattleTask()
+        ActionManager.finishBattleTaskAI()
     }
 
     fun showBattleAI(leftRobotSprite: RobotSprite, rightRobotSprite: RobotSprite) {
@@ -57,34 +68,9 @@ object GameMain {
         }
     }
 
-    fun switchLevel(mapView: MapView, no: Int) {
-        initGame(mapView, no)
-    }
-
-
-    private fun initGame(mapView: MapView, no: Int) {
-        if (!hasInit) {
-            mapSpriteList = dataMock.createMapListFromLevel(mapView.context, LevelConfig.No1.mapList)
-            robotSpriteList = LevelConfig.No1.blueRobotList + LevelConfig.No1.redRobotList
-            selectSprite = dataMock.createSelectSpriteFromPos(mapView.context, LevelConfig.No1.blueRobotList[0].pos)
-        }
-
-        hasInit = true
-        this.mapView = mapView
-        this.switchScene = mapView.activity as ISceneSwitch
-        this.mapSpriteList.let {
-            mapView.initMap(it)
-        }
-        robotSpriteList.let {
-            mapView.initRobots(it)
-        }
-        mapView.initSelect(selectSprite!!)
-        updateActionStatus()
-    }
 
     fun updateSpritePos(sprite: BaseSprite, pos: Pos) {
         mapView?.updatePosWithAnim(sprite, sprite.pos, pos)
-
 
 //        mapView?.updateViewPos(sprite)
     }

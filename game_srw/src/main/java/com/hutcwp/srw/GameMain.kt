@@ -5,7 +5,8 @@ import com.hutcwp.srw.constants.RobotConstants
 import com.hutcwp.srw.controller.ISceneSwitch
 import com.hutcwp.srw.service.ActionManager
 import com.hutcwp.srw.service.LevelManager
-import com.hutcwp.srw.view.MapView
+import com.hutcwp.srw.ui.activity.MainGameActivity
+import com.hutcwp.srw.ui.view.MapView
 import me.hutcwp.log.MLog
 
 /**

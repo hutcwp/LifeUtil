@@ -1,4 +1,4 @@
-package com.hutcwp.srw.view
+package com.hutcwp.srw.ui.view
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import com.hutcwp.srw.ITask
+import com.hutcwp.srw.controller.ITask
 import com.hutcwp.srw.R
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.info.battle.Weapon

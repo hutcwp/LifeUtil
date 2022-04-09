@@ -4,21 +4,18 @@
 
     <application>
         <activity
-            android:name="com.hutcwp.RobotInfoActivity"
+            android:name=".ui.activity.RobotInfoActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
         <activity
-            android:name=".MainGameActivity"
+            android:name=".ui.activity.MainGameActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
-        <activity
-            android:name=".view.BattleActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
     </application>
 
 </manifest>

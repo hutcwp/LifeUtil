@@ -1,7 +1,7 @@
 package com.hutcwp.srw.scene
 
 import android.view.View
-import com.hutcwp.srw.ITask
+import com.hutcwp.srw.controller.ITask
 import com.hutcwp.srw.R
 import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.controller.BattleController

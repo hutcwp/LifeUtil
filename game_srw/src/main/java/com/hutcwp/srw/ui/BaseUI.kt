@@ -1,4 +1,4 @@
-package com.hutcwp.srw
+package com.hutcwp.srw.ui
 
 import android.content.Context
 import android.util.AttributeSet

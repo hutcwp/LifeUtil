@@ -1,7 +1,7 @@
 package com.hutcwp.srw.constants
 
 import android.content.Context
-import com.hutcwp.srw.RobotsFactoryService
+import com.hutcwp.srw.service.RobotsFactoryService
 import com.hutcwp.srw.bean.Pos
 import com.hutcwp.srw.bean.RobotParams
 import com.hutcwp.srw.bean.RobotSprite

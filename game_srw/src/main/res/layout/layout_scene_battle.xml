@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <com.hutcwp.srw.view.BattleSceneAnimLayout
+    <com.hutcwp.srw.ui.view.BattleSceneAnimLayout
         android:id="@+id/ly_battle_scene"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.hutcwp.srw.view.BattleDetailLayout
+    <com.hutcwp.srw.ui.view.BattleDetailLayout
         android:id="@+id/ly_battle_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

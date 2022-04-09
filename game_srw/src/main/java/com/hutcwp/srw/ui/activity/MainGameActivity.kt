@@ -1,8 +1,9 @@
-package com.hutcwp.srw
+package com.hutcwp.srw.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.hutcwp.srw.R
 import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.controller.IGameController
 import com.hutcwp.srw.controller.ISceneSwitch

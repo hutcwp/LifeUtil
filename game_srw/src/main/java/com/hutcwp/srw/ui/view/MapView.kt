@@ -1,4 +1,4 @@
-package com.hutcwp.srw.view
+package com.hutcwp.srw.ui.view
 
 import android.animation.Animator
 import android.animation.AnimatorSet
@@ -6,14 +6,12 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.contains
 import androidx.fragment.app.FragmentActivity
-import com.hutcwp.srw.MainGameActivity
+import com.hutcwp.srw.ui.activity.MainGameActivity
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.controller.GameController
-import com.hutcwp.srw.info.Robot
 
 /**
  *  author : kevin

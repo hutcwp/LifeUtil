@@ -1,4 +1,4 @@
-package com.hutcwp.srw.view
+package com.hutcwp.srw.ui.view
 
 import android.app.Dialog
 import android.os.Bundle

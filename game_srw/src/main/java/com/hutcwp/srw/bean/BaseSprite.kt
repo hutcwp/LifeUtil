@@ -1,6 +1,6 @@
 package com.hutcwp.srw.bean
 
-import com.hutcwp.srw.BaseUI
+import com.hutcwp.srw.ui.BaseUI
 
 /**
  *  author : kevin

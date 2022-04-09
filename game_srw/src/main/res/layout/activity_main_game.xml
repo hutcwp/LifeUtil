@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".MainGameActivity">
+    tools:context=".ui.activity.MainGameActivity">
 
     <FrameLayout
         android:id="@+id/fl_container"
@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.hutcwp.srw.view.GameControllerLayout
+    <com.hutcwp.srw.ui.view.GameControllerLayout
         android:id="@+id/gcLayout"
         android:layout_width="match_parent"
         android:layout_height="140dp"

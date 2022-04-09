@@ -3,8 +3,8 @@ package com.hutcwp.srw.ai
 import android.os.Handler
 import android.os.Looper
 import com.hutcwp.srw.GameMain
-import com.hutcwp.srw.ITask
-import com.hutcwp.srw.TaskController
+import com.hutcwp.srw.controller.ITask
+import com.hutcwp.srw.controller.TaskController
 import com.hutcwp.srw.bean.Pos
 import com.hutcwp.srw.bean.RobotSprite
 

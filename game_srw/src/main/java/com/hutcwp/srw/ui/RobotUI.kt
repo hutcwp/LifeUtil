@@ -1,7 +1,8 @@
-package com.hutcwp.srw
+package com.hutcwp.srw.ui
 
 import android.content.Context
 import android.util.AttributeSet
+import com.hutcwp.srw.ui.BaseUI
 
 /**
  *  author : kevin

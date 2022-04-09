@@ -2,13 +2,11 @@ package com.hutcwp.host
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
-import com.hutcwp.srw.MainGameActivity
+import com.hutcwp.srw.ui.activity.MainGameActivity
 import me.hutcwp.BaseConfig
-import me.hutcwp.auto.MainPageManager
 import me.hutcwp.log.MLog
 
 class SplashActivity : AppCompatActivity() {
@@ -26,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
 //            ARouter.getInstance().build("/homepage/home").navigation()
 //            finish()
 //        }, 500)
-        startActivity(Intent(this,MainGameActivity::class.java))
+        startActivity(Intent(this, MainGameActivity::class.java))
     }
 
 

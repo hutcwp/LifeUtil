@@ -1,4 +1,4 @@
-package com.hutcwp.srw
+package com.hutcwp.srw.service
 
 import com.hutcwp.srw.factory.RobotFactory
 

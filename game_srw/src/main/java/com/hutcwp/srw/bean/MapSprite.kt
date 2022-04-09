@@ -1,7 +1,7 @@
 package com.hutcwp.srw.bean
 
 import android.content.Context
-import com.hutcwp.srw.BaseUI
+import com.hutcwp.srw.ui.BaseUI
 
 /**
  *  author : kevin

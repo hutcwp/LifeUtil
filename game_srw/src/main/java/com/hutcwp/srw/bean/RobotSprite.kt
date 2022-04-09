@@ -1,9 +1,8 @@
 package com.hutcwp.srw.bean
 
 import android.content.Context
-import com.hutcwp.srw.BaseUI
 import com.hutcwp.srw.GameMain
-import com.hutcwp.srw.RobotUI
+import com.hutcwp.srw.ui.RobotUI
 import com.hutcwp.srw.compute.BattleCenter
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.info.battle.Weapon

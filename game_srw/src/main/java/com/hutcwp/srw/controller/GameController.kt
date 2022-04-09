@@ -2,13 +2,13 @@ package com.hutcwp.srw.controller
 
 import android.content.Intent
 import android.os.Bundle
-import com.hutcwp.RobotInfoActivity
+import com.hutcwp.srw.ui.activity.RobotInfoActivity
 import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.bean.BaseSprite
 import com.hutcwp.srw.bean.Pos
 import com.hutcwp.srw.bean.RobotSprite
-import com.hutcwp.srw.view.IControllerMenu
-import com.hutcwp.srw.view.MapView
+import com.hutcwp.srw.ui.view.IControllerMenu
+import com.hutcwp.srw.ui.view.MapView
 import me.hutcwp.log.MLog
 import me.hutcwp.util.ResolutionUtils
 

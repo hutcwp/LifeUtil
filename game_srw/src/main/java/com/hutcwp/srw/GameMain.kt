@@ -3,7 +3,6 @@ package com.hutcwp.srw
 import com.hutcwp.srw.bean.*
 import com.hutcwp.srw.constants.RobotConstants
 import com.hutcwp.srw.controller.ISceneSwitch
-import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.service.ActionManager
 import com.hutcwp.srw.service.LevelManager
 import com.hutcwp.srw.view.MapView
@@ -19,7 +18,7 @@ object GameMain {
     private const val TAG = "GameMain"
 
 
-    var robotSpriteList: List<RobotSprite> = mutableListOf()
+    var robotSpriteList: MutableList<RobotSprite> = mutableListOf()
     var mapSpriteList: MutableList<MapSprite> = mutableListOf()
     var selectSprite: SelectSprite? = null
 
@@ -38,7 +37,7 @@ object GameMain {
 
     private fun initGame(mapView: MapView, switchScene: ISceneSwitch, no: Int) {
         mapSpriteList = LevelManager.getMapSprite(mapView.context)
-        robotSpriteList = LevelManager.getRobotSprite()
+        robotSpriteList = LevelManager.getRobotSprite().toMutableList()
         selectSprite = LevelManager.getSelectSprite(mapView.context)
 
         this.mapView = mapView
@@ -70,15 +69,14 @@ object GameMain {
 
 
     //更新UI
-
     fun updateSpritePos(sprite: BaseSprite, pos: Pos) {
         mapView?.updatePosWithAnim(sprite, sprite.pos, pos)
     }
 
     fun destroyRobot(robotSprite: RobotSprite) {
         mapView?.removeRobotSprite(robotSprite)
+        robotSpriteList.remove(robotSprite)
     }
-
 
 
     fun findRobotByPos(pos: Pos): RobotSprite? {
@@ -110,7 +108,6 @@ object GameMain {
     fun existRobot(pos: Pos): Boolean {
         return robotSpriteList.find { it.pos == pos } != null
     }
-
 
 
     /**

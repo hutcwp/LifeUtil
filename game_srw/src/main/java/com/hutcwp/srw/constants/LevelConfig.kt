@@ -40,7 +40,7 @@ object LevelConfig {
         val blueRobotList = listOf(
                 createRobotSprite(Robot(
                         RobotConstants.GangDa,
-                        listOf(WeaponConstant.Daodan),
+                        listOf(WeaponConstant.Daodan,WeaponConstant.GuangJian),
                         PeopleConstants.DaWei),
                         Pos(12, 14)),
                 createRobotSprite(Robot(

@@ -21,6 +21,8 @@ class GameControllerLayout @JvmOverloads constructor(
     var gameController: IGameController? = null
     var enable: Boolean = true //是否开启手柄控制
 
+    private var gameListenerList: MutableList<IGameController> = mutableListOf()
+
     init {
         View.inflate(context, R.layout.layout_game_controller, this)
         initView()
@@ -35,6 +37,10 @@ class GameControllerLayout @JvmOverloads constructor(
         btn_cancel?.setOnClickListener(this)
     }
 
+    fun addListener(l: IGameController) {
+        gameListenerList.add(l)
+    }
+
     override fun onClick(view: View?) {
         view ?: return
         if (enable.not()) {
@@ -44,21 +50,39 @@ class GameControllerLayout @JvmOverloads constructor(
         when (view.id) {
             R.id.btn_up -> {
                 gameController?.up()
+                gameListenerList.forEach {
+                    it.up()
+                }
             }
             R.id.btn_down -> {
                 gameController?.down()
+                gameListenerList.forEach {
+                    it.down()
+                }
             }
             R.id.btn_left -> {
                 gameController?.left()
+                gameListenerList.forEach {
+                    it.left()
+                }
             }
             R.id.btn_right -> {
                 gameController?.right()
+                gameListenerList.forEach {
+                    it.right()
+                }
             }
             R.id.btn_ok -> {
                 gameController?.ok()
+                gameListenerList.forEach {
+                    it.ok()
+                }
             }
             R.id.btn_cancel -> {
                 gameController?.cancel()
+                gameListenerList.forEach {
+                    it.cancel()
+                }
             }
         }
     }

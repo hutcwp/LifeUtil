@@ -6,12 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.hutcwp.srw.R
 import com.hutcwp.srw.constants.RobotConstants
+import com.hutcwp.srw.controller.IGameController
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.ui.view.info.RobotInfoAdapter
 import com.hutcwp.srw.util.*
 import kotlinx.android.synthetic.main.activity_robot_info.*
 
-class RobotInfoActivity : AppCompatActivity() {
+class RobotInfoActivity : AppCompatActivity(), IGameController {
 
     var robot: Robot? = null
 
@@ -27,6 +28,8 @@ class RobotInfoActivity : AppCompatActivity() {
 
         updateRobotInfo(robot!!)
         changeUIStyle(robot!!.attribute.team)
+
+        gcLayout?.gameController = this
     }
 
     //如果是红色方，机器人图片在左边
@@ -56,14 +59,6 @@ class RobotInfoActivity : AppCompatActivity() {
             tv_mobility?.text = it.mobilityStr()
             tv_skill?.text = it.skillStr()
 
-
-//            tv_strength?.text = it.strengthStr()
-//            tv_defensive?.text = it.defendStr()
-//            tv_speed?.text = it.speedStr()
-//            tv_hp?.text = it.hpStr()
-//            tv_exp?.text = it.expStr()
-//            tv_up_exp?.text = it.upExpStr()
-
             iv_robot?.setImageResource(it.imgId)
         }
 
@@ -71,6 +66,30 @@ class RobotInfoActivity : AppCompatActivity() {
             tv_operator_name?.text = "驾驶员   ${it.name}"
             iv_operator_avatar?.setImageResource(it.resId)
         }
+    }
+
+    fun addGameListener(l: IGameController) {
+        gcLayout.addListener(l)
+    }
+
+    override fun up() {
+    }
+
+    override fun down() {
+    }
+
+    override fun left() {
+        viewPager?.currentItem = 0
+    }
+
+    override fun right() {
+        viewPager?.currentItem = 1
+    }
+
+    override fun ok() {
+    }
+
+    override fun cancel() {
     }
 
 

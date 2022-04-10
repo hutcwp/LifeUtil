@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="110dp">
 
@@ -14,23 +15,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/iv_select1"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/icon_select_dot"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_weapon1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_weapon1" />
+
         <TextView
             android:id="@+id/tv_weapon1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="远程激光炮"
+            android:layout_marginLeft="4dp"
             android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@+id/iv_select1"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="远程激光炮" />
+
+        <ImageView
+            android:id="@+id/iv_select2"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/icon_select_dot"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_weapon2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_weapon2" />
+
 
         <TextView
             android:id="@+id/tv_weapon2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="三栖导弹"
+            android:layout_marginLeft="4dp"
             android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_weapon1" />
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/iv_select2"
+            app:layout_constraintTop_toBottomOf="@id/tv_weapon1"
+            tools:text="三栖导弹" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

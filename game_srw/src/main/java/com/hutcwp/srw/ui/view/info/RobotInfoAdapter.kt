@@ -77,7 +77,7 @@ class RobotInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun updateInfo(robot: Robot) {
             val view = WeaponLayout(itemView.context).apply {
-                this.updateRobotInfo(robot)
+                this.updateRobotInfo(robot, true)
             }
             container?.removeAllViews()
             container.addView(view)

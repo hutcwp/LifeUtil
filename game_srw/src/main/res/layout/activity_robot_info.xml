@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/black"
@@ -86,76 +86,13 @@
             app:layout_constraintBottom_toBottomOf="@id/cl_basic_info"
             app:layout_constraintLeft_toRightOf="@id/cl_basic_info" />
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_detail_info"
-            android:layout_width="300dp"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/bg_white_circle"
-            android:padding="15dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_basic_info">
+            app:layout_constraintTop_toBottomOf="@id/cl_basic_info" />
 
-
-            <TextView
-                android:id="@+id/tv_strength"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="强度   89"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_defensive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="防卫  60"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_strength" />
-
-            <TextView
-                android:id="@+id/tv_speed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="速度  50"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_defensive" />
-
-            <TextView
-                android:id="@+id/tv_hp"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="Hp  304/304"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_exp"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="EXP          146"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_hp" />
-
-            <TextView
-                android:id="@+id/tv_up_exp"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="升级还需   24"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_exp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="300dp"
@@ -164,7 +101,7 @@
             android:background="@drawable/bg_white_circle"
             android:padding="15dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_detail_info">
+            app:layout_constraintTop_toBottomOf="@id/viewPager">
 
             <ImageView
                 android:id="@+id/iv_operator_avatar"

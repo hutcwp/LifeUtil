@@ -1,11 +1,13 @@
 package com.hutcwp.srw.ui.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.hutcwp.srw.R
 import com.hutcwp.srw.constants.RobotConstants
 import com.hutcwp.srw.info.Robot
+import com.hutcwp.srw.ui.view.info.RobotInfoAdapter
 import com.hutcwp.srw.util.*
 import kotlinx.android.synthetic.main.activity_robot_info.*
 
@@ -13,11 +15,12 @@ class RobotInfoActivity : AppCompatActivity() {
 
     var robot: Robot? = null
 
+    private val adapter: RobotInfoAdapter by lazy { RobotInfoAdapter() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window?.decorView?.setBackgroundColor(Color.BLACK)
         setContentView(R.layout.activity_robot_info)
-
-
 
         robot = intent?.extras?.get(PARAM_ROBOT) as Robot?
         robot ?: return
@@ -42,6 +45,10 @@ class RobotInfoActivity : AppCompatActivity() {
 
 
     private fun updateRobotInfo(robot: Robot) {
+
+        viewPager?.adapter = adapter
+        adapter?.setData(robot)
+
         robot.attribute.let {
             tv_robot_name?.text = it.robotNameStr()
             tv_level?.text = it.levelStr()
@@ -50,12 +57,12 @@ class RobotInfoActivity : AppCompatActivity() {
             tv_skill?.text = it.skillStr()
 
 
-            tv_strength?.text = it.strengthStr()
-            tv_defensive?.text = it.defendStr()
-            tv_speed?.text = it.speedStr()
-            tv_hp?.text = it.hpStr()
-            tv_exp?.text = it.expStr()
-            tv_up_exp?.text = it.upExpStr()
+//            tv_strength?.text = it.strengthStr()
+//            tv_defensive?.text = it.defendStr()
+//            tv_speed?.text = it.speedStr()
+//            tv_hp?.text = it.hpStr()
+//            tv_exp?.text = it.expStr()
+//            tv_up_exp?.text = it.upExpStr()
 
             iv_robot?.setImageResource(it.imgId)
         }

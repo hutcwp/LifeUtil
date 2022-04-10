@@ -1,6 +1,7 @@
 package com.hutcwp.srw.util
 
 import com.hutcwp.srw.info.Robot
+import com.hutcwp.srw.info.battle.Weapon
 
 /**
  *  author : kevin
@@ -63,5 +64,26 @@ fun Robot.Attributes.expStr(): String {
 
 fun Robot.Attributes.upExpStr(): String {
     return "升级还需    30"
+}
+
+
+fun Weapon.aimStr(): String {
+    return "命中    ${this.aim}"
+}
+
+fun Weapon.rangStr(): String {
+    return "射程    ${this.range}"
+}
+
+fun Weapon.attackAir(): String {
+    return "空 ${this.airAttack()}"
+}
+
+fun Weapon.attackLand(): String {
+    return "陆 ${this.landAttack()}"
+}
+
+fun Weapon.attackSea(): String {
+    return "海 ${this.weaAttack()}"
 }
 

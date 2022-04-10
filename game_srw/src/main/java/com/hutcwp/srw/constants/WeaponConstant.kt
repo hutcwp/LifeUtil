@@ -9,7 +9,7 @@ import com.hutcwp.srw.info.battle.Weapon
  */
 object WeaponConstant {
 
-    val GuangJian = Weapon(520, "光剑")
-    val Daodan = Weapon(120, "")
+    val GuangJian = Weapon("光剑", 120, 1, 120)
+    val Daodan = Weapon("导弹", 130, 5, 110)
 
 }

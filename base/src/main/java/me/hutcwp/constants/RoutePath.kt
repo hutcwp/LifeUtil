@@ -22,5 +22,6 @@ object RoutePath {
 
 
     const val LIVE_CHANNEL = "/live/channel"
+    const val LIVE_CHANNEL_COMPONENT = "/live/channel_component"
 
 }

@@ -67,4 +67,7 @@ dependencies {
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
     compile project(path: ':base')
+
+    implementation project(path: ':component')
+
 }

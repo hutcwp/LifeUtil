@@ -1,19 +1,20 @@
-package com.hutcwp.live
+package com.hutcwp.live.component
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.alibaba.android.arouter.facade.annotation.Route
+import androidx.recyclerview.widget.RecyclerView
 import com.drakeet.multitype.MultiTypeAdapter
-import com.hutcwp.lifecycler.LifeCycleObserver
-import com.hutcwp.live.chat.*
+import com.hutcwp.component.Component
+import com.hutcwp.live.R
+import com.hutcwp.live.chat.TestUtils
 import com.hutcwp.live.chat.bean.Data
 import com.hutcwp.live.chat.bean.Foo
 import com.hutcwp.live.chat.bean.MyChatMsg
-import com.hutcwp.live.chat.binder.msg.*
+import com.hutcwp.live.chat.binder.msg.ActivityNewsHolder
+import com.hutcwp.live.chat.binder.msg.GiftNewsHolder
+import com.hutcwp.live.chat.binder.msg.NormalMsgHolder
+import com.hutcwp.live.chat.binder.msg.SystemNewsHolder
 import com.hutcwp.live.chat.binder.other.DataType1ViewBinder
 import com.hutcwp.live.chat.binder.other.DataType2ViewBinder
 import com.hutcwp.live.chat.binder.other.FooViewDelegate
@@ -21,12 +22,16 @@ import com.hutcwp.live.chat.data.*
 import com.hutcwp.live.chat.intepreter.ActivityNewsInterpreter
 import com.hutcwp.live.chat.intepreter.GiftInterpreter
 import com.hutcwp.live.chat.intepreter.NormalChatInterpreter
-import kotlinx.android.synthetic.main.live_activity_channel.*
-import me.hutcwp.constants.RoutePath
 
+/**
+ *  author : kevin
+ *  date : 2021/12/12 2:24 AM
+ *  description :
+ */
+class PublicMsgComponent() : Component(R.layout.live_layout_public_chat_component) {
 
-@Route(path = RoutePath.LIVE_CHANNEL, name = "直播间")
-class ChannelActivity : AppCompatActivity() {
+    private var rxPb: RecyclerView? = null
+
 
     private val handle = Handler(Looper.myLooper()!!)
 
@@ -34,28 +39,15 @@ class ChannelActivity : AppCompatActivity() {
     private val items = ArrayList<Any>()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.live_activity_channel)
+    override fun onViewCreated() {
 
         initRV()
-        lifecycle.addObserver(object : LifecycleEventObserver {
-            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                when (event) {
-                    Lifecycle.Event.ON_CREATE -> TODO()
-                    Lifecycle.Event.ON_START -> TODO()
-                    Lifecycle.Event.ON_RESUME -> TODO()
-                    Lifecycle.Event.ON_PAUSE -> TODO()
-                    Lifecycle.Event.ON_STOP -> TODO()
-                    Lifecycle.Event.ON_DESTROY -> TODO()
-                    Lifecycle.Event.ON_ANY -> TODO()
-                }
-            }
-        }
-
     }
 
+
     private fun initRV() {
+        rxPb = rootView?.findViewById(R.id.rv_public_screen)
+
         adapter.register(FooViewDelegate())
 
         adapter.register(GiftNewsHolder())
@@ -75,8 +67,8 @@ class ChannelActivity : AppCompatActivity() {
             }
         }
 
-        rv_public_screen?.adapter = adapter
-        rv_public_screen?.addItemDecoration(DividerItemDecoration(baseContext, DividerItemDecoration.VERTICAL))
+        rxPb?.adapter = adapter
+        rxPb?.addItemDecoration(DividerItemDecoration(rootView!!.context, DividerItemDecoration.VERTICAL))
 
         initData()
 
@@ -162,7 +154,7 @@ class ChannelActivity : AppCompatActivity() {
         handle.postDelayed({
             items.add(TestUtils.getRandomMsg())
             adapter.notifyItemInserted(items.size)
-            rv_public_screen.smoothScrollToPosition(items.size)
+            rxPb?.smoothScrollToPosition(items.size)
 
             testSendMsgDelay()
         }, 1500)

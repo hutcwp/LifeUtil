@@ -6,6 +6,10 @@
         <activity
             android:name=".ChannelActivity"
             android:exported="true" />
+
+        <activity android:name=".component.LiveComponentActivity">
+
+        </activity>
     </application>
 
 </manifest>

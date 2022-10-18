@@ -47,7 +47,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun toHomePage() {
-        ARouter.getInstance().build(RoutePath.LIVE_CHANNEL).navigation()
+//        ARouter.getInstance().build(RoutePath.LIVE_CHANNEL).navigation()
+        ARouter.getInstance().build(RoutePath.LIVE_CHANNEL_COMPONENT).navigation()
 //        ARouter.getInstance().build("/homepage/assist").navigation()
         finish()
     }

@@ -3,7 +3,7 @@
 buildscript {
 
     ext.kotlin_version = project.property('kotlinVersion')
-
+    ext.AGPVersion = project.property('AGPVersion')
 
     repositories {
         google()
@@ -18,7 +18,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath "com.android.tools.build:gradle:$AGPVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
 //        classpath 'com.billy.android:autoregister:1.4.1'

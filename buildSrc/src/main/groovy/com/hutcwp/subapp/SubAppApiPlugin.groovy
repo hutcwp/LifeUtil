@@ -18,14 +18,14 @@ class SubAppApiPlugin implements Plugin<Project> {
         this.project = project
         apply plugin: 'com.android.library'
 
-//        Deps.compose {
-//            kotlin()
+        Deps.compose {
+            kotlin()
 //            log()
 //            subAppFramework()
 //            libProcessor()
 //            rxjava()
 //            pluginActivityCheck()
-//        }
+        }
 
         project.android {
 

@@ -50,4 +50,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     implementation  'com.android.tools.build:gradle:' + AGPVersion
 
+    implementation 'org.yaml:snakeyaml:1.23'
+
+
 }

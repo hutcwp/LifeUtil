@@ -1,6 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+import com.hutcwp.dep.BaseDeps
 
 buildscript {
+
+    BaseDeps.init(rootProject)
 
     ext.kotlin_version = project.property('kotlinVersion')
     ext.AGPVersion = project.property('AGPVersion')
@@ -45,4 +48,9 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+dependencies {
+
+
 }

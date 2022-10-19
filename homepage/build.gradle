@@ -1,45 +1,27 @@
+import com.hutcwp.dep.Deps
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+Deps.compose {
+    templateSubAppApi()
+    aRouter()
+}
+
 android {
-    signingConfigs {
-        signer {
-            storeFile file('../key/signer.jks')
-            storePassword '123456'
-            keyAlias = 'key'
-            keyPassword '123456'
-        }
-    }
-    compileSdkVersion 28
+
 
     resourcePrefix "hp_"
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         kapt {
             arguments {
                 arg("AROUTER_MODULE_NAME", project.getName())
             }
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.signer
-        }
-    }
-    android {
-        lintOptions {
-            abortOnError false
         }
     }
 
@@ -57,9 +39,6 @@ dependencies {
 
     compile project(path: ':base')
 
-    implementation 'com.alibaba:arouter-api:1.5.0'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
-    kapt 'com.alibaba:arouter-compiler:1.2.2'
 
     implementation 'com.qianwen:update-app-kotlin:1.2.3'
     compile 'com.qianwen:okhttp-utils:3.8.0'

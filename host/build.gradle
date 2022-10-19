@@ -77,7 +77,7 @@ dependencies {
     implementation project(path: ':homepage')
 //    implementation project(path: ':read')
 //    implementation project(path: ':weather')
-    implementation project(path: ':game')
+//    implementation project(path: ':game')
 //    implementation project(path: ':live')
 //    implementation project(path: ':blog')
     // 本地异常捕捉框架：https://github.com/Ereza/CustomActivityOnCrash
@@ -105,32 +105,32 @@ repositories {
     register(new CategoryB()); //scanSuperClass的子类
   }
  */
-apply plugin: 'auto-register'
-project.ext.registerInfoList = [
-        [
-                'scanInterface'          : 'me.hutcwp.auto.IMainPage'
-                // scanSuperClasses 会自动被加入到exclude中，下面的exclude只作为演示，其实可以不用手动添加
-                , 'scanSuperClasses'     : ['com.billy.android.autoregister.demo.BaseCategory']
-                , 'codeInsertToClassName': 'me.hutcwp.auto.MainPageManager'
-                //未指定codeInsertToMethodName，默认插入到static块中，故此处register必须为static方法
-                , 'registerMethodName'   : 'register' //
-                , 'exclude'              : [
-                //排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
-                'com.billy.android.autoregister.demo.BaseCategory'.replaceAll('\\.', '/') //排除这个基类
-        ]
-        ],
-        [
-                'scanInterface'           : 'me.hutcwp.IMainPage'
-                , 'codeInsertToClassName' : 'com.hutcwp.host.MainPageManager'
-                , 'codeInsertToMethodName': 'init' //非static方法
-                , 'registerMethodName'    : 'register' //非static方法
-        ]
-]
-
-autoregister {
-    registerInfo = registerInfoList
-    cacheEnabled = true
-}
+//apply plugin: 'auto-register'
+//project.ext.registerInfoList = [
+//        [
+//                'scanInterface'          : 'me.hutcwp.auto.IMainPage'
+//                // scanSuperClasses 会自动被加入到exclude中，下面的exclude只作为演示，其实可以不用手动添加
+//                , 'scanSuperClasses'     : ['com.billy.android.autoregister.demo.BaseCategory']
+//                , 'codeInsertToClassName': 'me.hutcwp.auto.MainPageManager'
+//                //未指定codeInsertToMethodName，默认插入到static块中，故此处register必须为static方法
+//                , 'registerMethodName'   : 'register' //
+//                , 'exclude'              : [
+//                //排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+//                'com.billy.android.autoregister.demo.BaseCategory'.replaceAll('\\.', '/') //排除这个基类
+//        ]
+//        ],
+//        [
+//                'scanInterface'           : 'me.hutcwp.IMainPage'
+//                , 'codeInsertToClassName' : 'com.hutcwp.host.MainPageManager'
+//                , 'codeInsertToMethodName': 'init' //非static方法
+//                , 'registerMethodName'    : 'register' //非static方法
+//        ]
+//]
+//
+//autoregister {
+//    registerInfo = registerInfoList
+//    cacheEnabled = true
+//}
 
 
 //assemble.doLast {

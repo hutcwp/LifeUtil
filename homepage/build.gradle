@@ -8,6 +8,7 @@ apply plugin: 'kotlin-kapt'
 Deps.compose {
     templateSubAppApi()
     aRouter()
+    supportLibrary()
     versionUpdate()
 }
 

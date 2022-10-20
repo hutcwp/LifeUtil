@@ -134,6 +134,47 @@ class DepAssemble {
         }
     }
 
+    /**
+     * 签名配置
+     * @return
+     */
+    def signingConfigs() {
+        project.android {
+            signingConfigs {
+                release {
+                    storeFile file('../key/signer.jks')
+                    storePassword '123456'
+                    keyAlias = 'key'
+                    keyPassword '123456'
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 崩溃库
+     * @return
+     */
+    def crashLib() {
+        dependencies {
+            // 本地异常捕捉框架：https://github.com/Ereza/CustomActivityOnCrash
+            implementation 'cat.ereza:customactivityoncrash:2.2.0'
+        }
+    }
+
+
+    /**
+     * 数据库
+     * @return
+     */
+    def roomDb() {
+        dependencies {
+            implementation 'androidx.room:room-runtime:2.2.5'
+            implementation "androidx.room:room-ktx:2.2.5"
+
+            kapt "androidx.room:room-compiler:2.2.5"
+        }
+    }
+
 }
-
-

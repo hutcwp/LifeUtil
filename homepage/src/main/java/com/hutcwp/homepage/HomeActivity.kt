@@ -11,6 +11,7 @@ import com.hutcwp.homepage.rv.DSVOrientation
 import com.hutcwp.homepage.rv.DiscreteScrollView
 import com.hutcwp.homepage.rv.ScaleTransformer
 import com.hutcwp.homepage.update.UpdateAppHttpUtil
+import com.hutcwp.mainpage.*
 import com.vector.update_app.UpdateCallback
 import com.vector.update_app.listener.ExceptionHandlerHelper
 import com.vector.update_app.utils.AppUpdateUtils
@@ -33,10 +34,22 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hp_activity_home)
+
+        initCategoryList()
 //        initViewPager()
 //        initListView()
         initDiscreteRv()
         checkUpdate()
+    }
+
+    private fun initCategoryList() {
+        MainPageManager.register(BlogPage())
+        MainPageManager.register(CartoonLoadPage())
+        MainPageManager.register(CartoonPage())
+        MainPageManager.register(GamePage())
+        MainPageManager.register(LivePage())
+        MainPageManager.register(ReadPage())
+        MainPageManager.register(WeatherPage())
     }
 
     private fun initDiscreteRv() {
@@ -49,9 +62,9 @@ class HomeActivity : AppCompatActivity() {
         discreteView.adapter = adapter
         discreteView.setItemTransitionTimeMillis(1000)
         discreteView.setItemTransformer(
-                ScaleTransformer.Builder()
-                        .setMinScale(0.8f)
-                        .build()
+            ScaleTransformer.Builder()
+                .setMinScale(0.8f)
+                .build()
         )
     }
 

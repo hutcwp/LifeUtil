@@ -10,11 +10,11 @@ import club.hutcwp.lifeutil.entitys.ReadCategory
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import club.hutcwp.lifeutil.ui.home.sub.news.NewsFragment
+import com.example.annotations.mvp.DelegateBind
 import com.google.android.material.tabs.TabLayout
-import hut.cwp.mvp.BindPresenter
 import me.hutcwp.log.MLog
 
-@BindPresenter(presenter = ReadPresenter::class)
+@DelegateBind(presenter = ReadPresenter::class)
 class ReadFragment : BaseFragment<ReadPresenter, ReadFragment>(), IHome<ReadCategory> {
 
     override fun getLayoutId(): Int {

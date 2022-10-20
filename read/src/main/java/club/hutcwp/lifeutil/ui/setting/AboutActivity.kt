@@ -11,7 +11,7 @@ import android.widget.ImageSwitcher
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import club.hutcwp.lifeutil.BuildConfig
+//import club.hutcwp.lifeutil.BuildConfig
 import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.ui.base.BaseActivity
 import club.hutcwp.lifeutil.util.WebUtils
@@ -52,7 +52,7 @@ class AboutActivity : BaseActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         tvVersion = findViewById<View>(R.id.tv_app_version) as TextView
-        tvVersion!!.text = "v" + BuildConfig.VERSION_NAME
+//        tvVersion!!.text = "v" + BuildConfig.VERSION_NAME
         imageSwitcher = findViewById<View>(R.id.imageSwitcher) as ImageSwitcher
         imageSwitcher!!.setFactory {
             val imageView = ImageView(this@AboutActivity)

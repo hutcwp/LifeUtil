@@ -11,14 +11,14 @@ import club.hutcwp.lifeutil.adpter.PhotoAdapter
 import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
-import hut.cwp.mvp.BindPresenter
+import com.example.annotations.mvp.DelegateBind
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-@BindPresenter(presenter = PicturePresenter::class)
+@DelegateBind(presenter = PicturePresenter::class)
 class PictureFragment : BaseFragment<PicturePresenter, IPicture>(), IPicture {
 
     private var adapter: PhotoAdapter? = null

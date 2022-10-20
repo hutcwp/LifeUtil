@@ -5,10 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.presenter.core.MvpFragment
+import com.example.presenter.core.MvpPresenter
+import com.example.presenter.core.MvpView
 import com.google.android.material.snackbar.Snackbar
-import hut.cwp.mvp.MvpFragment
-import hut.cwp.mvp.MvpPresenter
-import hut.cwp.mvp.MvpView
+
 
 /**
  * Created by hutcwp on 2017/4/15.
@@ -18,6 +19,7 @@ import hut.cwp.mvp.MvpView
  */
 
 abstract class BaseFragment<P : MvpPresenter<V>, V : MvpView> : MvpFragment<P, V>() {
+
     private var isViewPrepared: Boolean = false // 标识fragment视图已经初始化完毕
     private var hasFetchData: Boolean = false // 标识已经触发过懒加载数据
 //    lateinit var binding: ViewDataBinding

@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import club.hutcwp.lifeutil.R
@@ -133,8 +134,8 @@ class MainActivity : BaseActivity() {
         var foundFragment = fragmentManager!!.findFragmentByTag(name)
         if (foundFragment == null) {
             when (name) {
-                FRAGMENT_TAG_PHOTO -> foundFragment = PhotoFragment()
-                FRAGMENT_TAG_READING -> foundFragment = ReadFragment()
+                FRAGMENT_TAG_PHOTO -> foundFragment = PhotoFragment() as Fragment
+                FRAGMENT_TAG_READING -> foundFragment = ReadFragment() as Fragment
             }
         }
 

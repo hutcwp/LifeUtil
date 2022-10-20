@@ -1,10 +1,11 @@
 package club.hutcwp.lifeutil.ui.home.sub.picture
 
+import androidx.fragment.app.Fragment
 import club.hutcwp.lifeutil.core.DoubanPhotoParseImpl
 import club.hutcwp.lifeutil.core.PhotoCatagoryParseImpl
 import club.hutcwp.lifeutil.entitys.Photo
 import club.hutcwp.lifeutil.http.ApiFactory
-import hut.cwp.mvp.MvpPresenter
+import com.example.presenter.core.MvpPresenter
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -28,25 +29,26 @@ class PicturePresenter : MvpPresenter<IPicture>() {
 
 
     private val gankObservable: Observable<List<Photo>>
-        get() = ApiFactory.getGirlsController()?.getGank(curPage.toString() + "")?.subscribeOn(Schedulers.io())!!.map { response ->
-            val photos = ArrayList<Photo>()
-            photos.addAll(response.datas!!)
-            photos
-        }
+        get() = ApiFactory.getGirlsController()?.getGank(curPage.toString() + "")?.subscribeOn(Schedulers.io())!!
+            .map { response ->
+                val photos = ArrayList<Photo>()
+                photos.addAll(response.datas!!)
+                photos
+            }
 
     /**
      * 从服务器上获取数据
      */
     private val dataFromServer: Observable<List<Photo>>
         get() {
-            val url = arguments.getString("url")!! + curPage
+            val url = (mvpView as Fragment).arguments?.getString("url")!! + curPage
             return Observable.just(url)
-                    .subscribeOn(Schedulers.io())
-                    .map { path ->
-                        val photos = ArrayList<Photo>()
-                        photos.addAll(PhotoCatagoryParseImpl().parse(path))
-                        photos
-                    }
+                .subscribeOn(Schedulers.io())
+                .map { path ->
+                    val photos = ArrayList<Photo>()
+                    photos.addAll(PhotoCatagoryParseImpl().parse(path))
+                    photos
+                }
         }
 
     private val dataFromServer2: Observable<List<Photo>>

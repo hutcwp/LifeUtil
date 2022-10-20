@@ -177,4 +177,24 @@ class DepAssemble {
         }
     }
 
+
+    def retrofit() {
+        dependencies {
+            implementation 'com.squareup.retrofit2:retrofit:2.2.0'
+            implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+            implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+        }
+    }
+
+    def gson() {
+        dependencies {
+            implementation 'com.google.code.gson:gson:2.8.2'
+        }
+    }
+
+    def rxlifecycle2() {
+        implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+        implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
+        implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    }
 }

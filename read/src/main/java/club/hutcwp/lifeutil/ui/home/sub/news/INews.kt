@@ -1,7 +1,7 @@
 package club.hutcwp.lifeutil.ui.home.sub.news
 
 import club.hutcwp.lifeutil.entitys.News
-import hut.cwp.mvp.MvpView
+import com.example.presenter.core.MvpView
 
 /**
  * Created by hutcwp on 2018/10/13 22:39

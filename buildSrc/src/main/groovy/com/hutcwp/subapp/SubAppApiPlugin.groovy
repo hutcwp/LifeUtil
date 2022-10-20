@@ -18,6 +18,9 @@ class SubAppApiPlugin implements Plugin<Project> {
         this.project = project
         apply plugin: 'com.android.library'
 
+        apply plugin: 'kotlin-android-extensions'
+        apply plugin: 'kotlin-kapt'
+
         Deps.compose {
             kotlin()
 //            log()
@@ -46,6 +49,11 @@ class SubAppApiPlugin implements Plugin<Project> {
                 testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
                 consumerProguardFiles "consumer-rules.pro"
 
+                project.kapt {
+                    arguments {
+                        arg("AROUTER_MODULE_NAME", project.getName())
+                    }
+                }
             }
 
             buildTypes {

@@ -55,7 +55,7 @@ dependencies {
     compile project(path: ':base')
 
     implementation project(':library-annotations')
-    implementation project(':base_scope:lib-mvp')
+    implementation project(':base_scope:lib-presenter')
     kapt project(':library-processor')
 
 }

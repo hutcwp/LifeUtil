@@ -11,5 +11,5 @@ include ':blog'
 include ':framwork'
 
 include ':library-processor'
-include ':base_scope:lib-mvp'
+include ':base_scope:lib-presenter'
 include ':library-annotations'

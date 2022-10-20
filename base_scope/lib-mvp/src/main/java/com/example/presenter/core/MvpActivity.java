@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+
 /**
  * A Activity that uses an {@link MvpPresenter} to implement a Model-View-Presenter
  */

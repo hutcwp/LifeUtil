@@ -7,10 +7,16 @@ dependencies {
 
     implementation project(':library-annotations')
 
-    implementation 'com.squareup:javapoet:1.11.1'
-    implementation 'com.google.auto.service:auto-service:1.0-rc6'
+    implementation 'com.squareup:javapoet:1.13.0'
+//    implementation 'com.google.auto.service:auto-service:1.0-rc6'
     implementation project(path: ':library-annotations')
+//    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
+
+
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
+    implementation 'com.google.auto.service:auto-service-annotations:1.0-rc6'
+
+
     compile group: 'com.google.guava', name: 'guava', version: '24.1-jre'
 //    implementation files('D:\\JAVA\\jdk1.8.0_171\\lib\\tools.jar')
 }

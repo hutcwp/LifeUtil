@@ -193,8 +193,20 @@ class DepAssemble {
     }
 
     def rxlifecycle2() {
-        implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
-        implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
-        implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+        dependencies {
+            implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+            implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
+            implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+        }
+    }
+
+
+    def bindPresenter() {
+        dependencies {
+            implementation project(':library-annotations')
+            implementation project(':base_scope:lib-mvp')
+            annotationProcessor project(':library-processor')
+//            annotationProcessor project(':library-processor')
+        }
     }
 }

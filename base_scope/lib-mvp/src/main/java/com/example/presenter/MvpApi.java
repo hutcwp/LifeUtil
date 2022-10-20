@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 
 public class MvpApi {
 
-    private static final String ANNOTATION_DELEGATE_BIND = "hut.cwp.annotations.mvp.DelegateBind";
+    private static final String ANNOTATION_DELEGATE_BIND = "com.example.annotations.mvp.DelegateBind";
 
     private static Class CLASS_DELEGATE_BIND;
 

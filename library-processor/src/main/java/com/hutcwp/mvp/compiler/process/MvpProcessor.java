@@ -34,7 +34,7 @@ import javax.tools.Diagnostic;
 public class MvpProcessor implements IProcessor {
 
     private final ClassName
-            PRESENTER_BINDER = ClassName.get("hut.cwp.api.mvp", "PresenterBinder");
+            PRESENTER_BINDER = ClassName.get("com.example.presenter", "PresenterBinder");
     private final ClassName REFLEXDATA_INNER = ClassName
             .get("hut.cwp.annotations.mvp.LifeData", "InnerClass");
 
@@ -47,6 +47,8 @@ public class MvpProcessor implements IProcessor {
     @Override
     public void process(RoundEnvironment roundEnv, SniperProcessor mAbstractProcessor) {
         mProcessor = mAbstractProcessor;
+        System.out.println("process============MvpProcessor");
+
         Set<TypeElement> set =
                 ElementFilter.typesIn(roundEnv.getElementsAnnotatedWith(DelegateBind.class));
         for (TypeElement element : set) {

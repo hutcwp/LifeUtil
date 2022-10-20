@@ -13,6 +13,7 @@ Deps.compose {
     roomDb()
     supportLibrary()
     versionUpdate()
+//    bindPresenter()
 }
 
 android {
@@ -50,21 +51,11 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.1.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
 
-//    implementation 'hutcwp:mvppresenter:1.0.9'
-//    annotationProcessor 'hutcwp:mvppresenter-compiler:1.0.8'
-//    compile project(path: ':cartoon')
-    compile project(path: ':base')
 
+    compile project(path: ':base')
 
     implementation project(':library-annotations')
     implementation project(':base_scope:lib-mvp')
-
     kapt project(':library-processor')
-
-
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
-
 
 }

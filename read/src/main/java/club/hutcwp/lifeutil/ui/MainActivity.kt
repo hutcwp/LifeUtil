@@ -134,8 +134,8 @@ class MainActivity : BaseActivity() {
         var foundFragment = fragmentManager!!.findFragmentByTag(name)
         if (foundFragment == null) {
             when (name) {
-                FRAGMENT_TAG_PHOTO -> foundFragment = PhotoFragment() as Fragment
-                FRAGMENT_TAG_READING -> foundFragment = ReadFragment() as Fragment
+                FRAGMENT_TAG_PHOTO -> foundFragment = PhotoFragment()
+                FRAGMENT_TAG_READING -> foundFragment = ReadFragment()
             }
         }
 

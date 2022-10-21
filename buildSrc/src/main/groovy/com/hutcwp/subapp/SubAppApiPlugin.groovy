@@ -72,6 +72,10 @@ class SubAppApiPlugin implements Plugin<Project> {
                 targetCompatibility = 1.8
             }
 
+            buildFeatures {
+                viewBinding = true
+            }
+
         }
     }
 }

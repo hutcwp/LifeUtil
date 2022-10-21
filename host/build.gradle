@@ -12,6 +12,7 @@ Deps.compose {
     aRouter()
     versionUpdate()
     signingConfigs()
+    supportLibrary()
     crashLib()
     rxJava()
     gson()

@@ -1,7 +1,6 @@
 import com.hutcwp.dep.Deps
 
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 
@@ -10,7 +9,17 @@ Deps.compose {
     supportLibrary()
 }
 
+android {
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
+
+    implementation project(':library-annotations')
+    implementation project(':base_scope:lib-presenter')
+    kapt project(':library-processor')
 }

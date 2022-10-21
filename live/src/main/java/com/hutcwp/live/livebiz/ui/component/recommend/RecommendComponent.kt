@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.annotations.mvp.DelegateBind
-import com.hutcwp.live.livebiz.ui.component.Component
+import com.hutcwp.framwork.component.Component
 import com.hutcwp.live.livebiz.ui.component.bean.PlayInfo
 import com.hutcwp.live.livebiz.ui.component.bean.Playable
 import com.hutcwp.live.livebiz.ui.component.video.PageItemViewBinder
@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.EventBus
  * YY: 909076244
  */
 @DelegateBind(presenter = RecommendPresenter::class)
-class RecommendComponent : Component<RecommendPresenter?, IRecommend?>(), IRecommend {
+class RecommendComponent : com.hutcwp.framwork.component.Component<RecommendPresenter?, IRecommend?>(), IRecommend {
     private var playListView: RecyclerView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

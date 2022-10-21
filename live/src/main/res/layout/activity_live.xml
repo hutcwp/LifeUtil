@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-    <com.hutcwp.live.livebiz.ui.view.RateLayout
-        android:id="@+id/video_view"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000000" />
+        android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/recommend_view"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@id/video_view" />
+        <com.hutcwp.live.livebiz.ui.view.RateLayout
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000" />
 
-    <com.hutcwp.live.livebiz.ui.view.RateLayout
-        android:id="@+id/danmu_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent" />
+        <RelativeLayout
+            android:id="@+id/recommend_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@id/video_view" />
 
-    <FrameLayout
-        android:id="@+id/public_message_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/recommend_view"
-        android:layout_marginBottom="60dp" />
+        <com.hutcwp.live.livebiz.ui.view.RateLayout
+            android:id="@+id/danmu_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
 
-    <FrameLayout
-        android:id="@+id/public_chat_input"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <FrameLayout
+            android:id="@+id/public_message_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/recommend_view"
+            android:layout_marginBottom="60dp" />
 
+        <FrameLayout
+            android:id="@+id/public_chat_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</layout>

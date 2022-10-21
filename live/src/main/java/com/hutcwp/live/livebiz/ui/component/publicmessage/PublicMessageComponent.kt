@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.annotations.mvp.DelegateBind
 import com.hutcwp.live.livebiz.base.util.MLog
-import com.hutcwp.live.livebiz.ui.component.Component
+import com.hutcwp.framwork.component.Component
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.DefaultChatDecoration
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatAdapter
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatView
@@ -26,7 +26,7 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.TimeUnit
 
 @DelegateBind(presenter = PublicMessagePresenter::class)
-class PublicMessageComponent : Component<PublicMessagePresenter?, IPublicMessageComponent?>(), IPublicMessageComponent {
+class PublicMessageComponent : com.hutcwp.framwork.component.Component<PublicMessagePresenter?, IPublicMessageComponent?>(), IPublicMessageComponent {
     private var btnLog: Button? = null
     private var btnTest: Button? = null
     private var rvPublicMessage: PublicChatView? = null

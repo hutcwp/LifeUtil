@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        tvCountDown?.setOnClickListener {
+        tv_count_down?.setOnClickListener {
             toHomePage()
         }
         startCountDownToHomePage()
@@ -39,7 +39,7 @@ class SplashActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    tvCountDown?.text = "点击跳过(${it}s)"
+//                    tv_count_down?.text = "点击跳过(${it}s)"
                     if (it == 0L) {
                         toHomePage()
                     }

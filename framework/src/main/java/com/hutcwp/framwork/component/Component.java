@@ -1,11 +1,11 @@
-package com.hutcwp.live.livebiz.ui.component;
+package com.hutcwp.framwork.component;
 
 
 import androidx.fragment.app.FragmentManager;
 import com.example.presenter.core.MvpFragment;
 import com.example.presenter.core.MvpPresenter;
 import com.example.presenter.core.MvpView;
-import com.hutcwp.live.livebiz.base.util.MLog;
+import com.example.presenter.util.MLog;
 
 /**
  * Created by hutcwp on 2018/8/20 00:50

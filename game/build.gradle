@@ -1,7 +1,6 @@
 import com.hutcwp.dep.Deps
 
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 Deps.compose {
@@ -18,5 +17,5 @@ Deps.compose {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':base')
-    implementation project(path: ':framwork')
+    implementation project(path: ':framework')
 }

@@ -8,7 +8,7 @@ include ':weather'
 include ':game'
 include ':live'
 include ':blog'
-include ':framwork'
+include ':framework'
 
 include ':library-processor'
 include ':base_scope:lib-presenter'

@@ -1,0 +1,25 @@
+package ${packageName};
+
+import java.util.ArrayList;
+import java.util.List;
+//import com.netease.cc.js.JsMethodCollection;
+//import com.google.auto.service.AutoService;
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term on ${date}
+ */
+//@AutoService(JsMethodCollection.class)
+public final class ${className} {
+
+    //@Override
+    public List<String> getJsMethods() {
+        List<String> list = new ArrayList<>();
+#foreach($jsMethod in $jsMethods)
+        // ${jsMethod.comment}
+        list.add("${jsMethod.name}");
+#end
+        return list;
+    }
+}

@@ -1,8 +1,8 @@
 package com.hutcwp.mvp.compiler.other;// package hut.cwp.compiler;
 
 
-import com.example.annotations.InitAttrConfig;
-import com.example.annotations.InitAttrConfigs;
+import com.example.annotations.container.InitAttrConfig;
+import com.example.annotations.container.InitAttrConfigs;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;

@@ -1,0 +1,26 @@
+package ${packageName};
+
+import io.realm.DynamicRealm;
+import io.realm.FieldAttribute;
+import io.realm.RealmObject;
+
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term
+ * @date ${date}
+ */
+interface ${className} {
+
+    public static final String TABLE_NAME = "${tableName}";
+    public static final String CLASS_NAME = "${realmObjName}";
+    public static final String FULL_CLASS_NAME = "${fullRealmObjName}";
+#foreach($field in $fields)
+#if($field.isPrimaryKey == "true")
+    public static final String ID = "${field.fieldValue}";
+
+#end
+    public static final String _${field.fieldName} = "${field.fieldValue}";
+#end
+}

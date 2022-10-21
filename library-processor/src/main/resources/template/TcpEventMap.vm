@@ -1,0 +1,34 @@
+package ${packageName};
+
+import androidx.collection.ArrayMap;
+import com.netease.cc.common.tcp.ITcpEventRegister;
+import com.google.auto.service.AutoService;
+
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term
+ * @date ${date}
+ */
+@AutoService(ITcpEventRegister.class)
+public final class ${className} implements ITcpEventRegister{
+
+    private static final ArrayMap<Integer, Class<?>> EVENT_MAP;
+
+    static {
+        EVENT_MAP = new ArrayMap<>(64);
+#foreach($sidData in $sidDataList)
+#if("$!sidData.eventName" != "")
+        EVENT_MAP.put(${sidData.sid}, ${sidData.eventName}.class);
+#else
+        // sid:${sidData.sid} not need create event!
+#end
+#end
+    }
+
+    @Override
+    public ArrayMap<Integer, Class<?>> getEventMap() {
+        return EVENT_MAP;
+    }
+}

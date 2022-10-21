@@ -1,0 +1,53 @@
+package ${packageName};
+
+
+import com.netease.cc.privacy.hookapi.PrivacyApiUtil;
+import com.netease.ccg.replaceapi.annotation.MethodReplace;
+import androidx.annotation.NonNull;
+import java.lang.Object;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term
+ * @date ${date}
+ */
+public class ${className} {
+
+#foreach($item in $items)
+
+    #if(${item.isReturnVoid} == "false")
+    /**
+     * "${item.desc}"
+     */
+    @MethodReplace(oriClass = ${item.oriClass}.class, oriAccess = ${item.oriAccess})
+	public static ${item.returntype} ${item.methodName}($item.parameters) {
+	    String key = "${item.oriClass}#${item.methodName}";
+	    if (!PrivacyApiUtil.checkAgreePrivacy(key)) {
+            return ${item.defReturn};
+        }
+        ${item.returntype} value = ${item.oriReturn};
+		return value;
+	}
+
+    #else
+
+    /**
+     * "${item.desc}"
+     */
+    @MethodReplace(oriClass = ${item.oriClass}.class, oriAccess = ${item.oriAccess})
+    public static ${item.returntype} ${item.methodName}($item.parameters) {
+      String key = "${item.oriClass}#${item.methodName}";
+      if (!PrivacyApiUtil.checkAgreePrivacy(key)) {
+            return;
+        }
+        ${item.oriReturn};
+    }
+    #end
+
+
+#end
+
+}

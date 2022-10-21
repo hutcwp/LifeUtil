@@ -1,0 +1,134 @@
+package ${packageName};
+
+import com.netease.cc.kv.KVBaseConfig;
+import com.netease.cc.kv.${configIdClassName};
+import com.netease.cc.kv.KVBaseTransaction;
+import android.content.SharedPreferences;
+import com.netease.cc.kv.observer.ConfigChangedObserver;
+import com.netease.cc.kv.observer.ConfigChangedObserverMgr;
+
+import androidx.annotation.NonNull;
+import java.lang.Object;
+#set($size = $transactionItems.size())
+#set($needTransaction = $size > 0)
+#if($needTransaction)
+import android.content.SharedPreferences.Editor;
+#end
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term on ${date}
+ */
+class ${className} extends KVBaseConfig {
+
+	public static final String ID = ${configIdClassName}.${configId};
+
+#foreach($item in $items)
+#if($item.genKey == "true")
+	public static final String ${item.keyConstantField} = "${item.keyConstantVal}";
+#end
+#end
+#foreach($item in $items)
+
+    /**
+     * 设置 "${item.desc}"
+     */
+	public static void ${item.setter} {
+		set${item.typeFormat}(ID, ${item.key}, value);
+	}
+
+#if($item.isParcelable == "true")
+    /**
+     * 获取 "${item.desc}"
+     */
+	public static ${item.type} ${item.getter} {
+		return (${item.type}) get${item.typeFormat}(ID, ${item.key}, ${item.type}.class);
+	}
+#else
+    /**
+     * 获取 "${item.desc}"
+     */
+	public static ${item.type} ${item.getter} {
+		return get${item.typeFormat}(ID, ${item.key}, ${item.def});
+	}
+
+    /**
+     * 获取 "${item.desc}"
+     */
+	public static ${item.type} ${item.getterWithDef} {
+		return get${item.typeFormat}(ID, ${item.key}, defValue);
+	}
+
+	#if($item.observe == "true")
+	/**
+	 * 监听 "${item.desc}"
+	 */
+	 public static void ${item.observer} {
+	      ConfigChangedObserverMgr.observe(ID, observer, ${item.key});
+	 }
+	#end
+#end
+
+    /**
+     * 移除 "${item.desc}"
+     */
+	public static void ${item.remove} {
+		remove(ID, ${item.key});
+	}
+#end
+
+    /**
+     * 清空 "${configIdClassName}.${configId}"所有KV
+     */
+	public static void clear() {
+		clear(ID);
+	}
+
+    /**
+     * 获取 "${configIdClassName}.${configId}" SharedPreferences
+     */
+	public static SharedPreferences getSharedPref() {
+		return getSharedPref(ID);
+	}
+
+    /**
+     * 监听某个配置里的一些配置项变更
+     */
+    public static void observe(@NonNull ConfigChangedObserver observer,
+                               String... keys) {
+        ConfigChangedObserverMgr.observe(ID, observer, keys);
+    }
+
+    /**
+     * 通知数据项变更
+     */
+    public static void notifyDataChanged(@NonNull String key, Object value) {
+        ConfigChangedObserverMgr.notifyDataChanged(ID, key, value);
+    }
+
+#if($needTransaction)
+    // Transaction
+
+    public static class Transaction extends KVBaseTransaction {
+
+        public Transaction(@NonNull String configId, @NonNull SharedPreferences sharedPreferences) {
+            super(configId, sharedPreferences);
+        }
+
+        public static Transaction create() {
+             return new Transaction(ID, getSharedPref());
+         }
+#foreach($item in $transactionItems)
+
+         /**
+          * 设置 "${item.desc}"
+          */
+         public Transaction ${item.setter} {
+             put${item.typeFormat}(${item.key}, value);
+             return this;
+         }
+#end
+    }
+#end
+}

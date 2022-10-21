@@ -22,7 +22,3 @@ dependencies {
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-

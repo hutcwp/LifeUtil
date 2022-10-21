@@ -1,10 +1,9 @@
 package com.hutcwp.live.livebiz.ui.component.recommend
 
 import android.os.Bundle
+import com.example.presenter.core.MvpPresenter
 import com.google.gson.Gson
 import com.hutcwp.live.livebiz.ui.component.bean.PlayInfo
-import com.hutcwp.live.livebiz.ui.component.video.VideoComponentPresenter
-import hut.cwp.mvp.MvpPresenter
 import me.hutcwp.log.MLog
 import okhttp3.*
 import java.io.IOException

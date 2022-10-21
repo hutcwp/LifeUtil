@@ -1,6 +1,5 @@
 package com.hutcwp.live.livebiz.ui.component.video
 
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
 import android.widget.Toast
+import com.example.annotations.mvp.DelegateBind
 import com.hutcwp.live.livebiz.base.util.MLog
 import com.hutcwp.live.livebiz.ui.component.Component
 import com.hutcwp.live.livebiz.ui.component.bean.Playable
 import com.hutcwp.live.livebiz.ui.view.CustomVideoView
 import com.hutcwp.livebiz.R
-import hut.cwp.mvp.BindPresenter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-@BindPresenter(presenter = VideoComponentPresenter::class)
+@DelegateBind(presenter = VideoComponentPresenter::class)
 class VideoComponent : Component<VideoComponentPresenter?, IVideoComponent?>(), IVideoComponent {
     private val videoPath = "http://alcdn.hls.xiaoka.tv/2017427/14b/7b3/Jzq08Sl8BbyELNTo/index.m3u8"
     private val mv = "http://fs.mv.web.kugou.com/202003072329/8989f6eff9ffc74a04ba6a4a0ae317af/G174/M04/01/19/jpQEAF3byymAX1GpANQ4qI7mBnw356.mp4"

@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.annotations.mvp.DelegateBind
 import com.hutcwp.live.livebiz.ui.component.Component
 import com.hutcwp.live.livebiz.ui.component.bean.PlayInfo
 import com.hutcwp.live.livebiz.ui.component.bean.Playable
 import com.hutcwp.live.livebiz.ui.component.video.PageItemViewBinder
 import com.hutcwp.livebiz.R
-import hut.cwp.mvp.BindPresenter
 import me.drakeet.multitype.MultiTypeAdapter
 import org.greenrobot.eventbus.EventBus
 
@@ -19,7 +19,7 @@ import org.greenrobot.eventbus.EventBus
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
-@BindPresenter(presenter = RecommendPresenter::class)
+@DelegateBind(presenter = RecommendPresenter::class)
 class RecommendComponent : Component<RecommendPresenter?, IRecommend?>(), IRecommend {
     private var playListView: RecyclerView? = null
 

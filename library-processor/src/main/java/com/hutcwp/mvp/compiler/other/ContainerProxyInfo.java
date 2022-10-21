@@ -43,7 +43,7 @@ public class ContainerProxyInfo implements IProxyInfo {
         StringBuilder builder = new StringBuilder();
         builder.append("// Generated code. Do not modify!\n");
         builder.append("package ").append(packageName).append(";\n\n");
-        builder.append("import hut.cwp.api.Inject;\n"); //这个地方怎样写好呢？
+        builder.append("import com.example.presenter.Inject;\n"); //这个地方怎样写好呢？
         builder.append("import " + packageName + "." + className + ";\n");
         builder.append('\n');
         builder.append("public class ").append(proxyClassName).append(" implements " + "Inject" + "<").append(className)

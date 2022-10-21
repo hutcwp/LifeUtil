@@ -1,14 +1,11 @@
 package com.hutcwp.live.livebiz.ui.component;
 
 
-import com.hutcwp.live.livebiz.base.util.MLog;
-
 import androidx.fragment.app.FragmentManager;
-import hut.cwp.mvp.MvpFragment;
-import hut.cwp.mvp.MvpPresenter;
-import hut.cwp.mvp.MvpView;
-
-import static java.security.AccessController.getContext;
+import com.example.presenter.core.MvpFragment;
+import com.example.presenter.core.MvpPresenter;
+import com.example.presenter.core.MvpView;
+import com.hutcwp.live.livebiz.base.util.MLog;
 
 /**
  * Created by hutcwp on 2018/8/20 00:50

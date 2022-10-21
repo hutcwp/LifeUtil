@@ -1,56 +1,33 @@
-apply plugin: 'com.android.library'
+import com.hutcwp.dep.Deps
+
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.jakewharton.butterknife'
-android {
-    compileSdkVersion 29
 
-
-    defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
-    }
-
-    kapt {
-        arguments {
-            arg("AROUTER_MODULE_NAME", project.getName())
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
+Deps.compose {
+    templateSubAppApi()
+    supportLibrary()
+    aRouter()
+//    bindPresenter()
 }
 
+
 def rxlifecycle_version = '2.0.1'
+
 dependencies {
     implementation project(path: ':base')
-    implementation 'com.alibaba:arouter-api:1.5.0'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
-    kapt 'com.alibaba:arouter-compiler:1.2.2'
+
+    implementation project(':library-annotations')
+    implementation project(':base_scope:lib-presenter')
+    kapt project(':library-processor')
+
 
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 
-    implementation 'hutcwp:mvppresenter-annotations:1.1'
-    implementation 'hutcwp:mvppresenter:1.1'
-    annotationProcessor 'hutcwp:mvppresenter-compiler:1.1'
-    kapt 'hutcwp:mvppresenter-compiler:1.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.0.2'
 
 
     implementation("com.trello.rxlifecycle2:rxlifecycle:${rxlifecycle_version}") {

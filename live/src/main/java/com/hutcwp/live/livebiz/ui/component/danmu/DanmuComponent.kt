@@ -6,6 +6,8 @@ import android.text.SpannedString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.annotations.mvp.DelegateBind
+import com.example.presenter.core.MvpFragment
 import com.hutcwp.live.livebiz.base.util.BasicConfig
 import com.hutcwp.live.livebiz.ui.component.danmu.kinds.ColorDanmaku
 import com.hutcwp.live.livebiz.ui.component.danmu.kinds.ColorTextCacheStuffer
@@ -13,8 +15,7 @@ import com.hutcwp.live.livebiz.ui.component.danmu.kinds.DanmakuStufferProxy
 import com.hutcwp.live.livebiz.ui.component.emoji.RichTextManager
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
 import com.hutcwp.livebiz.R
-import hut.cwp.mvp.BindPresenter
-import hut.cwp.mvp.MvpFragment
+
 import master.flame.danmaku.controller.DrawHandler
 import master.flame.danmaku.danmaku.model.*
 import master.flame.danmaku.danmaku.model.android.DanmakuContext
@@ -27,7 +28,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
-@BindPresenter(presenter = DanmuPresenter::class)
+@DelegateBind(presenter = DanmuPresenter::class)
 class DanmuComponent : MvpFragment<DanmuPresenter?, IDanmuComponent?>(), IDanmuComponent {
     private var showDanmaku = false
     private var danmakuView: DanmakuView? = null

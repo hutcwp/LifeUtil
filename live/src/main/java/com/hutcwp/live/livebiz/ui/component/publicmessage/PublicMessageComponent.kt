@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.annotations.mvp.DelegateBind
 import com.hutcwp.live.livebiz.base.util.MLog
 import com.hutcwp.live.livebiz.ui.component.Component
-import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.DefaultChatDecoration
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatAdapter
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatView
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.TestUtils
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.*
+import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
 import com.hutcwp.livebiz.R
-import hut.cwp.mvp.BindPresenter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -25,7 +25,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.TimeUnit
 
-@BindPresenter(presenter = PublicMessagePresenter::class)
+@DelegateBind(presenter = PublicMessagePresenter::class)
 class PublicMessageComponent : Component<PublicMessagePresenter?, IPublicMessageComponent?>(), IPublicMessageComponent {
     private var btnLog: Button? = null
     private var btnTest: Button? = null

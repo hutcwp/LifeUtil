@@ -1,6 +1,7 @@
 package com.hutcwp.live.livebiz.ui.component.publicmessage;
 
-import hut.cwp.mvp.MvpView;
+
+import com.example.presenter.core.MvpView;
 
 public interface IPublicMessageComponent extends MvpView {
 

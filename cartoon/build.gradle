@@ -8,6 +8,7 @@ Deps.compose {
     templateSubAppApi()
     aRouter()
     roomDb()
+    rxJava()
     supportLibrary()
 }
 

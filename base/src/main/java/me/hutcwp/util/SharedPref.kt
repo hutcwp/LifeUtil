@@ -79,7 +79,7 @@ open class SharedPref(private val mPref: SharedPreferences) {
             return defaultValue
         }
         return try {
-            java.lang.Long.parseLong(rawValue)
+            java.lang.Long.parseLong(rawValue!!)
         } catch (e: NumberFormatException) {
             MLog.error(TAG,
                     "lcy failed to parse %s as long, for key %s, ex : %s",

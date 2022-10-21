@@ -209,4 +209,34 @@ class DepAssemble {
 //            annotationProcessor project(':library-processor')
         }
     }
+
+    def rxJava() {
+        dependencies {
+            implementation 'io.reactivex.rxjava2:rxjava:2.1.11'
+            implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+        }
+    }
+
+    def fresco() {
+        dependencies {
+            implementation "com.facebook.fresco:animated-base:1.9.0"
+            implementation "com.facebook.fresco:animated-drawable:1.9.0"
+            implementation "com.facebook.fresco:animated-webp:1.9.0"
+            implementation "com.facebook.fresco:drawee:1.9.0"
+            implementation "com.facebook.fresco:fbcore:1.9.0"
+            implementation "com.facebook.fresco:imagepipeline:1.9.0"
+            implementation "com.facebook.fresco:imagepipeline-base:1.9.0"
+            implementation "com.facebook.fresco:webpsupport:1.9.0"
+            implementation "com.facebook.soloader:soloader:0.3.0"
+        }
+    }
+
+    def glide() {
+        dependencies {
+
+            compile("com.github.bumptech.glide:glide:4.7.1")
+            compile "com.github.bumptech.glide:okhttp3-integration:4.6.1"
+        }
+    }
+
 }

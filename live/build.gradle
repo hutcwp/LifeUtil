@@ -9,6 +9,8 @@ Deps.compose {
     templateSubAppApi()
     supportLibrary()
     aRouter()
+    gson()
+    rxJava()
 //    bindPresenter()
 }
 

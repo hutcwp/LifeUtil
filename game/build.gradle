@@ -8,6 +8,8 @@ Deps.compose {
     templateSubAppApi()
     aRouter()
     roomDb()
+    rxJava()
+    gson()
     supportLibrary()
     versionUpdate()
 }

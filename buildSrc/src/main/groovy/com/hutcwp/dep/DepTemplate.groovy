@@ -3,6 +3,7 @@ package com.hutcwp.dep
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import com.hutcwp.subapp.SubAppApiPlugin
+import com.hutcwp.lib.AndroidLibTemplatePlugin
 
 class DepTemplate {
 
@@ -34,8 +35,8 @@ class DepTemplate {
      * @param buildScript
      * @return
      */
-    def templateCcLibrary() {
-        apply plugin : CCAndroidLibTemplatePlugin
+    def templateLibrary() {
+        apply plugin : AndroidLibTemplatePlugin
     }
 
     def pluginKapt() {

@@ -1,14 +1,13 @@
-package com.hutcwp.subapp
+package com.hutcwp.lib
 
+import com.hutcwp.dep.Deps
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import com.hutcwp.dep.Deps
-
 
 /**
- * sub-app-api.gradle改写
+ * base-library-template.gradle改写
  */
-class SubAppApiPlugin implements Plugin<Project> {
+class BaseLibTemplatePlugin implements Plugin<Project> {
 
     @Delegate
     Project project
@@ -18,46 +17,18 @@ class SubAppApiPlugin implements Plugin<Project> {
         this.project = project
         apply plugin: 'com.android.library'
 
-        apply plugin: 'kotlin-android-extensions'
-        apply plugin: 'kotlin-kapt'
-
-        Deps.compose {
-            kotlin()
-            gson()
-            rxJava()
-        }
-
         project.android {
-
-            signingConfigs {
-                signer {
-                    storeFile file('../key/signer.jks')
-                    storePassword '123456'
-                    keyAlias = 'key'
-                    keyPassword '123456'
-                }
-            }
-
             compileSdkVersion Deps.compileSdkVersion
-
             defaultConfig {
                 targetSdkVersion Deps.targetSdkVersion
                 minSdkVersion Deps.minSdkVersion
-                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
                 consumerProguardFiles "consumer-rules.pro"
-
-                project.kapt {
-                    arguments {
-                        arg("AROUTER_MODULE_NAME", project.getName())
-                    }
-                }
             }
 
             buildTypes {
                 release {
                     minifyEnabled false
                     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-                    signingConfig signingConfigs.signer
                 }
             }
 
@@ -72,6 +43,24 @@ class SubAppApiPlugin implements Plugin<Project> {
                 targetCompatibility = 1.8
             }
 
+            // 指定源文件目录
+            sourceSets {
+                main {
+                    java.srcDirs = ['src/main/java']
+                }
+                debug {
+                    java.srcDirs = ['src/debug/java', 'build/generated/source/apt2/debug']
+                }
+                release {
+                    java.srcDirs = ['src/release/java', 'build/generated/source/apt2/release']
+                }
+            }
         }
+
+
+        dependencies {
+            implementation fileTree(dir: 'libs', include: ['*.jar'])
+        }
+
     }
 }

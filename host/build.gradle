@@ -13,6 +13,8 @@ Deps.compose {
     versionUpdate()
     signingConfigs()
     crashLib()
+    rxJava()
+    gson()
 }
 
 android {

@@ -12,23 +12,9 @@ Deps.compose {
     versionUpdate()
 }
 
-android {
-
-    resourcePrefix "game_"
-    defaultConfig {
-
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
-    }
-
-}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation project(path: ':base')
     implementation project(path: ':framwork')
 }

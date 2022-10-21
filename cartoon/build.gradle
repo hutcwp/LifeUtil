@@ -11,24 +11,8 @@ Deps.compose {
     supportLibrary()
 }
 
-android {
-
-    defaultConfig {
-
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
-    }
-
-
-}
 
 dependencies {
-
-    compile project(path: ':base')
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation project(path: ':base')
 }

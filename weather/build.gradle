@@ -12,7 +12,5 @@ Deps.compose {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    compile project(path: ':base')
-
+    implementation project(path: ':base')
 }

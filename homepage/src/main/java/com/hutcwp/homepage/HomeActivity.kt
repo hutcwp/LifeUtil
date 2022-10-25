@@ -48,6 +48,7 @@ class HomeActivity : AppCompatActivity() {
         MainPageManager.register(CartoonPage())
         MainPageManager.register(GamePage())
         MainPageManager.register(LivePage())
+        MainPageManager.register(MLivePage())
         MainPageManager.register(ReadPage())
         MainPageManager.register(WeatherPage())
     }

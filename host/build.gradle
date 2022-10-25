@@ -67,14 +67,15 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
 
-    implementation project(path: ':cartoon')
+//    implementation project(path: ':cartoon')
     implementation project(path: ':base')
     implementation project(path: ':homepage')
-    implementation project(path: ':read')
-    implementation project(path: ':weather')
-    implementation project(path: ':game')
+//    implementation project(path: ':read')
+//    implementation project(path: ':weather')
+//    implementation project(path: ':game')
     implementation project(path: ':live')
-    implementation project(path: ':blog')
+    implementation project(path: ':mlive')
+//    implementation project(path: ':blog')
 
 }
 repositories {

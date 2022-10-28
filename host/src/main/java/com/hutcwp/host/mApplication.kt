@@ -5,6 +5,7 @@ import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.facebook.stetho.Stetho
+import com.hutcwp.tcp.TcpManager
 //import com.hutcwp.homepage.HomePageInitLogic
 import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
@@ -35,6 +36,7 @@ class mApplication : BaseApplication() {
         Stetho.initializeWithDefaults(this);
         webpInit()
         aRouterInit()
+        TcpManager.connect()
 
 //        MonitorFPS(context, "application").start()
     }

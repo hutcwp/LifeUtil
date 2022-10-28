@@ -16,6 +16,7 @@ class MLivePage : IMainPage {
     }
 
     override fun getPath(): String {
-        return Constants.RoutePath.MLIVE_CAMERA2
+        return Constants.RoutePath.MLIVE_PREVIEW
+//        return Constants.RoutePath.MLIVE_CAMERA2
     }
 }

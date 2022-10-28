@@ -24,4 +24,5 @@ dependencies {
     implementation project(path: ':framework')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':base_scope:lib-tcp')
 }

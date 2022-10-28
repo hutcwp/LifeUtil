@@ -19,6 +19,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
 
+    implementation project(':base_scope:lib-tcp')
     implementation project(':library-annotations')
     implementation project(':base_scope:lib-presenter')
     kapt project(':library-processor')

@@ -8,6 +8,7 @@ import android.widget.Button
 import com.example.annotations.mvp.DelegateBind
 import com.hutcwp.live.livebiz.base.util.MLog
 import com.hutcwp.framwork.component.Component
+import com.hutcwp.live.livebiz.protocol.ChatMsgProtocolEvent
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.DefaultChatDecoration
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatAdapter
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.lib.PublicChatView
@@ -15,6 +16,8 @@ import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.TestUtils
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.*
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.viewbinder.msg.MyChatMsg
 import com.hutcwp.livebiz.R
+import com.hutcwp.tcp.TcpManager
+import com.hutcwp.tcp.protocol.TcpProtocol
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -26,17 +29,23 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.TimeUnit
 
 @DelegateBind(presenter = PublicMessagePresenter::class)
-class PublicMessageComponent : com.hutcwp.framwork.component.Component<PublicMessagePresenter?, IPublicMessageComponent?>(), IPublicMessageComponent {
+class PublicMessageComponent : Component<PublicMessagePresenter?, IPublicMessageComponent>(),
+    IPublicMessageComponent {
     private var btnLog: Button? = null
     private var btnTest: Button? = null
     private var rvPublicMessage: PublicChatView? = null
     private var sendMsgDisposable: Disposable? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.component_public_message, container, false)
         initView(view)
         initListener()
         initData()
+
         return view
     }
 
@@ -48,7 +57,11 @@ class PublicMessageComponent : com.hutcwp.framwork.component.Component<PublicMes
         adapter.register(SystemNewViewBinder())
         adapter.register(GiftViewBinder())
         rvPublicMessage?.let {
-            it.addItemDecoration(DefaultChatDecoration(ResolutionUtils.convertDpToPixel(3f, context).toInt()))
+            it.addItemDecoration(
+                DefaultChatDecoration(
+                    ResolutionUtils.convertDpToPixel(3f, context).toInt()
+                )
+            )
             it.setChatAdapter(adapter)
         }
     }
@@ -65,7 +78,9 @@ class PublicMessageComponent : com.hutcwp.framwork.component.Component<PublicMes
     }
 
     override fun showTest() {
-        startSendMsg()
+//        startSendMsg()
+
+        TcpManager.sendMsg(TcpProtocol(sid = 2, cid = 1, content = "消息"))
     }
 
     override fun showLog() {
@@ -79,9 +94,9 @@ class PublicMessageComponent : com.hutcwp.framwork.component.Component<PublicMes
     private fun startSendMsg() {
         RxUtils.dispose(sendMsgDisposable)
         sendMsgDisposable = Observable.interval(500, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val rand = (1..5).shuffled().last()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                val rand = (1..5).shuffled().last()
 //                    val msg = when (rand) {
 //                        1 -> TestUtils.getActivityMsg()
 //                        2 -> TestUtils.getGiftMsg()
@@ -90,14 +105,21 @@ class PublicMessageComponent : com.hutcwp.framwork.component.Component<PublicMes
 //                        5 -> TestUtils.getSystemNewMsg()
 //                        else -> TestUtils.getNormalMsg()
 //                    }
-                    val msg = TestUtils.getNormalMsg()
-                    MLog.info(TAG, "rand is $rand")
-                    EventBus.getDefault().post(msg)
-                }
+                val msg = TestUtils.getNormalMsg()
+                MLog.info(TAG, "rand is $rand")
+                EventBus.getDefault().post(msg)
+            }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun receiveMsg(msg: MyChatMsg) {
+        rvPublicMessage?.addMessage(msg)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun receiveChatMsg(chatMsg: ChatMsgProtocolEvent) {
+        val msg = TestUtils.getNormalMsg()
+//        msg.content = chatMsg.rspBean?.data?.toString()
         rvPublicMessage?.addMessage(msg)
     }
 

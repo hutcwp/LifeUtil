@@ -13,8 +13,8 @@ import java.io.BufferedWriter
  *  发送心跳包
  */
 private const val TAG = "BeatHeartRunnable"
-private const val BEAT_DURATION = 5000L
-private const val MAX_RETRY_COUNT = 3
+private const val BEAT_DURATION = 15000L
+private const val MAX_RETRY_COUNT = 1
 
 class BeatHeartRunnable(private val bw: BufferedWriter) : Runnable {
 

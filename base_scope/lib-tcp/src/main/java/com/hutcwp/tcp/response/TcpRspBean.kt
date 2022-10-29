@@ -1,8 +1,6 @@
 package com.hutcwp.tcp.response
 
-import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.hutcwp.tcp.protocol.TcpProtocol
 
 
 /**

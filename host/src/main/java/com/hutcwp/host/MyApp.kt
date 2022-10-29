@@ -5,11 +5,12 @@ import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.facebook.stetho.Stetho
+import com.hutcwp.homepage.HomePageInitLogic
+import com.hutcwp.live.livebiz.LiveAppLogic
 import com.hutcwp.tcp.TcpManager
 //import com.hutcwp.homepage.HomePageInitLogic
 import me.hutcwp.BasicConfig
 import me.hutcwp.app.BaseApplication
-import me.hutcwp.util.MonitorFPS
 //import me.hutcwp.cartoon.app.CartoonInitLogic
 import me.hutcwp.webp.WebpBytebufferDecoder
 import me.hutcwp.webp.WebpDrawable
@@ -22,10 +23,11 @@ import java.nio.ByteBuffer
  * email: caiwenpeng@yy.com
  * YY: 909076244
  */
-class mApplication : BaseApplication() {
+class MyApp : BaseApplication() {
 
     override fun initLogic() {
-//        registerAppLogicClass(HomePageInitLogic::class)
+        registerAppLogicClass(HomePageInitLogic::class)
+        registerAppLogicClass(LiveAppLogic::class)
 //        registerAppLogicClass(CartoonInitLogic::class)
     }
 
@@ -58,8 +60,12 @@ class mApplication : BaseApplication() {
         val byteDecoder = WebpBytebufferDecoder(this)
         // use prepend() avoid intercept by default decoder
         Glide.get(this).registry
-                .prepend<InputStream, WebpDrawable>(InputStream::class.java, WebpDrawable::class.java, decoder)
-                .prepend(ByteBuffer::class.java, WebpDrawable::class.java, byteDecoder)
+            .prepend<InputStream, WebpDrawable>(
+                InputStream::class.java,
+                WebpDrawable::class.java,
+                decoder
+            )
+            .prepend(ByteBuffer::class.java, WebpDrawable::class.java, byteDecoder)
     }
 
     companion object {

@@ -1,11 +1,12 @@
 package com.hutcwp.tcp
 
 import android.os.Looper
-import android.util.Log
+import com.hutcwp.event.AbstractTcpEvent
 import com.hutcwp.tcp.protocol.TcpProtocol
-import com.hutcwp.tcp.response.TcpRspBean
+import com.hutcwp.tcp.protocol.decodeToTcpRsp
 import com.hutcwp.tcp.task.TcpServerRunnable
 import me.hutcwp.log.MLog
+import org.greenrobot.eventbus.EventBus
 import java.net.Socket
 import kotlin.concurrent.thread
 
@@ -21,6 +22,8 @@ object TcpManager : TcpRspCallBack {
     private const val PORT = 10002
 
     private val msgQueueManager by lazy { MsgQueueManager() }
+
+    private val protocolEventList = mutableListOf<AbstractTcpEvent>()
 
     @Volatile
     private var isConnected = false //当前连接状态
@@ -68,8 +71,22 @@ object TcpManager : TcpRspCallBack {
     }
 
 
-    override fun onResponse(tcpRsp: TcpRspBean) {
-        Log.i(TAG, "接收到协议：rsp=$tcpRsp")
+    override fun onResponse(tcpProtocol: TcpProtocol) {
+        MLog.info(TAG, "接收到协议：rsp=$tcpProtocol")
+
+        protocolEventList.find {
+            it.sid == tcpProtocol.sid && it.cid == tcpProtocol.cid
+        }?.let {
+            val constructor = it.javaClass.getConstructor()
+            val event = constructor.newInstance()
+            event.rspBean = tcpProtocol.decodeToTcpRsp()
+            EventBus.getDefault().post(it)
+            MLog.debug(TAG, "发送event = $event")
+        }
+    }
+
+    fun registerEvent(abstractTcpEvent: AbstractTcpEvent) {
+        protocolEventList.add(abstractTcpEvent)
     }
 
 }
@@ -79,5 +96,5 @@ object TcpManager : TcpRspCallBack {
  * tcp响应包回调
  */
 interface TcpRspCallBack {
-    fun onResponse(tcpRsp: TcpRspBean)
+    fun onResponse(tcpProtocol: TcpProtocol)
 }

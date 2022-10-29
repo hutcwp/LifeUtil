@@ -2,6 +2,10 @@ package com.hutcwp.tcp
 
 
 import android.util.Log
+import com.hutcwp.tcp.protocol.TcpProtocol
+import com.hutcwp.tcp.protocol.TransformData
+import com.hutcwp.tcp.protocol.decodeToTcpRsp
+import com.hutcwp.tcp.transform.TcpTransformUtil
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
@@ -14,10 +18,7 @@ private const val TAG = "ServerThread"
 
 class ServerThread(private val client: Socket) : Thread() {
 
-    private val sendMsgQueue = LinkedBlockingQueue<MsgBean>().apply {
-        this.add(MsgBean("test"))
-    }
-
+    private val sendMsgQueue = LinkedBlockingQueue<TcpProtocol>()
 
     lateinit var bw: BufferedWriter
     lateinit var br: BufferedReader
@@ -66,17 +67,28 @@ class ServerThread(private val client: Socket) : Thread() {
                 var line: String
                 var content = StringBuilder()
                 while (br.readLine().also { line = it } != null) {
-                    if (line.contains("start:")) {
+
+                    val isStartFlag = line.startsWith("start:")
+                    val isEndFlag = line.startsWith("end:")
+
+                    if (isStartFlag) {
                         content = StringBuilder()
                         println("开始解析一个包")
-                    } else if (line.contains("end:")) {
+                    }
+
+                    content.append(line)
+                    println("line=$line")
+
+
+                    if (isEndFlag) {
                         println("结束解析一个包")
                         println("收到服务器消息：$content")
-                        content.toString().decodeToTcpRsp()?.let {
-                            MsgQueueManager.onResponse(it)
+
+                        val dataMsg = content.toString()
+                        content = StringBuilder()
+                        TcpTransformUtil.transToProtocol(TransformData(dataMsg)).let {
+                            MsgQueueManager.onResponse(it.decodeToTcpRsp())
                         }
-                    } else {
-                        content.append(line)
                     }
                 }
 
@@ -93,14 +105,9 @@ class ServerThread(private val client: Socket) : Thread() {
             try {
                 val bw = BufferedWriter(OutputStreamWriter(client.getOutputStream()))
                 while (sendMsgQueue.isNotEmpty()) {
-                    val msg = sendMsgQueue.poll()
-                    val content = msg.formatStr()
-                    bw.write(
-                        """
-    body:$content
-
-    """.trimIndent()
-                    )
+                    val tcpProtocol = sendMsgQueue.poll()
+                    val content = TcpTransformUtil.transToData(tcpProtocol).data
+                    bw.write(content)
                     bw.flush()
 
                     println("主动发送消息给服务端---->$content")

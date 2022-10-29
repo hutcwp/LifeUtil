@@ -4,8 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hutcwp.tcp.MsgBean
 import com.hutcwp.tcp.MsgQueueManager
+import com.hutcwp.tcp.protocol.TcpProtocol
 
 /**
  * 预览界面
@@ -19,7 +19,7 @@ class PreviewActivity : AppCompatActivity() {
 
 
         findViewById<Button>(R.id.btn_start_live)?.setOnClickListener {
-            MsgQueueManager.sendMsg(MsgBean("发送的消息"))
+            MsgQueueManager.sendMsg(TcpProtocol(1,0,"发送的消息"))
         }
     }
 }

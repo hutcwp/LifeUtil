@@ -18,10 +18,23 @@ data class TransformData(val data: String) : java.io.Serializable {
 
 /**
  * tcp协议格式
+ * priority: 优先级
  * sid cid 协议号
  */
-data class TcpProtocol(val sid: Int, val cid: Int, val content: String) {
+data class TcpProtocol(val priority: Int = 0, val sid: Int, val cid: Int, val content: String) :
+    Comparable<TcpProtocol> {
 
+
+    override fun compareTo(other: TcpProtocol): Int {
+        return priority.compareTo(other.priority)
+    }
+
+}
+
+private val BEAT_HEART_PRORITY = 100
+
+fun getHeartTcpProtocol(): TcpProtocol {
+    return TcpProtocol(BEAT_HEART_PRORITY, 1, 1, "beat heart")
 }
 
 /**

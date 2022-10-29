@@ -36,7 +36,7 @@ class mApplication : BaseApplication() {
         Stetho.initializeWithDefaults(this);
         webpInit()
         aRouterInit()
-        TcpManager.connect()
+        TcpManager.initiation()
 
 //        MonitorFPS(context, "application").start()
     }

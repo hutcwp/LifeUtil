@@ -77,7 +77,8 @@ class DataFormat {
         val contentIndex = data.indexOf(contentFlag)
         val protocolIndex = data.indexOf(protocolFlag)
 
-        val protocolStr = data.substring(protocolIndex, contentIndex).replace(protocolFlag, "").trim()
+        val protocolStr =
+            data.substring(protocolIndex, contentIndex).replace(protocolFlag, "").trim()
         val contentStr = data.substring(contentIndex + contentFlag.length)
 
         val sid = protocolStr.split(",")[0].replace("sid=", "").toInt()
@@ -85,7 +86,7 @@ class DataFormat {
 
         Log.i(TAG, "sid=$sid,cid=$cid, protocol=$protocolStr , content=$contentStr")
 
-        return TcpProtocol(sid, cid, contentStr)
+        return TcpProtocol(sid = sid, cid = cid, content = contentStr)
     }
 
 }

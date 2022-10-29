@@ -1,10 +1,10 @@
 package com.hutcwp.mlive
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hutcwp.tcp.MsgQueueManager
+import com.hutcwp.tcp.TcpManager
 import com.hutcwp.tcp.protocol.TcpProtocol
 
 /**
@@ -19,7 +19,7 @@ class PreviewActivity : AppCompatActivity() {
 
 
         findViewById<Button>(R.id.btn_start_live)?.setOnClickListener {
-            MsgQueueManager.sendMsg(TcpProtocol(1,0,"发送的消息"))
+            TcpManager.sendMsg(TcpProtocol(sid = 1, cid = 0, content = "发送的消息"))
         }
     }
 }

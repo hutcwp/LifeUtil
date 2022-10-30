@@ -1,6 +1,5 @@
 package com.hutcwp.tcp.task
 
-import com.hutcwp.tcp.MsgQueueManager
 import com.hutcwp.tcp.TcpManager
 import com.hutcwp.tcp.transform.TcpTransformUtil
 import me.hutcwp.log.MLog
@@ -15,9 +14,12 @@ private const val TAG = "SendMsgRunnable"
 
 class SendMsgRunnable(private val bw: BufferedWriter) : Runnable {
 
+    @Volatile
+    private var flag = true
+
     override fun run() {
-        try {
-            while (true) {
+        while (true) {
+            try {
                 val tcpProtocol = TcpManager.getNextSendMsg()?.let {
                     val content = TcpTransformUtil.transToData(it).data
                     bw.write(content)
@@ -25,9 +27,13 @@ class SendMsgRunnable(private val bw: BufferedWriter) : Runnable {
 
                     MLog.info(TAG, "主动发送消息给服务端---->$content")
                 }
+
+            } catch (e: Exception) {
+                MLog.info(TAG, "发送服务端的消息异常：$e", e)
+                if (!TcpManager.isConnected) {
+                    flag = false
+                }
             }
-        } catch (e: Exception) {
-            MLog.info(TAG, "发送服务端的消息异常：$e", e)
         }
     }
 

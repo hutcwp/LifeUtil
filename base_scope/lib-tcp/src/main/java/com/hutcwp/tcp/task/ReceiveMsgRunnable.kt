@@ -16,12 +16,15 @@ private const val TAG = "ReceiveMsgRunnable"
 
 class ReceiveMsgRunnable(private val br: BufferedReader) : Runnable {
 
+    @Volatile
+    private var flag = true
+
     override fun run() {
         receiveMsg()
     }
 
     private fun receiveMsg() {
-        while (true) {
+        while (flag) {
             try {
                 //读取客户端发送来的消息
                 var line: String
@@ -54,6 +57,9 @@ class ReceiveMsgRunnable(private val br: BufferedReader) : Runnable {
                 MLog.info(TAG, "服务端输入流断开")
             } catch (e: Exception) {
                 MLog.info(TAG, "接收服务端的消息异常：$e", e)
+                if (!TcpManager.isConnected) {
+                    flag = false
+                }
             }
         }
     }

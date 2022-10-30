@@ -26,7 +26,7 @@ object TcpManager : TcpRspCallBack {
     private val protocolEventList = mutableListOf<AbstractTcpEvent>()
 
     @Volatile
-    private var isConnected = false //当前连接状态
+    var isConnected = false //当前连接状态
 
 
     /**

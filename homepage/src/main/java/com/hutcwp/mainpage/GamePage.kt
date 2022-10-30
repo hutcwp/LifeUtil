@@ -16,7 +16,6 @@ class GamePage : IMainPage {
     }
 
     override fun getPath(): String {
-//        return Constants.RoutePath.WUZIQI_MAIN_PAGE
-        return Constants.RoutePath.GAME_MAIN_PAGE
+        return "/game/srw"
     }
 }

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="110dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_weapon_info"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_white_circle"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_select1"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/icon_select_dot"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_weapon1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_weapon1" />
+
+        <TextView
+            android:id="@+id/tv_weapon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@+id/iv_select1"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="远程激光炮" />
+
+        <ImageView
+            android:id="@+id/iv_select2"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/icon_select_dot"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_weapon2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_weapon2" />
+
+
+        <TextView
+            android:id="@+id/tv_weapon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/iv_select2"
+            app:layout_constraintTop_toBottomOf="@id/tv_weapon1"
+            tools:text="三栖导弹" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_white_circle"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@+id/cl_weapon_info"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/tv_aim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="命中   89"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_range"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="射程  24"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_aim" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_weapon_info">
+
+
+        <TextView
+            android:id="@+id/tv_huoli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="8dp"
+            android:text="火力："
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_air"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="8dp"
+            android:text="陆空：310"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_huoli"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_land"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="8dp"
+            android:text="陆：310"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/tv_sea"
+            app:layout_constraintStart_toEndOf="@+id/tv_air"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="8dp"
+            android:text="海：300"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

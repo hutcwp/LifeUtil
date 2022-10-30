@@ -1,6 +1,6 @@
 package com.hutcwp.live.livebiz.ui.component.danmu;
 
-import hut.cwp.mvp.MvpView;
+import com.example.presenter.core.MvpView;
 
 public interface IDanmuComponent extends MvpView {
 }

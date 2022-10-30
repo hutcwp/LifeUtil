@@ -1,0 +1,28 @@
+import com.hutcwp.dep.Deps
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+Deps.compose {
+    templateSubAppApi()
+    supportLibrary()
+    aRouter()
+    gson()
+    rxJava()
+}
+
+android {
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+}
+
+
+dependencies {
+    implementation project(path: ':base')
+    implementation project(path: ':framework')
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':base_scope:lib-tcp')
+}

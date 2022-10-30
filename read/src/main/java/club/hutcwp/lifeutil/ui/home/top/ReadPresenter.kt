@@ -2,7 +2,7 @@ package club.hutcwp.lifeutil.ui.home.top
 
 import android.widget.Toast
 import club.hutcwp.lifeutil.entitys.ReadCategory
-import hut.cwp.mvp.MvpPresenter
+import com.example.presenter.core.MvpPresenter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

@@ -15,9 +15,9 @@ import club.hutcwp.lifeutil.entitys.PhotoCategory
 import club.hutcwp.lifeutil.ui.MainActivity
 import club.hutcwp.lifeutil.ui.base.BaseFragment
 import club.hutcwp.lifeutil.ui.home.sub.picture.PictureFragment
-import hut.cwp.mvp.BindPresenter
+import com.example.annotations.mvp.DelegateBind
 
-@BindPresenter(presenter = PhotoPresenter::class)
+@DelegateBind(presenter = PhotoPresenter::class)
 class PhotoFragment : BaseFragment<PhotoPresenter, PhotoFragment>(), IHome<PhotoCategory> {
 
     override fun getLayoutId(): Int {

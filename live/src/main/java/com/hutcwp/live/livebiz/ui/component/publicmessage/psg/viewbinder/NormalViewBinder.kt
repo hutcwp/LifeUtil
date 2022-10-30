@@ -67,7 +67,6 @@ class NormalViewBinder : ItemViewBinder<NormalMsg, NormalViewBinder.ViewHolder>(
         var colorSpan = ForegroundColorSpan(ContextCompat.getColor(BasicConfig.getApplicationContext(), R.color.color_chat_at_username))
         builder.setSpan(colorSpan, leftLen, nLeftLen, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
         //设置用户名颜色
-        //设置用户名颜色
         colorSpan = ForegroundColorSpan(ContextCompat.getColor(BasicConfig.getApplicationContext(), R.color.color_chat_username))
         builder.setSpan(colorSpan, 1, data.sendUserName.length + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
 

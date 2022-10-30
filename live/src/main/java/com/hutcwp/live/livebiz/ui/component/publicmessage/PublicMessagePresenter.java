@@ -1,7 +1,7 @@
 package com.hutcwp.live.livebiz.ui.component.publicmessage;
 
 
-import hut.cwp.mvp.MvpPresenter;
+import com.example.presenter.core.MvpPresenter;
 
 public class PublicMessagePresenter extends MvpPresenter<IPublicMessageComponent> {
 
@@ -20,10 +20,6 @@ public class PublicMessagePresenter extends MvpPresenter<IPublicMessageComponent
         component = (PublicMessageComponent) getView();
     }
 
-    @Override
-    protected void detachView() {
-        super.detachView();
-    }
 
     public void performTest() {
         component.showTest();

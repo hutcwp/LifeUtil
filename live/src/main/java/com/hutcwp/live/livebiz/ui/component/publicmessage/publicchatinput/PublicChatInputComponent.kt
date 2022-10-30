@@ -1,20 +1,18 @@
 package com.hutcwp.live.livebiz.ui.component.publicmessage.publicchatinput
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.LinearLayout
+import com.example.annotations.mvp.DelegateBind
 import com.hutcwp.live.livebiz.base.util.MLog
 import com.hutcwp.live.livebiz.core.PublicMessageManager
-import com.hutcwp.live.livebiz.ui.component.Component
+import com.hutcwp.framwork.component.Component
 import com.hutcwp.live.livebiz.ui.component.emoji.EmoticonsView
 import com.hutcwp.live.livebiz.ui.component.publicmessage.psg.util.TestUtils
 import com.hutcwp.livebiz.R
-import hut.cwp.mvp.BindPresenter
 
 /**
  *
@@ -23,8 +21,8 @@ import hut.cwp.mvp.BindPresenter
  * YY: 909076244
  *
  **/
-@BindPresenter(presenter = PublicChatPresenter::class)
-class PublicChatInputComponent : Component<PublicChatPresenter, IPublicChatInput>(), IPublicChatInput {
+@DelegateBind(presenter = PublicChatPresenter::class)
+class PublicChatInputComponent : com.hutcwp.framwork.component.Component<PublicChatPresenter, IPublicChatInput>(), IPublicChatInput {
 
     private var btnSend: Button? = null
     private var etInput: EmotionChatEditText? = null

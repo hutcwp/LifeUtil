@@ -12,7 +12,6 @@ import com.hutcwp.live.livebiz.ui.view.danmu.BarrageView;
 import com.hutcwp.livebiz.R;
 
 import androidx.appcompat.app.AppCompatActivity;
-import hut.cwp.api.Injector;
 
 
 public class SelfDanmuActivity extends AppCompatActivity {

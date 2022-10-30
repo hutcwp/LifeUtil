@@ -27,7 +27,7 @@ class BattleSceneComponent private constructor() : DialogFragment() {
             setCanceledOnTouchOutside(false)
             setCancelable(false)
             requestWindowFeature(Window.FEATURE_NO_TITLE)
-            window.apply {
+            window?.apply {
                 setDimAmount(0.0f)
                 setBackgroundDrawableResource(R.color.transparent)
                 addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)

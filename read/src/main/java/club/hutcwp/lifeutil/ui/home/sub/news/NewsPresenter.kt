@@ -1,8 +1,9 @@
 package club.hutcwp.lifeutil.ui.home.sub.news
 
+import androidx.fragment.app.Fragment
 import club.hutcwp.lifeutil.core.NewsParseImpl
 import club.hutcwp.lifeutil.entitys.News
-import hut.cwp.mvp.MvpPresenter
+import com.example.presenter.core.MvpPresenter
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -34,7 +35,7 @@ class NewsPresenter : MvpPresenter<INews>() {
     }
 
     fun getUrl(curPage: Int): String {
-        val baseUrl = arguments.getString("url")
+        val baseUrl =( mvpView as Fragment).arguments?.getString("url")
         return "$baseUrl/page/$curPage"
     }
 

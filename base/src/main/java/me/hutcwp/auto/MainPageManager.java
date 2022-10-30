@@ -8,9 +8,10 @@ import java.util.Set;
  * @since 17/9/20 16:56
  */
 public class MainPageManager {
+
     private static Set<IMainPage> CATEGORIES = new HashSet<>();
 
-    static void register(IMainPage category) {
+    public static void register(IMainPage category) {
         if (category != null) {
             CATEGORIES.add(category);
         }

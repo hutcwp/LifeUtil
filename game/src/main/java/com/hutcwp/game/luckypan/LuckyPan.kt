@@ -145,7 +145,7 @@ class LuckyPan : SurfaceView, SurfaceHolder.Callback, Runnable {
             startAngle += 60
             //            Log.e("aaaa", "startAngle: " + startAngle);
             mArcPaint.color = mArcColor[i]
-            mCanvas?.drawArc(recf, startAngle.toFloat(), sweepAngle.toFloat(), true, mArcPaint)
+            mCanvas?.drawArc(recf!!, startAngle.toFloat(), sweepAngle.toFloat(), true, mArcPaint)
             drawPathText(startAngle, sweepAngle, i)
             drawBitmap(startAngle + sweepAngle / 2.toFloat())
         }

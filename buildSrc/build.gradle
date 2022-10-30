@@ -1,0 +1,56 @@
+
+buildscript {
+
+    // 这里是给插件使用
+    def myProperties = new Properties()
+    project.rootProject.file("../gradle.properties").newDataInputStream().with {
+        myProperties.load(it)
+        it.close()
+    }
+
+    ext.AGPVersion = myProperties['AGPVersion']
+    ext.kotlin_version = myProperties['kotlinVersion']
+
+    repositories {
+        google()
+        mavenCentral()
+
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+            maven { url "https://dl.google.com/dl/android/maven2/" }
+            maven { url 'https://jitpack.io' }
+        }
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+        maven { url "https://dl.google.com/dl/android/maven2/" }
+        maven { url 'https://jitpack.io' }
+    }
+    jcenter()
+}
+
+apply plugin: 'groovy'
+apply plugin: 'kotlin'
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    implementation  'com.android.tools.build:gradle:' + AGPVersion
+
+    implementation 'org.yaml:snakeyaml:1.23'
+
+
+}

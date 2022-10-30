@@ -1,6 +1,7 @@
 package com.hutcwp.live.livebiz.ui.component.publicmessage.publicchatinput
 
-import hut.cwp.mvp.MvpView
+import com.example.presenter.core.MvpView
+
 
 /**
  *

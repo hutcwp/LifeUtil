@@ -7,7 +7,7 @@ import club.hutcwp.lifeutil.R
 import club.hutcwp.lifeutil.adpter.ReadAdapter
 import club.hutcwp.lifeutil.entitys.News
 import club.hutcwp.lifeutil.ui.base.BaseFragment
-import hut.cwp.mvp.BindPresenter
+import com.example.annotations.mvp.DelegateBind
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
@@ -18,7 +18,7 @@ import me.hutcwp.util.RxUtils
 /**
  * 阅读的子类
  */
-@BindPresenter(presenter = NewsPresenter::class)
+@DelegateBind(presenter = NewsPresenter::class)
 class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
 
     private var adapter: ReadAdapter? = null
@@ -26,6 +26,8 @@ class NewsFragment : BaseFragment<NewsPresenter, INews>(), INews {
     private var recycleView: RecyclerView? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var curPage = 0
+
+    private val presenter by lazy { NewsPresenter() }
 
     override fun getLayoutId(): Int {
         return R.layout.read_fragment_category

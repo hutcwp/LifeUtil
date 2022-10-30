@@ -58,7 +58,7 @@ class CopyableLayout : RelativeLayout {
     private fun copyToClip(str: CharSequence?) {
         val cm = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
         val mClipData = ClipData.newPlainText("Label", str)
-        cm?.primaryClip = mClipData
+//        cm?.primaryClip = mClipData
     }
 
     companion object {

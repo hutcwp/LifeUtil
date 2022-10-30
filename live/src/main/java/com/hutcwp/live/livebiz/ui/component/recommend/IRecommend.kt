@@ -1,7 +1,8 @@
 package com.hutcwp.live.livebiz.ui.component.recommend
 
+import com.example.presenter.core.MvpView
 import com.hutcwp.live.livebiz.ui.component.bean.PlayInfo
-import hut.cwp.mvp.MvpView
+
 
 /**
  *

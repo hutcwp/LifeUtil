@@ -1,8 +1,8 @@
 package club.hutcwp.lifeutil.ui.home.top
 
 import androidx.viewpager.widget.ViewPager
+import com.example.presenter.core.MvpView
 
-import hut.cwp.mvp.MvpView
 
 /**
  * Created by hutcwp on 2018/10/13 01:39

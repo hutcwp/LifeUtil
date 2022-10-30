@@ -3,7 +3,7 @@ package club.hutcwp.lifeutil.ui.home.top
 import java.util.ArrayList
 
 import club.hutcwp.lifeutil.entitys.PhotoCategory
-import hut.cwp.mvp.MvpPresenter
+import com.example.presenter.core.MvpPresenter
 
 /**
  * Created by hutcwp on 2018/10/14 00:51

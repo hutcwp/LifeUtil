@@ -13,6 +13,8 @@ class Constants {
         const val LUCKY_MAIN_PAGE = "/game/lucky/main"
         const val JIGSAW_MAIN_PAGE = "/game/jigsaw/main"
         const val IDENTIFY_MAIN_PAGE = "/game/identify/main"
+        const val MLIVE_PREVIEW = "/mlive/preview"
+        const val MLIVE_CAMERA2 = "/mlive/camera2"
     }
 
     object URL {

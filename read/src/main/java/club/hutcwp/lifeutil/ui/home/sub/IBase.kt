@@ -1,6 +1,7 @@
 package club.hutcwp.lifeutil.ui.home.sub
 
-import hut.cwp.mvp.MvpView
+import com.example.presenter.core.MvpView
+
 
 /**
  * Created by hutcwp on 2018/10/14 18:37

@@ -12,7 +12,7 @@ import com.hutcwp.srw.scene.BattleScene
 import com.hutcwp.srw.scene.IScene
 import com.hutcwp.srw.scene.MainGameScene
 import kotlinx.android.synthetic.main.activity_main_game.*
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 
 @Route(path = "/game/srw")
 class MainGameActivity : AppCompatActivity(), ISceneSwitch {
@@ -86,7 +86,7 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
     private fun playMainBGM() {
         val path = "audio/music2/87.mp3"
-        BackgroundMusic.getInstance(BaseConfig.getApplicationContext())
+        BackgroundMusic.getInstance(BasicConfig.getApplicationContext())
                 .playBackgroundMusic(path, true)
     }
 

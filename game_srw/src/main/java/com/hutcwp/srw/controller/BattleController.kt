@@ -5,7 +5,7 @@ import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.compute.BattleCenter
 import com.hutcwp.srw.music.BackgroundMusic
 import com.hutcwp.srw.scene.BattleScene
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 
 /**
  *  author : kevin
@@ -114,11 +114,11 @@ class BattleController(private val battleScene: BattleScene,
 
     private fun playBGM(path: String?) {
         path ?: return
-        BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).playBackgroundMusic(path, true)
+        BackgroundMusic.getInstance(BasicConfig.getApplicationContext()).playBackgroundMusic(path, true)
     }
 
     private fun stopBGM() {
-        BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).stopBackgroundMusic()
+        BackgroundMusic.getInstance(BasicConfig.getApplicationContext()).stopBackgroundMusic()
     }
 
     //回收工作

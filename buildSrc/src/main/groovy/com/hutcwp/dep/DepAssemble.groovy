@@ -85,6 +85,9 @@ class DepAssemble {
             implementation 'androidx.recyclerview:recyclerview:' + Deps.Version.androidxSupportVersion, {
                 force = true
             }
+//            implementation 'androidx.viewpager2:viewpager2:' + Deps.Version.androidxSupportVersion, {
+//                force = true
+//            }
             implementation 'com.google.android.material:material:' + Deps.Version.androidxDesignVersion, {
                 force = true
             }

@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.facebook.stetho.Stetho
 import com.hutcwp.homepage.HomePageInitLogic
-import com.hutcwp.live.livebiz.LiveAppLogic
+//import com.hutcwp.live.livebiz.LiveAppLogic
 import com.hutcwp.tcp.TcpManager
 //import com.hutcwp.homepage.HomePageInitLogic
 import me.hutcwp.BasicConfig
@@ -27,7 +27,7 @@ class MyApp : BaseApplication() {
 
     override fun initLogic() {
         registerAppLogicClass(HomePageInitLogic::class)
-        registerAppLogicClass(LiveAppLogic::class)
+//        registerAppLogicClass(LiveAppLogic::class)
 //        registerAppLogicClass(CartoonInitLogic::class)
     }
 

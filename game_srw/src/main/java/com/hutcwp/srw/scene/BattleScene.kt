@@ -10,7 +10,7 @@ import com.hutcwp.srw.info.Operator
 import com.hutcwp.srw.info.battle.Weapon
 import com.hutcwp.srw.music.BackgroundMusic
 import kotlinx.android.synthetic.main.layout_scene_battle.*
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
 import me.hutcwp.log.MLog
 
 /**
@@ -138,7 +138,7 @@ class BattleScene(private val sceneSwitch: ISceneSwitch) : BaseScene(R.layout.la
         this.battleController = null
         this.isUserCmd = false
         this.battleController = null
-        BackgroundMusic.getInstance(BaseConfig.getApplicationContext()).stopBackgroundMusic()
+        BackgroundMusic.getInstance(BasicConfig.getApplicationContext()).stopBackgroundMusic()
     }
 
 

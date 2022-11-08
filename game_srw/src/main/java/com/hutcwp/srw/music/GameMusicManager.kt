@@ -1,6 +1,7 @@
 package com.hutcwp.srw.music
 
-import me.hutcwp.BaseConfig
+import me.hutcwp.BasicConfig
+
 
 /**
  *  author : kevin
@@ -15,12 +16,12 @@ object GameMusicManager {
 
 
     fun playMainBGM() {
-        BackgroundMusic.getInstance(BaseConfig.getApplicationContext())
+        BackgroundMusic.getInstance(BasicConfig.getApplicationContext())
                 .playBackgroundMusic(MAIN_GAME_MUSIC, true)
     }
 
     fun playSelectWav() {
-        AudioMusic.getInstance(BaseConfig.getApplicationContext()).playAudioMusic(SELECT_BTN_MUSIC, false)
+        AudioMusic.getInstance(BasicConfig.getApplicationContext()).playAudioMusic(SELECT_BTN_MUSIC, false)
     }
 
 }

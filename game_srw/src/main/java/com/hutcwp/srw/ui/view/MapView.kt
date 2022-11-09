@@ -19,14 +19,11 @@ import com.hutcwp.srw.controller.GameController
  *  description :
  */
 class MapView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    var gameController: GameController? = null
 
-    var activity: FragmentActivity? = null
-
-    var controllerMenuDialog: ControllerMenuDialog? = null
+//    var gameController: GameController? = null
 
 
     var mapSpriteSpriteList: List<MapSprite> = mutableListOf()
@@ -35,6 +32,15 @@ class MapView @JvmOverloads constructor(
     var mapWidth = 0
     var mapHeight = 0
 
+    var mapUnit: Int = 60 //单位格子长度
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    /**
+     * 地图sprite
+     */
     fun initMap(mapSpriteSpriteList: List<MapSprite>) {
         this.mapSpriteSpriteList = mapSpriteSpriteList
         mapSpriteSpriteList.forEach {
@@ -44,11 +50,17 @@ class MapView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * 初始化机器人sprite
+     */
     fun initRobots(robotSpriteList: List<RobotSprite>) {
         this.robotSpriteList = robotSpriteList
         addRobotList(robotSpriteList)
     }
 
+    /**
+     * 初始化选择器sprite
+     */
     fun initSelect(selectSprite: SelectSprite) {
         addViewToMap(selectSprite)
     }
@@ -61,23 +73,21 @@ class MapView @JvmOverloads constructor(
 
     private fun addViewToMap(sprite: BaseSprite) {
         val view = sprite.view
-        assert(sprite.view != null)
 
         val x = sprite.pos.x
         val y = sprite.pos.y
-        val marginStart = x * MainGameActivity.UNIT_MAP
-        val marginTop = y * MainGameActivity.UNIT_MAP
+        val marginStart = x * mapUnit
+        val marginTop = y * mapUnit
 
-        val lp = FrameLayout.LayoutParams(MainGameActivity.UNIT_MAP, MainGameActivity.UNIT_MAP).apply {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                this.marginStart = marginStart
-            }
+        val lp = LayoutParams(mapUnit, mapUnit).apply {
+            this.marginStart = marginStart
             this.topMargin = marginTop
         }
 
         view.layoutParams = lp
 
-        view.setOnClickListener { gameController?.select(sprite) }
+        //todo 好像没用
+//        view.setOnClickListener { gameController?.select(sprite) }
 
         addView(view)
     }
@@ -90,36 +100,19 @@ class MapView @JvmOverloads constructor(
         return robotSpriteList.find { it.pos == pos } != null
     }
 
-    fun dismissMenu() {
-        controllerMenuDialog?.dismissAllowingStateLoss()
-    }
 
-    /**
-     * 展示控制菜单
-     */
-    fun showControllerMenuDialog(sprite: RobotSprite) {
-        if (controllerMenuDialog == null) {
-            controllerMenuDialog = ControllerMenuDialog.newInstance(sprite.robot)
-            controllerMenuDialog?.iControllerMenu = gameController
-        }
-        controllerMenuDialog?.updateRobot(sprite.robot)
-        ControllerMenuDialog.showMenu(controllerMenuDialog!!, activity!!.supportFragmentManager)
-    }
 
     fun updateViewPos(sprite: BaseSprite?) {
         sprite ?: return
         if (this.contains(sprite.view)) {
-
             val x = sprite.pos.x
             val y = sprite.pos.y
-            val marginStart = x * MainGameActivity.UNIT_MAP
-            val marginTop = y * MainGameActivity.UNIT_MAP
+            val marginStart = x * mapUnit
+            val marginTop = y * mapUnit
             Log.d("hutcwp", "更新到pos" + sprite.pos.toString())
 
-            val lp = FrameLayout.LayoutParams(MainGameActivity.UNIT_MAP, MainGameActivity.UNIT_MAP).apply {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    this.marginStart = marginStart
-                }
+            val lp = LayoutParams(mapUnit, mapUnit).apply {
+                this.marginStart = marginStart
                 this.topMargin = marginTop
             }
 
@@ -156,7 +149,7 @@ class MapView @JvmOverloads constructor(
             }
 
         })
-        animatorSet.start();
+        animatorSet.start()
     }
 
 

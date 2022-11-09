@@ -29,7 +29,7 @@ class RobotInfoActivity : AppCompatActivity(), IGameController {
         updateRobotInfo(robot!!)
         changeUIStyle(robot!!.attribute.team)
 
-        gcLayout?.gameController = this
+        gameControllerLayout?.addListener(this)
     }
 
     //如果是红色方，机器人图片在左边
@@ -69,7 +69,7 @@ class RobotInfoActivity : AppCompatActivity(), IGameController {
     }
 
     fun addGameListener(l: IGameController) {
-        gcLayout.addListener(l)
+        gameControllerLayout.addListener(l)
     }
 
     override fun up() {

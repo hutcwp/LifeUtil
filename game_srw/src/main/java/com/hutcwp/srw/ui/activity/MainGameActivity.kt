@@ -35,64 +35,68 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
         if (mainGameScene == null) {
             mainGameScene = MainGameScene()
             supportFragmentManager.beginTransaction()
-                    .add(R.id.fl_container, mainGameScene!!)
-                    .show(mainGameScene!!)
-                    .commitAllowingStateLoss()
+                .add(R.id.fl_container, mainGameScene!!)
+                .show(mainGameScene!!)
+                .commitAllowingStateLoss()
         } else {
             (mainGameScene as IScene).initWithContext(false)
             supportFragmentManager.beginTransaction()
-                    .hide(battleScene!!)
-                    .show(mainGameScene!!)
-                    .commitAllowingStateLoss()
+                .hide(battleScene!!)
+                .show(mainGameScene!!)
+                .commitAllowingStateLoss()
         }
     }
 
-    override fun switchBattleScene(isAuto: Boolean, leftRobot: RobotSprite, rightRobot: RobotSprite) {
+    override fun switchBattleScene(
+        isAuto: Boolean,
+        leftRobot: RobotSprite,
+        rightRobot: RobotSprite
+    ) {
         if (battleScene == null) {
             battleScene = BattleScene(this)
 
             battleScene?.let {
                 it.updateBattleParams(isAuto, leftRobot, rightRobot)
                 supportFragmentManager.beginTransaction()
-                        .add(R.id.fl_container, it)
-                        .show(it)
-                        .commitAllowingStateLoss()
+                    .add(R.id.fl_container, it)
+                    .show(it)
+                    .commitAllowingStateLoss()
             }
         } else {
             battleScene?.let {
                 it.updateBattleParams(isAuto, leftRobot, rightRobot)
                 it.initWithContext(false)
                 supportFragmentManager.beginTransaction()
-                        .hide(it)
-                        .show(it)
-                        .commitAllowingStateLoss()
+                    .hide(it)
+                    .show(it)
+                    .commitAllowingStateLoss()
             }
         }
     }
 
     override fun froze() {
-        gcLayout?.enable = true
+        gameControllerLayout?.enable = true
     }
 
     override fun unfroze() {
-        gcLayout?.enable = false
+        gameControllerLayout?.enable = false
     }
 
     //设置游戏手柄控制器
     override fun setGameController(gameController: IGameController) {
-        gcLayout?.gameController = gameController
+        gameControllerLayout?.addListener(gameController)
     }
-
 
     private fun playMainBGM() {
         val path = "audio/music2/87.mp3"
         BackgroundMusic.getInstance(BasicConfig.getApplicationContext())
-                .playBackgroundMusic(path, true)
+            .playBackgroundMusic(path, true)
     }
 
 
+
     companion object {
-        const val UNIT_MAP = 60
+//        const val UNIT_MAP = 60
     }
 
 }

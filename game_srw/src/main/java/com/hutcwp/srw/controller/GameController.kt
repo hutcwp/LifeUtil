@@ -2,32 +2,36 @@ package com.hutcwp.srw.controller
 
 import android.content.Intent
 import android.os.Bundle
-import com.hutcwp.srw.ui.activity.RobotInfoActivity
 import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.bean.BaseSprite
 import com.hutcwp.srw.bean.Pos
 import com.hutcwp.srw.bean.RobotSprite
+import com.hutcwp.srw.ui.GameCamera
+import com.hutcwp.srw.ui.activity.RobotInfoActivity
 import com.hutcwp.srw.ui.view.IControllerMenu
 import com.hutcwp.srw.ui.view.MapView
 import me.hutcwp.log.MLog
-import me.hutcwp.util.ResolutionUtils
 
 /**
  *  author : kevin
  *  date : 2022/3/6 6:49 PM
- *  description :
+ *  description : 游戏控制器
+ *  实现IGameController手柄接口
  */
-class GameController(private val sceneSwitch: ISceneSwitch, private val mapView: MapView) : IControllerMenu, IGameController {
-
+class GameController(
+    private val sceneSwitch: ISceneSwitch,
+    private val menuContainer: IMenuContainer,
+    private val mapView: MapView
+) : IControllerMenu, IGameController {
 
     private var curRobotSprite: RobotSprite? = null
-
     private var menuStatus: MenuStatus = MenuStatus.Normal
+
+    private var gameCamera = GameCamera(mapView)
 
 
     init {
-        mapView.gameController = this
-        GameMain.switchLevel(mapView, 1)
+        GameMain.switchLevel(mapView, sceneSwitch, 1)
     }
 
 
@@ -41,10 +45,9 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
         mapView.resetNormalMap()
     }
 
-
     override fun move() {
         changeMapSelectStatus(MenuStatus.Move)
-        mapView.dismissMenu()
+        menuContainer.dismissMenu()
 
         val range = curRobotSprite!!.robot.attribute.move
         mapView.showMoveRange(curRobotSprite!!.pos, range)
@@ -52,7 +55,7 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
 
     override fun attack() {
         changeMapSelectStatus(MenuStatus.Attack)
-        mapView.dismissMenu()
+        menuContainer.dismissMenu()
 
         val range = curRobotSprite!!.robot.attribute.move
         mapView.showAttackRange(curRobotSprite!!.pos, range)
@@ -72,7 +75,7 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
 
     override fun finish() {
 //        curRobotSprite?.updateMoveAvailable(false)
-        mapView.dismissMenu()
+        menuContainer.dismissMenu()
         GameMain.takeTurn()
     }
 
@@ -81,11 +84,10 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
     }
 
     override fun select(sprite: BaseSprite) {
-
         when (menuStatus) {
             MenuStatus.Normal -> {
                 if (sprite is RobotSprite) {
-                    mapView.showControllerMenuDialog(sprite)
+                    menuContainer.showControllerMenuDialog(sprite)
                     curRobotSprite = sprite
                 }
             }
@@ -113,7 +115,6 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
                 }
             }
         }
-
     }
 
 
@@ -123,7 +124,8 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
         if (mapView.posInMapRange(pos)) {
             GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
-        changeMapPos(false)
+
+//        gameCamera.up()
     }
 
     override fun down() {
@@ -133,7 +135,7 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
             GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
 
-        changeMapPos(true)
+//        gameCamera.down()
     }
 
     override fun left() {
@@ -179,24 +181,9 @@ class GameController(private val sceneSwitch: ISceneSwitch, private val mapView:
     }
 
 
-    private fun changeMapPos(isDown: Boolean) {
-        if (isDown) {
-            if (mapView.bottom - (mapView.scrollY) > ResolutionUtils.getScreenHeight(mapView.context)) {
-                mapView.scrollY += MAP_MOVE_SPEED
-            }
-        } else {
-            if (mapView.top + (mapView.scrollY) > 0) {
-                mapView.scrollY -= MAP_MOVE_SPEED
-            }
-        }
-    }
-
-
     companion object {
         const val TAG = "GameController"
         const val MAP_WIDTH_SIZE = 16
         const val MAP_HEIGHT_SIZE = 16
-
-        const val MAP_MOVE_SPEED = 30
     }
 }

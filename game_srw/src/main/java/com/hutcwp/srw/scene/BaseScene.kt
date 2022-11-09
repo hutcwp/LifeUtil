@@ -36,13 +36,6 @@ abstract class BaseScene(@LayoutRes contentLayoutId: Int) : Fragment(contentLayo
         release()
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (hidden) {
-
-        }
-    }
-
     override fun release() {
     }
 

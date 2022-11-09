@@ -15,10 +15,9 @@ import me.hutcwp.log.MLog
  *  description : 游戏手柄控制视图
  */
 class GameControllerLayout @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr), View.OnClickListener {
 
-    var gameController: IGameController? = null
     var enable: Boolean = true //是否开启手柄控制
 
     private var gameListenerList: MutableList<IGameController> = mutableListOf()
@@ -38,48 +37,55 @@ class GameControllerLayout @JvmOverloads constructor(
     }
 
     fun addListener(l: IGameController) {
-        gameListenerList.add(l)
+        if (!gameListenerList.contains(l)) {
+            gameListenerList.add(l)
+        }
+    }
+
+    fun removeListener(l: IGameController) {
+        if (gameListenerList.contains(l)) {
+            gameListenerList.add(l)
+        }
     }
 
     override fun onClick(view: View?) {
         view ?: return
         if (enable.not()) {
-            MLog.info("GameControllerLayout", "手柄控制器开关未开!")
+            MLog.warn(TAG, "手柄控制器开关未开!")
             return
         }
+        if (gameListenerList.isEmpty()) {
+            MLog.warn(TAG, "还没有设置手柄接收器【gameController=null】!")
+            return
+        }
+
         when (view.id) {
             R.id.btn_up -> {
-                gameController?.up()
                 gameListenerList.forEach {
                     it.up()
                 }
             }
             R.id.btn_down -> {
-                gameController?.down()
                 gameListenerList.forEach {
                     it.down()
                 }
             }
             R.id.btn_left -> {
-                gameController?.left()
                 gameListenerList.forEach {
                     it.left()
                 }
             }
             R.id.btn_right -> {
-                gameController?.right()
                 gameListenerList.forEach {
                     it.right()
                 }
             }
             R.id.btn_ok -> {
-                gameController?.ok()
                 gameListenerList.forEach {
                     it.ok()
                 }
             }
             R.id.btn_cancel -> {
-                gameController?.cancel()
                 gameListenerList.forEach {
                     it.cancel()
                 }
@@ -87,4 +93,13 @@ class GameControllerLayout @JvmOverloads constructor(
         }
     }
 
+    override fun removeAllViews() {
+        super.removeAllViews()
+        gameListenerList.clear()
+    }
+
+
+    companion object {
+        private const val TAG = "GameControllerLayout"
+    }
 }

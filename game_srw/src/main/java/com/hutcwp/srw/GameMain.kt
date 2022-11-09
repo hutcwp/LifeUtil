@@ -12,7 +12,7 @@ import me.hutcwp.log.MLog
 /**
  *  author : kevin
  *  date : 2022/3/13 12:37 AM
- *  description :
+ *  description : 全局的数据，控制中心
  */
 object GameMain {
 
@@ -31,9 +31,9 @@ object GameMain {
     /**
      * 这个方法只在关卡重置时调用
      */
-    fun switchLevel(mapView: MapView, no: Int) {
+    fun switchLevel(mapView: MapView, switchScene: ISceneSwitch, no: Int) {
         MLog.info(TAG, "switchLevel")
-        initGame(mapView, mapView.activity as ISceneSwitch, no)
+        initGame(mapView, switchScene, no)
     }
 
     private fun initGame(mapView: MapView, switchScene: ISceneSwitch, no: Int) {
@@ -43,6 +43,7 @@ object GameMain {
 
         this.mapView = mapView
         this.switchScene = switchScene
+
         mapView.clearMap()
         mapView.initMap(mapSpriteList)
         mapView.initRobots(robotSpriteList)
@@ -116,9 +117,9 @@ object GameMain {
      */
     fun gameControllerEnable(enAble: Boolean) {
         if (enAble) {
-            (mapView?.activity as? MainGameActivity)?.froze()
+            switchScene?.froze()
         } else {
-            (mapView?.activity as? MainGameActivity)?.unfroze()
+            switchScene?.unfroze()
         }
     }
 

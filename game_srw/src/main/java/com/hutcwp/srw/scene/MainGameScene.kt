@@ -6,9 +6,11 @@ import com.hutcwp.srw.bean.RobotSprite
 import com.hutcwp.srw.controller.GameController
 import com.hutcwp.srw.controller.IMenuContainer
 import com.hutcwp.srw.controller.ISceneSwitch
+import com.hutcwp.srw.ui.GameCamera
 import com.hutcwp.srw.ui.activity.MainGameActivity
 import com.hutcwp.srw.ui.view.ControllerMenuDialog
 import com.hutcwp.srw.ui.view.MapView
+import com.hutcwp.srw.util.getRawPos
 
 /**
  *  author : kevin
@@ -22,9 +24,13 @@ class MainGameScene : BaseScene(R.layout.layout_scene_main_game), IScene, IMenuC
 
 
     override fun firstInitView(rootView: View) {
-        val map = rootView.findViewById<MapView>(R.id.game_map)
+        val mapView = rootView.findViewById<MapView>(R.id.game_map)
+        val cameraView = rootView.findViewById<View>(R.id.cl_container)
+        val gameCamera = GameCamera(mapView, cameraView)
+        mapView.gameCamera = gameCamera
+
         gameController =
-            GameController(activity as MainGameActivity, this, map)
+            GameController(activity as MainGameActivity, this, mapView, cameraView)
     }
 
     override fun initData() {

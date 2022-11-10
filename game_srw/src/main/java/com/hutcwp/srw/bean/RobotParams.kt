@@ -10,7 +10,7 @@ class RobotParams(val resId: Int, val pos: Pos) {
 
     class Builder {
         var resId: Int = -1
-        var pos: Pos = Pos(0, 0)
+        var pos: Pos = Pos(0F, 0F)
 
         fun build() = RobotParams(resId, pos)
     }
@@ -18,7 +18,9 @@ class RobotParams(val resId: Int, val pos: Pos) {
 }
 
 
-class Pos(val x: Int, val y: Int) {
+class Pos(val x: Float, val y: Float) {
+
+    constructor(x: Int, y: Int) : this(x.toFloat(), y.toFloat())
 
     constructor(pos: Pos) : this(pos.x, pos.y)
 
@@ -38,7 +40,7 @@ class Pos(val x: Int, val y: Int) {
     override fun hashCode(): Int {
         var result = x
         result = 31 * result + y
-        return result
+        return result.toInt()
     }
 
     override fun toString(): String {

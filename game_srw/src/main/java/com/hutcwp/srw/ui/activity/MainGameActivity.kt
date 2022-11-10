@@ -11,6 +11,8 @@ import com.hutcwp.srw.music.BackgroundMusic
 import com.hutcwp.srw.scene.BattleScene
 import com.hutcwp.srw.scene.IScene
 import com.hutcwp.srw.scene.MainGameScene
+import com.hutcwp.srw.ui.GameCamera
+import com.hutcwp.srw.util.getRawPos
 import kotlinx.android.synthetic.main.activity_main_game.*
 import me.hutcwp.BasicConfig
 
@@ -20,6 +22,7 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
 
     var mainGameScene: MainGameScene? = null
     var battleScene: BattleScene? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

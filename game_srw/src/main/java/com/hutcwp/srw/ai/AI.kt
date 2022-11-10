@@ -104,7 +104,7 @@ class AI {
     }
 
     fun duration(pos1: Pos, pos2: Pos): Int {
-        return Math.abs(pos1.x - pos2.x) + Math.abs(pos1.y - pos2.y)
+        return Math.abs(pos1.x - pos2.x).toInt() + Math.abs(pos1.y - pos2.y).toInt()
     }
 
     /**

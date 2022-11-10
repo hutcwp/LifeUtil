@@ -2,6 +2,7 @@ package com.hutcwp.srw.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.bean.BaseSprite
 import com.hutcwp.srw.bean.Pos
@@ -10,6 +11,7 @@ import com.hutcwp.srw.ui.GameCamera
 import com.hutcwp.srw.ui.activity.RobotInfoActivity
 import com.hutcwp.srw.ui.view.IControllerMenu
 import com.hutcwp.srw.ui.view.MapView
+import com.hutcwp.srw.util.getRawPos
 import me.hutcwp.log.MLog
 
 /**
@@ -21,13 +23,13 @@ import me.hutcwp.log.MLog
 class GameController(
     private val sceneSwitch: ISceneSwitch,
     private val menuContainer: IMenuContainer,
-    private val mapView: MapView
+    private val mapView: MapView,
+    private val cameraView: View
 ) : IControllerMenu, IGameController {
 
     private var curRobotSprite: RobotSprite? = null
     private var menuStatus: MenuStatus = MenuStatus.Normal
 
-    private var gameCamera = GameCamera(mapView)
 
 
     init {
@@ -134,7 +136,6 @@ class GameController(
         if (mapView.posInMapRange(pos)) {
             GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
-
 //        gameCamera.down()
     }
 
@@ -144,6 +145,8 @@ class GameController(
         if (mapView.posInMapRange(pos)) {
             GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
+
+//        gameCamera.left()
     }
 
     override fun right() {
@@ -152,6 +155,8 @@ class GameController(
         if (mapView.posInMapRange(pos)) {
             GameMain.updateSpritePos(GameMain.selectSprite!!, pos)
         }
+
+//        gameCamera.right()
     }
 
     override fun ok() {

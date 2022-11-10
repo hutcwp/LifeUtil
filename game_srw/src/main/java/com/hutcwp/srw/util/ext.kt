@@ -1,7 +1,9 @@
 package com.hutcwp.srw.util
 
+import android.view.View
 import com.hutcwp.srw.info.Robot
 import com.hutcwp.srw.info.battle.Weapon
+import com.hutcwp.srw.ui.GameCamera
 
 /**
  *  author : kevin
@@ -87,3 +89,17 @@ fun Weapon.attackSea(): String {
     return "海 ${this.weaAttack()}"
 }
 
+
+fun View.getRawPos(): GameCamera.RawPos {
+    val location = IntArray(2)
+    this.getLocationOnScreen(location) //获取在整个屏幕内的绝对坐标
+
+    val rawX = location[0]
+    val rawY = location[1]
+    val top = rawY
+    val bottom = rawY + this.height
+    val left = rawX
+    val right = rawX + this.width
+
+    return GameCamera.RawPos(left, top, right, bottom)
+}

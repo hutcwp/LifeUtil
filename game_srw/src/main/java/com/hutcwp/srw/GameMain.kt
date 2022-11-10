@@ -5,6 +5,7 @@ import com.hutcwp.srw.constants.RobotConstants
 import com.hutcwp.srw.controller.ISceneSwitch
 import com.hutcwp.srw.service.ActionManager
 import com.hutcwp.srw.service.LevelManager
+import com.hutcwp.srw.ui.GameCamera
 import com.hutcwp.srw.ui.activity.MainGameActivity
 import com.hutcwp.srw.ui.view.MapView
 import me.hutcwp.log.MLog
@@ -121,6 +122,14 @@ object GameMain {
         } else {
             switchScene?.unfroze()
         }
+    }
+
+    fun updateCameraPos(rawPos: GameCamera.RawPos) {
+
+    }
+
+    fun tryMoveCamera(x: Int, y: Int) {
+        TODO("Not yet implemented")
     }
 
 }

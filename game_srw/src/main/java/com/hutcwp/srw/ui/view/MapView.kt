@@ -3,15 +3,18 @@ package com.hutcwp.srw.ui.view
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
 import androidx.core.view.contains
-import androidx.fragment.app.FragmentActivity
-import com.hutcwp.srw.ui.activity.MainGameActivity
+import com.hutcwp.srw.GameMain
 import com.hutcwp.srw.bean.*
-import com.hutcwp.srw.controller.GameController
+import com.hutcwp.srw.ui.GameCamera
+import com.hutcwp.srw.ui.view.anim.PointEvaluator
+import com.hutcwp.srw.util.getRawPos
+import me.hutcwp.log.MLog
 
 /**
  *  author : kevin
@@ -23,20 +26,25 @@ class MapView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 
-//    var gameController: GameController? = null
-
-
     var mapSpriteSpriteList: List<MapSprite> = mutableListOf()
     var robotSpriteList: List<RobotSprite> = mutableListOf()
 
     var mapWidth = 0
     var mapHeight = 0
 
+
     var mapUnit: Int = 60 //单位格子长度
         set(value) {
             field = value
             invalidate()
         }
+
+    var gameCamera: GameCamera? = null
+
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+    }
 
     /**
      * 地图sprite
@@ -45,8 +53,8 @@ class MapView @JvmOverloads constructor(
         this.mapSpriteSpriteList = mapSpriteSpriteList
         mapSpriteSpriteList.forEach {
             addViewToMap(it)
-            mapWidth = Math.max(mapWidth, it.pos.x)
-            mapHeight = Math.max(mapHeight, it.pos.y)
+            mapWidth = Math.max(mapWidth, it.pos.x.toInt())
+            mapHeight = Math.max(mapHeight, it.pos.y.toInt())
         }
     }
 
@@ -79,12 +87,11 @@ class MapView @JvmOverloads constructor(
         val marginStart = x * mapUnit
         val marginTop = y * mapUnit
 
-        val lp = LayoutParams(mapUnit, mapUnit).apply {
-            this.marginStart = marginStart
-            this.topMargin = marginTop
+        val lp = LayoutParams(mapUnit, mapUnit)
+        view.layoutParams = lp.apply {
+            this.marginStart = marginStart.toInt()
+            this.topMargin = marginTop.toInt()
         }
-
-        view.layoutParams = lp
 
         //todo 好像没用
 //        view.setOnClickListener { gameController?.select(sprite) }
@@ -93,43 +100,71 @@ class MapView @JvmOverloads constructor(
     }
 
     fun posInMapRange(pos: Pos): Boolean {
-        return (pos.x in 0 until mapWidth) && (pos.y in 0 until mapHeight)
+        return (pos.x.toInt() in 0 until mapWidth) && (pos.y.toInt() in 0 until mapHeight)
     }
 
     fun posHasRobot(pos: Pos): Boolean {
         return robotSpriteList.find { it.pos == pos } != null
     }
 
-
-
-    fun updateViewPos(sprite: BaseSprite?) {
+    fun updateViewPos(sprite: BaseSprite?, pos: Pos) {
         sprite ?: return
-        if (this.contains(sprite.view)) {
+
+        val view = sprite.view
+        if (this.contains(view)) {
+            sprite.pos = pos
+
             val x = sprite.pos.x
             val y = sprite.pos.y
             val marginStart = x * mapUnit
             val marginTop = y * mapUnit
             Log.d("hutcwp", "更新到pos" + sprite.pos.toString())
 
-            val lp = LayoutParams(mapUnit, mapUnit).apply {
-                this.marginStart = marginStart
-                this.topMargin = marginTop
+            val lp = view.layoutParams
+            lp as FrameLayout.LayoutParams
+            lp.apply {
+                this.marginStart = marginStart.toInt()
+                this.topMargin = marginTop.toInt()
             }
 
-            sprite.view.layoutParams = lp
-            sprite.view.invalidate()
+            view.layoutParams = lp
         }
     }
 
     fun updatePosWithAnim(sprite: BaseSprite, oldPos: Pos, newPos: Pos) {
+        MLog.debug("hutcwp", "updatePosWithAnim: oldPos=$oldPos, newPos=$newPos")
         val durX = (newPos.x - oldPos.x) * sprite.view.width.toFloat()
         val durY = (newPos.y - oldPos.y) * sprite.view.height.toFloat()
 
-        val objectAnimatorX = ObjectAnimator.ofFloat(sprite.view, "translationX", 0f, durX)
-        val objectAnimatorY = ObjectAnimator.ofFloat(sprite.view, "translationY", 0f, durY)
-        val animatorSet = AnimatorSet()
-        animatorSet.playSequentially(objectAnimatorX, objectAnimatorY)
+        val objectAnimatorX = ObjectAnimator.ofFloat(
+            sprite.view,
+            "translationX",
+            sprite.view.translationX,
+            sprite.view.translationX + durX
+        )
+        val objectAnimatorY = ObjectAnimator.ofFloat(
+            sprite.view, "translationY", sprite.view.translationY,
+            sprite.view.translationY + durY
+        )
 
+//        val mapAnimatorX = ObjectAnimator.ofFloat(
+//            this,
+//            "translationX",
+//            this.translationX,
+//            this.translationX + durX
+//        )
+//        val mapAnimatorY = ObjectAnimator.ofFloat(
+//            this, "translationY",
+//            this.translationY,
+//            this.translationY + durY
+//        )
+
+
+        val animatorSet = AnimatorSet()
+//        animatorSet.playSequentially(objectAnimatorX, objectAnimatorY, mapAnimatorX, mapAnimatorY)
+        animatorSet.play(objectAnimatorX)
+//            .with(mapAnimatorX).with(mapAnimatorY)
+            .before(objectAnimatorY)
         animatorSet.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator?) {
 
@@ -138,8 +173,9 @@ class MapView @JvmOverloads constructor(
             override fun onAnimationEnd(p0: Animator?) {
                 sprite.view.translationX = 0f
                 sprite.view.translationY = 0f
-                sprite.pos = newPos
-                updateViewPos(sprite)
+                updateViewPos(sprite, newPos)
+
+                gameCamera?.tryMove(-durX.toInt(), -durY.toInt())
             }
 
             override fun onAnimationCancel(p0: Animator?) {
@@ -147,11 +183,11 @@ class MapView @JvmOverloads constructor(
 
             override fun onAnimationRepeat(p0: Animator?) {
             }
-
         })
+
+        animatorSet.duration = 300L
         animatorSet.start()
     }
-
 
     /**
      *  移动状态下，找地图可移动的mapSprite
@@ -203,6 +239,28 @@ class MapView @JvmOverloads constructor(
                 return
             }
         }
+    }
+
+    /**
+     * 平移
+     */
+    fun tryTranslate(dx: Int, dy: Int) {
+        val mapAnimatorX = ObjectAnimator.ofFloat(
+            this,
+            "translationX",
+            this.translationX,
+            this.translationX + dx
+        )
+        val mapAnimatorY = ObjectAnimator.ofFloat(
+            this, "translationY",
+            this.translationY,
+            this.translationY + dy
+        )
+
+        val animatorSet = AnimatorSet()
+        animatorSet.play(mapAnimatorX).with(mapAnimatorY)
+        animatorSet.duration = 300L
+        animatorSet.start()
     }
 
     fun clearMap() {

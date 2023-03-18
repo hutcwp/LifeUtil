@@ -1,0 +1,22 @@
+package ${packageName};
+
+import io.realm.DynamicRealm;
+import io.realm.FieldAttribute;
+import io.realm.RealmObject;
+import io.realm.annotations.RealmModule;
+import com.google.auto.service.AutoService;
+import com.netease.cc.annotations.${moduleInterface};
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term on ${date}
+ */
+@RealmModule(
+     library = true,
+     classes = {
+          ${realmObjName}.class
+     })
+@AutoService(${moduleInterface}.class)
+public class ${className} implements ${moduleInterface} {
+}

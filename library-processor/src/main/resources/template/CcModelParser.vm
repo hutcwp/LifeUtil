@@ -1,0 +1,50 @@
+package ${packageName};
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import org.json.JSONObject;
+import java.io.Serializable;
+import com.netease.cc.activity.channel.common.parser.ModelParser;
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term
+ * @date ${date}
+ */
+public final class ${originClassName}_Parser implements Serializable {
+
+    @NonNull
+    public static ${originClassName} parse(@NonNull ${originClassName} model, @NonNull JSONObject json) {
+#foreach($field in $fields)
+#if($field.isModel)
+        model.${field.name} = ${field.type}_Parser.parse(json.${field.opt});
+#else
+        model.${field.name} = json.${field.opt};
+#end
+#end
+        return model;
+    }
+
+    @Nullable
+    public static ${originClassName} parse(@Nullable JSONObject json) {
+        if (json == null) {
+           return null;
+        }
+        ${originClassName} model = new ${originClassName}();
+        return parse(model, json);
+     }
+
+     public static void copyFrom(@NonNull ${originClassName} toModel, @NonNull ${originClassName} fromModel) {
+#foreach($field in $fields)
+#if($field.isModel)
+        if (fromModel.${field.name} != null) {
+           toModel.${field.name} = new ${field.type}();
+           ${field.type}_Parser.copyFrom(toModel.${field.name}, fromModel.${field.name});
+        }
+#else
+        toModel.${field.name} = fromModel.${field.name};
+#end
+#end
+     }
+}

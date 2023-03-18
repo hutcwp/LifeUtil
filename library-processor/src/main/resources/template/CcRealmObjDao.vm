@@ -1,0 +1,160 @@
+package ${packageName};
+
+import androidx.annotation.Nullable;
+import com.netease.cc.database.util.dao.AbstractDao;
+import com.netease.cc.database.util.DbParamMap;
+import com.netease.cc.database.util.dao.CcRealmObjectDao;
+import java.lang.Exception;
+import java.lang.Number;
+import java.util.Map;
+import java.util.Set;
+import io.realm.Realm;
+import io.realm.RealmObject;
+import io.realm.RealmObjectSchema;
+import io.realm.DynamicRealm;
+import io.realm.FieldAttribute;
+import io.realm.exceptions.RealmPrimaryKeyConstraintException;
+import com.google.auto.service.AutoService;
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term
+ * @date ${date}
+ */
+@AutoService(CcRealmObjectDao.class)
+public class ${className} extends AbstractDao<${tableName}> {
+
+    @Override
+	public long insertEntityWithAutoIncrementId(Realm realm, ${tableName} entity) throws Exception {
+#if($primaryField == "null")
+        new Exception("${tableName} has not primary key!");
+        return 0;
+#elseif($primaryField.fieldType != "java.lang.Long" && $primaryField.fieldType != "long")
+        new Exception("${tableName} primary key is ${primaryField.fieldType}, gen auto increment id failed!");
+        return 0;
+#else
+        if (realm == null || entity == null) {
+            return 0;
+        }
+        long nextId = entity.getId();
+        try {
+            if (nextId <= 0) {
+                nextId = generateId(realm);
+                entity.setId(nextId);
+            }
+			realm.insert(entity);
+        } catch (RealmPrimaryKeyConstraintException e) {
+			++nextId;
+			entity.setId(nextId);
+			nextId = insertEntityWithAutoIncrementId(realm, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return nextId;
+#end
+	}
+
+    @Override
+	public Class getRealmObjectClass() {
+		return ${realmObjName}.class;
+	}
+
+    @Override
+	public String getTableName() {
+		return I${realmObjName}.TABLE_NAME;
+	}
+
+	@Override
+	public void createTable(DynamicRealm realm, Class<? extends RealmObject> clazz) {
+		if (realm == null) {
+			throw new NullPointerException("'realm' must be provided");
+		}
+		if (clazz == null) {
+			throw new NullPointerException("A class extending RealmObject must be provided");
+		}
+		realm.getSchema()
+			.create(I${realmObjName}.CLASS_NAME)
+#foreach($field in $fields)
+#if($field.isPrimaryKey == "true")
+			.addField(I${realmObjName}._${field.fieldValue}, ${field.fieldType}.class, FieldAttribute.PRIMARY_KEY)
+#elseif($foreach.hasNext)
+			.addField(I${realmObjName}._${field.fieldValue}, ${field.fieldType}.class)
+#else
+			.addField(I${realmObjName}._${field.fieldValue}, ${field.fieldType}.class);
+#end
+#end
+	}
+
+    @Override
+    public String getClassName() {
+        return I${realmObjName}.FULL_CLASS_NAME;
+    }
+
+    @Override
+    @Nullable
+    public RealmObjectSchema updateTable(DynamicRealm realm, Class<? extends RealmObject> clazz) {
+		if (realm == null) {
+			throw new NullPointerException("'realm' must be provided");
+		}
+		if (clazz == null) {
+			throw new NullPointerException("A class extending RealmObject must be provided");
+		}
+		return realm.getSchema().get(I${realmObjName}.CLASS_NAME);
+    }
+
+    @Override
+	public String getRealmObjectId() {
+		try {
+			return I${realmObjName}.ID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+    @Override
+	public void updateEntity(${tableName} oldEntity, Map<String, Object> paramMap) {
+		if (paramMap == null || paramMap.isEmpty()) {
+			return;
+		}
+		Set<Map.Entry<String, Object>> entries = paramMap.entrySet();
+		for (Map.Entry<String, Object> entry : entries) {
+			switch (entry.getKey()) {
+#foreach($field in $fields)
+#if($field.isPrimaryKey == "false")
+				case I${realmObjName}._${field.fieldName}:
+					if (entry.getValue() != null) {
+						oldEntity.${field.setter}((${field.fieldType}) entry.getValue());
+					}
+					break;
+#end
+#end
+				default:
+					break;
+			}
+		}
+	}
+
+    @Override
+	@Nullable
+	public Map entity2ParamMap(${tableName} entity) {
+		if (entity == null) {
+			return null;
+		}
+#set($fieldCount=$fields.size())
+#set($notPrimaryKeyFieldCount=$fieldCount - 1)
+		DbParamMap paramMap = new DbParamMap(${notPrimaryKeyFieldCount});
+#foreach($field in $fields)
+#if($field.isPrimaryKey == "true")
+#elseif($field.isPrimitive == "true")
+		paramMap.putParam(I${realmObjName}._${field.fieldName}, entity.${field.getter}());
+#elseif($field.isPrimitive == "false")
+		if (entity.${field.getter}() != null) {
+			paramMap.putParam(I${realmObjName}._${field.fieldName}, entity.${field.getter}());
+		}
+#end
+#end
+		return paramMap;
+	}
+}

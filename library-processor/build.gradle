@@ -1,3 +1,5 @@
+import com.hutcwp.dep.Deps
+
 apply plugin: 'java-library'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -15,14 +17,14 @@ dependencies {
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
     implementation 'com.google.auto.service:auto-service-annotations:1.0-rc6'
 
-    compile group: 'com.google.guava', name: 'guava', version: '24.1-jre'
-//    implementation files('D:\\JAVA\\jdk1.8.0_171\\lib\\tools.jar')
+    implementation group: 'com.google.guava', name: 'guava', version: '24.1-jre'
+
+    implementation 'org.apache.velocity:velocity:1.7'
+
+    implementation 'androidx.annotation:annotation:1.1.0'
+
 }
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
-
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
 

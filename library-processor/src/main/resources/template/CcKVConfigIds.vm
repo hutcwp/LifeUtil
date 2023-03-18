@@ -1,0 +1,22 @@
+package ${packageName};
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * This codes are generated automatically. Do not modify!
+ *
+ * @author CC term
+ * @date ${date}
+ */
+public class ${className} {
+
+#foreach($config in $configs)
+    /**
+     *  ${config.desc}, {@link ${config.packageName}.${config.className}}
+     */
+	public static final String ${config.ID} = "${config.id}";
+
+#end
+}

@@ -1,6 +1,6 @@
 package com.hutcwp.mvp.compiler.other;
 
-import com.example.annotations.InitAttrConfig;
+import com.example.annotations.container.InitAttrConfig;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

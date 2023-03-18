@@ -39,7 +39,6 @@ class AI {
 
                 handle?.postDelayed({
                     this.end()//需要主动调用结束，用于异步的情况下触发回调时机
-
                 },2000)
             }
 

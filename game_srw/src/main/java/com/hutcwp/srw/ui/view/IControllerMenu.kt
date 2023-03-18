@@ -17,8 +17,11 @@ interface IControllerMenu {
 
     fun skill()
 
-    fun select(sprite: BaseSprite)
 
     fun attack()
+
+    fun select()
+
+    fun cancel()
 
 }

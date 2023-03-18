@@ -15,12 +15,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <com.hutcwp.srw.ui.view.GameControllerLayout
         android:id="@+id/gameControllerLayout"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="20dp"
+        android:background="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

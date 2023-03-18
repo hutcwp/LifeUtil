@@ -11,6 +11,7 @@ interface ISceneSwitch {
 
     //设置手柄控制器
     fun setGameController(gameController: IGameController)
+    fun removeGameController(gameController: IGameController)
 
     fun switchMainScene()
 

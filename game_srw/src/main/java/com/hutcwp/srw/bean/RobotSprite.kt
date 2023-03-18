@@ -12,10 +12,12 @@ import com.hutcwp.srw.info.battle.Weapon
  *  date : 2022/3/6 6:14 PM
  *  description :
  */
-class RobotSprite(val context: Context, val robot: Robot, val params: RobotParams) : BaseSprite(RobotUI(context), params.pos, params.resId) {
+class RobotSprite(val context: Context, val robot: Robot, val params: RobotParams) :
+    BaseSprite(RobotUI(context), params.pos, params.resId) {
 
 
     var canAction: Boolean = true //是否还可以行动
+    var canMove: Boolean = true
 
     fun beAttack(robot: Robot) {
         val attack = robot.attribute.attack
@@ -69,8 +71,8 @@ class RobotSprite(val context: Context, val robot: Robot, val params: RobotParam
         updateMoveAvailable(canAction)
     }
 
-    fun showAttackAnim() {
-
+    fun updateMoveStatus(canMove: Boolean) {
+        this.canMove = canMove
     }
 
 

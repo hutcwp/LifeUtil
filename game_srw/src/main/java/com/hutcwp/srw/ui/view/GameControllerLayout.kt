@@ -8,6 +8,7 @@ import com.hutcwp.srw.R
 import com.hutcwp.srw.controller.IGameController
 import kotlinx.android.synthetic.main.layout_game_controller.view.*
 import me.hutcwp.log.MLog
+import java.util.LinkedList
 
 /**
  *  author : kevin
@@ -20,7 +21,7 @@ class GameControllerLayout @JvmOverloads constructor(
 
     var enable: Boolean = true //是否开启手柄控制
 
-    private var gameListenerList: MutableList<IGameController> = mutableListOf()
+    private var gameListenerList: LinkedList<IGameController> = LinkedList()
 
     init {
         View.inflate(context, R.layout.layout_game_controller, this)
@@ -38,13 +39,13 @@ class GameControllerLayout @JvmOverloads constructor(
 
     fun addListener(l: IGameController) {
         if (!gameListenerList.contains(l)) {
-            gameListenerList.add(l)
+            gameListenerList.addFirst(l)
         }
     }
 
     fun removeListener(l: IGameController) {
         if (gameListenerList.contains(l)) {
-            gameListenerList.add(l)
+            gameListenerList.remove(l)
         }
     }
 
@@ -61,34 +62,22 @@ class GameControllerLayout @JvmOverloads constructor(
 
         when (view.id) {
             R.id.btn_up -> {
-                gameListenerList.forEach {
-                    it.up()
-                }
+                gameListenerList.firstOrNull()?.up()
             }
             R.id.btn_down -> {
-                gameListenerList.forEach {
-                    it.down()
-                }
+                gameListenerList.firstOrNull()?.down()
             }
             R.id.btn_left -> {
-                gameListenerList.forEach {
-                    it.left()
-                }
+                gameListenerList.firstOrNull()?.left()
             }
             R.id.btn_right -> {
-                gameListenerList.forEach {
-                    it.right()
-                }
+                gameListenerList.firstOrNull()?.right()
             }
             R.id.btn_ok -> {
-                gameListenerList.forEach {
-                    it.ok()
-                }
+                gameListenerList.firstOrNull()?.ok()
             }
             R.id.btn_cancel -> {
-                gameListenerList.forEach {
-                    it.cancel()
-                }
+                gameListenerList.firstOrNull()?.cancel()
             }
         }
     }

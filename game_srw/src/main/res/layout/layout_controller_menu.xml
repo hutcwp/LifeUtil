@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_menu"
     android:layout_width="400dp"
     android:layout_height="200dp"
     android:layout_gravity="bottom|center"
     android:background="@drawable/bg_controller_menu"
-    android:padding="20dp">
+    android:padding="20dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
 
     <Button
         android:id="@+id/btn_move"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:background="@drawable/select_button_menu"
+        android:enabled="false"
         android:text="移动"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,7 +26,11 @@
         android:id="@+id/btn_attack"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/select_button_menu"
+        android:enabled="false"
         android:text="攻击"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_move" />
 
@@ -27,7 +38,11 @@
         android:id="@+id/btn_status"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/select_button_menu"
+        android:enabled="false"
         android:text="状态"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_attack" />
 
@@ -36,7 +51,10 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
+        android:background="@drawable/select_button_menu"
+        android:enabled="false"
         android:text="精神"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/btn_move"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +62,11 @@
         android:id="@+id/btn_wait"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/select_button_menu"
+        android:enabled="false"
         android:text="待命"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/btn_skill"
         app:layout_constraintTop_toBottomOf="@id/btn_skill" />
 

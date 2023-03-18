@@ -124,12 +124,10 @@ object GameMain {
         }
     }
 
-    fun updateCameraPos(rawPos: GameCamera.RawPos) {
-
+    /**
+     * 是否是蓝色机器人
+     */
+    fun isBlueRobot(robotSprite: RobotSprite): Boolean {
+        return blueRobotSpriteList().contains(robotSprite)
     }
-
-    fun tryMoveCamera(x: Int, y: Int) {
-        TODO("Not yet implemented")
-    }
-
 }

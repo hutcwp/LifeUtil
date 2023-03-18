@@ -90,6 +90,11 @@ class MainGameActivity : AppCompatActivity(), ISceneSwitch {
         gameControllerLayout?.addListener(gameController)
     }
 
+    override fun removeGameController(gameController: IGameController) {
+        gameControllerLayout?.removeListener(gameController)
+    }
+
+
     private fun playMainBGM() {
         val path = "audio/music2/87.mp3"
         BackgroundMusic.getInstance(BasicConfig.getApplicationContext())
